@@ -8,6 +8,8 @@ import themeSetup from "../theme";
 import createEmotionCache from "../createEmotionCache";
 import { useMediaQuery } from "@mui/material";
 import { ErrorBoundary } from "../components/layout/error_boundary";
+import { ApolloProvider } from "@apollo/client";
+import client from "../utils/apolo.util";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -37,18 +39,23 @@ export default function MyApp(props: MyAppProps) {
 
   return (
     <ErrorBoundary>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-          {/* TODO: Add main color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </CacheProvider>
+      <ApolloProvider client={client}>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <meta
+              name="viewport"
+              content="initial-scale=1, width=device-width"
+            />
+            {/* TODO: Add main color */}
+            <meta name="theme-color" content={theme.palette.primary.main} />
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </CacheProvider>
+      </ApolloProvider>
     </ErrorBoundary>
   );
 }
