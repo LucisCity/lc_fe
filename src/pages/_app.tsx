@@ -7,7 +7,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import themeSetup from "../theme";
 import createEmotionCache from "../createEmotionCache";
 import { useMediaQuery } from "@mui/material";
-import { ErrorBoundary } from "../../components/layout/error_boundary";
+import { ErrorBoundary } from "../components/layout/error_boundary";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

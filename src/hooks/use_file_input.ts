@@ -1,6 +1,5 @@
-import { remove } from "mobx";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { round } from "../utils/number.utils";
+import { useEffect, useState } from "react";
+import { round } from "../utils/number.util";
 
 export type Preview = { url: string; name: string; type: string; id?: number };
 
