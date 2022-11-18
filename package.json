@@ -13,6 +13,8 @@
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.14",
+    "@mui/lab": "^5.0.0-alpha.108",
     "@mui/material": "^5.10.14",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
@@ -29,6 +31,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.4",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-secure-storage": "^1.0.21",
     "react-use": "^17.4.0"
   },
   "devDependencies": {
