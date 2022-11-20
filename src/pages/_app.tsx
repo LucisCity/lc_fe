@@ -32,20 +32,14 @@ export default function MyApp(props: MyAppProps) {
   });
   console.log(mode);
 
-  const theme = React.useMemo(
-    () => themeSetup(prefersDarkMode ? "dark" : "light"),
-    [prefersDarkMode]
-  );
+  const theme = React.useMemo(() => themeSetup(prefersDarkMode ? "dark" : "light"), [prefersDarkMode]);
 
   return (
     <ErrorBoundary>
       <ApolloProvider client={client}>
         <CacheProvider value={emotionCache}>
           <Head>
-            <meta
-              name="viewport"
-              content="initial-scale=1, width=device-width"
-            />
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
             {/* TODO: Add main color */}
             <meta name="theme-color" content={theme.palette.primary.main} />
           </Head>

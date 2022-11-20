@@ -1,7 +1,7 @@
 import { Maybe } from "graphql/jsutils/Maybe";
-import {isClient} from "./DOM";
+// import { isClient } from "./DOM";
 
-export const to_hex_str = (str: string): string => {
+export const toHexStr = (str: string): string => {
   let result = "";
   for (let i = 0; i < str.length; i++) {
     result += str.charCodeAt(i).toString(16);
@@ -9,8 +9,8 @@ export const to_hex_str = (str: string): string => {
   return result;
 };
 
-export function trim_middle(s: string, head_len: number, tail_len: number) {
-  return s.substring(0, head_len) + "..." + s.substring(s.length - tail_len);
+export function trimMiddle(s: string, headLen: number, tailLen: number) {
+  return s.substring(0, headLen) + "..." + s.substring(s.length - tailLen);
 }
 
 export function vi2en(str: string): string {
@@ -54,22 +54,22 @@ export function truncateStr(str: Maybe<string>, start: number, end: number) {
 
 // not safe
 export function replaceCharAt(s: string, idx: number, char: string) {
-  return s.slice(0, idx) + char + s.slice(idx + 1, s.length)
+  return s.slice(0, idx) + char + s.slice(idx + 1, s.length);
 }
 
 // Decoding base64 ⇢ UTF8
-export function b64DecodeUnicode (str: string) {
+export function b64DecodeUnicode(str: string) {
   return decodeURIComponent(
     Array.prototype.map
       .call(atob(str), function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join(''),
+      .join(""),
   );
 }
 
 // Encoding UTF8 ⇢ base64
-export function b64EncodeUnicode (str: string) {
+export function b64EncodeUnicode(str: string) {
   return btoa(
     encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
       return String.fromCharCode(parseInt(p1, 16));
@@ -77,7 +77,8 @@ export function b64EncodeUnicode (str: string) {
   );
 }
 
-// ----- Solution: https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
+// eslint-disable-next-line max-len
+// Solution: https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
 export function fromBinary(encoded: string) {
   const binary = window.atob(encoded);
   const bytes = new Uint8Array(binary.length);
@@ -88,7 +89,7 @@ export function fromBinary(encoded: string) {
   return String.fromCharCode(...new Uint16Array(bytes.buffer));
 }
 
-if(isClient) {
-  // @ts-ignore
-  window.test__decode = fromBinary
-}
+// if (isClient) {
+//   // @ts-ignore
+//   window.test__decode = fromBinary;
+// }

@@ -14,8 +14,8 @@ export function formatDate(date: any, _format?: string) {
 }
 
 export function durationFrom(date: string | Date, toDate: string | Date) {
-  let start = typeof date === "string" ? new Date(date) : date;
-  let end = typeof toDate === "string" ? new Date(toDate) : toDate;
+  const start = typeof date === "string" ? new Date(date) : date;
+  const end = typeof toDate === "string" ? new Date(toDate) : toDate;
   return intervalToDuration({
     start,
     end,

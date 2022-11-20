@@ -13,33 +13,31 @@ export type Scalars = {
 };
 
 export type AuthGql = {
-  __typename?: 'AuthGql';
-  token: Scalars['String'];
+  __typename?: "AuthGql";
+  token: Scalars["String"];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   /** Login */
   login: AuthGql;
   /** Register */
-  register: Scalars['String'];
+  register: Scalars["String"];
 };
-
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
-
 export type MutationRegisterArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-  ref_code?: InputMaybe<Scalars['String']>;
+  email: Scalars["String"];
+  password: Scalars["String"];
+  ref_code?: InputMaybe<Scalars["String"]>;
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   /** Auth resolver */
-  temp: Scalars['String'];
+  temp: Scalars["String"];
 };

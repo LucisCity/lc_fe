@@ -10,11 +10,7 @@ const POSITION: SnackbarOrigin = {
 
 export default function NotistackWrapper({ children }: any) {
   return (
-    <SnackbarProvider
-      maxSnack={MAX_SNACK}
-      autoHideDuration={AUTO_HIDE_DURATION}
-      anchorOrigin={POSITION}
-    >
+    <SnackbarProvider maxSnack={MAX_SNACK} autoHideDuration={AUTO_HIDE_DURATION} anchorOrigin={POSITION}>
       {children}
     </SnackbarProvider>
   );

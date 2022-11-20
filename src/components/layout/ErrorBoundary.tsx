@@ -1,6 +1,6 @@
 import React, { ErrorInfo } from "react";
 // import ErrorSection from 'next/error'
-import ErrorSection from "./error_section";
+import ErrorSection from "./ErrorSection";
 
 export class ErrorBoundary extends React.Component {
   constructor(props: any) {

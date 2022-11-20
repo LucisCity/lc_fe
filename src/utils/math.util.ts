@@ -16,9 +16,7 @@ export class KMath {
     if (t == null) {
       return 0;
     }
-    return (
-      typeof t === "string" ? new BN(t) : new BN(t.toString())
-    ).toNumber();
+    return (typeof t === "string" ? new BN(t) : new BN(t.toString())).toNumber();
   }
 
   public static isPositive(t: any) {
@@ -26,54 +24,36 @@ export class KMath {
     return !b.isZero() && b.isPositive();
   }
 
-  public static isLessThan(
-    numberA: string | number | BigNumber,
-    numberB: string | number | BigNumber
-  ) {
+  public static isLessThan(numberA: string | number | BigNumber, numberB: string | number | BigNumber) {
     const bnA = this.getBN(numberA);
     const bnB = this.getBN(numberB);
     return bnA.isLessThan(bnB);
   }
 
-  public static mul(
-    numberA: string | number | BigNumber,
-    numberB: string | number | BigNumber
-  ) {
+  public static mul(numberA: string | number | BigNumber, numberB: string | number | BigNumber) {
     const bnA = this.getBN(numberA);
     const bnB = this.getBN(numberB);
     return bnA.multipliedBy(bnB);
   }
-  public static div(
-    numberA: string | number | BigNumber,
-    numberB: string | number | BigNumber
-  ) {
+  public static div(numberA: string | number | BigNumber, numberB: string | number | BigNumber) {
     const bnA = this.getBN(numberA);
     const bnB = this.getBN(numberB);
     return bnA.dividedBy(bnB);
   }
 
-  public static pow(
-    numberA: string | number | BigNumber,
-    numberB: string | number | BigNumber
-  ) {
+  public static pow(numberA: string | number | BigNumber, numberB: string | number | BigNumber) {
     const bnA = this.getBN(numberA);
     const bnB = this.getBN(numberB);
     return bnA.pow(bnB);
   }
 
-  public static plus(
-    numberA: string | number | BigNumber,
-    numberB: string | number | BigNumber
-  ) {
+  public static plus(numberA: string | number | BigNumber, numberB: string | number | BigNumber) {
     const bnA = this.getBN(numberA);
     const bnB = this.getBN(numberB);
     return bnA.plus(bnB);
   }
 
-  public static minus(
-    numberA: string | number | BigNumber,
-    numberB: string | number | BigNumber
-  ) {
+  public static minus(numberA: string | number | BigNumber, numberB: string | number | BigNumber) {
     const bnA = this.getBN(numberA);
     const bnB = this.getBN(numberB);
     return bnA.minus(bnB);

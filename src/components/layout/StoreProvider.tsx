@@ -13,7 +13,5 @@ export function StoreProvider({ children }: { children: JSX.Element }) {
     // }
   }, []);
   // return children;
-  return (
-    <StoreContext.Provider value={ROOT_STORE}>{children}</StoreContext.Provider>
-  );
+  return <StoreContext.Provider value={ROOT_STORE}>{children}</StoreContext.Provider>;
 }

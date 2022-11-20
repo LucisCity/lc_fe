@@ -53,11 +53,7 @@ export default function LoginForm() {
           required: "This is required",
         })}
       />
-      <LoadingButton
-        loading={isSubmitting}
-        loadingIndicator="Loading…"
-        type="submit"
-      >
+      <LoadingButton loading={isSubmitting} loadingIndicator="Loading…" type="submit">
         Login
       </LoadingButton>
     </form>

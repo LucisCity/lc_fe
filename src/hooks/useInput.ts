@@ -15,7 +15,6 @@ export function useInput<T>(init: T | undefined) {
       setValue(_value);
     }
   };
-  
 
   const onChangeChecked = function (_value: any) {
     if (typeof _value === "object") {

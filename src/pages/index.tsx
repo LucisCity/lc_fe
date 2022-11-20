@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import LoginPage from "../components/auth/login/login";
-import AppLayout from "../components/layout/Layout";
+import LoginPage from "../components/auth/login";
+import AppLayout from "../components/layout";
 
 const Home: NextPage = () => {
   return (

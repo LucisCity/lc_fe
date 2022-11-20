@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "serve": "npx serve out",
     "codegen": "graphql-codegen --config codegen.ts"
   },
@@ -48,7 +49,12 @@
     "@graphql-codegen/typescript": "^2.8.2",
     "@graphql-codegen/typescript-operations": "^2.5.7",
     "@graphql-codegen/typescript-react-apollo": "^3.3.6",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
     "dotenv": "^16.0.3",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
     "sass": "^1.56.1",
     "typescript": "4.9.3"
   }
