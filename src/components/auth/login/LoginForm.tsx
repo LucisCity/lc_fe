@@ -9,7 +9,7 @@ export default function LoginForm() {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  const { login, submitting } = useLogin();
+  const { login } = useLogin();
 
   async function onSubmit(values: any) {
     return login(values.password, values.email);

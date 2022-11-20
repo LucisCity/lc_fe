@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Center } from "../../common/center";
 import useLogin from "./hooks/useLogin";
-import LoginForm from "./login_form";
+import LoginForm from "./LoginForm";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 function Copyright(props: any) {
