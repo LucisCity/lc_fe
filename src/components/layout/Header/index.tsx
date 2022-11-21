@@ -12,6 +12,9 @@ const HeaderStyled = styled("div")(({ theme }) => ({
   backdropFilter: "blur(12px)",
   display: "flex",
   alignItems: "center",
+  position: "sticky",
+  top: 0,
+  zIndex: 1,
 }));
 
 const Ul = styled("ul")(({ theme }) => ({
