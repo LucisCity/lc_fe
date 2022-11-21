@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import { styled } from "@mui/system";
 import { headerHeight } from "../layout/header";
 
@@ -11,5 +12,9 @@ const MainStyled = styled("main")(({ theme }) => ({
 }));
 
 export const LandingPage = () => {
-  return <MainStyled>landing</MainStyled>;
+  return (
+    <MainStyled>
+      <Container></Container>
+    </MainStyled>
+  );
 };
