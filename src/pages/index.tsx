@@ -4,7 +4,7 @@ import AppLayout from "../components/layout";
 
 const Home: NextPage = () => {
   return (
-    <AppLayout>
+    <AppLayout isExtendHeaderComponent>
       <LandingPage />
     </AppLayout>
   );

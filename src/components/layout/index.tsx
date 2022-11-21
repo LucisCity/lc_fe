@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import React from "react";
 import DocHead from "./doc_head";
 import Footer from "./footer";
 import Header from "./header";
