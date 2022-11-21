@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import LoginPage from "../components/auth/login";
+import { LandingPage } from "../components/landing";
 import AppLayout from "../components/layout";
 
 const Home: NextPage = () => {
   return (
     <AppLayout>
-      <LoginPage />
+      <LandingPage />
     </AppLayout>
   );
 };

@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import themeSetup from "../theme";
 import createEmotionCache from "../createEmotionCache";
-import { useMediaQuery } from "@mui/material";
+import { PaletteMode, useMediaQuery } from "@mui/material";
 import { ErrorBoundary } from "../components/layout/error_boundary";
 import { ApolloProvider } from "@apollo/client";
 import client from "../utils/apolo.util";
@@ -21,18 +21,26 @@ interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = React.useState(() => {
+  const [mode, setMode] = React.useState<PaletteMode | null | undefined>(() => {
     // for the sake of solving this issues
     // ("ReferenceError: localStorage is not defined")
     if (typeof window !== "undefined") {
-      return "dark";
-    } else {
-      console.log(123);
+      const localMode = localStorage.getItem("mode");
+      if (localMode === "light" || localMode === "dark") {
+        return localMode;
+      } else {
+        return null;
+      }
     }
   });
-  console.log(mode);
 
-  const theme = React.useMemo(() => themeSetup(prefersDarkMode ? "dark" : "light"), [prefersDarkMode]);
+  const theme = React.useMemo(() => {
+    if (mode) {
+      return themeSetup(mode);
+    } else {
+      return themeSetup(prefersDarkMode ? "dark" : "light");
+    }
+  }, [prefersDarkMode, mode]);
 
   return (
     <ErrorBoundary>
