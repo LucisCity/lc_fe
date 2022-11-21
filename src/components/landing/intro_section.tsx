@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
-import { headerHeight } from "../layout/header";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
-  height: `calc(100vh - ${headerHeight}px)`,
+  height: `100vh`,
   width: "100%",
 }));
 export const IntroSection = () => {

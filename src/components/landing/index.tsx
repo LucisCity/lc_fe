@@ -1,7 +1,8 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-
+import anime from "animejs";
 import React from "react";
+import { headerHeight } from "../layout/header";
 import { IntroSection } from "./intro_section";
 
 const MainStyled = styled("main")(({ theme }) => ({
@@ -21,8 +22,82 @@ const ExtendHeader = styled("div")(({ theme }) => ({
   zIndex: 1,
 }));
 
+const durationScroll = 500;
+
+enum Section {
+  None, // start
+  IntroductionCompany,
+  IntroductionCard,
+  Ecosystem,
+  ReasonChoose,
+  Operation,
+  Demo,
+  RoadMap,
+  Partner,
+  Community,
+}
+
+const totalSection = Object.keys(Section).length / 2;
 export const LandingPage = () => {
-  const introSectionRef = React.useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = React.useState(0);
+  const [isPending, setIsPending] = React.useState(false);
+  const isPendingRef = React.useRef(isPending);
+  const setIsPendingRef = (data: boolean) => {
+    isPendingRef.current = data;
+    setIsPending(data);
+  };
+
+  const scrollPosition = React.useMemo(() => {
+    if (typeof window !== "undefined") {
+      // introduction company and card in the same section view
+      if (activeSection === Section.IntroductionCompany || activeSection === Section.IntroductionCard) {
+        return window.innerHeight - (window.innerHeight - headerHeight - extendHeaderHeight);
+      }
+
+      return (activeSection - 1) * window.innerHeight - (window.innerHeight - headerHeight - extendHeaderHeight);
+    }
+
+    return 0;
+  }, [activeSection]);
+
+  React.useEffect(() => {
+    document.addEventListener("wheel", onScroll, { passive: false });
+  }, []);
+
+  const onScroll = (event: WheelEvent) => {
+    event.preventDefault();
+    const scrollDown = (-event.deltaY || -event.detail) < 0;
+    if (!isPendingRef.current) {
+      setIsPendingRef(true);
+      setTimeout(() => {
+        setIsPendingRef(false);
+      }, durationScroll);
+      if (scrollDown) {
+        setActiveSection((pre) => {
+          if (pre === totalSection - 1) {
+            return pre;
+          }
+          return pre + 1;
+        });
+      } else {
+        setActiveSection((pre) => {
+          if (pre === 0) {
+            return pre;
+          }
+          return pre - 1;
+        });
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    anime({
+      targets: window.document.documentElement,
+      scrollTop: scrollPosition,
+      easing: "easeInCubic",
+      duration: durationScroll,
+    });
+  }, [activeSection]);
 
   return (
     <>
@@ -42,8 +117,7 @@ export const LandingPage = () => {
         </Container>
       </ExtendHeader>
       <MainStyled>
-        <Box ref={introSectionRef} height="100%" width="100%">
-          <IntroSection />
+        <Box height="100%" width="100%">
           <IntroSection />
           <IntroSection />
           <IntroSection />
