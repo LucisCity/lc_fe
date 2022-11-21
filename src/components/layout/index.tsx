@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
-import DocHead from "./DocHead";
-import Footer from "./Footer";
-import Header from "./Header";
+import DocHead from "./doc_head";
+import Footer from "./footer";
+import Header from "./header";
 
 function AppLayout(props: any) {
   const { children } = props;

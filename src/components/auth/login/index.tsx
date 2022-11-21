@@ -1,10 +1,9 @@
 import { Avatar, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
 import { Center } from "../../common/center";
-import useLogin from "./hooks/useLogin";
-import LoginForm from "./LoginForm";
+import useLogin from "./hooks/use_login";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LoginForm from './login_form';
 
 function Copyright(props: any) {
   return (

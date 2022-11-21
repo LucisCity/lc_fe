@@ -1,7 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useForm } from "react-hook-form";
-import useLogin from "./hooks/useLogin";
+import useLogin from "./hooks/use_login";
 
 export default function LoginForm() {
   const {
@@ -9,7 +9,7 @@ export default function LoginForm() {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  const { login } = useLogin();
+  const { login, submitting } = useLogin();
 
   async function onSubmit(values: any) {
     return login(values.password, values.email);
@@ -53,7 +53,11 @@ export default function LoginForm() {
           required: "This is required",
         })}
       />
-      <LoadingButton loading={isSubmitting} loadingIndicator="Loading…" type="submit">
+      <LoadingButton
+        loading={isSubmitting}
+        loadingIndicator="Loading…"
+        type="submit"
+      >
         Login
       </LoadingButton>
     </form>
