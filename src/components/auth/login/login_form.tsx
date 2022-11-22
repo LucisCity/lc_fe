@@ -3,8 +3,8 @@ import { Avatar, Box, Button, Grid, Stack, TextField, Typography } from "@mui/ma
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 //@ts-ignore
-import { useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { useGoogleLogin } from "@react-oauth/google";
 import useLogin from "./hooks/use_login";
 
 export default function LoginForm() {
@@ -14,6 +14,8 @@ export default function LoginForm() {
     formState: { errors, isSubmitting },
   } = useForm();
   const { login, fbLogin, ggLogin } = useLogin();
+  const _test_a = "";
+  console.log(_test_a);
 
   const loginGG = useGoogleLogin({
     onSuccess: ggLogin,
