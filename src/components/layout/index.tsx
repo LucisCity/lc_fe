@@ -3,13 +3,18 @@ import DocHead from "./doc_head";
 import Footer from "./footer";
 import Header from "./header";
 
-function AppLayout(props: any) {
-  const { children } = props;
+type Props = {
+  children: any;
+  isShowHeader?: boolean;
+  isExtendHeaderComponent?: boolean;
+};
+function AppLayout(props: Props) {
+  const { children, isShowHeader } = props;
 
   return (
     <Box>
       <DocHead />
-      <Header />
+      {isShowHeader === false ? null : <Header />}
       {children}
       <Footer />
     </Box>
