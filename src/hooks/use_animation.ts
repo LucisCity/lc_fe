@@ -1,7 +1,7 @@
 import anime from "animejs";
 
 export const useAnimation = () => {
-  const fadeIn = (targets: any, duration: number = 500) => {
+  const fadeIn = (targets: any, duration = 500) => {
     anime({
       targets,
       opacity: 1,
@@ -10,7 +10,7 @@ export const useAnimation = () => {
     });
   };
 
-  const fadeOut = (targets: any, duration: number = 500) => {
+  const fadeOut = (targets: any, duration = 500) => {
     anime({
       targets,
       opacity: 0,

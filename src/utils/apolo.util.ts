@@ -37,8 +37,8 @@ export function setAuthToken(token: string) {
 
 const isClient = typeof window !== "undefined";
 if (isClient) {
-  // @ts-ignore
-  window.tmp__setApoloAuth = setAuthToken;
+  // eslint-disable-next-line camelcase
+  (window as any).tmp__setApoloAuth = setAuthToken;
 }
 
 /**
@@ -87,48 +87,44 @@ if (isClient) {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: process.env.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTION_URL ?? "",
-    })
+    }),
   );
 
   splitLink = split(
     ({ query }) => {
       const definition = getMainDefinition(query);
-      return (
-        definition.kind === "OperationDefinition" &&
-        definition.operation === "subscription"
-      );
+      return definition.kind === "OperationDefinition" && definition.operation === "subscription";
     },
     authLink.concat(wsLink),
-    authLink.concat(httpLink)
+    authLink.concat(httpLink),
   );
 }
 
 let countGqlErrNetwork = 0;
+// eslint-disable-next-line prefer-const
 let errorWait: any = null;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach((e) => {
       const { message, path, extensions } = e;
-      console.log(
-        `[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`
-      );
+      console.log(`[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`);
       if (message === "Unauthorized") {
         // Clean auth info in case of auth error
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
         if (_getAuthToken() != null) {
-          clearLocalAuthInfo();
-          AuthStore.resetStates();
-          AuthGameStore.resetStates(); // reset game store
+          // clearLocalAuthInfo();
+          // AuthStore.resetStates();
+          // AuthGameStore.resetStates(); // reset game store
 
           if (!errorWait) {
-            errorWait = antd_message.error(
-              "Session has expired. Please sign in again!",
-              5
-            );
-            setTimeout(() => {
-              errorWait = null;
-            }, 5000);
+            // errorWait = antd_message.error(
+            //   "Session has expired. Please sign in again!",
+            //   5
+            // );
+            // setTimeout(() => {
+            //   errorWait = null;
+            // }, 5000);
           }
           // Modal.info({content: "sdfsdfsdfsd"});
         }
@@ -172,9 +168,7 @@ export function handleApolloError(error: ApolloError) {
         //   3
         // );
       } else {
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        );
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
         // notification["error"]({
         //   message: "Error!",
         //   description: message,
@@ -193,7 +187,7 @@ export function onApolloError(
   error: ApolloError,
   onLogicError: (e: GraphQLError) => void,
   onAuthError: (e: GraphQLError) => void,
-  onNetworkError: (e: Error | ServerParseError | ServerError) => void
+  onNetworkError: (e: Error | ServerParseError | ServerError) => void,
 ) {
   const { graphQLErrors, networkError } = error;
 
@@ -218,10 +212,7 @@ export enum CommonError {
   UnAuth = "UnAuth",
 }
 
-function onSingleError(
-  e: any,
-  onError: (code: string, message: string, path?: string[]) => void
-) {
+function onSingleError(e: any, onError: (code: string, message: string, path?: string[]) => void) {
   const { message, locations, path } = e;
 
   // Inside graphQLErrors
@@ -238,13 +229,10 @@ function onSingleError(
   }
 }
 
-export function handleGraphqlErrors(
-  e: ApolloError,
-  onError: (code: string, message: string, path?: string[]) => void
-) {
+export function handleGraphqlErrors(e: ApolloError, onError: (code: string, message: string, path?: string[]) => void) {
   const { graphQLErrors, networkError, clientErrors } = e;
   // console.dir(e)
-  // console.log('{handleGraphqlErrors.handleGraphqlErrors} graphQLErrors, networkError: ', graphQLErrors, networkError);
+  // console.log('{handleGraphqlErrors.handleGraphqlErrors} graphQLErrors, networkError:', graphQLErrors, networkError);
 
   if (networkError) {
     // @ts-ignore

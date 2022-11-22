@@ -18,6 +18,7 @@ export default function LoginForm() {
 
   const loginGG = useGoogleLogin({
     onSuccess: ggLogin,
+    // eslint-disable-next-line camelcase
     ux_mode: "popup",
     // flow: "auth-code",
   });

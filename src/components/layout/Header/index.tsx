@@ -38,9 +38,7 @@ const HeaderNextLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-interface IProps {}
-
-const Header = (props: IProps) => {
+const Header = () => {
   return (
     <>
       <HeaderStyled>
