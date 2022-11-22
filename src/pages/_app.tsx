@@ -10,6 +10,7 @@ import { PaletteMode, useMediaQuery } from "@mui/material";
 import { ErrorBoundary } from "../components/layout/error_boundary";
 import { ApolloProvider } from "@apollo/client";
 import client from "../utils/apolo.util";
+import NotistackWrapper from "../components/common/snackbar";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -52,9 +53,11 @@ export default function MyApp(props: MyAppProps) {
             <meta name="theme-color" content={theme.palette.primary.main} />
           </Head>
           <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <Component {...pageProps} />
+            <NotistackWrapper>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <Component {...pageProps} />
+            </NotistackWrapper>
           </ThemeProvider>
         </CacheProvider>
       </ApolloProvider>

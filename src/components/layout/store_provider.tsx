@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ROOT_STORE, StoreContext } from "../../stores";
+import { ROOT_STORE, StoreContext } from "../../store";
 
 export function StoreProvider({ children }: { children: JSX.Element }) {
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloLink, createHttpLink, from, InMemoryCache, split } from "@apollo/client";
+import { ApolloClient, ApolloError, ApolloLink, createHttpLink, from, InMemoryCache, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
@@ -90,7 +90,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach((e) => {
       const { message, path, extensions } = e;
       console.log(`[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`);
-      if (message === "Unauthorized") {
+      if (message === "Unauthorized" || extensions.code === "UNAUTHENTICATED") {
         // Clean auth info in case of auth error
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
@@ -100,6 +100,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
           // AuthGameStore.resetStates(); // reset game store
           // Modal.info({content: "sdfsdfsdfsd"});
         }
+      } else {
       }
     });
   }
@@ -121,3 +122,51 @@ const client = new ApolloClient({
 });
 
 export default client;
+
+export enum CommonError {
+  Network = "Network",
+  UnAuth = "UnAuth",
+}
+
+type ErrorType = { code: string; message: string };
+
+function handleSingleError(e: any): ErrorType {
+  const { message } = e;
+  // @ts-ignore
+  if (e.code) {
+    // @ts-ignore
+    return { code: e.code, message };
+  }
+  const code = e.extensions?.code as string;
+  if (
+    e.extensions?.code === "BAD_USER_INPUT" &&
+    e.extensions.response &&
+    Array.isArray(e.extensions.response.message)
+  ) {
+    const msgs: string[] = e.extensions.response.message;
+    return { code, message: msgs[0] };
+  }
+  return { code, message };
+}
+
+export function handleGraphqlErrors(e: ApolloError): ErrorType[] {
+  const { graphQLErrors, networkError, clientErrors } = e;
+
+  if (networkError) {
+    console.log(JSON.stringify(e));
+    // @ts-ignore
+    if (!networkError.result) {
+      return [{ code: CommonError.Network, message: e.message }];
+    }
+    // @ts-ignore
+    return networkError.result.errors.map((e) => onSingleError(e, onError));
+  }
+
+  if (graphQLErrors) {
+    return graphQLErrors.map((e) => handleSingleError(e));
+  }
+  if (clientErrors) {
+    return clientErrors.map((e) => handleSingleError(e));
+  }
+  return [];
+}
