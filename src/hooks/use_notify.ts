@@ -1,5 +1,7 @@
 export function useNotify() {
-  function toast(args: any) {}
+  function toast(args: any) {
+    console.log("args: ", args);
+  }
   function handleError(err: any) {
     if (!err) {
       return;

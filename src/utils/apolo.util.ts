@@ -1,21 +1,10 @@
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  from,
-  ApolloError,
-  ServerParseError,
-  ServerError,
-  split,
-  ApolloLink,
-} from "@apollo/client";
+import { ApolloClient, ApolloLink, createHttpLink, from, InMemoryCache, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
-import { GraphQLError } from "graphql";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 //   import { CachePersistor } from 'apollo-cache-persist';
 
 // Cache implementation
@@ -36,10 +25,6 @@ export function setAuthToken(token: string) {
 }
 
 const isClient = typeof window !== "undefined";
-if (isClient) {
-  // @ts-ignore
-  window.tmp__setApoloAuth = setAuthToken;
-}
 
 /**
  * If you wanna get JWT token of current user, plz get from AuthStore.token instead
@@ -87,49 +72,32 @@ if (isClient) {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: process.env.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTION_URL ?? "",
-    })
+    }),
   );
 
   splitLink = split(
     ({ query }) => {
       const definition = getMainDefinition(query);
-      return (
-        definition.kind === "OperationDefinition" &&
-        definition.operation === "subscription"
-      );
+      return definition.kind === "OperationDefinition" && definition.operation === "subscription";
     },
     authLink.concat(wsLink),
-    authLink.concat(httpLink)
+    authLink.concat(httpLink),
   );
 }
 
-let countGqlErrNetwork = 0;
-let errorWait: any = null;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach((e) => {
       const { message, path, extensions } = e;
-      console.log(
-        `[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`
-      );
+      console.log(`[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`);
       if (message === "Unauthorized") {
         // Clean auth info in case of auth error
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
         if (_getAuthToken() != null) {
-          clearLocalAuthInfo();
-          AuthStore.resetStates();
-          AuthGameStore.resetStates(); // reset game store
-
-          if (!errorWait) {
-            errorWait = antd_message.error(
-              "Session has expired. Please sign in again!",
-              5
-            );
-            setTimeout(() => {
-              errorWait = null;
-            }, 5000);
-          }
+          // clearLocalAuthInfo();
+          // AuthStore.resetStates();
+          // AuthGameStore.resetStates(); // reset game store
           // Modal.info({content: "sdfsdfsdfsd"});
         }
       }
@@ -138,7 +106,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
   if (networkError) {
     console.log(`[Network error]: ${networkError}`);
-    countGqlErrNetwork += 1;
   }
 });
 
@@ -154,112 +121,3 @@ const client = new ApolloClient({
 });
 
 export default client;
-
-/**
- * User for external error handling
- */
-export function handleApolloError(error: ApolloError) {
-  const { graphQLErrors, networkError } = error;
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) => {
-      if (message === "Unauthorized") {
-        // notification["error"]({
-        //   message: "Unauthorized",
-        //   description: "Please connect wallet first!",
-        // });
-        // message.error(
-        //   "Error: Unauthorized: Please connect wallet first!",
-        //   3
-        // );
-      } else {
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        );
-        // notification["error"]({
-        //   message: "Error!",
-        //   description: message,
-        // });
-
-        // message.error(message, 3);
-      }
-    });
-
-  if (networkError) {
-    console.log(`[Network error]: ${networkError}`);
-  }
-}
-
-export function onApolloError(
-  error: ApolloError,
-  onLogicError: (e: GraphQLError) => void,
-  onAuthError: (e: GraphQLError) => void,
-  onNetworkError: (e: Error | ServerParseError | ServerError) => void
-) {
-  const { graphQLErrors, networkError } = error;
-
-  if (networkError) {
-    onNetworkError(networkError);
-    return;
-  }
-
-  if (graphQLErrors)
-    graphQLErrors.forEach((e) => {
-      const { message, locations, path } = e;
-      if (message === "Unauthorized") {
-        onAuthError(e);
-      } else {
-        onLogicError(e);
-      }
-    });
-}
-
-export enum CommonError {
-  Network = "Network",
-  UnAuth = "UnAuth",
-}
-
-function onSingleError(
-  e: any,
-  onError: (code: string, message: string, path?: string[]) => void
-) {
-  const { message, locations, path } = e;
-
-  // Inside graphQLErrors
-  if (message === "Unauthorized") {
-    onError(CommonError.UnAuth, message);
-  }
-
-  // @ts-ignore
-  if (e.code) {
-    // @ts-ignore
-    onError(e.code, message);
-  } else {
-    onError(e.extensions?.code as string, message);
-  }
-}
-
-export function handleGraphqlErrors(
-  e: ApolloError,
-  onError: (code: string, message: string, path?: string[]) => void
-) {
-  const { graphQLErrors, networkError, clientErrors } = e;
-  // console.dir(e)
-  // console.log('{handleGraphqlErrors.handleGraphqlErrors} graphQLErrors, networkError: ', graphQLErrors, networkError);
-
-  if (networkError) {
-    // @ts-ignore
-    if (!networkError.result) {
-      onError(CommonError.Network, e.message);
-    }
-
-    // @ts-ignore
-    networkError.result?.errors.forEach((e) => onSingleError(e, onError));
-  }
-
-  if (graphQLErrors) {
-    graphQLErrors.forEach((e) => onSingleError(e, onError));
-  }
-  if (clientErrors) {
-    clientErrors.forEach((e) => onSingleError(e, onError));
-  }
-}
