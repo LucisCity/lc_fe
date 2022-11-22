@@ -24,7 +24,7 @@ const ExtendHeader = styled("div")(({ theme }) => ({
 
 const durationScroll = 500;
 
-enum Section {
+export enum Section {
   None, // start
   IntroductionCompany,
   IntroductionCard,
@@ -74,7 +74,7 @@ export const LandingPage = () => {
       }, durationScroll);
       if (scrollDown) {
         setActiveSection((pre) => {
-          if (pre === totalSection - 1) {
+          if (pre > totalSection) {
             return pre;
           }
           return pre + 1;
@@ -94,7 +94,7 @@ export const LandingPage = () => {
     anime({
       targets: window.document.documentElement,
       scrollTop: scrollPosition,
-      easing: "easeInCubic",
+      easing: "linear",
       duration: durationScroll,
     });
   }, [activeSection]);
@@ -118,6 +118,11 @@ export const LandingPage = () => {
       </ExtendHeader>
       <MainStyled>
         <Box height="100%" width="100%">
+          <IntroSection activeSection={activeSection} />
+          <IntroSection />
+          <IntroSection />
+          <IntroSection />
+          <IntroSection />
           <IntroSection />
           <IntroSection />
           <IntroSection />

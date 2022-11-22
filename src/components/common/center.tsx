@@ -1,6 +1,9 @@
 import { Box } from "@mui/system";
 
-export function Center(props: any) {
+interface IProps {
+  children?: any;
+}
+export function Center(props: IProps) {
   return (
     <Box
       sx={{
