@@ -6,8 +6,8 @@ type Props = {
 };
 
 export default function DocHead(props: Props) {
-  const title = "Manga comic";
-  const desc = props.description ?? "Manga comic";
+  const title = "Lucis city";
+  const desc = props.description ?? "Lucis city";
   const thumb = "";
 
   return (
@@ -28,7 +28,7 @@ export default function DocHead(props: Props) {
 
       <meta name="apple-mobile-web-app-title" content={title} />
       <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta name="application-name" content="Manga comic" />
+      <meta name="application-name" content="Lucis city" />
 
       <meta property="og:title" content={title} />
       <meta data-hid="description" name="description" content={desc} />

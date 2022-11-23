@@ -3,7 +3,10 @@ import { styled } from "@mui/system";
 import anime from "animejs";
 import React from "react";
 import { headerHeight } from "../layout/header";
+import { EcosystemSection } from "./ecosystem_section";
 import { IntroSection } from "./intro_section";
+import { OperationSection } from "./operation_section";
+import { ReasonChooseSection } from "./reason_choose_section";
 
 const MainStyled = styled("main")(({ theme }) => ({
   // height: `calc(100vh - ${headerHeight}px)`,
@@ -118,14 +121,14 @@ export const LandingPage = () => {
       </ExtendHeader>
       <MainStyled>
         <Box height="100%" width="100%">
-          <IntroSection activeSection={activeSection} />
+          {/* <IntroSection activeSection={activeSection} />
           <IntroSection />
-          <IntroSection />
-          <IntroSection />
-          <IntroSection />
-          <IntroSection />
-          <IntroSection />
-          <IntroSection />
+          <IntroSection /> */}
+          <EcosystemSection activeSection={activeSection} />
+          <ReasonChooseSection activeSection={activeSection} />
+          <OperationSection activeSection={activeSection} />
+          {/* <IntroSection /> */}
+          {/* <IntroSection /> */}
         </Box>
       </MainStyled>
     </>
