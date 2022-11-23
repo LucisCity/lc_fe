@@ -9,7 +9,7 @@ docker compose up --build -d
 # Check if the stack start successfully
 #
 sleep 2
-docker ps
+docker ps | grep 'lc_fe_isr-app-1'
 UP_SECONDS_AGO=`docker ps | grep 'lc_fe_isr-app-1' | grep ' seconds'`
 echo $UP_SECONDS_AGO
 
