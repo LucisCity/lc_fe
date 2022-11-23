@@ -62,6 +62,8 @@ export const LandingPage = () => {
 
   React.useEffect(() => {
     document.addEventListener("wheel", onScroll, { passive: false });
+
+    return () => document.removeEventListener("wheel", onScroll, { passive: false });
   }, []);
 
   const onScroll = (event: WheelEvent) => {
