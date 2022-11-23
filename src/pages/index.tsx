@@ -1,12 +1,15 @@
 import type { NextPage } from "next";
 import { LandingPage } from "../components/landing";
-import AppLayout from "../components/layout";
+import Footer from "../components/layout/footer";
+import LandingHeader from "../components/layout/header/landing_header";
 
 const Home: NextPage = () => {
   return (
-    <AppLayout isExtendHeaderComponent>
+    <>
+      <LandingHeader />
       <LandingPage />
-    </AppLayout>
+      <Footer />
+    </>
   );
 };
 

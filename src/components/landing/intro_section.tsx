@@ -43,7 +43,7 @@ export const IntroSection = (props: IProps) => {
   return (
     <MainItemComponent
       sx={{
-        background: `url(${"/landing/intro-luciscity.jpg"})`,
+        background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "left",

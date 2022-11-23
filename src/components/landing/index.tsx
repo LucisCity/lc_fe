@@ -4,22 +4,12 @@ import anime from "animejs";
 import React from "react";
 import { headerHeight } from "../layout/header";
 import { IntroSection } from "./intro_section";
+import { extendHeaderHeight } from "../layout/header/landing_header";
 
 const MainStyled = styled("main")(({ theme }) => ({
   // height: `calc(100vh - ${headerHeight}px)`,
   width: "100%",
   backdropFilter: "blur(12px)",
-}));
-
-const extendHeaderHeight = 410;
-const ExtendHeader = styled("div")(({ theme }) => ({
-  minHeight: extendHeaderHeight,
-  width: "100%",
-  background: "rgba(255, 255, 255, 0.2);",
-  backdropFilter: "blur(12px)",
-  display: "flex",
-  alignItems: "center",
-  zIndex: 1,
 }));
 
 const durationScroll = 500;
@@ -51,10 +41,10 @@ export const LandingPage = () => {
     if (typeof window !== "undefined") {
       // introduction company and card in the same section view
       if (activeSection === Section.IntroductionCompany || activeSection === Section.IntroductionCard) {
-        return window.innerHeight - (window.innerHeight - headerHeight - extendHeaderHeight);
+        return window.innerHeight;
       }
 
-      return (activeSection - 1) * window.innerHeight - (window.innerHeight - headerHeight - extendHeaderHeight);
+      return (activeSection - 1) * window.innerHeight;
     }
 
     return 0;
@@ -62,8 +52,8 @@ export const LandingPage = () => {
 
   React.useEffect(() => {
     document.addEventListener("wheel", onScroll, { passive: false });
-
-    return () => document.removeEventListener("wheel", onScroll, { passive: false });
+    document.body.style.overflow = "hidden";
+    return () => document.removeEventListener("wheel", onScroll);
   }, []);
 
   const onScroll = (event: WheelEvent) => {
@@ -99,25 +89,10 @@ export const LandingPage = () => {
       easing: "linear",
       duration: durationScroll,
     });
-  }, [activeSection]);
+  }, [scrollPosition]);
 
   return (
     <>
-      <ExtendHeader>
-        <Container>
-          <Grid container>
-            <Grid item xs={3} />
-            <Grid item xs={6}>
-              <Typography variant="h3">Established reader distracted</Typography>
-              <Typography>
-                Fact that a reader will be distracted by the readable content of a page when looking at its layout.
-              </Typography>
-              <Button>Learn more {`---->`}</Button>
-            </Grid>
-            <Grid item xs={3} />
-          </Grid>
-        </Container>
-      </ExtendHeader>
       <MainStyled>
         <Box height="100%" width="100%">
           <IntroSection activeSection={activeSection} />
