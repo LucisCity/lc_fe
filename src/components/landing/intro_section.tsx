@@ -28,28 +28,22 @@ const StarImage2 = styled("img")(() => ({
 export const IntroSection = (props: IProps) => {
   const activeSection = props.activeSection;
 
-  const introCompanyRef = React.useRef(null);
-  const introCardRef = React.useRef(null);
   const animation = useAnimation();
 
   React.useEffect(() => {
     if (activeSection === Section.IntroductionCompany) {
-      animation.fadeOut(introCardRef.current);
-      animation.fadeIn(introCompanyRef.current);
+      animation.fadeOut("#intro-card-section");
+      animation.fadeIn("#intro-company-section");
     } else if (activeSection === Section.IntroductionCard) {
-      animation.fadeIn(introCardRef.current);
-      animation.fadeOut(introCompanyRef.current);
-    } else {
-      // fadeOutIntroCard(introCardRef);
-      // fadeOutIntroCompany(introCompanyRef);
+      animation.fadeIn("#intro-card-section");
+      animation.fadeOut("#intro-company-section");
     }
   }, [activeSection]);
 
   return (
     <MainItemComponent
-      id="intro-section"
       sx={{
-        background: `url(${"/landing/intro-luciscity.jpg"})`,
+        background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "left",
@@ -58,7 +52,7 @@ export const IntroSection = (props: IProps) => {
     >
       <Container sx={{ height: "100%" }}>
         <Box position="relative" height={"100%"}>
-          <Box height={"100%"} ref={introCompanyRef} sx={{ opacity: 0 }}>
+          <Box height={"100%"} component="section" id="intro-company-section" sx={{ opacity: 0 }}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={3}></Grid>
               <Grid item xs={6} sx={{ height: "100%" }}>
@@ -81,7 +75,14 @@ export const IntroSection = (props: IProps) => {
               <Grid item xs={3}></Grid>
             </Grid>
           </Box>
-          <Box position="absolute" height={"100%"} top={0} ref={introCardRef} sx={{ opacity: 0 }}>
+          <Box
+            position="absolute"
+            component="section"
+            height={"100%"}
+            id="intro-card-section"
+            top={0}
+            sx={{ opacity: 0 }}
+          >
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={3} sx={{ height: "100%" }}>
                 <Box
