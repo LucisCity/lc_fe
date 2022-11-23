@@ -8,10 +8,11 @@ docker compose up --build -d
 #
 # Check if the stack start successfully
 #
-DC_OUTPUT=`docker compose top`
-echo $DC_OUTPUT 
+sleep 2
+UP_SECONDS_AGO=`d ps | grep 'lc_fe_isr-app-1' | grep 'seconds'`
+echo $UP_SECONDS_AGO
 
-if [ -n "$DC_OUTPUT" ] 
+if [ -n "$UP_SECONDS_AGO" ]
 then
     echo "Deploy successfully"
 else
