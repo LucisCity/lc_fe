@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from "react";
+import { useState } from "react";
 
 export function useInput<T>(init: T | undefined) {
   const [value, setValue] = useState<T | undefined>(init);

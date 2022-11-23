@@ -3,7 +3,7 @@ import { round } from "../utils/number.util";
 
 export type Preview = { url: string; name: string; type: string; id?: number };
 
-export function useFileInput(allowEmpty = true, extendMode = false, maxTotalSize = 10) {
+export function useFileInput(allowEmpty = true, extendMode = false) {
   const [value, setValue] = useState<File[]>();
   const [previews, setPreviews] = useState<Preview[]>([]);
   const [oldPreviews, setOldPreviews] = useState<Preview[]>([]);
@@ -42,7 +42,10 @@ export function useFileInput(allowEmpty = true, extendMode = false, maxTotalSize
     if (!oldPreview) {
       return;
     }
-    const files = value!.filter((item) => item.name !== fileName);
+    if (!value) {
+      return;
+    }
+    const files = value.filter((item) => item.name !== fileName);
     setValue(files);
     setPreviews(previews.filter((item) => item.name !== fileName));
     setTotalSize(getTotalSize(files));
@@ -57,7 +60,10 @@ export function useFileInput(allowEmpty = true, extendMode = false, maxTotalSize
     if (!oldPreview) {
       return;
     }
-    const files = value!.filter((_, idx) => idx !== index);
+    if (!value) {
+      return;
+    }
+    const files = value.filter((_, idx) => idx !== index);
     setValue(files);
     // remove selected preview
     setPreviews(previews.filter((_, idx) => idx !== index));

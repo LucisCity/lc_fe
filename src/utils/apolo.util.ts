@@ -1,21 +1,10 @@
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  from,
-  ApolloError,
-  ServerParseError,
-  ServerError,
-  split,
-  ApolloLink,
-} from "@apollo/client";
+import { ApolloClient, ApolloError, ApolloLink, createHttpLink, from, InMemoryCache, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
-import { GraphQLError } from "graphql";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 //   import { CachePersistor } from 'apollo-cache-persist';
 
 // Cache implementation
@@ -36,10 +25,6 @@ export function setAuthToken(token: string) {
 }
 
 const isClient = typeof window !== "undefined";
-if (isClient) {
-  // eslint-disable-next-line camelcase
-  (window as any).tmp__setApoloAuth = setAuthToken;
-}
 
 /**
  * If you wanna get JWT token of current user, plz get from AuthStore.token instead
@@ -100,15 +85,12 @@ if (isClient) {
   );
 }
 
-let countGqlErrNetwork = 0;
-// eslint-disable-next-line prefer-const
-let errorWait: any = null;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach((e) => {
       const { message, path, extensions } = e;
       console.log(`[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`);
-      if (message === "Unauthorized") {
+      if (message === "Unauthorized" || extensions.code === "UNAUTHENTICATED") {
         // Clean auth info in case of auth error
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
@@ -116,25 +98,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
           // clearLocalAuthInfo();
           // AuthStore.resetStates();
           // AuthGameStore.resetStates(); // reset game store
-
-          if (!errorWait) {
-            // errorWait = antd_message.error(
-            //   "Session has expired. Please sign in again!",
-            //   5
-            // );
-            // setTimeout(() => {
-            //   errorWait = null;
-            // }, 5000);
-          }
           // Modal.info({content: "sdfsdfsdfsd"});
         }
+      } else {
       }
     });
   }
 
   if (networkError) {
     console.log(`[Network error]: ${networkError}`);
-    countGqlErrNetwork += 1;
   }
 });
 
@@ -151,103 +123,50 @@ const client = new ApolloClient({
 
 export default client;
 
-/**
- * User for external error handling
- */
-export function handleApolloError(error: ApolloError) {
-  const { graphQLErrors, networkError } = error;
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) => {
-      if (message === "Unauthorized") {
-        // notification["error"]({
-        //   message: "Unauthorized",
-        //   description: "Please connect wallet first!",
-        // });
-        // message.error(
-        //   "Error: Unauthorized: Please connect wallet first!",
-        //   3
-        // );
-      } else {
-        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
-        // notification["error"]({
-        //   message: "Error!",
-        //   description: message,
-        // });
-
-        // message.error(message, 3);
-      }
-    });
-
-  if (networkError) {
-    console.log(`[Network error]: ${networkError}`);
-  }
-}
-
-export function onApolloError(
-  error: ApolloError,
-  onLogicError: (e: GraphQLError) => void,
-  onAuthError: (e: GraphQLError) => void,
-  onNetworkError: (e: Error | ServerParseError | ServerError) => void,
-) {
-  const { graphQLErrors, networkError } = error;
-
-  if (networkError) {
-    onNetworkError(networkError);
-    return;
-  }
-
-  if (graphQLErrors)
-    graphQLErrors.forEach((e) => {
-      const { message, locations, path } = e;
-      if (message === "Unauthorized") {
-        onAuthError(e);
-      } else {
-        onLogicError(e);
-      }
-    });
-}
-
 export enum CommonError {
   Network = "Network",
   UnAuth = "UnAuth",
 }
 
-function onSingleError(e: any, onError: (code: string, message: string, path?: string[]) => void) {
-  const { message, locations, path } = e;
+type ErrorType = { code: string; message: string };
 
-  // Inside graphQLErrors
-  if (message === "Unauthorized") {
-    onError(CommonError.UnAuth, message);
-  }
-
+function handleSingleError(e: any): ErrorType {
+  const { message } = e;
   // @ts-ignore
   if (e.code) {
     // @ts-ignore
-    onError(e.code, message);
-  } else {
-    onError(e.extensions?.code as string, message);
+    return { code: e.code, message };
   }
+  const code = e.extensions?.code as string;
+  if (
+    e.extensions?.code === "BAD_USER_INPUT" &&
+    e.extensions.response &&
+    Array.isArray(e.extensions.response.message)
+  ) {
+    const msgs: string[] = e.extensions.response.message;
+    return { code, message: msgs[0] };
+  }
+  return { code, message };
 }
 
-export function handleGraphqlErrors(e: ApolloError, onError: (code: string, message: string, path?: string[]) => void) {
+export function handleGraphqlErrors(e: ApolloError): ErrorType[] {
   const { graphQLErrors, networkError, clientErrors } = e;
-  // console.dir(e)
-  // console.log('{handleGraphqlErrors.handleGraphqlErrors} graphQLErrors, networkError:', graphQLErrors, networkError);
 
   if (networkError) {
+    console.log(JSON.stringify(e));
     // @ts-ignore
     if (!networkError.result) {
-      onError(CommonError.Network, e.message);
+      return [{ code: CommonError.Network, message: e.message }];
     }
-
     // @ts-ignore
-    networkError.result?.errors.forEach((e) => onSingleError(e, onError));
+    return networkError.result.errors.map((e) => onSingleError(e, onError));
   }
 
   if (graphQLErrors) {
-    graphQLErrors.forEach((e) => onSingleError(e, onError));
+    return graphQLErrors.map((e) => handleSingleError(e));
   }
   if (clientErrors) {
-    clientErrors.forEach((e) => onSingleError(e, onError));
+    return clientErrors.map((e) => handleSingleError(e));
   }
+  return [];
 }
