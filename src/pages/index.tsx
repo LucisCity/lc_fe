@@ -6,9 +6,9 @@ import LandingHeader from "../components/layout/header/landing_header";
 const Home: NextPage = () => {
   return (
     <>
-      <LandingHeader />
+      {/* <LandingHeader /> */}
       <LandingPage />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

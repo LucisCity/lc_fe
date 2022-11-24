@@ -7,7 +7,10 @@ import { EcosystemSection } from "./ecosystem_section";
 import { IntroSection } from "./intro_section";
 import { OperationSection } from "./operation_section";
 import { ReasonChooseSection } from "./reason_choose_section";
-import { extendHeaderHeight } from "../layout/header/landing_header";
+import LandingHeader, { extendHeaderHeight } from "../layout/header/landing_header";
+import { ScrollView } from "./scroll_view";
+import { CardSection } from "./card_section";
+import { TopSection } from "./top_section";
 
 const MainStyled = styled("main")(({ theme }) => ({
   // height: `calc(100vh - ${headerHeight}px)`,
@@ -18,7 +21,7 @@ const MainStyled = styled("main")(({ theme }) => ({
 const durationScroll = 500;
 
 export enum Section {
-  None, // start
+  OnTop, // start
   IntroductionCompany,
   IntroductionCard,
   Ecosystem,
@@ -40,18 +43,14 @@ export const LandingPage = () => {
     setIsPending(data);
   };
 
-  const scrollPosition = React.useMemo(() => {
-    if (typeof window !== "undefined") {
-      // introduction company and card in the same section view
-      if (activeSection === Section.IntroductionCompany || activeSection === Section.IntroductionCard) {
-        return window.innerHeight;
-      }
+  // const scrollPosition = React.useMemo(() => {
+  //   if (typeof window !== "undefined") {
+  //     // introduction company and card in the same section view
+  //     return activeSection * window.innerHeight;
+  //   }
 
-      return (activeSection - 1) * window.innerHeight;
-    }
-
-    return 0;
-  }, [activeSection]);
+  //   return 0;
+  // }, [activeSection]);
 
   React.useEffect(() => {
     document.addEventListener("wheel", onScroll, { passive: false });
@@ -85,28 +84,29 @@ export const LandingPage = () => {
     }
   };
 
-  React.useEffect(() => {
-    anime({
-      targets: window.document.documentElement,
-      scrollTop: scrollPosition,
-      easing: "linear",
-      duration: durationScroll,
-    });
-  }, [scrollPosition]);
+  // React.useEffect(() => {
+  //   anime({
+  //     targets: window.document.documentElement,
+  //     scrollTop: scrollPosition,
+  //     easing: "linear",
+  //     duration: durationScroll,
+  //   });
+  // }, [scrollPosition]);
 
   return (
     <>
+      <LandingHeader activeSection={activeSection} />
       <MainStyled>
-        <Box height="100%" width="100%">
+        <ScrollView activeSection={activeSection}>
+          <TopSection activeSection={activeSection} />
           <IntroSection activeSection={activeSection} />
-          <IntroSection />
-          <IntroSection />
+          <CardSection activeSection={activeSection} />
           <EcosystemSection activeSection={activeSection} />
           <ReasonChooseSection activeSection={activeSection} />
           <OperationSection activeSection={activeSection} />
           <IntroSection />
           <IntroSection />
-        </Box>
+        </ScrollView>
       </MainStyled>
     </>
   );

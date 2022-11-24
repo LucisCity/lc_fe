@@ -32,11 +32,7 @@ export const IntroSection = (props: IProps) => {
 
   React.useEffect(() => {
     if (activeSection === Section.IntroductionCompany) {
-      animation.fadeOut("#intro-card-section");
       animation.fadeIn("#intro-company-section");
-    } else if (activeSection === Section.IntroductionCard) {
-      animation.fadeIn("#intro-card-section");
-      animation.fadeOut("#intro-company-section");
     }
   }, [activeSection]);
 
@@ -73,52 +69,6 @@ export const IntroSection = (props: IProps) => {
                 </Box>
               </Grid>
               <Grid item xs={3}></Grid>
-            </Grid>
-          </Box>
-          <Box
-            position="absolute"
-            component="section"
-            height={"100%"}
-            id="intro-card-section"
-            top={0}
-            sx={{ opacity: 0 }}
-          >
-            <Grid container sx={{ height: "100%" }}>
-              <Grid item xs={3} sx={{ height: "100%" }}>
-                <Box
-                  display="flex"
-                  flexDirection={"column"}
-                  justifyContent="center"
-                  alignItems={"flex-start"}
-                  gap={2}
-                  height="100%"
-                >
-                  <div style={{ position: "relative" }}>
-                    <img src="/card.png" alt="" />
-                    <StarImage1 src="/star2.png" alt="" />
-                  </div>
-                </Box>
-              </Grid>
-              <Grid item xs={9} sx={{ height: "100%" }}>
-                <Box
-                  display="flex"
-                  flexDirection={"column"}
-                  justifyContent="center"
-                  alignItems={"flex-start"}
-                  gap={2}
-                  height="100%"
-                >
-                  <div style={{ position: "relative" }}>
-                    <Typography variant="h2">THE HAWK CARD ĐẲNG CẤP CÔNG NGHỆ</Typography>
-                    <Typography>
-                      Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi nhuận
-                      từ toàn bộ các tiện ích trong Hệ sinh thái....
-                    </Typography>
-                    <Button variant="outlined">Become invest</Button>
-                    <StarImage2 src="/star1.png" alt="" />
-                  </div>
-                </Box>
-              </Grid>
             </Grid>
           </Box>
         </Box>
