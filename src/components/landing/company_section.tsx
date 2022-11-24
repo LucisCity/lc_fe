@@ -9,7 +9,7 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-const BecomeInvestButton = styled(Button)(({ theme }) => ({
+export const BecomeInvestButton = styled(Button)(({ theme }) => ({
   background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
   filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2))",
   backdropFilter: "blur(4px)",

@@ -196,7 +196,7 @@ const LandingHeader = (props: IProps) => {
                     Log in{" "}
                   </ButtonLogin>
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
-                    <img src="/assets/imgs/landing/global.svg" alt="" />
+                    <img src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>
                 </Right>
               </Box>
