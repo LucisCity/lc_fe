@@ -13,7 +13,7 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
     height: headerHeight,
     // background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
     // backdropFilter: "blur(12px)",
-    position: "fixed",
+    position: "absolute",
     top: 0,
     zIndex: 2,
     //@ts-ignore
@@ -27,14 +27,10 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
       borderImageSlice: 1,
       borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
     }),
+    display: "flex",
+    alignItems: "center",
   }),
 );
-
-const Menubar = styled("div")(({ theme }) => ({
-  width: "100%",
-  display: "flex",
-  alignItems: "center",
-}));
 
 const ExtendBox = styled("div")(({ theme }) => ({
   width: "100%",
@@ -87,11 +83,16 @@ const Ul = styled("ul")(({ theme }) => ({
   listStyleType: "none",
   gap: theme.spacing(6),
   margin: 0,
+  padding: 0,
   alignItems: "center",
   height: headerHeight,
   borderLeft: "1px solid",
   borderImageSlice: 1,
   borderImageSource: "linear-gradient(180deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  justifyContent: "center",
+  [theme.breakpoints.down("md")]: {
+    gap: theme.spacing(4),
+  },
 }));
 
 const HeaderNextLink = styled(Link)(({ theme }) => ({
@@ -123,6 +124,10 @@ const HeaderNextLink = styled(Link)(({ theme }) => ({
   "&:active": {
     textDecoration: "none",
   },
+
+  [theme.breakpoints.down("md")]: {
+    fontSize: 12,
+  },
 }));
 
 const ButtonLogin = styled(Button)(({ theme }) => ({
@@ -140,6 +145,11 @@ const ButtonLogin = styled(Button)(({ theme }) => ({
     cursor: "pointer",
     boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
   },
+
+  [theme.breakpoints.down("md")]: {
+    height: 40,
+    width: 120,
+  },
 }));
 
 interface IProps {
@@ -148,51 +158,51 @@ interface IProps {
 const LandingHeader = (props: IProps) => {
   const activeSection = props.activeSection ?? Section.OnTop;
   return (
-    <>
+    <Box position={"relative"}>
       <HeaderStyled open={activeSection === Section.OnTop}>
-        <Menubar>
-          <Container>
-            <Grid container>
-              <Grid item id="logo" xs={3}>
-                <Left>Logo</Left>
-              </Grid>
-              <Grid item id="menu" xs={6} style={{ position: "relative" }}>
-                <nav>
-                  <Ul>
-                    <li>
-                      <HeaderNextLink href="/"> Home </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Member </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Invest </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Marketplace </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Blog </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Contact </HeaderNextLink>
-                    </li>
-                  </Ul>
-                </nav>
-              </Grid>
-              <Grid item xs={3} id="auth">
-                <Box height={"100%"} position={"relative"}>
-                  <Right>
-                    <ButtonLogin variant="contained">Log in </ButtonLogin>
-                    <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
-                      <img src="/assets/imgs/landing/global.svg" alt="" />
-                    </IconButton>
-                  </Right>
-                </Box>
-              </Grid>
+        <Container>
+          <Grid container>
+            <Grid item id="logo" xs={3}>
+              {/* <Left>Logo</Left> */}
             </Grid>
-          </Container>
-        </Menubar>
+            <Grid item id="menu" xs={6} style={{ position: "relative" }}>
+              <nav>
+                <Ul>
+                  <li>
+                    <HeaderNextLink href="/"> Home </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Member </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Invest </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Marketplace </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Blog </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Contact </HeaderNextLink>
+                  </li>
+                </Ul>
+              </nav>
+            </Grid>
+            <Grid item xs={3} id="auth">
+              <Box height={"100%"} position={"relative"}>
+                <Right>
+                  <ButtonLogin LinkComponent={Link} href={"/login"} variant="contained">
+                    Log in{" "}
+                  </ButtonLogin>
+                  <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
+                    <img src="/assets/imgs/landing/global.svg" alt="" />
+                  </IconButton>
+                </Right>
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
       </HeaderStyled>
       <SupportPage open={activeSection === Section.OnTop}>
         <Container>
@@ -202,24 +212,35 @@ const LandingHeader = (props: IProps) => {
               <ExtendBox>
                 <Typography
                   variant="h2"
-                  sx={{
+                  sx={(theme) => ({
                     pt: "40px",
-                  }}
+                    fontSize: 56,
+                    fontWeight: 400,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 46,
+                    },
+                  })}
                 >
                   Established reader distracted
                 </Typography>
                 <Typography
-                  sx={{
+                  sx={(theme) => ({
                     pt: "28px",
-                  }}
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 14,
+                    },
+                  })}
                 >
                   Fact that a reader will be distracted by the readable content of a page when looking at its layout.
                 </Typography>
                 <Button
-                  sx={{
+                  sx={(theme) => ({
                     mt: 16,
                     color: "#504C67",
-                  }}
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 14,
+                    },
+                  })}
                 >
                   LEARN MORE <img style={{ marginLeft: 16 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />
                 </Button>
@@ -232,7 +253,7 @@ const LandingHeader = (props: IProps) => {
           </Grid>
         </Container>
       </SupportPage>
-    </>
+    </Box>
   );
 };
 export default LandingHeader;

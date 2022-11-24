@@ -80,14 +80,12 @@ export const LandingPage = () => {
    * Mobile only
    */
   const onTouchMove = (event: TouchEvent) => {
-    console.log(2);
     event.preventDefault();
     if (initialYRef.current === null) {
       return;
     }
     const currentY = event.touches[0].clientY;
     const diffY = initialYRef.current - currentY;
-    console.log(diffY);
     if (!isPendingRef.current) {
       setIsPendingRef(true);
       setTimeout(() => {
