@@ -3,7 +3,6 @@ import { Box, styled } from "@mui/system";
 import Link from "next/link";
 import { Left } from "../../common/left";
 import { Right } from "../../common/right";
-import useWindowPosition from "../../../hooks/use_window_position";
 import { Section } from "../../landing";
 
 export const headerHeight = 90;
@@ -14,25 +13,24 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
     height: headerHeight,
     // background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
     // backdropFilter: "blur(12px)",
-    position: "fixed",
+    position: "absolute",
     top: 0,
     zIndex: 2,
     //@ts-ignore
-    transition: theme.transitions.create(["background", "background"], { duration: 1000 }),
+    transition: theme.transitions.create(["background-color", "backdrop-filter"], { duration: 1000 }),
     ...(!open && {
       //@ts-ignore
-      transition: theme.transitions.create(["background", "backdropFilter"], { duration: 1000 }),
+      transition: theme.transitions.create(["background-color", "backdrop-filter"], { duration: 1000 }),
       background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
       backdropFilter: "blur(12px)",
+      borderBottom: "1px solid",
+      borderImageSlice: 1,
+      borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
     }),
+    display: "flex",
+    alignItems: "center",
   }),
 );
-
-const Menubar = styled("div")(({ theme }) => ({
-  width: "100%",
-  display: "flex",
-  alignItems: "center",
-}));
 
 const ExtendBox = styled("div")(({ theme }) => ({
   width: "100%",
@@ -43,7 +41,8 @@ const ExtendBox = styled("div")(({ theme }) => ({
   paddingRight: theme.spacing(3),
   paddingTop: theme.spacing(20),
   borderLeft: "1px solid",
-  borderImage: "linear-gradient(102.67deg, #C5CEE8 -18.34%, #DFE7FD -18.33%, rgba(207, 216, 241, 0.12) 92.76%) 1 100%",
+  borderImageSlice: 1,
+  borderImageSource: "linear-gradient(102.67deg, #C5CEE8 -18.34%, #DFE7FD -18.33%, rgba(207, 216, 241, 0.12) 92.76%)",
 }));
 
 const SupportPage = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
@@ -72,13 +71,28 @@ const GridDot = styled("img")(({ theme }) => ({
   right: 0,
 }));
 
+const CoinImage = styled("img")(({ theme }) => ({
+  position: "absolute",
+  bottom: 100,
+  zIndex: -1,
+  left: -60,
+}));
+
 const Ul = styled("ul")(({ theme }) => ({
   display: "flex",
   listStyleType: "none",
-  gap: theme.spacing(3),
+  gap: theme.spacing(6),
   margin: 0,
+  padding: 0,
   alignItems: "center",
   height: headerHeight,
+  borderLeft: "1px solid",
+  borderImageSlice: 1,
+  borderImageSource: "linear-gradient(180deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  justifyContent: "center",
+  [theme.breakpoints.down("md")]: {
+    gap: theme.spacing(4),
+  },
 }));
 
 const HeaderNextLink = styled(Link)(({ theme }) => ({
@@ -110,6 +124,10 @@ const HeaderNextLink = styled(Link)(({ theme }) => ({
   "&:active": {
     textDecoration: "none",
   },
+
+  [theme.breakpoints.down("md")]: {
+    fontSize: 12,
+  },
 }));
 
 const ButtonLogin = styled(Button)(({ theme }) => ({
@@ -127,6 +145,11 @@ const ButtonLogin = styled(Button)(({ theme }) => ({
     cursor: "pointer",
     boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
   },
+
+  [theme.breakpoints.down("md")]: {
+    height: 40,
+    width: 120,
+  },
 }));
 
 interface IProps {
@@ -135,82 +158,94 @@ interface IProps {
 const LandingHeader = (props: IProps) => {
   const activeSection = props.activeSection ?? Section.OnTop;
   return (
-    <>
+    <Box position={"relative"}>
       <HeaderStyled open={activeSection === Section.OnTop}>
-        <Menubar>
-          <Container>
-            <Grid container>
-              <Grid item id="logo" xs={3}>
-                <Left>Logo</Left>
-              </Grid>
-              <Grid item id="menu" xs={6} style={{ position: "relative" }}>
-                <nav>
-                  <Ul>
-                    <li>
-                      <HeaderNextLink href="/"> Home </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Member </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Invest </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Marketplace </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Blog </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Contact </HeaderNextLink>
-                    </li>
-                  </Ul>
-                </nav>
-              </Grid>
-              <Grid item xs={3} id="auth">
-                <Box height={"100%"} position={"relative"}>
-                  <Right>
-                    <ButtonLogin variant="contained">Log in </ButtonLogin>
-                    <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
-                      <img src="/assets/imgs/landing/global.svg" alt="" />
-                    </IconButton>
-                  </Right>
-                </Box>
-              </Grid>
+        <Container>
+          <Grid container>
+            <Grid item id="logo" xs={3}>
+              {/* <Left>Logo</Left> */}
             </Grid>
-          </Container>
-        </Menubar>
+            <Grid item id="menu" xs={6} style={{ position: "relative" }}>
+              <nav>
+                <Ul>
+                  <li>
+                    <HeaderNextLink href="/"> Home </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Member </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Invest </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Marketplace </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Blog </HeaderNextLink>
+                  </li>
+                  <li>
+                    <HeaderNextLink href="/"> Contact </HeaderNextLink>
+                  </li>
+                </Ul>
+              </nav>
+            </Grid>
+            <Grid item xs={3} id="auth">
+              <Box height={"100%"} position={"relative"}>
+                <Right>
+                  <ButtonLogin LinkComponent={Link} href={"/login"} variant="contained">
+                    Log in{" "}
+                  </ButtonLogin>
+                  <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
+                    <img src="/assets/imgs/landing/global.svg" alt="i18n" />
+                  </IconButton>
+                </Right>
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
       </HeaderStyled>
       <SupportPage open={activeSection === Section.OnTop}>
         <Container>
           <Grid container>
             <Grid item xs={3} />
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{ position: "relative" }}>
               <ExtendBox>
                 <Typography
                   variant="h2"
-                  sx={{
+                  sx={(theme) => ({
                     pt: "40px",
-                  }}
+                    fontSize: 56,
+                    fontWeight: 400,
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 46,
+                    },
+                  })}
                 >
                   Established reader distracted
                 </Typography>
                 <Typography
-                  sx={{
+                  sx={(theme) => ({
                     pt: "28px",
-                  }}
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 14,
+                    },
+                  })}
                 >
                   Fact that a reader will be distracted by the readable content of a page when looking at its layout.
                 </Typography>
                 <Button
-                  sx={{
-                    mt: 5,
+                  sx={(theme) => ({
+                    mt: 16,
                     color: "#504C67",
-                  }}
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 14,
+                    },
+                  })}
                 >
-                  LEARN MORE {`------->`}
+                  LEARN MORE <img style={{ marginLeft: 16 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />
                 </Button>
               </ExtendBox>
+              <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />
             </Grid>
             <Grid item xs={3} sx={{ position: "relative" }}>
               <GridDot src={"/assets/imgs/landing/header-decor.png"} />
@@ -218,7 +253,7 @@ const LandingHeader = (props: IProps) => {
           </Grid>
         </Container>
       </SupportPage>
-    </>
+    </Box>
   );
 };
 export default LandingHeader;

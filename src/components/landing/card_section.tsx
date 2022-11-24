@@ -1,8 +1,9 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography, Paper } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
+import { BecomeInvestButton } from "./company_section";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -21,8 +22,22 @@ const StarImage1 = styled("img")(() => ({
 
 const StarImage2 = styled("img")(() => ({
   position: "absolute",
-  top: -150,
-  right: -100,
+  top: -100,
+  right: 0,
+}));
+
+const CardItem = styled(Paper)(({ theme }) => ({
+  height: 82,
+  borderRadius: 8,
+  padding: theme.spacing(3),
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "rgba(255, 255, 255, 0.5)",
+  backdropFilter: "blur(3.5px)",
+  img: {
+    marginRight: theme.spacing(3),
+  },
 }));
 
 export const CardSection = (props: IProps) => {
@@ -72,7 +87,7 @@ export const CardSection = (props: IProps) => {
                   </div>
                 </Box>
               </Grid>
-              <Grid item xs={9} sx={{ height: "100%" }}>
+              <Grid item xs={8} sx={{ height: "100%" }}>
                 <Box
                   display="flex"
                   flexDirection={"column"}
@@ -81,17 +96,71 @@ export const CardSection = (props: IProps) => {
                   gap={2}
                   height="100%"
                 >
-                  <div style={{ position: "relative" }}>
-                    <Typography variant="h2">THE HAWK CARD ĐẲNG CẤP CÔNG NGHỆ</Typography>
-                    <Typography>
-                      Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi nhuận
-                      từ toàn bộ các tiện ích trong Hệ sinh thái....
+                  <Box style={{ position: "relative" }}>
+                    <Typography
+                      variant="h1"
+                      sx={{ fontSize: 54, fontWeight: 700, color: "rgba(80, 76, 103, 1)", mb: 10 }}
+                    >
+                      THE HAWK CARD
                     </Typography>
-                    <Button variant="outlined">Become invest</Button>
+                    <Typography sx={{ color: "rgba(80, 76, 103, 1)", mb: 10 }}>
+                      Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải <br /> nghiệm và hưởng
+                      lợi nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
+                    </Typography>
+                    <Box mb={10}>
+                      <Grid container spacing={3}>
+                        <Grid item xs={4}>
+                          <CardItem elevation={0}>
+                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                            Cộng đồng Nhà Đầu tư đẳng cấp - cơ hội kết nối
+                          </CardItem>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <CardItem elevation={0}>
+                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                            Tiềm năng vượt trội
+                          </CardItem>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <CardItem elevation={0}>
+                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                            Tăng cơ hội đầu tư
+                          </CardItem>
+                        </Grid>
+                      </Grid>
+                      <Grid container spacing={3} sx={{ mt: 0 }}>
+                        <Grid item xs={3}>
+                          <CardItem elevation={0}>
+                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                            Lợi nhuận kép
+                          </CardItem>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <CardItem elevation={0}>
+                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                            Trải nghiệm tiện ích, đặc quyền chủ thẻ tích hợp trong hệ sinh thái
+                          </CardItem>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <CardItem elevation={0}>
+                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                            Đa dạng tiềm lực khách hàng
+                          </CardItem>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Box>
+                      <BecomeInvestButton variant="contained">
+                        Become invest
+                        <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
+                      </BecomeInvestButton>
+                      <Button sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}>Read more</Button>
+                    </Box>
                     <StarImage2 src="/star1.png" alt="" />
-                  </div>
+                  </Box>
                 </Box>
               </Grid>
+              <Grid item xs={1} />
             </Grid>
           </Box>
         </Box>

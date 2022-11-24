@@ -18,6 +18,7 @@ const ChildView = styled("div", { shouldForwardProp: (prop) => prop !== "open" }
     // transition: theme.transitions.create(["opacity"], { duration: 1000 }),
     ...(open && {
       opacity: 1,
+      zIndex: 10,
       //@ts-ignore
       // transition: theme.transitions.create(["opacity"], { duration: 1000 }),
     }),

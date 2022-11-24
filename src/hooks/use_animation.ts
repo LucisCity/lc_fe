@@ -16,7 +16,6 @@ export const useAnimation = () => {
       opacity: 0,
       easing: "easeInQuad",
       duration,
-      delay: 100,
     });
   };
 
