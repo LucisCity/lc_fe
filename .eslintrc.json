@@ -9,7 +9,7 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "no-unused-vars": ["warn", { "vars": "all" }],
     "camelcase": ["error", { "properties": "always" }],
-    "max-len": ["error", { "code": 120 }],
+    "max-len": ["error", { "code": 150 }],
     "@typescript-eslint/no-empty-function": "off"
   }
 }
