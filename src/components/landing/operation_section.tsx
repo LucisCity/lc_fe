@@ -60,7 +60,7 @@ export function OperationSection() {
           <Center>
             <Box
               component="img"
-              src="/temp/img_operation.png"
+              src="/assets/imgs/landing/img_operation.png"
               alt=""
               sx={{
                 maxWidth: "100%",

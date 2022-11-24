@@ -8,7 +8,7 @@ export function EcosystemSection() {
     <Box
       sx={{
         width: "100vw",
-        minHeight: "100vh",
+        height: "100vh",
         padding: 4,
       }}
       data-swiper-parallax="-300"
@@ -22,10 +22,20 @@ export function EcosystemSection() {
         sx={{
           [theme.breakpoints.down("md")]: {
             flexDirection: "column",
+            marginTop: 1,
           },
         }}
       >
-        <Box component="img" src="/temp/img_ecosystem.png" alt="" />
+        <Box
+          component="img"
+          src="/assets/imgs/landing/img_ecosystem.png"
+          alt=""
+          sx={{
+            [theme.breakpoints.down("sm")]: {
+              maxHeight: "250px",
+            },
+          }}
+        />
         <Box
           sx={{
             marginLeft: 28,

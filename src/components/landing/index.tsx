@@ -152,9 +152,9 @@ export const LandingPage = () => {
           <TopSection activeSection={activeSection} />
           <CompanySection activeSection={activeSection} />
           <CardSection activeSection={activeSection} />
-          <EcosystemSection activeSection={activeSection} />
-          <ReasonChooseSection activeSection={activeSection} />
-          <OperationSection activeSection={activeSection} />
+          <EcosystemSection />
+          <ReasonChooseSection />
+          <OperationSection />
         </ScrollView>
       </MainStyled>
     </>

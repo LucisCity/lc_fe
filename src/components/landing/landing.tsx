@@ -8,9 +8,10 @@ import { Mousewheel, Pagination, Parallax } from "swiper";
 import { EcosystemSection } from "./ecosystem_section";
 import { ReasonChooseSection } from "./reason_choose_section";
 import { OperationSection } from "./operation_section";
-import { IntroSection } from "./intro_section";
+import { CompanySection } from "./company_section";
 import { useState } from "react";
 import { ScrollDirection, ScrollDirectionCtx } from "../anim";
+import LandingHeader from "../layout/header/landing_header";
 
 export default function LandingPageV2() {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>("down");
@@ -60,7 +61,7 @@ export default function LandingPageV2() {
           <Box
             slot="container-start"
             sx={{
-              background: `url(${"/landing/intro-luciscity.jpg"})`,
+              background: `url(${"/landing/intro-luciscity.jpg"})`, ///assets/imgs/landing/background-card.jpg
               position: "absolute",
               left: "0",
               top: "0",
@@ -72,7 +73,8 @@ export default function LandingPageV2() {
             data-swiper-parallax="-23%"
           ></Box>
           <SwiperSlide>
-            <IntroSection />
+            <LandingHeader />
+            <CompanySection />
           </SwiperSlide>
           <SwiperSlide>
             <EcosystemSection />
@@ -84,7 +86,7 @@ export default function LandingPageV2() {
             <OperationSection />
           </SwiperSlide>
           <SwiperSlide>
-            <IntroSection />
+            <CompanySection />
           </SwiperSlide>
         </Swiper>
       </ScrollDirectionCtx.Provider>
