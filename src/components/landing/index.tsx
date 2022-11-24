@@ -4,7 +4,7 @@ import anime from "animejs";
 import React from "react";
 import { headerHeight } from "../layout/header";
 import { EcosystemSection } from "./ecosystem_section";
-import { IntroSection } from "./intro_section";
+import { CompanySection } from "./company_section";
 import { OperationSection } from "./operation_section";
 import { ReasonChooseSection } from "./reason_choose_section";
 import LandingHeader, { extendHeaderHeight } from "../layout/header/landing_header";
@@ -99,13 +99,11 @@ export const LandingPage = () => {
       <MainStyled>
         <ScrollView activeSection={activeSection}>
           <TopSection activeSection={activeSection} />
-          <IntroSection activeSection={activeSection} />
+          <CompanySection activeSection={activeSection} />
           <CardSection activeSection={activeSection} />
           <EcosystemSection activeSection={activeSection} />
           <ReasonChooseSection activeSection={activeSection} />
           <OperationSection activeSection={activeSection} />
-          <IntroSection />
-          <IntroSection />
         </ScrollView>
       </MainStyled>
     </>

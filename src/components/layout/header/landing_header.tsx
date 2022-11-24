@@ -3,7 +3,6 @@ import { Box, styled } from "@mui/system";
 import Link from "next/link";
 import { Left } from "../../common/left";
 import { Right } from "../../common/right";
-import useWindowPosition from "../../../hooks/use_window_position";
 import { Section } from "../../landing";
 
 export const headerHeight = 90;
@@ -18,12 +17,15 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
     top: 0,
     zIndex: 2,
     //@ts-ignore
-    transition: theme.transitions.create(["background", "background"], { duration: 1000 }),
+    transition: theme.transitions.create(["background-color", "backdrop-filter"], { duration: 1000 }),
     ...(!open && {
       //@ts-ignore
-      transition: theme.transitions.create(["background", "backdropFilter"], { duration: 1000 }),
+      transition: theme.transitions.create(["background-color", "backdrop-filter"], { duration: 1000 }),
       background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
       backdropFilter: "blur(12px)",
+      borderBottom: "1px solid",
+      borderImageSlice: 1,
+      borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
     }),
   }),
 );
@@ -43,7 +45,8 @@ const ExtendBox = styled("div")(({ theme }) => ({
   paddingRight: theme.spacing(3),
   paddingTop: theme.spacing(20),
   borderLeft: "1px solid",
-  borderImage: "linear-gradient(102.67deg, #C5CEE8 -18.34%, #DFE7FD -18.33%, rgba(207, 216, 241, 0.12) 92.76%) 1 100%",
+  borderImageSlice: 1,
+  borderImageSource: "linear-gradient(102.67deg, #C5CEE8 -18.34%, #DFE7FD -18.33%, rgba(207, 216, 241, 0.12) 92.76%)",
 }));
 
 const SupportPage = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
@@ -72,13 +75,23 @@ const GridDot = styled("img")(({ theme }) => ({
   right: 0,
 }));
 
+const CoinImage = styled("img")(({ theme }) => ({
+  position: "absolute",
+  bottom: 100,
+  zIndex: -1,
+  left: -60,
+}));
+
 const Ul = styled("ul")(({ theme }) => ({
   display: "flex",
   listStyleType: "none",
-  gap: theme.spacing(3),
+  gap: theme.spacing(6),
   margin: 0,
   alignItems: "center",
   height: headerHeight,
+  borderLeft: "1px solid",
+  borderImageSlice: 1,
+  borderImageSource: "linear-gradient(180deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
 }));
 
 const HeaderNextLink = styled(Link)(({ theme }) => ({
@@ -185,7 +198,7 @@ const LandingHeader = (props: IProps) => {
         <Container>
           <Grid container>
             <Grid item xs={3} />
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{ position: "relative" }}>
               <ExtendBox>
                 <Typography
                   variant="h2"
@@ -204,13 +217,14 @@ const LandingHeader = (props: IProps) => {
                 </Typography>
                 <Button
                   sx={{
-                    mt: 5,
+                    mt: 16,
                     color: "#504C67",
                   }}
                 >
-                  LEARN MORE {`------->`}
+                  LEARN MORE <img style={{ marginLeft: 16 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />
                 </Button>
               </ExtendBox>
+              <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />
             </Grid>
             <Grid item xs={3} sx={{ position: "relative" }}>
               <GridDot src={"/assets/imgs/landing/header-decor.png"} />
