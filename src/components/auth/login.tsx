@@ -33,7 +33,10 @@ function RegisterForm() {
     <Box component="form" onSubmit={form.handleSubmit(onSubmit)}>
       <Box
         sx={{
-          backgroundColor: "#41434A",
+          background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           padding: "24px",
         }}
       >
@@ -45,7 +48,7 @@ function RegisterForm() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "#131520",
+            backgroundColor: "white",
             padding: "24px",
             borderRadius: "4px",
           }}

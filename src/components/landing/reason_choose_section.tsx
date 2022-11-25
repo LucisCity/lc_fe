@@ -4,7 +4,11 @@ import React from "react";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 
-export function ReasonChooseSection() {
+type Props = {
+  index?: number;
+};
+
+export function ReasonChooseSection(props: Props) {
   const theme = useTheme();
 
   return (
@@ -12,6 +16,16 @@ export function ReasonChooseSection() {
       sx={{
         width: "100vw",
         height: "100vh",
+        overflow: "hidden",
+        [theme.breakpoints.down("sm")]: {
+          background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "left",
+          padding: 4,
+          height: "auto",
+          overflow: "auto",
+        },
       }}
       data-swiper-parallax="-300"
     >
@@ -32,7 +46,7 @@ export function ReasonChooseSection() {
           <Grid container spacing={6}>
             <Grid md={0} lg={3}></Grid>
             <Grid md={12} lg={9}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }}>
+              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
                 <Typography
                   variant="h3"
                   whiteSpace="pre-line"
@@ -55,7 +69,11 @@ export function ReasonChooseSection() {
               }}
             ></Grid>
             <Grid md={6} lg={3}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} style={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, y: -100 } }}
+                style={{ height: "100%" }}
+                index={props.index}
+              >
                 <ReasonBox
                   title="MarketPlace"
                   content="Cho phép Nhà đầu tư giao dịch trong nhiều nền tảng khác nhau."
@@ -63,7 +81,11 @@ export function ReasonChooseSection() {
               </AnimWhenVisible>
             </Grid>
             <Grid md={6} lg={3}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} style={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, y: -100 } }}
+                style={{ height: "100%" }}
+                index={props.index}
+              >
                 <ReasonBox
                   title="Quản lý đầu tư"
                   content={
@@ -74,7 +96,11 @@ export function ReasonChooseSection() {
               </AnimWhenVisible>
             </Grid>
             <Grid md={6} lg={3}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} style={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, y: -100 } }}
+                style={{ height: "100%" }}
+                index={props.index}
+              >
                 <ReasonBox
                   title="Đa dạng hóa"
                   content={
@@ -85,7 +111,11 @@ export function ReasonChooseSection() {
               </AnimWhenVisible>
             </Grid>
             <Grid md={6} lg={3}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} style={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, y: -100 } }}
+                style={{ height: "100%" }}
+                index={props.index}
+              >
                 <ReasonBox
                   title="Được đảm bảo"
                   content={"Tài sản được lựa chọn từ các thành viên trong Cộng đồng Nhà Đầu tư Lucis City."}
@@ -94,7 +124,11 @@ export function ReasonChooseSection() {
               </AnimWhenVisible>
             </Grid>
             <Grid md={6} lg={3}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} style={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, y: -100 } }}
+                style={{ height: "100%" }}
+                index={props.index}
+              >
                 <ReasonBox
                   title="Kiếm lợi nhuận"
                   content={
@@ -105,7 +139,11 @@ export function ReasonChooseSection() {
               </AnimWhenVisible>
             </Grid>
             <Grid md={6} lg={3}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} style={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, y: -100 } }}
+                style={{ height: "100%" }}
+                index={props.index}
+              >
                 <ReasonBox
                   title="Đẳng cấp"
                   content="Lựa chọn các Nhà đầu tư có cùng phân khúc theo sản phẩm của Hệ sinh thái"
@@ -120,12 +158,7 @@ export function ReasonChooseSection() {
   );
 }
 
-type Props = {
-  title: string;
-  content: string;
-  icon?: string;
-};
-function ReasonBox({ title, content, icon }: Props) {
+function ReasonBox({ title, content, icon }: { title: string; content: string; icon?: string }) {
   return (
     <Box
       sx={{

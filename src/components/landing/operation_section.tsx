@@ -3,7 +3,11 @@ import React from "react";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 
-export function OperationSection() {
+type Props = {
+  index?: number;
+};
+
+export function OperationSection(props: Props) {
   const theme = useTheme();
 
   return (
@@ -15,7 +19,16 @@ export function OperationSection() {
         justifyContent: "center",
         alignItems: "center",
         [theme.breakpoints.down("sm")]: {
+          background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "left",
+          padding: 4,
+          paddingTop: 6,
+          paddingBottom: 6,
           height: "auto",
+          display: "block",
+          overflow: "auto",
         },
       }}
       data-swiper-parallax="-300"
@@ -35,15 +48,13 @@ export function OperationSection() {
             display: "flex",
             alignItems: "center",
             gap: 22.5,
-            marginTop: 38,
             [theme.breakpoints.down("md")]: {
               flexDirection: "column",
-              marginTop: 15,
               gap: 12,
             },
           }}
         >
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }}>
+          <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
             <Typography variant="h3" whiteSpace="pre-line">{`Basic operation
             of Lucis city`}</Typography>
             <Typography
@@ -56,7 +67,7 @@ export function OperationSection() {
             </Typography>
           </AnimWhenVisible>
         </Box>
-        <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }}>
+        <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
           <Center>
             <Box
               component="img"

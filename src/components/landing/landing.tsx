@@ -10,12 +10,33 @@ import { ReasonChooseSection } from "./reason_choose_section";
 import { OperationSection } from "./operation_section";
 import { CompanySection } from "./company_section";
 import { useState } from "react";
-import { ScrollDirection, ScrollDirectionCtx } from "../anim";
 import LandingHeader from "../layout/header/landing_header";
+import { useWindowSize } from "react-use";
+import useScroll from "../../hooks/useScroll";
+import { PagingContextType, PagingCtx } from "../anim/swip_visible_anim";
+import NftSection from "./nft_section";
 
 export default function LandingPageV2() {
-  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>("down");
+  const [paging, setPaging] = useState<PagingContextType>({
+    activeIndex: 0,
+    preIndex: 0,
+  });
+  useScroll();
+  const size = useWindowSize();
 
+  if (size.width > 0 && size.width < 768) {
+    return (
+      <Box>
+        <LandingHeader />
+        <CompanySection />
+        <EcosystemSection />
+        <ReasonChooseSection />
+        <OperationSection />
+        <NftSection />
+        <CompanySection />
+      </Box>
+    );
+  }
   return (
     <Box
       sx={{
@@ -24,11 +45,7 @@ export default function LandingPageV2() {
         overflow: "auto",
       }}
     >
-      <ScrollDirectionCtx.Provider
-        value={{
-          direction: scrollDirection,
-        }}
-      >
+      <PagingCtx.Provider value={paging}>
         <Swiper
           direction={"vertical"}
           slidesPerView={1}
@@ -39,18 +56,11 @@ export default function LandingPageV2() {
           }}
           modules={[Parallax, Mousewheel, Pagination]}
           parallax={true}
-          // onChangeDirection={(swiper) => {
-
-          // }}
           onActiveIndexChange={(swiper) => {
-            console.log("swiper.activeIndex: ", swiper.activeIndex);
-            console.log("swiper.previousIndex: ", swiper.previousIndex);
-
-            if (swiper.activeIndex > swiper.previousIndex) {
-              setScrollDirection("down");
-            } else {
-              setScrollDirection("up");
-            }
+            setPaging({
+              activeIndex: swiper.activeIndex,
+              preIndex: swiper.previousIndex,
+            });
           }}
           style={{
             overflow: "auto",
@@ -61,12 +71,12 @@ export default function LandingPageV2() {
           <Box
             slot="container-start"
             sx={{
-              background: `url(${"/landing/intro-luciscity.jpg"})`, ///assets/imgs/landing/background-card.jpg
+              background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/background-card.jpg
               position: "absolute",
               left: "0",
               top: "0",
               width: "130%",
-              height: "100%",
+              height: "150%",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -77,19 +87,22 @@ export default function LandingPageV2() {
             <CompanySection />
           </SwiperSlide>
           <SwiperSlide>
-            <EcosystemSection />
+            <EcosystemSection index={1} />
           </SwiperSlide>
           <SwiperSlide>
-            <ReasonChooseSection />
+            <ReasonChooseSection index={2} />
           </SwiperSlide>
           <SwiperSlide>
-            <OperationSection />
+            <OperationSection index={3} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <NftSection index={4} />;
           </SwiperSlide>
           <SwiperSlide>
             <CompanySection />
           </SwiperSlide>
         </Swiper>
-      </ScrollDirectionCtx.Provider>
+      </PagingCtx.Provider>
     </Box>
   );
 }
