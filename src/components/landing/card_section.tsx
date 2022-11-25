@@ -63,16 +63,9 @@ export const CardSection = (props: IProps) => {
     >
       <Container sx={{ height: "100%" }}>
         <Box position="relative" height={"100%"}>
-          <Box
-            position="absolute"
-            component="section"
-            height={"100%"}
-            id="intro-card-section"
-            top={0}
-            sx={{ opacity: 0 }}
-          >
+          <Box position="absolute" component="section" height={"100%"} id="intro-card-section" top={0}>
             <Grid container sx={{ height: "100%" }}>
-              <Grid item xs={3} sx={{ height: "100%" }}>
+              <Grid item xs={0} md={3} sx={{ height: "100%" }}>
                 <Box
                   display="flex"
                   flexDirection={"column"}
@@ -87,7 +80,7 @@ export const CardSection = (props: IProps) => {
                   </div>
                 </Box>
               </Grid>
-              <Grid item xs={8} sx={{ height: "100%" }}>
+              <Grid item xs={12} md={8} sx={{ height: "100%" }}>
                 <Box
                   display="flex"
                   flexDirection={"column"}
@@ -109,19 +102,19 @@ export const CardSection = (props: IProps) => {
                     </Typography>
                     <Box mb={10}>
                       <Grid container spacing={3}>
-                        <Grid item xs={4}>
+                        <Grid item sm={4} xs={12}>
                           <CardItem elevation={0}>
                             <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                             Cộng đồng Nhà Đầu tư đẳng cấp - cơ hội kết nối
                           </CardItem>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item sm={4} xs={12}>
                           <CardItem elevation={0}>
                             <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                             Tiềm năng vượt trội
                           </CardItem>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item sm={4} xs={12}>
                           <CardItem elevation={0}>
                             <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                             Tăng cơ hội đầu tư
@@ -129,19 +122,19 @@ export const CardSection = (props: IProps) => {
                         </Grid>
                       </Grid>
                       <Grid container spacing={3} sx={{ mt: 0 }}>
-                        <Grid item xs={3}>
+                        <Grid item sm={3} xs={12}>
                           <CardItem elevation={0}>
                             <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                             Lợi nhuận kép
                           </CardItem>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item sm={6} xs={12}>
                           <CardItem elevation={0}>
                             <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                             Trải nghiệm tiện ích, đặc quyền chủ thẻ tích hợp trong hệ sinh thái
                           </CardItem>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item sm={3} xs={12}>
                           <CardItem elevation={0}>
                             <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                             Đa dạng tiềm lực khách hàng
