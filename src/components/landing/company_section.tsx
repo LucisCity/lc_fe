@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import React from "react";
 import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
+import AnimWhenVisible from "../anim";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -27,28 +28,10 @@ export const BecomeInvestButton = styled(Button)(({ theme }) => ({
     boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
   },
 }));
-interface IProps {
-  activeSection?: Section;
-}
 
-export const CompanySection = (props: IProps) => {
-  const activeSection = props.activeSection;
-
-  const animation = useAnimation();
-
-  React.useEffect(() => {
-    if (activeSection === Section.IntroductionCompany) {
-      animation.fadeIn("#company-content-section");
-      // animation.fadeIn("#company-section");
-    } else {
-      animation.fadeOut("#company-content-section");
-      // animation.fadeOut("#company-section");
-    }
-  }, [activeSection]);
-
+export const CompanySection = () => {
   return (
     <MainItemComponent
-      id="company-section"
       sx={{
         background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
         backgroundRepeat: "no-repeat",
@@ -59,10 +42,10 @@ export const CompanySection = (props: IProps) => {
     >
       <Container sx={{ height: "100%" }}>
         <Box position="relative" height={"100%"}>
-          <Box height={"100%"} component="section" id="company-content-section" sx={{ opacity: 0 }}>
+          <Box height={"100%"} component="section">
             <Grid container sx={{ height: "100%" }}>
-              <Grid item xs={3}></Grid>
-              <Grid item xs={6} sx={{ height: "100%" }}>
+              <Grid item xs={0} sm={3}></Grid>
+              <Grid item xs={12} sm={6} sx={{ height: "100%" }}>
                 <Box
                   display="flex"
                   flexDirection={"column"}
@@ -70,20 +53,24 @@ export const CompanySection = (props: IProps) => {
                   alignItems={"flex-start"}
                   height="100%"
                 >
-                  <Typography variant="h1" sx={{ color: "#504C67", fontWeight: 700, fontSize: 64, mb: 20 }}>
-                    Lucis <span style={{ color: "#fff" }}>City</span>
-                  </Typography>
+                  <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }}>
+                    <Typography variant="h1" sx={{ color: "#504C67", fontWeight: 700, fontSize: 64, mb: 20 }}>
+                      Lucis <span style={{ color: "#fff" }}>City</span>
+                    </Typography>
+                  </AnimWhenVisible>
                   <Typography sx={{ mb: 10 }}>
                     Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng Mở ra cơ hội đầu tư vào thị
                     trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
                   </Typography>
-                  <BecomeInvestButton variant="contained">
-                    Become invest
-                    <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
-                  </BecomeInvestButton>
+                  <AnimWhenVisible variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}>
+                    <BecomeInvestButton variant="contained">
+                      Become invest
+                      <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
+                    </BecomeInvestButton>
+                  </AnimWhenVisible>
                 </Box>
               </Grid>
-              <Grid item xs={3}></Grid>
+              <Grid item xs={0} sm={3}></Grid>
             </Grid>
           </Box>
         </Box>

@@ -8,7 +8,7 @@ export const headerHeight = 90;
 const HeaderStyled = styled("div")(({ theme }) => ({
   minHeight: headerHeight,
   width: "100%",
-  background: "rgba(255, 255, 255, 0.2);",
+  background: "rgba(255, 255, 255, 0.2)",
   backdropFilter: "blur(12px)",
   display: "flex",
   alignItems: "center",
