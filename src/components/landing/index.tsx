@@ -1,4 +1,4 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
 import "swiper/css";
@@ -10,11 +10,13 @@ import { ReasonChooseSection } from "./reason_choose_section";
 import { OperationSection } from "./operation_section";
 import { CompanySection } from "./company_section";
 import { useState } from "react";
-import { ScrollDirection, ScrollDirectionCtx } from "../anim";
 import LandingHeader from "../layout/header/landing_header";
+import { useWindowSize } from "react-use";
+import useScroll from "../../hooks/useScroll";
+import { PagingContextType, PagingCtx } from "../anim/swip_visible_anim";
+import NftSection from "./nft_section";
 import { TopSection } from "./top_section";
 import { CardSection } from "./card_section";
-import { useTheme } from "@mui/system";
 
 export enum Section {
   OnTop, // start
@@ -29,10 +31,30 @@ export enum Section {
   Community,
 }
 export default function LandingPage() {
-  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>("down");
   const [slideActive, setSlideActive] = useState(0);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const [paging, setPaging] = useState<PagingContextType>({
+    activeIndex: 0,
+    preIndex: 0,
+  });
+  useScroll();
+  const size = useWindowSize();
+
+  if (size.width > 0 && size.width < 768) {
+    return (
+      <Box>
+        <LandingHeader slideActive={slideActive} />
+        <CompanySection />
+        <EcosystemSection />
+        <ReasonChooseSection />
+        <OperationSection />
+        <NftSection />
+        <CompanySection />
+      </Box>
+    );
+  }
+
   return (
     <>
       <LandingHeader slideActive={slideActive} />
@@ -43,11 +65,7 @@ export default function LandingPage() {
           overflow: "auto",
         }}
       >
-        <ScrollDirectionCtx.Provider
-          value={{
-            direction: scrollDirection,
-          }}
-        >
+        <PagingCtx.Provider value={paging}>
           <Swiper
             direction={"vertical"}
             slidesPerView={1}
@@ -64,11 +82,10 @@ export default function LandingPage() {
             // }}
             onActiveIndexChange={(swiper) => {
               setSlideActive(swiper.activeIndex);
-              if (swiper.activeIndex > swiper.previousIndex) {
-                setScrollDirection("down");
-              } else {
-                setScrollDirection("up");
-              }
+              setPaging({
+                activeIndex: swiper.activeIndex,
+                preIndex: swiper.previousIndex,
+              });
             }}
             style={{
               overflow: "hidden",
@@ -77,43 +94,46 @@ export default function LandingPage() {
             }}
           >
             <Box
-              slot={"container-start"}
+              slot="container-start"
               sx={{
-                background: `url(${"/landing/intro-luciscity.jpg"})`, ///assets/imgs/landing/background-card.jpg
+                background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/background-card.jpg
                 position: "absolute",
                 left: "0",
                 top: "0",
-                width: "100%",
-                height: "110%",
+                width: "130%",
+                height: "150%",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              data-swiper-parallax="-5%"
-            />
+              data-swiper-parallax="-23%"
+            ></Box>
 
             <SwiperSlide>
-              <TopSection />
+              <TopSection index={0} />
             </SwiperSlide>
             <SwiperSlide>
-              <CompanySection />
+              <CompanySection index={1} />
             </SwiperSlide>
             <SwiperSlide>
-              <CardSection />
+              <CardSection index={2} />
             </SwiperSlide>
             <SwiperSlide>
-              <EcosystemSection />
+              <EcosystemSection index={3} />
             </SwiperSlide>
             <SwiperSlide>
-              <ReasonChooseSection />
+              <ReasonChooseSection index={4} />
             </SwiperSlide>
             <SwiperSlide>
-              <OperationSection />
+              <OperationSection index={5} />
             </SwiperSlide>
             <SwiperSlide>
-              <CompanySection />
+              <NftSection index={6} />;
+            </SwiperSlide>
+            <SwiperSlide>
+              <CompanySection index={7} />
             </SwiperSlide>
           </Swiper>
-        </ScrollDirectionCtx.Provider>
+        </PagingCtx.Provider>
       </Box>
     </>
   );

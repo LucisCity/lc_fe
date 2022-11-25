@@ -33,11 +33,15 @@ export function ReasonChooseSection(props: Props) {
         sx={{
           maxWidth: "1440px",
           padding: "1px 144px",
+          paddingTop: 8,
           // [theme.breakpoints.down("xl")]: {
           //   padding: "1px 32px",
           // },
           [theme.breakpoints.down("lg")]: {
             padding: "1px 16px 16px 16px",
+          },
+          [theme.breakpoints.down("sm")]: {
+            paddingTop: "1px",
           },
           height: "100%",
         }}

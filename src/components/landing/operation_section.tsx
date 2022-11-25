@@ -37,9 +37,13 @@ export function OperationSection(props: Props) {
         sx={{
           maxWidth: "1440px",
           padding: "1px 144px",
+          paddingTop: 15,
           margin: "0px auto",
           [theme.breakpoints.down("lg")]: {
             padding: "1px 16px 16px 16px",
+          },
+          [theme.breakpoints.down("sm")]: {
+            paddingTop: "1px",
           },
         }}
       >

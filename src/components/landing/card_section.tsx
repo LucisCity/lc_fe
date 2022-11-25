@@ -12,6 +12,7 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 
 interface IProps {
   activeSection?: Section;
+  index?: number;
 }
 
 const StarImage1 = styled("img")(() => ({

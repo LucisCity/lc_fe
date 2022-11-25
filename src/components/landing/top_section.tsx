@@ -11,6 +11,7 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 
 interface IProps {
   activeSection?: Section;
+  index?: number;
 }
 
 export const TopSection = (props: IProps) => {

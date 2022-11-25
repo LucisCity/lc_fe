@@ -29,7 +29,10 @@ export const BecomeInvestButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const CompanySection = () => {
+type Props = {
+  index?: number;
+};
+export const CompanySection = (props: Props) => {
   return (
     <MainItemComponent
       sx={{
@@ -53,7 +56,7 @@ export const CompanySection = () => {
                   alignItems={"flex-start"}
                   height="100%"
                 >
-                  <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }}>
+                  <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
                     <Typography variant="h1" sx={{ color: "#504C67", fontWeight: 700, fontSize: 64, mb: 20 }}>
                       Lucis <span style={{ color: "#fff" }}>City</span>
                     </Typography>
@@ -62,7 +65,10 @@ export const CompanySection = () => {
                     Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng Mở ra cơ hội đầu tư vào thị
                     trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
                   </Typography>
-                  <AnimWhenVisible variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}>
+                  <AnimWhenVisible
+                    variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}
+                    index={props.index}
+                  >
                     <BecomeInvestButton variant="contained">
                       Become invest
                       <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
