@@ -33,7 +33,6 @@ export enum Section {
 export default function LandingPage() {
   const [slideActive, setSlideActive] = useState(0);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [paging, setPaging] = useState<PagingContextType>({
     activeIndex: 0,
     preIndex: 0,
@@ -55,7 +54,6 @@ export default function LandingPage() {
         </Box>
       ) : (
         <>
-          <LandingHeader slideActive={slideActive} />
           <Box
             sx={{
               width: "100%",
@@ -71,7 +69,6 @@ export default function LandingPage() {
                 mousewheel={true}
                 pagination={{
                   clickable: true,
-                  enabled: matches,
                 }}
                 modules={[Parallax, Mousewheel, Pagination]}
                 parallax={true}
@@ -91,6 +88,10 @@ export default function LandingPage() {
                   height: "100%",
                 }}
               >
+                <Box slot="container-start">
+                  <LandingHeader slideActive={slideActive} />
+                </Box>
+
                 <Box
                   slot="container-start"
                   sx={{

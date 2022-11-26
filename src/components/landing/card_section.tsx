@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import React from "react";
 import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
+import AnimWhenVisible from "../anim";
 import { BecomeInvestButton } from "./company_section";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
@@ -11,7 +12,6 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 }));
 
 interface IProps {
-  activeSection?: Section;
   index?: number;
 }
 
@@ -39,19 +39,84 @@ const CardItem = styled(Paper)(({ theme }) => ({
   img: {
     marginRight: theme.spacing(3),
   },
+  // [theme.breakpoints.between("sm", "md")]: {
+  //   height: 62,
+  // },
 }));
 
+const CardSupportTitle = styled("div")(({ theme }) => ({
+  background: `url("/assets/imgs/landing/card_support_title.png")`,
+  width: 60,
+  height: 25,
+  marginLeft: theme.spacing(3),
+}));
+
+const contentItems1 = [
+  {
+    text: "Cộng đồng Nhà Đầu tư đẳng cấp - cơ hội kết nối",
+    delay: 0,
+    sm: 4,
+  },
+  {
+    text: "Tiềm năng vượt trội",
+    delay: 0.3,
+    sm: 4,
+  },
+  {
+    text: "Tăng cơ hội đầu tư",
+    delay: 0.6,
+    sm: 4,
+  },
+];
+
+const contentItems2 = [
+  {
+    text: "Lợi nhuận kép",
+    delay: 0.9,
+    sm: 3,
+  },
+  {
+    text: "Trải nghiệm tiện ích, đặc quyền chủ thẻ tích hợp trong hệ sinh thái",
+    delay: 1.2,
+    sm: 6,
+  },
+  {
+    text: "Đa dạng tiềm lực khách hàng",
+    delay: 1.5,
+    sm: 3,
+  },
+];
+
+const ListContent = ({
+  listContent,
+  animeIndex,
+}: {
+  listContent: { text: string; delay: number; sm: number }[];
+  animeIndex?: number;
+}) => {
+  return (
+    <>
+      {listContent.map((item, index) => (
+        <Grid item xs={12} sm={item.sm ?? 4} key={"list-content-card" + index}>
+          <AnimWhenVisible
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0, y: 30, transition: { delay: 0 } },
+            }}
+            transition={{ delay: item.delay, duration: 0.6 }}
+            index={animeIndex}
+          >
+            <CardItem elevation={0}>
+              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+              {item.text}
+            </CardItem>
+          </AnimWhenVisible>
+        </Grid>
+      ))}
+    </>
+  );
+};
 export const CardSection = (props: IProps) => {
-  const activeSection = props.activeSection;
-
-  const animation = useAnimation();
-
-  React.useEffect(() => {
-    if (activeSection === Section.IntroductionCard) {
-      animation.fadeIn("#intro-card-section");
-    }
-  }, [activeSection]);
-
   return (
     <MainItemComponent
       sx={{
@@ -64,7 +129,7 @@ export const CardSection = (props: IProps) => {
     >
       <Container sx={{ height: "100%" }}>
         <Box position="relative" height={"100%"}>
-          <Box position="absolute" component="section" height={"100%"} id="intro-card-section" top={0}>
+          <Box height={"100%"}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={0} md={3} sx={{ height: "100%" }}>
                 <Box
@@ -81,7 +146,7 @@ export const CardSection = (props: IProps) => {
                   </div>
                 </Box>
               </Grid>
-              <Grid item xs={12} md={8} sx={{ height: "100%" }}>
+              <Grid item xs={12} sm={8} sx={{ height: "100%" }}>
                 <Box
                   display="flex"
                   flexDirection={"column"}
@@ -91,56 +156,26 @@ export const CardSection = (props: IProps) => {
                   height="100%"
                 >
                   <Box style={{ position: "relative" }}>
+                    <Box display="flex">
+                      <img src="/assets/imgs/landing/galaxy_card.svg" alt="galaxy card" />
+                      <CardSupportTitle />
+                    </Box>
                     <Typography
-                      variant="h1"
-                      sx={{ fontSize: 54, fontWeight: 700, color: "rgba(80, 76, 103, 1)", mb: 10 }}
+                      sx={{ color: "#6555EE", textTransform: "uppercase", fontWeight: 600, fontSize: 16 }}
+                      mt={2}
                     >
-                      THE HAWK CARD
+                      đẳng cấp công nghệ
                     </Typography>
-                    <Typography sx={{ color: "rgba(80, 76, 103, 1)", mb: 10 }}>
+                    <Typography sx={{ color: "rgba(80, 76, 103, 1)" }} mt={8} mb={9}>
                       Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải <br /> nghiệm và hưởng
                       lợi nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
                     </Typography>
-                    <Box mb={10}>
+                    <Box mb={9}>
                       <Grid container spacing={3}>
-                        <Grid item sm={4} xs={12}>
-                          <CardItem elevation={0}>
-                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                            Cộng đồng Nhà Đầu tư đẳng cấp - cơ hội kết nối
-                          </CardItem>
-                        </Grid>
-                        <Grid item sm={4} xs={12}>
-                          <CardItem elevation={0}>
-                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                            Tiềm năng vượt trội
-                          </CardItem>
-                        </Grid>
-                        <Grid item sm={4} xs={12}>
-                          <CardItem elevation={0}>
-                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                            Tăng cơ hội đầu tư
-                          </CardItem>
-                        </Grid>
+                        <ListContent listContent={contentItems1} animeIndex={props?.index} />
                       </Grid>
                       <Grid container spacing={3} sx={{ mt: 0 }}>
-                        <Grid item sm={3} xs={12}>
-                          <CardItem elevation={0}>
-                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                            Lợi nhuận kép
-                          </CardItem>
-                        </Grid>
-                        <Grid item sm={6} xs={12}>
-                          <CardItem elevation={0}>
-                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                            Trải nghiệm tiện ích, đặc quyền chủ thẻ tích hợp trong hệ sinh thái
-                          </CardItem>
-                        </Grid>
-                        <Grid item sm={3} xs={12}>
-                          <CardItem elevation={0}>
-                            <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                            Đa dạng tiềm lực khách hàng
-                          </CardItem>
-                        </Grid>
+                        <ListContent listContent={contentItems2} animeIndex={props?.index} />
                       </Grid>
                     </Box>
                     <Box>
