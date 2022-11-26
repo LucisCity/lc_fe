@@ -28,7 +28,7 @@ export function OperationSection(props: Props) {
           paddingBottom: 6,
           height: "auto",
           display: "block",
-          overflow: "auto",
+          // overflow: "auto",
         },
       }}
       data-swiper-parallax="-300"

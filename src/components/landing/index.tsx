@@ -41,19 +41,19 @@ export default function LandingPage() {
   useScroll();
   const size = useWindowSize();
 
-  if (size.width > 0 && size.width < 768) {
-    return (
-      <Box>
-        <LandingHeader slideActive={slideActive} />
-        <CompanySection />
-        <EcosystemSection />
-        <ReasonChooseSection />
-        <OperationSection />
-        <NftSection />
-        <CompanySection />
-      </Box>
-    );
-  }
+  // if (size.width < 768) {
+  return (
+    <Box>
+      <LandingHeader slideActive={slideActive} />
+      <CompanySection />
+      <EcosystemSection />
+      <ReasonChooseSection />
+      <OperationSection />
+      <NftSection />
+      <CompanySection />
+    </Box>
+  );
+  // }
 
   return (
     <>

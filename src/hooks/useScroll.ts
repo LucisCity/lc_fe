@@ -15,7 +15,7 @@ export default function useScroll() {
     } else if (yScrollPosition < window.scrollY) {
       isScrollDown = true;
     }
-    console.log("isScrollDown11: ", isScrollDown);
+    // console.log("isScrollDown: ", isScrollDown);
     yScrollPosition = window.scrollY;
   };
 

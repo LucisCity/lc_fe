@@ -57,6 +57,7 @@ export default function NftSection(props: Props) {
                 flexDirection: "column",
                 borderRadius: "16px",
                 width: "270px",
+                overflow: "hidden",
               }}
             >
               <Box component="img" src="/assets/imgs/landing/img_bg_estate.png" alt="" width="100%" />

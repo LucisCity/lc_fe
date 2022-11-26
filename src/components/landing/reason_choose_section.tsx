@@ -24,7 +24,7 @@ export function ReasonChooseSection(props: Props) {
           backgroundPosition: "left",
           padding: 4,
           height: "auto",
-          overflow: "auto",
+          // overflow: "auto",
         },
       }}
       data-swiper-parallax="-300"

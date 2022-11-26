@@ -32,7 +32,7 @@ export default function ScrollVisibleAnim(props: Props) {
     if (props.enable === false) {
       return;
     }
-    console.log("isScrollDown: ", isScrollDown);
+    // console.log("isScrollDown: ", isScrollDown);
     if (inView && isScrollDown) {
       controls.start("visible");
       setIsShow(true);
