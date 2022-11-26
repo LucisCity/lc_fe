@@ -41,100 +41,100 @@ export default function LandingPage() {
   useScroll();
   const size = useWindowSize();
 
-  // if (size.width < 768) {
   return (
     <Box>
-      <LandingHeader slideActive={slideActive} />
-      <CompanySection />
-      <EcosystemSection />
-      <ReasonChooseSection />
-      <OperationSection />
-      <NftSection />
-      <CompanySection />
-    </Box>
-  );
-  // }
-
-  return (
-    <>
-      <LandingHeader slideActive={slideActive} />
-      <Box
-        sx={{
-          width: "100%",
-          height: "100vh",
-          overflow: "auto",
-        }}
-      >
-        <PagingCtx.Provider value={paging}>
-          <Swiper
-            direction={"vertical"}
-            slidesPerView={1}
-            spaceBetween={0}
-            mousewheel={true}
-            pagination={{
-              clickable: true,
-              enabled: matches,
-            }}
-            modules={[Parallax, Mousewheel, Pagination]}
-            parallax={true}
-            // onChangeDirection={(swiper) => {
-
-            // }}
-            onActiveIndexChange={(swiper) => {
-              setSlideActive(swiper.activeIndex);
-              setPaging({
-                activeIndex: swiper.activeIndex,
-                preIndex: swiper.previousIndex,
-              });
-            }}
-            style={{
-              overflow: "hidden",
+      {size.width < 768 ? (
+        <Box>
+          <LandingHeader slideActive={slideActive} />
+          <CompanySection />
+          <EcosystemSection />
+          <ReasonChooseSection />
+          <OperationSection />
+          <NftSection />
+          <CompanySection />
+        </Box>
+      ) : (
+        <>
+          <LandingHeader slideActive={slideActive} />
+          <Box
+            sx={{
               width: "100%",
-              height: "100%",
+              height: "100vh",
+              overflow: "auto",
             }}
           >
-            <Box
-              slot="container-start"
-              sx={{
-                background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/background-card.jpg
-                position: "absolute",
-                left: "0",
-                top: "0",
-                width: "130%",
-                height: "150%",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              data-swiper-parallax="-23%"
-            ></Box>
+            <PagingCtx.Provider value={paging}>
+              <Swiper
+                direction={"vertical"}
+                slidesPerView={1}
+                spaceBetween={0}
+                mousewheel={true}
+                pagination={{
+                  clickable: true,
+                  enabled: matches,
+                }}
+                modules={[Parallax, Mousewheel, Pagination]}
+                parallax={true}
+                // onChangeDirection={(swiper) => {
 
-            <SwiperSlide>
-              <TopSection index={0} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CompanySection index={1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardSection index={2} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <EcosystemSection index={3} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ReasonChooseSection index={4} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <OperationSection index={5} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <NftSection index={6} />;
-            </SwiperSlide>
-            <SwiperSlide>
-              <CompanySection index={7} />
-            </SwiperSlide>
-          </Swiper>
-        </PagingCtx.Provider>
-      </Box>
-    </>
+                // }}
+                onActiveIndexChange={(swiper) => {
+                  setSlideActive(swiper.activeIndex);
+                  setPaging({
+                    activeIndex: swiper.activeIndex,
+                    preIndex: swiper.previousIndex,
+                  });
+                }}
+                style={{
+                  overflow: "hidden",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Box
+                  slot="container-start"
+                  sx={{
+                    background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/background-card.jpg
+                    position: "absolute",
+                    left: "0",
+                    top: "0",
+                    width: "130%",
+                    height: "150%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                  data-swiper-parallax="-23%"
+                ></Box>
+
+                <SwiperSlide>
+                  <TopSection index={0} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <CompanySection index={1} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <CardSection index={2} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <EcosystemSection index={3} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ReasonChooseSection index={4} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <OperationSection index={5} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <NftSection index={6} />;
+                </SwiperSlide>
+                <SwiperSlide>
+                  <CompanySection index={7} />
+                </SwiperSlide>
+              </Swiper>
+            </PagingCtx.Provider>
+          </Box>
+        </>
+      )}
+    </Box>
   );
 }
