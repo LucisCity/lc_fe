@@ -10,24 +10,24 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-export const BecomeInvestButton = styled(Button)(({ theme }) => ({
-  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
-  filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2))",
-  backdropFilter: "blur(4px)",
-  borderRadius: 4,
-  height: 52,
-  width: 190,
-  boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-  textTransform: "none",
-  fontSize: "16px",
-  fontWeight: 400,
-  color: "#504C67",
-  "&:hover": {
-    background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
-    cursor: "pointer",
-    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-  },
-}));
+// export const BecomeInvestButton = styled(Button)(({ theme }) => ({
+//   background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+//   filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2))",
+//   backdropFilter: "blur(4px)",
+//   borderRadius: 4,
+//   height: 52,
+//   width: 190,
+//   boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+//   textTransform: "none",
+//   fontSize: "16px",
+//   fontWeight: 400,
+//   color: "#504C67",
+//   "&:hover": {
+//     background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+//     cursor: "pointer",
+//     boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+//   },
+// }));
 
 type Props = {
   index?: number;
@@ -69,10 +69,10 @@ export const CompanySection = (props: Props) => {
                     variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}
                     index={props.index}
                   >
-                    <BecomeInvestButton variant="contained">
+                    <Button variant="contained">
                       Become an invest
                       <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
-                    </BecomeInvestButton>
+                    </Button>
                   </AnimWhenVisible>
                 </Box>
               </Grid>

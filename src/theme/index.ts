@@ -20,12 +20,16 @@ const theme = (mode: PaletteMode) =>
         },
         styleOverrides: {
           containedPrimary: ({ theme }) => ({
-            background: "#925FF0",
-            borderRadius: 4,
-            gap: 5,
-            padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
+            background: "#6555EE",
+            borderRadius: 8,
+            gap: 8,
+            padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
+            fontWeight: 500,
+            fontSize: 16,
+            lineHeight: "100%",
+            textTransform: "none",
             ":hover": {
-              background: "#A87FF3",
+              background: "#5946FF",
             },
           }),
         },

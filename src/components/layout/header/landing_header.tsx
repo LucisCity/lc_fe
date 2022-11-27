@@ -231,9 +231,9 @@ const LandingHeader = (props: IProps) => {
                 })}
               >
                 <Right>
-                  <ButtonLogin LinkComponent={Link} href={"/login"} variant="contained">
+                  <Button LinkComponent={Link} href={"/login"} variant="contained">
                     Log in{" "}
-                  </ButtonLogin>
+                  </Button>
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>

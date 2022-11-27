@@ -1,10 +1,10 @@
 import { Box, Button, Container, Grid, Typography, Paper } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
-import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
 import AnimWhenVisible from "../anim";
-import { BecomeInvestButton } from "./company_section";
+import { CardAnimation } from "./components/card_animation";
+// import { BecomeInvestButton } from "./company_section";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -14,12 +14,6 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 interface IProps {
   index?: number;
 }
-
-const StarImage1 = styled("img")(() => ({
-  position: "absolute",
-  left: -30,
-  bottom: -30,
-}));
 
 const StarImage2 = styled("img")(() => ({
   position: "absolute",
@@ -39,16 +33,25 @@ const CardItem = styled(Paper)(({ theme }) => ({
   img: {
     marginRight: theme.spacing(3),
   },
-  // [theme.breakpoints.between("sm", "md")]: {
-  //   height: 62,
-  // },
+  [theme.breakpoints.between("sm", "md")]: {
+    fontSize: 12,
+    height: 62,
+  },
 }));
 
 const CardSupportTitle = styled("div")(({ theme }) => ({
-  background: `url("/assets/imgs/landing/card_support_title.png")`,
   width: 60,
   height: 25,
   marginLeft: theme.spacing(3),
+  borderRadius: 4,
+  border: "1px solid #fff",
+  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: 12,
+  fontWeight: 500,
+  lineHeight: 1,
 }));
 
 const contentItems1 = [
@@ -130,20 +133,16 @@ export const CardSection = (props: IProps) => {
       <Container sx={{ height: "100%" }}>
         <Box position="relative" height={"100%"}>
           <Box height={"100%"}>
-            <Grid container sx={{ height: "100%" }}>
-              <Grid item xs={0} md={3} sx={{ height: "100%" }}>
+            <Grid container sx={{ height: "100%" }} spacing={16}>
+              <Grid item xs={0} sm={3} sx={{ height: "100%" }}>
                 <Box
                   display="flex"
                   flexDirection={"column"}
                   justifyContent="center"
                   alignItems={"flex-start"}
-                  gap={2}
                   height="100%"
                 >
-                  <div style={{ position: "relative" }}>
-                    <img src="/card.png" alt="" />
-                    <StarImage1 src="/star2.png" alt="" />
-                  </div>
+                  <CardAnimation animationIndex={props.index} />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={8} sx={{ height: "100%" }}>
@@ -156,20 +155,29 @@ export const CardSection = (props: IProps) => {
                   height="100%"
                 >
                   <Box style={{ position: "relative" }}>
-                    <Box display="flex">
-                      <img src="/assets/imgs/landing/galaxy_card.svg" alt="galaxy card" />
-                      <CardSupportTitle />
-                    </Box>
-                    <Typography
-                      sx={{ color: "#6555EE", textTransform: "uppercase", fontWeight: 600, fontSize: 16 }}
-                      mt={2}
+                    <AnimWhenVisible
+                      variants={{
+                        visible: { opacity: 1, y: 0 },
+                        hidden: { opacity: 0, y: -30, transition: { delay: 0 } },
+                      }}
+                      // transition={{ delay: item.delay, duration: 0.6 }}
+                      index={props.index}
                     >
-                      đẳng cấp công nghệ
-                    </Typography>
-                    <Typography sx={{ color: "rgba(80, 76, 103, 1)" }} mt={8} mb={9}>
-                      Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải <br /> nghiệm và hưởng
-                      lợi nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
-                    </Typography>
+                      <Box display="flex">
+                        <img src="/assets/imgs/landing/card_title.png" alt="galaxy card" height="25px" />
+                        <CardSupportTitle>card</CardSupportTitle>
+                      </Box>
+                      <Typography
+                        sx={{ color: "#6555EE", textTransform: "uppercase", fontWeight: 600, fontSize: 16 }}
+                        mt={2}
+                      >
+                        đẳng cấp công nghệ
+                      </Typography>
+                      <Typography sx={{ color: "rgba(80, 76, 103, 1)" }} mt={8} mb={9}>
+                        Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải <br /> nghiệm và hưởng
+                        lợi nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
+                      </Typography>
+                    </AnimWhenVisible>
                     <Box mb={9}>
                       <Grid container spacing={3}>
                         <ListContent listContent={contentItems1} animeIndex={props?.index} />
@@ -178,18 +186,28 @@ export const CardSection = (props: IProps) => {
                         <ListContent listContent={contentItems2} animeIndex={props?.index} />
                       </Grid>
                     </Box>
-                    <Box>
-                      <BecomeInvestButton variant="contained">
-                        Become invest
-                        <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
-                      </BecomeInvestButton>
-                      <Button sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}>Read more</Button>
-                    </Box>
+                    <AnimWhenVisible
+                      variants={{
+                        visible: { opacity: 1, y: 0 },
+                        hidden: { opacity: 0, y: 30, transition: { delay: 0 } },
+                      }}
+                      // transition={{ delay: item.delay, duration: 0.6 }}
+                      index={props.index}
+                    >
+                      <Box>
+                        <Button variant="contained">
+                          Become an invest
+                          <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
+                        </Button>
+                        <Button sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}>Read more</Button>
+                      </Box>
+                    </AnimWhenVisible>
+
                     <StarImage2 src="/star1.png" alt="" />
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={1} />
+              <Grid item xs={0} sm={1} />
             </Grid>
           </Box>
         </Box>

@@ -42,15 +42,17 @@ export default function LandingPage() {
 
   return (
     <Box>
-      {size.width < 768 ? (
+      {size.width < theme.breakpoints.values.sm ? (
         <Box>
           <LandingHeader slideActive={slideActive} />
+          <TopSection />
           <CompanySection />
+          {/* <CardSection /> */}
           <EcosystemSection />
           <ReasonChooseSection />
           <OperationSection />
           <NftSection />
-          <CompanySection />
+          {/* <CompanySection /> */}
         </Box>
       ) : (
         <>
