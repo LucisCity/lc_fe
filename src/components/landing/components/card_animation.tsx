@@ -11,11 +11,33 @@ const ImageAnimation = styled(motion.img)(({ theme }) => ({
     height: 300,
   },
 }));
-
-const Coin = styled("img")(() => ({
+const Coin = styled("img")(({ theme }) => ({
   position: "absolute",
-  left: -30,
-  bottom: 0,
+  right: -30,
+  top: -70,
+  zIndex: -1,
+  [theme.breakpoints.down("md")]: {
+    left: 200,
+    bottom: 50,
+  },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
+}));
+
+const Coin2 = styled("img")(({ theme }) => ({
+  position: "absolute",
+  left: -50,
+  bottom: -50,
+  zIndex: -1,
+  [theme.breakpoints.down("md")]: {
+    left: 200,
+    bottom: 50,
+  },
+  [theme.breakpoints.down("sm")]: {
+    left: 70,
+    bottom: 50,
+  },
 }));
 const Wrapper = styled(motion.div)(({ theme }) => ({
   width: "100%",
@@ -36,7 +58,6 @@ interface IProps {
 }
 
 export const CardAnimation = (props: IProps) => {
-  const theme = useTheme();
   return (
     <Box
       position="relative"
@@ -98,7 +119,8 @@ export const CardAnimation = (props: IProps) => {
           </>
         </Wrapper>
       </AnimWhenVisible>
-      <Coin src="/star2.png" alt="" />
+      <Coin src="/assets/imgs/landing/coin3.png" alt="" />
+      <Coin2 src="/assets/imgs/landing/coin3.png" alt="" />
     </Box>
   );
 };

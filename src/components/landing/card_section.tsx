@@ -9,6 +9,7 @@ import { CardAnimation } from "./components/card_animation";
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
   width: "100%",
+  position: "relative",
   [theme.breakpoints.down("sm")]: {
     height: "auto",
     paddingTop: theme.spacing(3),
@@ -20,10 +21,17 @@ interface IProps {
   index?: number;
 }
 
-const CoinImage = styled("img")(() => ({
+const CoinImage = styled("img")(({ theme }) => ({
   position: "absolute",
-  top: 50,
+  top: 100,
   right: 200,
+  [theme.breakpoints.down("lg")]: {
+    right: 100,
+  },
+  [theme.breakpoints.down("md")]: {
+    top: 0,
+    right: 0,
+  },
 }));
 
 const CardItem = styled(Paper)(({ theme }) => ({
@@ -150,7 +158,15 @@ export const CardSection = (props: IProps) => {
       <Container sx={{ height: "100%" }}>
         <Grid container sx={{ height: "100%" }} spacing={{ lg: 16, md: 12, sx: 0 }}>
           <Grid item xs={0} md={4} lg={3} width={"100%"}>
-            <Box display="flex" justifyContent="center" alignItems={"center"} width={"100%"} height={"100%"}>
+            <Box
+              display="flex"
+              justifyContent="center"
+              position={"relative"}
+              zIndex={1}
+              alignItems={"center"}
+              width={"100%"}
+              height={"100%"}
+            >
               <CardAnimation animationIndex={props.index} />
             </Box>
           </Grid>
@@ -238,7 +254,7 @@ export const CardSection = (props: IProps) => {
           </Grid>
           <Grid item xs={0} lg={1} />
         </Grid>
-        <CoinImage src="/star1.png" alt="" />
+        <CoinImage src="/assets/imgs/landing/coin4.png" alt="" />
       </Container>
     </MainItemComponent>
   );
