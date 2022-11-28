@@ -10,6 +10,11 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
+const TitleImage = styled("img")(({ theme }) => ({
+  height: 180,
+  paddingBottom: theme.spacing(12),
+}));
+
 // export const BecomeInvestButton = styled(Button)(({ theme }) => ({
 //   background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
 //   filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2))",
@@ -57,9 +62,7 @@ export const CompanySection = (props: Props) => {
                   height="100%"
                 >
                   <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
-                    <Typography variant="h1" sx={{ color: "#504C67", fontWeight: 700, fontSize: 64, mb: 12 }}>
-                      Lucis <span style={{ color: "#fff" }}>City</span>
-                    </Typography>
+                    <TitleImage src="/assets/imgs/logo/logo-color.svg" alt="lucis - title" />
                   </AnimWhenVisible>
                   <Typography sx={{ mb: 22 }}>
                     Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng Mở ra cơ hội đầu tư vào thị

@@ -45,7 +45,9 @@ const Header = () => {
         <Container>
           <Grid container>
             <Grid item id="logo" xs={3}>
-              <Left>Logo</Left>
+              <Left>
+                <img src="/assets/imgs/logo/logo-color.svg" alt="" />
+              </Left>
             </Grid>
             <Grid item id="menu" xs={6}>
               <nav>

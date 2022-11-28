@@ -3,6 +3,7 @@ import { Box, styled, useTheme } from "@mui/system";
 import Link from "next/link";
 import { Left } from "../../common/left";
 import { Right } from "../../common/right";
+import { Center } from "../../common/center";
 import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
 export const headerHeight = 90;
@@ -192,7 +193,9 @@ const LandingHeader = (props: IProps) => {
         <Container>
           <Grid container>
             <Grid item id="logo" sm={3} xs={6}>
-              {/* <Left>Logo</Left> */}
+              <Center>
+                <img src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" height={60} />
+              </Center>
             </Grid>
             <Grid item id="menu" sm={6} xs={0} style={{ position: "relative" }}>
               <MenuBar>

@@ -159,12 +159,13 @@ export const CardSection = (props: IProps) => {
               display="flex"
               flexDirection={"column"}
               justifyContent="center"
-              alignItems={"center"}
+              // alignItems={"center"}
               gap={2}
               height="100%"
               sx={(theme) => ({
                 [theme.breakpoints.down("md")]: {
                   justifyContent: "flex-start",
+                  alignItems: "center",
                 },
               })}
             >
