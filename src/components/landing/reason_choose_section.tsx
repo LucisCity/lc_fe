@@ -50,7 +50,7 @@ export function ReasonChooseSection(props: Props) {
           <Grid container spacing={6}>
             <Grid md={0} lg={3}></Grid>
             <Grid md={12} lg={9}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
+              <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300, y: -300 } }} index={props.index}>
                 <Typography
                   variant="h3"
                   whiteSpace="pre-line"
@@ -74,7 +74,7 @@ export function ReasonChooseSection(props: Props) {
             ></Grid>
             <Grid md={6} lg={3}>
               <AnimWhenVisible
-                variants={{ hidden: { opacity: 0, y: -100 } }}
+                variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
                 index={props.index}
               >
@@ -86,7 +86,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
             <Grid md={6} lg={3}>
               <AnimWhenVisible
-                variants={{ hidden: { opacity: 0, y: -100 } }}
+                variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
                 index={props.index}
               >
@@ -101,7 +101,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
             <Grid md={6} lg={3}>
               <AnimWhenVisible
-                variants={{ hidden: { opacity: 0, y: -100 } }}
+                variants={{ hidden: { opacity: 0, x: -300 } }}
                 style={{ height: "100%" }}
                 index={props.index}
               >
@@ -116,7 +116,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
             <Grid md={6} lg={3}>
               <AnimWhenVisible
-                variants={{ hidden: { opacity: 0, y: -100 } }}
+                variants={{ hidden: { opacity: 0, x: -300 } }}
                 style={{ height: "100%" }}
                 index={props.index}
               >
@@ -129,7 +129,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
             <Grid md={6} lg={3}>
               <AnimWhenVisible
-                variants={{ hidden: { opacity: 0, y: -100 } }}
+                variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
                 index={props.index}
               >
@@ -144,7 +144,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
             <Grid md={6} lg={3}>
               <AnimWhenVisible
-                variants={{ hidden: { opacity: 0, y: -100 } }}
+                variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
                 index={props.index}
               >

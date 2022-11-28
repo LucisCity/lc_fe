@@ -15,6 +15,8 @@ export function EcosystemSection(props: Props) {
         width: "100vw",
         height: "100vh",
         overflow: "hidden",
+        // position: "relative",
+        // background: "transparent",
         [theme.breakpoints.down("sm")]: {
           background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
           backgroundRepeat: "no-repeat",
@@ -27,6 +29,15 @@ export function EcosystemSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
+      {/* <Box
+        component="img"
+        src="/assets/imgs/landing/img_red.svg"
+        sx={{
+          position: "absolute",
+          top: "20px",
+          left: "0px",
+        }}
+      /> */}
       <Box
         display="flex"
         alignItems="center"
@@ -57,12 +68,12 @@ export function EcosystemSection(props: Props) {
             },
           }}
         >
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
+          <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
             <Typography variant="h3" whiteSpace="pre-line" id="es_header">{`Hệ sinh thái
           Lucis City`}</Typography>
           </AnimWhenVisible>
 
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, y: 100 } }} index={props.index}>
+          <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300, y: 300 } }} index={props.index}>
             <Typography
               whiteSpace="pre-line"
               id="es_content"

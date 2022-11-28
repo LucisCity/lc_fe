@@ -147,7 +147,7 @@ export const CardSection = (props: IProps) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", padding: "1px" }}>
         <Grid container sx={{ height: "100%" }} spacing={{ lg: 16, md: 12, sx: 0 }}>
           <Grid item xs={0} md={4} lg={3} width={"100%"}>
             <Box display="flex" justifyContent="center" alignItems={"center"} width={"100%"} height={"100%"}>

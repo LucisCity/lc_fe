@@ -30,6 +30,7 @@ export enum Section {
   Partner,
   Community,
 }
+
 export default function LandingPage() {
   const [slideActive, setSlideActive] = useState(0);
   const theme = useTheme();
@@ -37,107 +38,108 @@ export default function LandingPage() {
     activeIndex: 0,
     preIndex: 0,
   });
-  useScroll();
+  const { position } = useScroll();
+
   const size = useWindowSize();
 
+  if (size.width === Infinity || size.width <= theme.breakpoints.values.sm) {
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          overflowX: "hidden",
+        }}
+      >
+        <LandingHeader slideActive={position > 100 ? 1 : 0} />
+        <TopSection />
+        <CompanySection />
+        <CardSection />
+        <EcosystemSection />
+        <ReasonChooseSection />
+        <OperationSection />
+        <NftSection />
+        <TopSection />
+      </Box>
+    );
+  }
   return (
-    <Box>
-      {size.width < theme.breakpoints.values.sm ? (
-        <Box>
-          <LandingHeader slideActive={slideActive} />
-          <TopSection />
-          <CompanySection />
-          <CardSection />
-          <EcosystemSection />
-          <ReasonChooseSection />
-          <OperationSection />
-          <NftSection />
-          {/* <CompanySection /> */}
-        </Box>
-      ) : (
-        <>
-          <Box
-            sx={{
-              width: "100%",
-              height: "100vh",
-              overflow: "auto",
-            }}
-          >
-            <PagingCtx.Provider value={paging}>
-              <Swiper
-                direction={"vertical"}
-                slidesPerView={1}
-                spaceBetween={0}
-                mousewheel={true}
-                pagination={{
-                  clickable: true,
-                }}
-                modules={[Parallax, Mousewheel, Pagination]}
-                parallax={true}
-                // onChangeDirection={(swiper) => {
-
-                // }}
-                onActiveIndexChange={(swiper) => {
-                  setSlideActive(swiper.activeIndex);
-                  setPaging({
-                    activeIndex: swiper.activeIndex,
-                    preIndex: swiper.previousIndex,
-                  });
-                }}
-                style={{
-                  overflow: "hidden",
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <Box slot="container-start">
-                  <LandingHeader slideActive={slideActive} />
-                </Box>
-
-                <Box
-                  slot="container-start"
-                  sx={{
-                    background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/background-card.jpg
-                    position: "absolute",
-                    left: "0",
-                    top: "0",
-                    width: "130%",
-                    height: "150%",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                  data-swiper-parallax="-23%"
-                ></Box>
-
-                <SwiperSlide>
-                  <TopSection index={0} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <CompanySection index={1} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <CardSection index={2} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EcosystemSection index={3} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ReasonChooseSection index={4} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <OperationSection index={5} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <NftSection index={6} />;
-                </SwiperSlide>
-                <SwiperSlide>
-                  <CompanySection index={7} />
-                </SwiperSlide>
-              </Swiper>
-            </PagingCtx.Provider>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100vh",
+        overflow: "auto",
+      }}
+    >
+      <PagingCtx.Provider value={paging}>
+        <Swiper
+          direction={"vertical"}
+          slidesPerView={1}
+          spaceBetween={0}
+          mousewheel={true}
+          speed={800}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Parallax, Mousewheel, Pagination]}
+          parallax={true}
+          onActiveIndexChange={(swiper) => {
+            setSlideActive(swiper.activeIndex);
+            setPaging({
+              activeIndex: swiper.activeIndex,
+              preIndex: swiper.previousIndex,
+            });
+          }}
+          style={{
+            overflow: "hidden",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <Box slot="container-start">
+            <LandingHeader slideActive={slideActive} />
           </Box>
-        </>
-      )}
+
+          <Box
+            slot="container-start"
+            sx={{
+              background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
+              position: "absolute",
+              left: "0",
+              top: "0",
+              width: "130%",
+              height: "150%",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            data-swiper-parallax="-23%"
+          ></Box>
+
+          <SwiperSlide>
+            <TopSection index={0} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CompanySection index={1} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardSection index={2} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <EcosystemSection index={3} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <ReasonChooseSection index={4} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <OperationSection index={5} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <NftSection index={6} />;
+          </SwiperSlide>
+          <SwiperSlide>
+            <CompanySection index={7} />
+          </SwiperSlide>
+        </Swiper>
+      </PagingCtx.Provider>
     </Box>
   );
 }

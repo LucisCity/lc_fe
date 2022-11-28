@@ -58,7 +58,7 @@ export function OperationSection(props: Props) {
             },
           }}
         >
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
+          <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300 } }} index={props.index}>
             <Typography variant="h3" whiteSpace="pre-line">{`Basic operation
             of Lucis city`}</Typography>
             <Typography
@@ -71,7 +71,7 @@ export function OperationSection(props: Props) {
             </Typography>
           </AnimWhenVisible>
         </Box>
-        <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
+        <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300 } }} index={props.index}>
           <Center>
             <Box
               component="img"
