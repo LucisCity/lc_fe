@@ -47,7 +47,7 @@ export default function LandingPage() {
           <LandingHeader slideActive={slideActive} />
           <TopSection />
           <CompanySection />
-          {/* <CardSection /> */}
+          <CardSection />
           <EcosystemSection />
           <ReasonChooseSection />
           <OperationSection />

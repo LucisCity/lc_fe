@@ -69,9 +69,11 @@ export const CompanySection = (props: Props) => {
                     variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}
                     index={props.index}
                   >
-                    <Button variant="contained">
+                    <Button
+                      variant="contained"
+                      endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                    >
                       Become an invest
-                      <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
                     </Button>
                   </AnimWhenVisible>
                 </Box>

@@ -1,18 +1,34 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { motion, Transition, useAnimation, Variants } from "framer-motion";
-import { styled } from "@mui/system";
+import { styled, useTheme } from "@mui/system";
 import AnimWhenVisible from "../../anim";
 import { usePaging } from "../../anim/swip_visible_anim";
-const Card = styled("img")(({ theme }) => ({
+const ImageAnimation = styled(motion.img)(({ theme }) => ({
   position: "absolute",
-  zIndex: 3,
+  height: 380,
+  [theme.breakpoints.down("md")]: {
+    height: 300,
+  },
 }));
 
 const Coin = styled("img")(() => ({
   position: "absolute",
   left: -30,
-  bottom: -120,
+  bottom: 0,
+}));
+const Wrapper = styled(motion.div)(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+
+  [theme.breakpoints.between("md", "lg")]: {
+    justifyContent: "flex-end",
+  },
+  [theme.breakpoints.down("md")]: {
+    paddingLeft: 50,
+  },
 }));
 
 interface IProps {
@@ -20,9 +36,21 @@ interface IProps {
 }
 
 export const CardAnimation = (props: IProps) => {
-  const paging = usePaging();
+  const theme = useTheme();
   return (
-    <Box position="relative" width={"100%"} height={380}>
+    <Box
+      position="relative"
+      width={"100%"}
+      height={380}
+      sx={(theme) => ({
+        [theme.breakpoints.between("sm", "md")]: {
+          marginTop: theme.spacing(32),
+        },
+        [theme.breakpoints.down("sm")]: {
+          marginTop: theme.spacing(16),
+        },
+      })}
+    >
       <AnimWhenVisible
         variants={{
           visible: { opacity: 1, x: 0 },
@@ -30,43 +58,45 @@ export const CardAnimation = (props: IProps) => {
         }}
         // transition={{ delay: item.delay, duration: 0.6 }}
         index={props.animationIndex}
+        style={{ width: "100%", height: "100%" }}
       >
-        {paging.activeIndex === props.animationIndex && (
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-            }}
-            transition={{ ease: "linear", duration: 2, repeat: Infinity }}
-          >
-            <>
-              <Card src="/card.png" />
-              <motion.img
-                src="/card.png"
-                style={{
-                  position: "absolute",
-                  zIndex: 2,
-                }}
-                animate={{
-                  x: [0, -30],
-                  rotate: [0, -10],
-                }}
-                transition={{ ease: "linear", duration: 1 }}
-              ></motion.img>
-              <motion.img
-                src="/card.png"
-                style={{
-                  position: "absolute",
-                  zIndex: 1,
-                }}
-                animate={{
-                  x: [0, -60],
-                  rotate: [0, -20],
-                }}
-                transition={{ ease: "linear", duration: 1 }}
-              ></motion.img>
-            </>
-          </motion.div>
-        )}
+        <Wrapper
+          animate={{
+            y: [0, -20, 0],
+          }}
+          transition={{ ease: "linear", duration: 2, repeat: Infinity }}
+        >
+          <>
+            <ImageAnimation
+              src="/card.png"
+              style={{
+                zIndex: 3,
+              }}
+            ></ImageAnimation>
+            <ImageAnimation
+              src="/card.png"
+              style={{
+                zIndex: 2,
+              }}
+              animate={{
+                x: [0, -30],
+                rotate: [0, -10],
+              }}
+              transition={{ ease: "linear", duration: 1 }}
+            ></ImageAnimation>
+            <ImageAnimation
+              src="/card.png"
+              style={{
+                zIndex: 1,
+              }}
+              animate={{
+                x: [0, -60],
+                rotate: [0, -20],
+              }}
+              transition={{ ease: "linear", duration: 1 }}
+            ></ImageAnimation>
+          </>
+        </Wrapper>
       </AnimWhenVisible>
       <Coin src="/star2.png" alt="" />
     </Box>
