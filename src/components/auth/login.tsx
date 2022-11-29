@@ -38,6 +38,7 @@ function RegisterForm() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           padding: "24px",
+          height: "100vh",
         }}
       >
         <Box

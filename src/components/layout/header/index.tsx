@@ -192,7 +192,9 @@ const Header = (props: IProps) => {
                 height={"100%"}
                 alignItems={"center"}
               >
-                <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
+                <Link href={"/"}>
+                  <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
+                </Link>
               </Box>
             </Grid>
             <Grid item id="menu" sm={6} xs={0} style={{ position: "relative" }}>
@@ -203,7 +205,7 @@ const Header = (props: IProps) => {
                       <HeaderNextLink href="/"> Home </HeaderNextLink>
                     </li>
                     <li>
-                      <HeaderNextLink href="/"> Member </HeaderNextLink>
+                      <HeaderNextLink href="/member"> Member </HeaderNextLink>
                     </li>
                     <li>
                       <HeaderNextLink href="/"> Invest </HeaderNextLink>

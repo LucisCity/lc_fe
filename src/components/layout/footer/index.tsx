@@ -9,8 +9,6 @@ const FooterStyled = styled("footer")(({ theme }) => ({
   backdropFilter: "blur(12px)",
   display: "flex",
   alignItems: "center",
-  position: "absolute",
-  bottom: 0,
 }));
 
 const UlComponent = styled("ul")(({ theme }) => ({
