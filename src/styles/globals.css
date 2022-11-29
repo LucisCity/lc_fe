@@ -6,7 +6,7 @@ body {
   margin: 0;
 }
 * {
-  font-family: "Roboto", sans-serif;
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
   box-sizing: border-box;
@@ -21,7 +21,7 @@ body {
   box-shadow: none;
 } */
 
-a {
+/* a {
   color: inherit;
   text-decoration: none;
 }
@@ -34,4 +34,4 @@ a {
     color: white;
     background: black;
   }
-}
+} */
