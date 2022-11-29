@@ -27,6 +27,9 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
       transition: theme.transitions.create(["height"], { duration: 1000 }),
       height: headerHeight,
     }),
+    [theme.breakpoints.down("sm")]: {
+      position: "fixed",
+    },
   }),
 );
 const MenuBar = styled("div")(({ theme }) => ({
