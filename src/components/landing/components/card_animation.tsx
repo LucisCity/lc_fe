@@ -55,6 +55,7 @@ const Wrapper = styled(motion.div)(({ theme }) => ({
 
 interface IProps {
   animationIndex?: number;
+  enable?: boolean;
 }
 
 export const CardAnimation = (props: IProps) => {
@@ -80,6 +81,7 @@ export const CardAnimation = (props: IProps) => {
         // transition={{ delay: item.delay, duration: 0.6 }}
         index={props.animationIndex}
         style={{ width: "100%", height: "100%" }}
+        enable={props?.enable ?? true}
       >
         <Wrapper
           animate={{

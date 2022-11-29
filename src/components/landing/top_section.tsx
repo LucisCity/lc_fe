@@ -7,16 +7,12 @@ import { useAnimation } from "../../hooks/use_animation";
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
   width: "100%",
+  [theme.breakpoints.down("sm")]: {
+    height: "50vh",
+  },
 }));
 
-interface IProps {
-  activeSection?: Section;
-  index?: number;
-}
-
-export const TopSection = (props: IProps) => {
-  const activeSection = props.activeSection;
-
+export const TopSection = () => {
   return (
     <MainItemComponent
       sx={{

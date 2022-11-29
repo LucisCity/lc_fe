@@ -5,9 +5,10 @@ import Header from "./header";
 type Props = {
   children: any;
   isShowHeader?: boolean;
+  isShowFooter?: boolean;
 };
 function AppLayout(props: Props) {
-  const { children, isShowHeader } = props;
+  const { children, isShowHeader, isShowFooter } = props;
 
   return (
     <>
@@ -15,7 +16,7 @@ function AppLayout(props: Props) {
       <DocHead />
       {isShowHeader === false ? null : <Header />}
       {children}
-      <Footer />
+      {isShowFooter === false ? null : <Footer />}
     </>
   );
 }

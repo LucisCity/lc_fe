@@ -1,8 +1,8 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
-import { styled } from "@mui/system";
-import { ButtonLogin, headerHeight, HeaderNextLink, ToggleDrawer } from "./landing_header";
-import { Container, Grid, IconButton } from "@mui/material";
+import { Box, styled } from "@mui/system";
+import { headerHeight, HeaderNextLink, LogoImage, ToggleDrawer } from ".";
+import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
 import { Left } from "../../common/left";
@@ -81,9 +81,9 @@ const MenuList = () => (
           </HeaderNextLink>
         </li>
         <li>
-          <ButtonLogin LinkComponent={Link} href={"/login"}>
+          <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
             Login
-          </ButtonLogin>
+          </Button>
         </li>
         <li>
           <IconButton>
@@ -122,7 +122,15 @@ export const SideBarMenu = (props: IProps) => {
           <Container sx={{ height: "100%" }}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={6}>
-                <Left>Logo</Left>
+                <Box
+                  display={"flex"}
+                  justifyContent={{ md: "center", xs: "flex-start" }}
+                  width={"100%"}
+                  height={"100%"}
+                  alignItems={"center"}
+                >
+                  <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
+                </Box>
               </Grid>
               <Grid item xs={6}>
                 <Right>

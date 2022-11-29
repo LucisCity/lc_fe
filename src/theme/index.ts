@@ -4,6 +4,11 @@ import { createTheme } from "@mui/material/styles";
 // Create a theme instance.
 const theme = (mode: PaletteMode) =>
   createTheme({
+    palette: {
+      text: {
+        primary: "#504C67",
+      },
+    },
     breakpoints: {
       values: {
         xs: 0,
@@ -32,6 +37,16 @@ const theme = (mode: PaletteMode) =>
               background: "#5946FF",
             },
           }),
+        },
+      },
+
+      // container
+      MuiContainer: {
+        styleOverrides: {
+          root: {
+            paddingLeft: "24px !important",
+            paddingRight: "24px !important",
+          },
         },
       },
     },

@@ -1,16 +1,15 @@
 import { Box, Button, Container, Grid, Typography, Paper } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
-import { useAnimation } from "../../hooks/use_animation";
 import AnimWhenVisible from "../anim";
 import { CardAnimation } from "./components/card_animation";
-// import { BecomeInvestButton } from "./company_section";
+import Link from "next/link";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
   width: "100%",
   position: "relative",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     height: "auto",
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
@@ -19,6 +18,9 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 
 interface IProps {
   index?: number;
+  disabledBackground?: boolean;
+  disabledReadmoreButton?: boolean;
+  disabledAnimation?: boolean;
 }
 
 const CoinImage = styled("img")(({ theme }) => ({
@@ -59,7 +61,7 @@ const CardItem = styled(Paper)(({ theme }) => ({
 const Title = styled("img")(({ theme }) => ({
   height: 25,
   [theme.breakpoints.down("sm")]: {
-    height: 16,
+    height: 15,
   },
 }));
 
@@ -76,6 +78,11 @@ const CardSupportTitle = styled("div")(({ theme }) => ({
   fontSize: 12,
   fontWeight: 500,
   lineHeight: 1,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 10,
+    width: 40,
+    height: 20,
+  },
 }));
 
 const contentItems1 = [
@@ -145,13 +152,16 @@ const ListContent = ({
   );
 };
 export const CardSection = (props: IProps) => {
+  const disabledBackground = props?.disabledBackground ?? false;
+  const disabledReadmoreButton = props?.disabledReadmoreButton ?? false;
+  const disabledAnimation = props?.disabledAnimation ?? false;
   return (
     <MainItemComponent
       sx={{
-        background: `url(${"assets/imgs/landing/background-card.jpg"})`,
+        background: !disabledBackground ? `url(${"assets/imgs/member/background.jpg"})` : "none",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPosition: "left",
+        backgroundPosition: "top",
         width: "100%",
       }}
     >
@@ -167,7 +177,7 @@ export const CardSection = (props: IProps) => {
               width={"100%"}
               height={"100%"}
             >
-              <CardAnimation animationIndex={props.index} />
+              <CardAnimation animationIndex={props.index} enable={!disabledAnimation} />
             </Box>
           </Grid>
           <Grid item xs={12} md={8} lg={8} sx={{ height: "100%" }}>
@@ -192,6 +202,7 @@ export const CardSection = (props: IProps) => {
                 }}
                 // transition={{ delay: item.delay, duration: 0.6 }}
                 index={props.index}
+                enable={!disabledAnimation}
               >
                 <Box display="flex">
                   <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
@@ -210,7 +221,7 @@ export const CardSection = (props: IProps) => {
                   đẳng cấp công nghệ
                 </Typography>
                 <Typography
-                  sx={(theme) => ({ color: "rgba(80, 76, 103, 1)", [theme.breakpoints.down("sm")]: { fontSize: 14 } })}
+                  sx={(theme) => ({ color: "rgba(80, 76, 103, 1)", [theme.breakpoints.down("sm")]: { fontSize: 12 } })}
                   mt={{ md: 8, xs: 4 }}
                   mb={{ md: 8, xs: 5 }}
                 >
@@ -231,6 +242,7 @@ export const CardSection = (props: IProps) => {
                 }}
                 // transition={{ delay: item.delay, duration: 0.6 }}
                 index={props.index}
+                enable={!disabledAnimation}
               >
                 <Box
                   display={"flex"}
@@ -240,6 +252,7 @@ export const CardSection = (props: IProps) => {
                     },
                   })}
                   flexDirection={"row"}
+                  pb={5}
                 >
                   <Button
                     variant="contained"
@@ -247,7 +260,15 @@ export const CardSection = (props: IProps) => {
                   >
                     Become an invest
                   </Button>
-                  <Button sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}>Read more</Button>
+                  {!disabledReadmoreButton && (
+                    <Button
+                      LinkComponent={Link}
+                      href={"/member"}
+                      sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
+                    >
+                      Read more
+                    </Button>
+                  )}
                 </Box>
               </AnimWhenVisible>
             </Box>
