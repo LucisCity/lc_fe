@@ -73,7 +73,6 @@ export default function NftSection(props: Props) {
               </Box>
             </Box>
           </AnimWhenVisible>
-
           <Box
             sx={{
               width: "100%",
@@ -95,6 +94,7 @@ export default function NftSection(props: Props) {
                   alignItems: "center",
                   justifyContent: "space-between",
                   marginTop: 4,
+                  width: "360px",
                 }}
               >
                 <Typography variant="h4">$63,429.39</Typography>
