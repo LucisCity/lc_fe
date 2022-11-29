@@ -3,7 +3,7 @@ import DocHead from "../components/layout/doc_head";
 import AppLayout from "../components/layout";
 import { TopSection } from "../components/landing/top_section";
 
-const Member: NextPage = () => {
+const Invest: NextPage = () => {
   return (
     <>
       <DocHead />
@@ -16,4 +16,4 @@ const Member: NextPage = () => {
   );
 };
 
-export default Member;
+export default Invest;
