@@ -13,6 +13,9 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 const TitleImage = styled("img")(({ theme }) => ({
   height: 180,
   paddingBottom: theme.spacing(12),
+  [theme.breakpoints.down("md")]: {
+    height: 160,
+  },
 }));
 
 // export const BecomeInvestButton = styled(Button)(({ theme }) => ({

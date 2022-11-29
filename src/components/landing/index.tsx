@@ -10,7 +10,7 @@ import { ReasonChooseSection } from "./reason_choose_section";
 import { OperationSection } from "./operation_section";
 import { CompanySection } from "./company_section";
 import { useState } from "react";
-import LandingHeader from "../layout/header/landing_header";
+import Header from "../layout/header";
 import { useWindowSize } from "react-use";
 import useScroll from "../../hooks/useScroll";
 import { PagingContextType, PagingCtx } from "../anim/swip_visible_anim";
@@ -50,7 +50,7 @@ export default function LandingPage() {
           overflowX: "hidden",
         }}
       >
-        <LandingHeader slideActive={position > 100 ? 1 : 0} />
+        <Header slideActive={position > 100 ? 1 : 0} />
         <TopSection />
         <CompanySection />
         <CardSection />
@@ -96,7 +96,7 @@ export default function LandingPage() {
           }}
         >
           <Box slot="container-start">
-            <LandingHeader slideActive={slideActive} />
+            <Header slideActive={slideActive} />
           </Box>
 
           <Box
@@ -115,7 +115,7 @@ export default function LandingPage() {
           ></Box>
 
           <SwiperSlide>
-            <TopSection index={0} />
+            <TopSection />
           </SwiperSlide>
           <SwiperSlide>
             <CompanySection index={1} />

@@ -59,7 +59,7 @@ const CardItem = styled(Paper)(({ theme }) => ({
 const Title = styled("img")(({ theme }) => ({
   height: 25,
   [theme.breakpoints.down("sm")]: {
-    height: 16,
+    height: 15,
   },
 }));
 
@@ -76,6 +76,11 @@ const CardSupportTitle = styled("div")(({ theme }) => ({
   fontSize: 12,
   fontWeight: 500,
   lineHeight: 1,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 10,
+    width: 40,
+    height: 20,
+  },
 }));
 
 const contentItems1 = [
@@ -210,7 +215,7 @@ export const CardSection = (props: IProps) => {
                   đẳng cấp công nghệ
                 </Typography>
                 <Typography
-                  sx={(theme) => ({ color: "rgba(80, 76, 103, 1)", [theme.breakpoints.down("sm")]: { fontSize: 14 } })}
+                  sx={(theme) => ({ color: "rgba(80, 76, 103, 1)", [theme.breakpoints.down("sm")]: { fontSize: 12 } })}
                   mt={{ md: 8, xs: 4 }}
                   mb={{ md: 8, xs: 5 }}
                 >
