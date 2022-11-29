@@ -1,5 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 
@@ -8,6 +9,7 @@ type Props = {
 };
 export function EcosystemSection(props: Props) {
   const theme = useTheme();
+  const size = useWindowSize();
 
   return (
     <Box
@@ -22,7 +24,7 @@ export function EcosystemSection(props: Props) {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",
-          padding: 4,
+          padding: 6,
           height: "auto",
           // overflow: "auto",
         },
@@ -46,6 +48,7 @@ export function EcosystemSection(props: Props) {
         sx={{
           [theme.breakpoints.down("md")]: {
             flexDirection: "column",
+            padding: "80px 0px",
           },
         }}
       >
@@ -73,10 +76,12 @@ export function EcosystemSection(props: Props) {
           Lucis City`}</Typography>
           </AnimWhenVisible>
 
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300, y: 300 } }} index={props.index}>
+          <AnimWhenVisible
+            variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? 300 : 0 } }}
+            index={props.index}
+          >
             <Typography
               whiteSpace="pre-line"
-              id="es_content"
               sx={{
                 marginTop: 15,
                 [theme.breakpoints.down("sm")]: {

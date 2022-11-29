@@ -23,7 +23,7 @@ export function OperationSection(props: Props) {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",
-          padding: 4,
+          padding: 6,
           paddingTop: 6,
           paddingBottom: 6,
           height: "auto",
