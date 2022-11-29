@@ -257,6 +257,8 @@ export const CardSection = (props: IProps) => {
                   <Button
                     variant="contained"
                     endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                    LinkComponent={Link}
+                    href={"/invest"}
                   >
                     Become an invest
                   </Button>

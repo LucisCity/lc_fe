@@ -6,6 +6,7 @@ import { Right } from "../../common/right";
 import { Center } from "../../common/center";
 import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
+import { useRouter } from "next/router";
 export const headerHeight = 90;
 export const extendHeaderHeight = 500;
 const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
@@ -116,9 +117,10 @@ const Ul = styled("ul")(({ theme }) => ({
   },
 }));
 
-export const HeaderNextLink = styled(Link, { shouldForwardProp: (prop) => prop !== "isSidebar" })<{
+export const HeaderNextLink = styled(Link)<{
   isSidebar?: boolean;
-}>(({ theme, isSidebar }) => ({
+  active?: boolean;
+}>(({ theme, isSidebar, active }) => ({
   color: "#504C67",
   fontWeight: 500,
   fontSize: 16,
@@ -130,6 +132,10 @@ export const HeaderNextLink = styled(Link, { shouldForwardProp: (prop) => prop !
     width: "0%",
     borderBottom: "2px solid #504C67",
     transition: (theme.transitions as any).create(["width"]),
+    ...(active && {
+      width: "100%",
+      transition: (theme.transitions as any).create(["width"]),
+    }),
   },
   "&:link": {
     textDecoration: "none",
@@ -172,12 +178,42 @@ export const ToggleDrawer = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
+const pages = [
+  {
+    name: "Home",
+    href: "/",
+  },
+  {
+    name: "Member",
+    href: "/member",
+  },
+  {
+    name: "Invest",
+    href: "/invest",
+  },
+  {
+    name: "Marketplace",
+    href: "/marketplace",
+  },
+  {
+    name: "Blog",
+    href: "/blog",
+  },
+  {
+    name: "Contact",
+    href: "/contact",
+  },
+];
 interface IProps {
   slideActive?: number;
 }
 const Header = (props: IProps) => {
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
+  const router = useRouter();
+  const activePage = React.useMemo(() => {
+    return pages.find((item) => item.href === router.pathname) ?? pages[0];
+  }, [router.pathname]);
   return (
     <Box position={"relative"}>
       <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} />
@@ -201,24 +237,14 @@ const Header = (props: IProps) => {
               <MenuBar>
                 <nav>
                   <Ul>
-                    <li>
-                      <HeaderNextLink href="/"> Home </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/member"> Member </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Invest </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Marketplace </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Blog </HeaderNextLink>
-                    </li>
-                    <li>
-                      <HeaderNextLink href="/"> Contact </HeaderNextLink>
-                    </li>
+                    {pages.map((page) => (
+                      <li key={page.name}>
+                        <HeaderNextLink href={page.href} active={page.href === activePage.href}>
+                          {" "}
+                          {page.name}{" "}
+                        </HeaderNextLink>
+                      </li>
+                    ))}
                   </Ul>
                 </nav>
               </MenuBar>

@@ -1,19 +1,19 @@
 import type { NextPage } from "next";
 import DocHead from "../components/layout/doc_head";
-import { MemberPage } from "../components/member";
 import AppLayout from "../components/layout";
+import { TopSection } from "../components/landing/top_section";
 
-const Member: NextPage = () => {
+const Invest: NextPage = () => {
   return (
     <>
       <DocHead />
       {/*<LandingHeader />*/}
       <AppLayout>
-        <MemberPage />
+        <TopSection />
       </AppLayout>
       {/* <Footer /> */}
     </>
   );
 };
 
-export default Member;
+export default Invest;
