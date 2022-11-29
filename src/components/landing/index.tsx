@@ -1,22 +1,22 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
 import "swiper/css";
-import "swiper/css/pagination";
-// import "swiper/css/effect-creative";
-import { Mousewheel, Pagination, Parallax } from "swiper";
+import { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
 import { EcosystemSection } from "./ecosystem_section";
 import { ReasonChooseSection } from "./reason_choose_section";
 import { OperationSection } from "./operation_section";
 import { CompanySection } from "./company_section";
 import { useState } from "react";
 import Header from "../layout/header";
-import { useWindowSize } from "react-use";
 import useScroll from "../../hooks/useScroll";
 import { PagingContextType, PagingCtx } from "../anim/swip_visible_anim";
 import NftSection from "./nft_section";
 import { TopSection } from "./top_section";
 import { CardSection } from "./card_section";
+import { useWindowSize } from "../../hooks/use_window_size";
+import s from "./landing.module.sass";
+import Indicator from "./components/indicator";
 
 export enum Section {
   OnTop, // start
@@ -42,7 +42,7 @@ export default function LandingPage() {
 
   const size = useWindowSize();
 
-  if (size.width === Infinity || size.width <= theme.breakpoints.values.sm) {
+  if (size.width <= theme.breakpoints.values.sm) {
     return (
       <Box
         sx={{
@@ -62,14 +62,9 @@ export default function LandingPage() {
       </Box>
     );
   }
+
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100vh",
-        overflow: "auto",
-      }}
-    >
+    <Box className={s.container}>
       <PagingCtx.Provider value={paging}>
         <Swiper
           direction={"vertical"}
@@ -77,10 +72,8 @@ export default function LandingPage() {
           spaceBetween={0}
           mousewheel={true}
           speed={800}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[Parallax, Mousewheel, Pagination]}
+          freeMode={false}
+          modules={[Parallax, Mousewheel, Pagination, FreeMode]}
           parallax={true}
           onActiveIndexChange={(swiper) => {
             setSlideActive(swiper.activeIndex);
@@ -140,6 +133,22 @@ export default function LandingPage() {
           </SwiperSlide>
         </Swiper>
       </PagingCtx.Provider>
+      <Box
+        sx={{
+          position: "absolute",
+          right: "12px",
+          top: "50%",
+          transform: "translate(0px, -50%)",
+          zIndex: 3,
+        }}
+      >
+        <Indicator title="Lucis City" isActive={paging.activeIndex === 1} />
+        <Indicator title="Galaxy Platinum" isActive={paging.activeIndex === 2} />
+        <Indicator title="Hệ sinh thái" isActive={paging.activeIndex === 3} />
+        <Indicator title="Should choose" isActive={paging.activeIndex === 4} />
+        <Indicator title="Openration" isActive={paging.activeIndex === 5} />
+        <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} />
+      </Box>
     </Box>
   );
 }

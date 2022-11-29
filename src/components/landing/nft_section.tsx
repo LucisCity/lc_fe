@@ -19,9 +19,6 @@ export default function NftSection(props: Props) {
         backgroundSize: "cover",
         backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
-          padding: 4,
-          paddingTop: 6,
-          paddingBottom: 6,
           height: "auto",
           overflowX: "hidden",
         },
@@ -34,8 +31,8 @@ export default function NftSection(props: Props) {
           margin: "0px auto",
           height: "100%",
           [theme.breakpoints.down("md")]: {
-            padding: "1px 16px 16px 16px",
             height: "auto",
+            padding: "80px 24px",
           },
         }}
       >
@@ -45,6 +42,7 @@ export default function NftSection(props: Props) {
             alignItems: "center",
             width: "100%",
             height: "100%",
+
             [theme.breakpoints.down("md")]: {
               flexDirection: "column",
             },
@@ -78,9 +76,12 @@ export default function NftSection(props: Props) {
 
           <Box
             sx={{
+              width: "100%",
+              overflow: "hidden",
+
               marginLeft: 10,
               [theme.breakpoints.down("md")]: {
-                marginLeft: 0,
+                marginLeft: "0px",
                 marginTop: 4,
               },
             }}

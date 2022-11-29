@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
+import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 
@@ -10,6 +11,7 @@ type Props = {
 
 export function ReasonChooseSection(props: Props) {
   const theme = useTheme();
+  const size = useWindowSize();
 
   return (
     <Box
@@ -41,7 +43,7 @@ export function ReasonChooseSection(props: Props) {
             padding: "1px 16px 16px 16px",
           },
           [theme.breakpoints.down("sm")]: {
-            paddingTop: "1px",
+            padding: "80px 24px",
           },
           height: "100%",
         }}
@@ -50,7 +52,10 @@ export function ReasonChooseSection(props: Props) {
           <Grid container spacing={6}>
             <Grid md={0} lg={3}></Grid>
             <Grid md={12} lg={9}>
-              <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300, y: -300 } }} index={props.index}>
+              <AnimWhenVisible
+                variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? -300 : 0 } }}
+                index={props.index}
+              >
                 <Typography
                   variant="h3"
                   whiteSpace="pre-line"

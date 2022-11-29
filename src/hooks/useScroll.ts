@@ -18,7 +18,7 @@ export default function useScroll() {
     }
 
     yScrollPosition = window.scrollY;
-    console.log("yScrollPosition: ", yScrollPosition);
+    // console.log("yScrollPosition: ", yScrollPosition);
     setPosition(yScrollPosition);
   };
 
