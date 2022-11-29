@@ -17,6 +17,8 @@ import { CardSection } from "./card_section";
 import { useWindowSize } from "../../hooks/use_window_size";
 import s from "./landing.module.sass";
 import Indicator from "./components/indicator";
+import { ZIndex } from "../../theme/config";
+import FabButton from "./components/fab_button";
 
 export enum Section {
   OnTop, // start
@@ -139,7 +141,7 @@ export default function LandingPage() {
           right: "12px",
           top: "50%",
           transform: "translate(0px, -50%)",
-          zIndex: 3,
+          zIndex: ZIndex.fixed,
         }}
       >
         <Indicator title="Lucis City" isActive={paging.activeIndex === 1} />
@@ -149,6 +151,7 @@ export default function LandingPage() {
         <Indicator title="Openration" isActive={paging.activeIndex === 5} />
         <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} />
       </Box>
+      <FabButton />
     </Box>
   );
 }
