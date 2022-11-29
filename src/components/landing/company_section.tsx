@@ -4,6 +4,7 @@ import React from "react";
 import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
 import AnimWhenVisible from "../anim";
+import Link from "next/link";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -78,6 +79,8 @@ export const CompanySection = (props: Props) => {
                     <Button
                       variant="contained"
                       endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                      LinkComponent={Link}
+                      href={"/invest"}
                     >
                       Become an invest
                     </Button>
