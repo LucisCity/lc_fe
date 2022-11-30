@@ -23,14 +23,18 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
     borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
     //@ts-ignore
     transition: theme.transitions.create(["height"], { duration: 800 }),
+    [theme.breakpoints.down("sm")]: {
+      position: "fixed",
+    },
     ...(!open && {
       //@ts-ignore
       transition: theme.transitions.create(["height"], { duration: 800 }),
       height: headerHeight,
+      [theme.breakpoints.down("sm")]: {
+        position: "fixed",
+        height: 60,
+      },
     }),
-    [theme.breakpoints.down("sm")]: {
-      position: "fixed",
-    },
   }),
 );
 const MenuBar = styled("div")(({ theme }) => ({
@@ -39,6 +43,7 @@ const MenuBar = styled("div")(({ theme }) => ({
 
   [theme.breakpoints.down("sm")]: {
     display: "none",
+    height: 60,
   },
 }));
 
@@ -114,6 +119,9 @@ const Ul = styled("ul")(({ theme }) => ({
   justifyContent: "center",
   [theme.breakpoints.down("md")]: {
     gap: theme.spacing(4),
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: 60,
   },
 }));
 
@@ -269,7 +277,7 @@ const Header = (props: IProps) => {
                 </Right>
               </Box>
               <Box
-                height={headerHeight}
+                height={{ xs: 60, sm: headerHeight }}
                 position={"relative"}
                 sx={(theme) => ({
                   [theme.breakpoints.up("sm")]: {

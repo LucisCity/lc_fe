@@ -238,7 +238,7 @@ export const CardSection = (props: IProps) => {
               </Box>
               <Box
                 display={"flex"}
-                width={{ sm: "100%", xs: 250 }}
+                width={{ sm: "100%", xs: 270 }}
                 justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
                 flexDirection={{ sm: "row", xs: "column" }}
                 pb={5}
@@ -249,7 +249,7 @@ export const CardSection = (props: IProps) => {
                   LinkComponent={Link}
                   href={"/invest"}
                 >
-                  Become an invest
+                  Become an investor
                 </Button>
                 {!disabledReadmoreButton && (
                   <Button

@@ -54,7 +54,7 @@ export default function LandingPage() {
         }}
       >
         <Header slideActive={position > 100 ? 1 : 0} />
-        <TopSection />
+        {/*<TopSection />*/}
         <CompanySection />
         <CardSection />
         <EcosystemSection />

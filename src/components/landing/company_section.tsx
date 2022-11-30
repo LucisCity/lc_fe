@@ -69,7 +69,7 @@ export const CompanySection = (props: Props) => {
                     <TitleImage src="/assets/imgs/logo/logo-color.svg" alt="lucis - title" />
                   </AnimWhenVisible>
                   <Typography sx={{ mb: 22 }}>
-                    Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng Mở ra cơ hội đầu tư vào thị
+                    Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng. Mở ra cơ hội đầu tư vào thị
                     trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
                   </Typography>
                   <AnimWhenVisible
@@ -82,7 +82,7 @@ export const CompanySection = (props: Props) => {
                       LinkComponent={Link}
                       href={"/invest"}
                     >
-                      Become an invest
+                      Become an investor
                     </Button>
                   </AnimWhenVisible>
                 </Box>

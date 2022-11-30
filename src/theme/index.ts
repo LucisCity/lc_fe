@@ -30,6 +30,7 @@ const theme = (mode: PaletteMode) =>
             gap: 8,
             padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
             fontWeight: 500,
+            fontStyle: "normal",
             fontSize: 16,
             lineHeight: "100%",
             textTransform: "none",
