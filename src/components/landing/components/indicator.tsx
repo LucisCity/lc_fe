@@ -1,6 +1,9 @@
 import { Box, Typography } from "@mui/material";
+import { useSwiper } from "swiper/react";
 
-export default function Indicator({ isActive, title }: { isActive: boolean; title: string }) {
+export default function Indicator({ isActive, title, index }: { isActive: boolean; title: string; index: number }) {
+  const swiper = useSwiper();
+
   return (
     <Box
       sx={{
@@ -8,6 +11,10 @@ export default function Indicator({ isActive, title }: { isActive: boolean; titl
         alignItems: "center",
         justifyContent: "flex-end",
         margin: "12px 0px",
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        swiper.slideTo(index);
       }}
     >
       <Typography

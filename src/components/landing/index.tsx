@@ -133,24 +133,24 @@ export default function LandingPage() {
           <SwiperSlide>
             <CompanySection index={7} />
           </SwiperSlide>
+          <Box
+            sx={{
+              position: "absolute",
+              right: "12px",
+              top: "50%",
+              transform: "translate(0px, -50%)",
+              zIndex: ZIndex.fixed,
+            }}
+          >
+            <Indicator title="Lucis City" isActive={paging.activeIndex === 1} index={1} />
+            <Indicator title="Galaxy Platinum" isActive={paging.activeIndex === 2} index={2} />
+            <Indicator title="Hệ sinh thái" isActive={paging.activeIndex === 3} index={3} />
+            <Indicator title="Should choose" isActive={paging.activeIndex === 4} index={4} />
+            <Indicator title="Openration" isActive={paging.activeIndex === 5} index={5} />
+            <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} index={6} />
+          </Box>
         </Swiper>
       </PagingCtx.Provider>
-      <Box
-        sx={{
-          position: "absolute",
-          right: "12px",
-          top: "50%",
-          transform: "translate(0px, -50%)",
-          zIndex: ZIndex.fixed,
-        }}
-      >
-        <Indicator title="Lucis City" isActive={paging.activeIndex === 1} />
-        <Indicator title="Galaxy Platinum" isActive={paging.activeIndex === 2} />
-        <Indicator title="Hệ sinh thái" isActive={paging.activeIndex === 3} />
-        <Indicator title="Should choose" isActive={paging.activeIndex === 4} />
-        <Indicator title="Openration" isActive={paging.activeIndex === 5} />
-        <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} />
-      </Box>
       <FabButton />
     </Box>
   );
