@@ -36,14 +36,12 @@ export function ReasonChooseSection(props: Props) {
           maxWidth: "1440px",
           padding: "1px 144px",
           paddingTop: 8,
-          // [theme.breakpoints.down("xl")]: {
-          //   padding: "1px 32px",
-          // },
           [theme.breakpoints.down("lg")]: {
-            padding: "1px 16px 16px 16px",
+            px: 6,
           },
           [theme.breakpoints.down("sm")]: {
-            padding: "80px 24px",
+            paddingTop: 29.5,
+            marginBottom: 19.25,
           },
           height: "100%",
         }}
@@ -59,12 +57,17 @@ export function ReasonChooseSection(props: Props) {
                 <Typography
                   variant="h3"
                   whiteSpace="pre-line"
-                  // sx={{
-                  //   marginTop: 32,
-                  //   [theme.breakpoints.down("lg")]: {
-                  //     marginTop: 8,
-                  //   },
-                  // }}
+                  sx={{
+                    marginTop: 32,
+                    lineHeight: "56px",
+                    fontSize: "48px",
+                    fontWeight: "700",
+                    [theme.breakpoints.down("md")]: {
+                      marginTop: 8,
+                      fontSize: "30px",
+                      lineHeight: "43px",
+                    },
+                  }}
                 >{`Why you should
           choose?`}</Typography>
               </AnimWhenVisible>
@@ -168,6 +171,8 @@ export function ReasonChooseSection(props: Props) {
 }
 
 function ReasonBox({ title, content, icon }: { title: string; content: string; icon?: string }) {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -184,11 +189,30 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
         }}
       >
         <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} alt="" />
-        <Typography variant="h5" whiteSpace="pre-line" marginLeft={3}>
+        <Typography
+          variant="h5"
+          whiteSpace="pre-line"
+          marginLeft={3}
+          sx={{
+            fontSize: "20px",
+            fontWeight: "700",
+            lineHeight: "43px",
+          }}
+        >
           {title}
         </Typography>
       </Box>
-      <Typography variant="body1" marginTop={7}>
+      <Typography
+        variant="body1"
+        sx={{
+          mt: 6,
+          fontSize: "12px",
+          lineHeight: "24px",
+          [theme.breakpoints.down("sm")]: {
+            mt: 4,
+          },
+        }}
+      >
         {content}
       </Typography>
     </Box>

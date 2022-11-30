@@ -31,15 +31,6 @@ export function EcosystemSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      {/* <Box
-        component="img"
-        src="/assets/imgs/landing/img_red.svg"
-        sx={{
-          position: "absolute",
-          top: "20px",
-          left: "0px",
-        }}
-      /> */}
       <Box
         display="flex"
         alignItems="center"
@@ -48,7 +39,6 @@ export function EcosystemSection(props: Props) {
         sx={{
           [theme.breakpoints.down("md")]: {
             flexDirection: "column",
-            padding: "80px 0px",
           },
         }}
       >
@@ -59,6 +49,7 @@ export function EcosystemSection(props: Props) {
           sx={{
             [theme.breakpoints.down("sm")]: {
               maxHeight: "250px",
+              marginTop: 35,
             },
           }}
         />
@@ -67,12 +58,26 @@ export function EcosystemSection(props: Props) {
             marginLeft: 28,
             [theme.breakpoints.down("md")]: {
               marginLeft: 0,
-              marginTop: 10,
+              marginTop: 10.75,
             },
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
-            <Typography variant="h3" whiteSpace="pre-line" id="es_header">{`Hệ sinh thái
+            <Typography
+              variant="h3"
+              whiteSpace="pre-line"
+              id="es_header"
+              sx={{
+                lineHeight: "56px",
+                fontSize: "48px",
+                fontWeight: "700",
+                [theme.breakpoints.down("md")]: {
+                  marginTop: 8,
+                  fontSize: "30px",
+                  lineHeight: "43px",
+                },
+              }}
+            >{`Hệ sinh thái
           Lucis City`}</Typography>
           </AnimWhenVisible>
 
@@ -84,8 +89,12 @@ export function EcosystemSection(props: Props) {
               whiteSpace="pre-line"
               sx={{
                 marginTop: 15,
+                fontSize: "12px",
+                fontWeight: "500",
+                lineHeight: "21px",
                 [theme.breakpoints.down("sm")]: {
-                  marginTop: 10,
+                  marginTop: 10.75,
+                  marginBottom: 19.25,
                 },
               }}
             >
