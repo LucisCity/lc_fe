@@ -24,7 +24,7 @@ export default function AnimComponent(props: Props) {
   return (
     <motion.div
       animate={controls}
-      initial={props.enable === false ? "visible" : "hidden"}
+      initial="hidden"
       viewport={{ once: true }}
       transition={props.transition ?? { duration: 0.5 }}
       variants={{
