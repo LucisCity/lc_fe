@@ -19,6 +19,8 @@ import s from "./landing.module.sass";
 import Indicator from "./components/indicator";
 import { ZIndex } from "../../theme/config";
 import FabButton from "./components/fab_button";
+import RoadmapSection from "./roadmap_section";
+import PartnerSection from "./partner_section";
 import BottomNavigation from "../layout/bottom_navigation";
 
 export enum Section {
@@ -61,6 +63,9 @@ export default function LandingPage() {
         <ReasonChooseSection />
         <OperationSection />
         <NftSection />
+        <RoadmapSection />
+        <PartnerSection />
+        <TopSection />
         <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={ZIndex.fixed}>
           <BottomNavigation />
         </Box>
@@ -134,7 +139,10 @@ export default function LandingPage() {
             <NftSection index={6} />;
           </SwiperSlide>
           <SwiperSlide>
-            <CompanySection index={7} />
+            <RoadmapSection index={7} />;
+          </SwiperSlide>
+          <SwiperSlide>
+            <PartnerSection index={8} />
           </SwiperSlide>
           <Box
             sx={{
@@ -151,6 +159,8 @@ export default function LandingPage() {
             <Indicator title="Should choose" isActive={paging.activeIndex === 4} index={4} />
             <Indicator title="Openration" isActive={paging.activeIndex === 5} index={5} />
             <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} index={6} />
+            <Indicator title="Roadmap" isActive={paging.activeIndex === 7} index={7} />
+            <Indicator title="Partner & Investor" isActive={paging.activeIndex === 8} index={8} />
           </Box>
         </Swiper>
       </PagingCtx.Provider>
