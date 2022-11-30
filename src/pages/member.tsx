@@ -8,7 +8,7 @@ const Member: NextPage = () => {
     <>
       <DocHead />
       {/*<LandingHeader />*/}
-      <AppLayout>
+      <AppLayout isShowFooter={false}>
         <MemberPage />
       </AppLayout>
       {/* <Footer /> */}

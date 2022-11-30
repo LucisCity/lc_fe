@@ -21,6 +21,7 @@ import { ZIndex } from "../../theme/config";
 import FabButton from "./components/fab_button";
 import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
+import BottomNavigation from "../layout/bottom_navigation";
 
 export enum Section {
   OnTop, // start
@@ -65,6 +66,9 @@ export default function LandingPage() {
         <RoadmapSection />
         <PartnerSection />
         <TopSection />
+        <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={ZIndex.fixed}>
+          <BottomNavigation />
+        </Box>
       </Box>
     );
   }
