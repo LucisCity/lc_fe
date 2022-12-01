@@ -1,6 +1,6 @@
 import DocHead from "./doc_head";
 import Footer from "./footer";
-import Header from "./header";
+import Header, { headerHeight, mobileHeaderHeight } from "./header";
 import { Box, useTheme } from "@mui/system";
 import BottomNavigation from "./bottom_navigation";
 
@@ -17,8 +17,9 @@ function AppLayout(props: Props) {
       <DocHead />
       {isShowHeader === false ? null : <Header />}
       {children}
+
       {isShowFooter === false ? null : <Footer />}
-      <Box display={{ sx: "none" }}>
+      <Box display={"none"}>
         <BottomNavigation />
       </Box>
     </>

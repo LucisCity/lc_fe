@@ -1,49 +1,52 @@
 import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
 import { Box, styled, useTheme } from "@mui/system";
 import Link from "next/link";
-import { Left } from "../../common/left";
 import { Right } from "../../common/right";
-import { Center } from "../../common/center";
 import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
 import { useRouter } from "next/router";
+import zIndex from "@mui/material/styles/zIndex";
+
 export const headerHeight = 90;
+export const mobileHeaderHeight = 60;
 export const extendHeaderHeight = 500;
-const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
-  ({ theme, open }) => ({
-    width: "100%",
-    height: extendHeaderHeight,
-    background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
-    backdropFilter: "blur(12px)",
-    position: "absolute",
-    top: 0,
-    zIndex: 2,
-    borderBottom: "1px solid",
-    borderImageSlice: 1,
-    borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{
+  open?: boolean;
+  isFixed?: boolean;
+}>(({ theme, open, isFixed }) => ({
+  width: "100%",
+  height: extendHeaderHeight,
+  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+  backdropFilter: "blur(12px)",
+  position: isFixed ? "absolute" : "fixed",
+  top: 0,
+  zIndex: zIndex.appBar,
+  borderBottom: "1px solid",
+  borderImageSlice: 1,
+  borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  //@ts-ignore
+  transition: theme.transitions.create(["height"], { duration: 800 }),
+  [theme.breakpoints.down("sm")]: {
+    position: "fixed",
+  },
+  ...(!open && {
     //@ts-ignore
     transition: theme.transitions.create(["height"], { duration: 800 }),
+    height: headerHeight,
     [theme.breakpoints.down("sm")]: {
       position: "fixed",
+      height: mobileHeaderHeight,
+      zIndex: zIndex.appBar,
     },
-    ...(!open && {
-      //@ts-ignore
-      transition: theme.transitions.create(["height"], { duration: 800 }),
-      height: headerHeight,
-      [theme.breakpoints.down("sm")]: {
-        position: "fixed",
-        height: 60,
-      },
-    }),
   }),
-);
+}));
 const MenuBar = styled("div")(({ theme }) => ({
   width: "100%",
   height: headerHeight,
 
   [theme.breakpoints.down("sm")]: {
     display: "none",
-    height: 60,
+    height: mobileHeaderHeight,
   },
 }));
 
@@ -121,7 +124,7 @@ const Ul = styled("ul")(({ theme }) => ({
     gap: theme.spacing(4),
   },
   [theme.breakpoints.down("sm")]: {
-    height: 60,
+    height: mobileHeaderHeight,
   },
 }));
 
@@ -214,6 +217,7 @@ const pages = [
 ];
 interface IProps {
   slideActive?: number;
+  isFixed?: boolean;
 }
 const Header = (props: IProps) => {
   const [showSidebar, setShowSidebar] = React.useState(false);
@@ -248,8 +252,7 @@ const Header = (props: IProps) => {
                     {pages.map((page) => (
                       <li key={page.name}>
                         <HeaderNextLink href={page.href} active={page.href === activePage.href}>
-                          {" "}
-                          {page.name}{" "}
+                          {page.name}
                         </HeaderNextLink>
                       </li>
                     ))}
