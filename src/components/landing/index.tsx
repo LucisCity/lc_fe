@@ -106,7 +106,7 @@ export default function LandingPage() {
           <Box
             slot="container-start"
             sx={{
-              background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
+              background: `url(${"/assets/imgs/member/background.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
               position: "absolute",
               left: "0",
               top: "0",

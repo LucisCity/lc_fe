@@ -1,8 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
-import { Center } from "../common/center";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, Pagination } from "swiper";
 
 type Props = {
   index?: number;
@@ -17,10 +14,6 @@ export default function PartnerSection(props: Props) {
         width: "100vw",
         height: "100vh",
         overflow: "hidden",
-        background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
         },

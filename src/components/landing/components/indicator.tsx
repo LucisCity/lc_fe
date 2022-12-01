@@ -10,7 +10,8 @@ export default function Indicator({ isActive, title, index }: { isActive: boolea
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        margin: "12px 0px",
+        py: 2,
+        my: 1,
         cursor: "pointer",
       }}
       onClick={() => {

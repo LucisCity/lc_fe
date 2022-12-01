@@ -1,6 +1,5 @@
 import { Box, Button, Grid, IconButton, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
-import { Center } from "../common/center";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import ISwiper, { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
 import { useState } from "react";
@@ -19,10 +18,6 @@ export default function RoadmapSection(props: Props) {
         width: "100vw",
         height: "100vh",
         overflow: "hidden",
-        background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
         },
