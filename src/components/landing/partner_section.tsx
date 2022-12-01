@@ -16,6 +16,10 @@ export default function PartnerSection(props: Props) {
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
+          background: `url(/assets/imgs/member/background.jpg)`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "left",
         },
       }}
     >

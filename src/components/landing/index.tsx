@@ -23,6 +23,7 @@ import PartnerSection from "./partner_section";
 import BottomNavigation from "../layout/bottom_navigation";
 import zIndex from "@mui/material/styles/zIndex";
 import Footer from "../layout/footer";
+import ComunitySection from "./community_section";
 
 export enum Section {
   OnTop, // start
@@ -66,6 +67,7 @@ export default function LandingPage() {
         <NftSection />
         <RoadmapSection />
         <PartnerSection />
+        <ComunitySection />
         <Footer />
         <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={zIndex.appBar}>
           <BottomNavigation />
@@ -145,6 +147,10 @@ export default function LandingPage() {
           <SwiperSlide>
             <PartnerSection index={8} />
           </SwiperSlide>
+          <SwiperSlide>
+            <ComunitySection index={9} />
+          </SwiperSlide>
+
           <Box
             sx={{
               position: "absolute",
@@ -162,6 +168,7 @@ export default function LandingPage() {
             <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} index={6} />
             <Indicator title="Roadmap" isActive={paging.activeIndex === 7} index={7} />
             <Indicator title="Partner & Investor" isActive={paging.activeIndex === 8} index={8} />
+            <Indicator title="Community" isActive={paging.activeIndex === 9} index={9} />
           </Box>
         </Swiper>
       </PagingCtx.Provider>
