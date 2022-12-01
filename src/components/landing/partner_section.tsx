@@ -1,10 +1,8 @@
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
-// import "swiper/css";
-// import "swiper/css/pagination";
+import { Mousewheel, Pagination } from "swiper";
 
 type Props = {
   index?: number;
@@ -48,10 +46,14 @@ export default function PartnerSection(props: Props) {
             height: "100%",
             // display: "flex",
             flexDirection: "column",
-            mt: "-100px",
-            [theme.breakpoints.down("md")]: {
-              mt: "-20px",
-            },
+
+            // mt: "-100px",
+            // [theme.breakpoints.down("xl")]: {
+            //   mt: "-30px",
+            // },
+            // [theme.breakpoints.down("md")]: {
+            //   mt: "-20px",
+            // },
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
@@ -78,7 +80,7 @@ export default function PartnerSection(props: Props) {
               width: "100%",
               mt: 51,
               px: 8,
-              [theme.breakpoints.down("md")]: {
+              [theme.breakpoints.down("xl")]: {
                 mt: 21,
               },
             }}

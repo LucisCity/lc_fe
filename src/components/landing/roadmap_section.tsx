@@ -48,6 +48,7 @@ export default function RoadmapSection(props: Props) {
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            position: "relative",
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
@@ -60,6 +61,8 @@ export default function RoadmapSection(props: Props) {
                 fontSize: "48px",
                 fontWeight: "700",
                 my: 15.75,
+                // position: "absolute",
+                // top: "30%",
                 [theme.breakpoints.down("md")]: {
                   fontSize: "30px",
                   lineHeight: "43px",
