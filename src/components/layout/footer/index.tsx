@@ -83,9 +83,12 @@ export const FooterNextLink = styled(Link)<{
   },
 }));
 
-export default function Footer() {
+interface IProps {
+  style?: any;
+}
+export default function Footer({ style }: IProps) {
   return (
-    <FooterStyled>
+    <FooterStyled style={style}>
       <Container>
         <Logo src="/assets/imgs/logo/logo-color.svg" alt="logo" />
         <Grid container spacing={{ sm: 0, xs: 4 }}>

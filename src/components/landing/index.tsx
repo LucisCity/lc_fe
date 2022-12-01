@@ -145,6 +145,9 @@ export default function LandingPage() {
           <SwiperSlide>
             <PartnerSection index={8} />
           </SwiperSlide>
+          <SwiperSlide>
+            <Footer style={{ position: "absolute", bottom: 0 }} />
+          </SwiperSlide>
           <Box
             sx={{
               position: "absolute",

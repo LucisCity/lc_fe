@@ -161,13 +161,13 @@ export const CardSection = (props: IProps) => {
   const disabledAnimation = props?.disabledAnimation ?? false;
   return (
     <MainItemComponent
-      sx={{
-        background: !disabledBackground ? `url(${"assets/imgs/member/background.jpg"})` : "none",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "top",
-        width: "100%",
-      }}
+    // sx={{
+    //   background: !disabledBackground ? `url(${"assets/imgs/member/background.jpg"})` : "none",
+    //   backgroundRepeat: "no-repeat",
+    //   backgroundSize: "cover",
+    //   backgroundPosition: "top",
+    //   width: "100%",
+    // }}
     >
       <Container sx={{ height: "100%", padding: "1px" }}>
         <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
