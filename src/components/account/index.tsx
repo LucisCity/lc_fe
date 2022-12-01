@@ -1,7 +1,5 @@
 import React from "react";
 import { Box, styled } from "@mui/system";
-import { CardSection } from "../landing/card_section";
-import { Avatar, Container, Grid, Paper, Typography } from "@mui/material";
 
 const Main = styled("main")(({ theme }) => ({
   background: "",
