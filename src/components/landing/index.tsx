@@ -22,6 +22,7 @@ import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
 import BottomNavigation from "../layout/bottom_navigation";
 import zIndex from "@mui/material/styles/zIndex";
+import Footer from "../layout/footer";
 
 export enum Section {
   OnTop, // start
@@ -65,6 +66,7 @@ export default function LandingPage() {
         <NftSection />
         <RoadmapSection />
         <PartnerSection />
+        <Footer />
         <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={zIndex.appBar}>
           <BottomNavigation />
         </Box>

@@ -199,7 +199,7 @@ export default function Footer() {
           </Grid>
         </Grid>
         <Box width={"100%"} borderBottom={"1px solid #fff"} mt={{ md: 20, xs: 16 }} mb={6} />
-        <Box display={"flex"} justifyContent="space-between">
+        <Box display={"flex"} justifyContent="space-between" pb={4}>
           <Typography fontSize={{ xs: 12, md: 16 }}>{new Date().getFullYear()} @ Lucis City</Typography>
         </Box>
       </Container>
