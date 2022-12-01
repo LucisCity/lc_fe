@@ -15,20 +15,14 @@ export function OperationSection(props: Props) {
       sx={{
         width: "100vw",
         height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
           background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",
-          // padding: 6,
-          // paddingTop: 6,
-          // paddingBottom: 6,
+          padding: 4,
           height: "auto",
-          display: "block",
-          // overflow: "auto",
         },
       }}
       data-swiper-parallax="-300"
@@ -36,52 +30,33 @@ export function OperationSection(props: Props) {
       <Box
         sx={{
           maxWidth: "1440px",
-          padding: "1px 144px",
-          paddingTop: 15,
-          margin: "0px auto",
-          [theme.breakpoints.down("lg")]: {
+          px: 36,
+          paddingTop: 25,
+          [theme.breakpoints.down("md")]: {
             px: 6,
+            paddingTop: 29.5,
+            marginBottom: 19.25,
           },
-          [theme.breakpoints.down("sm")]: {
-            pt: 29.5,
-            pb: 19.25,
-          },
+          height: "100%",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 22.5,
-            [theme.breakpoints.down("md")]: {
-              flexDirection: "column",
-              gap: 12,
-            },
-          }}
-        >
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300 } }} index={props.index}>
-            <Typography
-              variant="h3"
-              whiteSpace="pre-line"
-              sx={{
-                lineHeight: "56px",
-                fontSize: "48px",
-                fontWeight: "700",
-                [theme.breakpoints.down("md")]: {
-                  fontSize: "30px",
-                  lineHeight: "43px",
-                },
-              }}
-            >{`Basic operation
+        <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300 } }} index={props.index}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h3" whiteSpace="pre-line">{`Basic operation
             of Lucis city`}</Typography>
             <Typography
-              variant="h6"
-              flex={1}
+              variant="subtitle2"
               // whiteSpace="pre-line"
               sx={{
-                fontSize: "16px",
-                fontWeight: "500",
-                lineHeight: "28px",
+                ml: 6,
+                maxWidth: "573px",
                 [theme.breakpoints.down("md")]: {
                   mt: 10,
                 },
@@ -90,17 +65,17 @@ export function OperationSection(props: Props) {
               Hệ sinh thái sáng tạo cung cấp quyền đồng sở hữu tài sản và tạo ra một thị trường đầu tư có giá trị cao.
               Hệ sinh thái của Lucis City được vận hành để đảm bảo lợi nhuân cho các Nhà đầu tư ở mọi danh mục đầu tư.
             </Typography>
-          </AnimWhenVisible>
-        </Box>
+          </Box>
+        </AnimWhenVisible>
         <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300 } }} index={props.index}>
           <Center>
             <Box
               component="img"
-              src="/assets/imgs/landing/img_operation.png"
+              src="/assets/imgs/landing/img_operation.svg"
               alt=""
               sx={{
                 maxWidth: "100%",
-                marginTop: 17,
+                marginTop: 25,
               }}
             />
           </Center>

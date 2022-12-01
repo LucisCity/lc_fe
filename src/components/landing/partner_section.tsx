@@ -16,51 +16,42 @@ export default function PartnerSection(props: Props) {
       sx={{
         width: "100vw",
         height: "100vh",
+        overflow: "hidden",
         background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
-          overflowX: "hidden",
         },
       }}
     >
       <Box
         sx={{
           maxWidth: "1440px",
-          padding: "1px 144px",
-          margin: "0px auto",
+          px: 36,
+          paddingTop: 8,
           height: "100%",
           [theme.breakpoints.down("md")]: {
-            height: "auto",
             px: 6,
-            pt: 29.5,
-            pb: 19.25,
+            paddingTop: 29.5,
+            marginBottom: 19.25,
           },
         }}
       >
-        <Center
+        <Box
           sx={{
             width: "100%",
             height: "100%",
-            // display: "flex",
+            display: "flex",
             flexDirection: "column",
-
-            // mt: "-100px",
-            // [theme.breakpoints.down("xl")]: {
-            //   mt: "-30px",
-            // },
-            // [theme.breakpoints.down("md")]: {
-            //   mt: "-20px",
-            // },
+            alignItems: "center",
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
             <Typography
               variant="h6"
               marginTop={1}
-              // color="#9FA4BC"
               sx={{
                 lineHeight: "56px",
                 fontSize: "48px",
@@ -139,7 +130,7 @@ export default function PartnerSection(props: Props) {
               </SwiperSlide>
             </Swiper>
           </Box>
-        </Center>
+        </Box>
       </Box>
     </Box>
   );

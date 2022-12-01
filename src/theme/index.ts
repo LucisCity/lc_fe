@@ -1,5 +1,6 @@
 import { PaletteMode } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import { TYPO_THEME } from "./typo.theme";
 
 // Create a theme instance.
 const theme = (mode: PaletteMode) =>
@@ -51,6 +52,7 @@ const theme = (mode: PaletteMode) =>
         },
       },
     },
+    typography: TYPO_THEME,
     spacing: 4,
   });
 

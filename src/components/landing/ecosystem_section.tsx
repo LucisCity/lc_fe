@@ -17,8 +17,6 @@ export function EcosystemSection(props: Props) {
         width: "100vw",
         height: "100vh",
         overflow: "hidden",
-        // position: "relative",
-        // background: "transparent",
         [theme.breakpoints.down("sm")]: {
           background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
           backgroundRepeat: "no-repeat",
@@ -26,25 +24,28 @@ export function EcosystemSection(props: Props) {
           backgroundPosition: "left",
           padding: 6,
           height: "auto",
-          // overflow: "auto",
         },
       }}
       data-swiper-parallax="-300"
     >
       <Box
+        maxWidth="1440px"
+        margin="0px auto"
         display="flex"
         alignItems="center"
         justifyContent="center"
         height="100%"
         sx={{
+          px: "130px",
           [theme.breakpoints.down("md")]: {
             flexDirection: "column",
+            px: "0px",
           },
         }}
       >
         <Box
           component="img"
-          src="/assets/imgs/landing/img_ecosystem.png"
+          src="/assets/imgs/landing/img_ecosystem.svg"
           alt=""
           sx={{
             [theme.breakpoints.down("sm")]: {
@@ -63,21 +64,7 @@ export function EcosystemSection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
-            <Typography
-              variant="h3"
-              whiteSpace="pre-line"
-              id="es_header"
-              sx={{
-                lineHeight: "56px",
-                fontSize: "48px",
-                fontWeight: "700",
-                [theme.breakpoints.down("md")]: {
-                  marginTop: 8,
-                  fontSize: "30px",
-                  lineHeight: "43px",
-                },
-              }}
-            >{`Hệ sinh thái
+            <Typography variant="h3" whiteSpace="pre-line">{`Hệ sinh thái
           Lucis City`}</Typography>
           </AnimWhenVisible>
 
@@ -87,21 +74,15 @@ export function EcosystemSection(props: Props) {
           >
             <Typography
               whiteSpace="pre-line"
+              variant="body1"
               sx={{
-                marginTop: 15,
-                fontSize: "12px",
-                fontWeight: "500",
-                lineHeight: "21px",
-                [theme.breakpoints.down("sm")]: {
-                  marginTop: 10.75,
-                  marginBottom: 19.25,
-                },
+                maxWidth: "426px",
+                mt: 13.75,
               }}
             >
-              {`Lucis City là hệ sinh thái số Bất Động sản
-          và các ngành sản phẩm - dịch vụ giải trí
-          cao cấp như: Du thuyền,
-          Siêu xe, Lounge...`}
+              Nhà Đầu tư có cơ hội đầu tư trực tiếp các sản phẩm - dịch vụ thực của Hệ sinh thái Lucis City từ nhiều nền
+              tảng khác nhau cũng như được trải nghiệm tất cả các tiện ích của hệ sinh thái. Lucis City xây dựng một
+              mạng lưới nhà đầu tư có tiềm lực và cùng đam mê để tăng giá trị kết nối và xúc tiến thương mại hiệu quả.
             </Typography>
           </AnimWhenVisible>
         </Box>

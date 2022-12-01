@@ -1,10 +1,9 @@
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
-// import "swiper/css";
-// import "swiper/css/pagination";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import ISwiper, { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
+import { useState } from "react";
 
 type Props = {
   index?: number;
@@ -12,61 +11,51 @@ type Props = {
 
 export default function RoadmapSection(props: Props) {
   const theme = useTheme();
+  const [swiper, setSwiper] = useState<ISwiper | null>(null);
 
   return (
     <Box
       sx={{
         width: "100vw",
         height: "100vh",
+        overflow: "hidden",
         background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
-          overflowX: "hidden",
         },
       }}
     >
       <Box
         sx={{
           maxWidth: "1440px",
-          padding: "1px 144px",
-          margin: "0px auto",
+          px: 36,
+          paddingTop: 8,
           height: "100%",
           [theme.breakpoints.down("md")]: {
-            height: "auto",
             px: 6,
-            pt: 29.5,
-            pb: 19.25,
+            paddingTop: 29.5,
+            marginBottom: 19.25,
           },
         }}
       >
-        <Center
+        <Box
           sx={{
-            width: "100%",
+            // width: "100%",
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            justifyContent: "center",
             position: "relative",
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
             <Typography
-              variant="h6"
-              marginTop={1}
-              // color="#9FA4BC"
+              variant="h3"
               sx={{
-                lineHeight: "56px",
-                fontSize: "48px",
-                fontWeight: "700",
-                my: 15.75,
-                // position: "absolute",
-                // top: "30%",
-                [theme.breakpoints.down("md")]: {
-                  fontSize: "30px",
-                  lineHeight: "43px",
-                },
+                mb: 15.75,
               }}
             >
               Roadmap
@@ -74,10 +63,31 @@ export default function RoadmapSection(props: Props) {
           </AnimWhenVisible>
           <Box
             sx={{
-              width: "100%",
-              px: 8,
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "20px",
+              mb: "20px",
             }}
           >
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                swiper?.slidePrev();
+              }}
+            >
+              <Box component="img" src="/assets/imgs/landing/ic_previous_slide.svg" alt="" />
+            </IconButton>
+
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                swiper?.slideNext();
+              }}
+            >
+              <Box component="img" src="/assets/imgs/landing/ic_next_slide.svg" alt="" />
+            </IconButton>
+          </Box>
+          <Box>
             <Swiper
               slidesPerView={1}
               spaceBetween={24}
@@ -91,13 +101,16 @@ export default function RoadmapSection(props: Props) {
               }}
               // mousewheel={true}
               speed={800}
-              centeredSlides={true}
-              pagination={{
-                clickable: true,
-              }}
+              // centeredSlides={true}
+              // pagination={{
+              //   clickable: true,
+              // }}
               modules={[Mousewheel, Pagination]}
+              onInit={(_swiper) => {
+                setSwiper(_swiper);
+              }}
               style={{
-                overflow: "hidden",
+                // overflow: "hidden",
                 width: "100%",
                 height: "100%",
                 padding: "1px",
@@ -184,7 +197,7 @@ export default function RoadmapSection(props: Props) {
               </SwiperSlide>
             </Swiper>
           </Box>
-        </Center>
+        </Box>
       </Box>
     </Box>
   );

@@ -34,12 +34,10 @@ export function ReasonChooseSection(props: Props) {
       <Box
         sx={{
           maxWidth: "1440px",
-          padding: "1px 144px",
+          px: 36,
           paddingTop: 8,
-          [theme.breakpoints.down("lg")]: {
+          [theme.breakpoints.down("md")]: {
             px: 6,
-          },
-          [theme.breakpoints.down("sm")]: {
             paddingTop: 29.5,
             marginBottom: 19.25,
           },
@@ -48,38 +46,16 @@ export function ReasonChooseSection(props: Props) {
       >
         <Center>
           <Grid container spacing={6}>
-            <Grid md={0} lg={3}></Grid>
-            <Grid md={12} lg={9}>
+            <Grid md={12} lg={6}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? -300 : 0 } }}
                 index={props.index}
               >
-                <Typography
-                  variant="h3"
-                  whiteSpace="pre-line"
-                  sx={{
-                    marginTop: 32,
-                    lineHeight: "56px",
-                    fontSize: "48px",
-                    fontWeight: "700",
-                    [theme.breakpoints.down("md")]: {
-                      marginTop: 8,
-                      fontSize: "30px",
-                      lineHeight: "43px",
-                    },
-                  }}
-                >{`Why you should
-          choose?`}</Typography>
+                <Typography variant="h3" whiteSpace="pre-line">{`Lựa chọn 
+                Lucis City....`}</Typography>
               </AnimWhenVisible>
             </Grid>
-            <Grid
-              lg={6}
-              sx={{
-                [theme.breakpoints.down("lg")]: {
-                  display: "none",
-                },
-              }}
-            ></Grid>
+
             <Grid md={6} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
@@ -189,16 +165,7 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
         }}
       >
         <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} alt="" />
-        <Typography
-          variant="h5"
-          whiteSpace="pre-line"
-          marginLeft={3}
-          sx={{
-            fontSize: "20px",
-            fontWeight: "700",
-            lineHeight: "43px",
-          }}
-        >
+        <Typography variant="h5" whiteSpace="pre-line" marginLeft={3}>
           {title}
         </Typography>
       </Box>
@@ -206,8 +173,6 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
         variant="body1"
         sx={{
           mt: 6,
-          fontSize: "12px",
-          lineHeight: "24px",
           [theme.breakpoints.down("sm")]: {
             mt: 4,
           },
