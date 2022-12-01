@@ -17,11 +17,12 @@ import { CardSection } from "./card_section";
 import { useWindowSize } from "../../hooks/use_window_size";
 import s from "./landing.module.sass";
 import Indicator from "./components/indicator";
-import { ZIndex } from "../../theme/config";
 import FabButton from "./components/fab_button";
 import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
 import BottomNavigation from "../layout/bottom_navigation";
+import zIndex from "@mui/material/styles/zIndex";
+import Footer from "../layout/footer";
 
 export enum Section {
   OnTop, // start
@@ -56,7 +57,7 @@ export default function LandingPage() {
         }}
       >
         <Header slideActive={position > 100 ? 1 : 0} />
-        {/*<TopSection />*/}
+        <TopSection />
         <CompanySection />
         <CardSection />
         <EcosystemSection />
@@ -65,8 +66,8 @@ export default function LandingPage() {
         <NftSection />
         <RoadmapSection />
         <PartnerSection />
-        <TopSection />
-        <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={ZIndex.fixed}>
+        <Footer />
+        <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={zIndex.appBar}>
           <BottomNavigation />
         </Box>
       </Box>
@@ -150,7 +151,7 @@ export default function LandingPage() {
               right: "12px",
               top: "50%",
               transform: "translate(0px, -50%)",
-              zIndex: ZIndex.fixed,
+              zIndex: zIndex.appBar,
             }}
           >
             <Indicator title="Lucis City" isActive={paging.activeIndex === 1} index={1} />

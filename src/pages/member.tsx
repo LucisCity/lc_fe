@@ -7,11 +7,9 @@ const Member: NextPage = () => {
   return (
     <>
       <DocHead />
-      {/*<LandingHeader />*/}
-      <AppLayout isShowFooter={false}>
+      <AppLayout>
         <MemberPage />
       </AppLayout>
-      {/* <Footer /> */}
     </>
   );
 };

@@ -1,8 +1,8 @@
 import { Box, Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { ZIndex } from "../../../theme/config";
 import { useState } from "react";
 import AnimComponent from "../../anim/anim_component";
+import zIndex from "@mui/material/styles/zIndex";
 
 export default function FabButton() {
   const [isShow, setIsShow] = useState(false);
@@ -13,7 +13,7 @@ export default function FabButton() {
         position: "absolute",
         bottom: "103px",
         right: "53px",
-        zIndex: ZIndex.fixed,
+        zIndex: zIndex.fab,
       }}
     >
       <AnimComponent enable={isShow}>
