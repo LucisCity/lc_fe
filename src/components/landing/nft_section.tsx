@@ -112,7 +112,7 @@ export default function NftSection(props: Props) {
                 spacing="6px"
                 sx={{
                   mt: 9,
-                  width: "368px",
+                  maxWidth: "368px",
                 }}
               >
                 <Grid item xs={6}>
