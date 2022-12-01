@@ -49,8 +49,8 @@ export function EcosystemSection(props: Props) {
           alt=""
           sx={{
             [theme.breakpoints.down("sm")]: {
-              maxHeight: "250px",
-              marginTop: 35,
+              maxHeight: "85vw",
+              marginTop: 20,
             },
           }}
         />
@@ -59,7 +59,7 @@ export function EcosystemSection(props: Props) {
             marginLeft: 28,
             [theme.breakpoints.down("md")]: {
               marginLeft: 0,
-              marginTop: 10.75,
+              marginTop: 13,
             },
           }}
         >
@@ -77,7 +77,8 @@ export function EcosystemSection(props: Props) {
               variant="body1"
               sx={{
                 maxWidth: "426px",
-                mt: 13.75,
+                mt: 8,
+                mb: 26,
               }}
             >
               Nhà Đầu tư có cơ hội đầu tư trực tiếp các sản phẩm - dịch vụ thực của Hệ sinh thái Lucis City từ nhiều nền

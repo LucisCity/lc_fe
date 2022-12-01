@@ -36,8 +36,8 @@ export default function RoadmapSection(props: Props) {
           height: "100%",
           [theme.breakpoints.down("md")]: {
             px: 6,
-            paddingTop: 29.5,
-            marginBottom: 19.25,
+            pt: 20,
+            pb: 26,
           },
         }}
       >

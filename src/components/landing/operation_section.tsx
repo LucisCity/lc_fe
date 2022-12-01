@@ -34,8 +34,8 @@ export function OperationSection(props: Props) {
           paddingTop: 25,
           [theme.breakpoints.down("md")]: {
             px: 6,
-            paddingTop: 29.5,
-            marginBottom: 19.25,
+            pt: 20,
+            pb: 26,
           },
           height: "100%",
         }}
@@ -45,8 +45,9 @@ export function OperationSection(props: Props) {
             sx={{
               width: "100%",
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: ["flex-start", "flex-end"],
               justifyContent: "space-between",
+              flexDirection: ["column", "row"],
             }}
           >
             <Typography variant="h3" whiteSpace="pre-line">{`Basic operation
@@ -58,6 +59,7 @@ export function OperationSection(props: Props) {
                 ml: 6,
                 maxWidth: "573px",
                 [theme.breakpoints.down("md")]: {
+                  ml: 0,
                   mt: 10,
                 },
               }}

@@ -38,8 +38,8 @@ export function ReasonChooseSection(props: Props) {
           paddingTop: 8,
           [theme.breakpoints.down("md")]: {
             px: 6,
-            paddingTop: 29.5,
-            marginBottom: 19.25,
+            pt: 20,
+            pb: 26,
           },
           height: "100%",
         }}

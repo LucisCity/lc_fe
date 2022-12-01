@@ -32,8 +32,8 @@ export default function NftSection(props: Props) {
           height: "100%",
           [theme.breakpoints.down("md")]: {
             px: 6,
-            paddingTop: 29.5,
-            marginBottom: 19.25,
+            pt: 20,
+            pb: 26,
           },
         }}
       >
@@ -102,7 +102,7 @@ export default function NftSection(props: Props) {
             }}
           >
             <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
-              <Typography variant="h3" whiteSpace="pre-line">{`NFT hóa 
+              <Typography variant="h3" whiteSpace="pre-line" sx={{ mt: [13, 0] }}>{`NFT hóa 
             bất động sản`}</Typography>
             </AnimWhenVisible>
             <AnimWhenVisible variants={{ hidden: { opacity: 0, y: 100 } }} index={props.index}>
@@ -111,7 +111,7 @@ export default function NftSection(props: Props) {
                 // gap={2}
                 spacing="6px"
                 sx={{
-                  marginTop: 9,
+                  mt: 9,
                   width: "368px",
                 }}
               >

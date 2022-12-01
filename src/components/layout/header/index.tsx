@@ -67,6 +67,7 @@ const ExtendBox = styled("div")(({ theme }) => ({
     border: "none",
     paddingLeft: 0,
     paddingRight: 0,
+    height: "100vh",
   },
 }));
 
