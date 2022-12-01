@@ -216,14 +216,7 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
         flexDirection: "column",
       }}
     >
-      <Typography
-        sx={{
-          fontSize: "20px",
-          fontWeight: "700",
-          lineHeight: "36px",
-          p: 6,
-        }}
-      >
+      <Typography variant="h5" sx={{ p: 6 }}>
         {title}
       </Typography>
       <Box
@@ -250,10 +243,8 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
                 }}
               />
               <Typography
+                variant="subtitle2"
                 sx={{
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  lineHeight: "24px",
                   flex: "1",
                 }}
               >
