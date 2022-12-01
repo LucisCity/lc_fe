@@ -20,7 +20,7 @@ export function ReasonChooseSection(props: Props) {
         height: "100vh",
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
-          background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+          background: `url(/assets/imgs/member/background.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",

@@ -39,6 +39,13 @@ const theme = (mode: PaletteMode) =>
               background: "#5946FF",
             },
           }),
+          outlinedPrimary: ({ theme }) => ({
+            // fontWeight: 500,
+            // fontStyle: "normal",
+            // fontSize: "16px",
+            // lineHeight: "100%",
+            textTransform: "none",
+          }),
         },
       },
 

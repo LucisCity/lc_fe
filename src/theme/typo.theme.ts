@@ -11,6 +11,11 @@ export const TYPO_THEME: TypographyOptions | ((palette: Palette) => TypographyOp
       lineHeight: "43px",
     },
   },
+  h4: {
+    fontSize: "24px",
+    fontWeight: "600",
+    lineHeight: "28px",
+  },
   h5: {
     fontSize: "20px",
     fontWeight: "700",
