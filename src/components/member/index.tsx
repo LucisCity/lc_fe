@@ -301,7 +301,7 @@ export const MemberPage = () => {
             </Typography>
             <Box pt={12}>
               <Grid container spacing={5}>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <Box component={Paper} elevation={0} borderRadius={4} p={8}>
                     <Box>
                       <Avatar sx={{ bgcolor: "rgba(101, 85, 238, 1)" }}>1</Avatar>
@@ -315,7 +315,7 @@ export const MemberPage = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <Box component={Paper} elevation={0} borderRadius={4} p={8}>
                     <Box>
                       <Avatar sx={{ bgcolor: "rgba(101, 85, 238, 1)" }}>1</Avatar>
@@ -329,7 +329,7 @@ export const MemberPage = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <Box component={Paper} elevation={0} borderRadius={4} p={8}>
                     <Box>
                       <Avatar sx={{ bgcolor: "rgba(101, 85, 238, 1)" }}>1</Avatar>
@@ -343,7 +343,7 @@ export const MemberPage = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <Box component={Paper} elevation={0} borderRadius={4} p={8}>
                     <Box>
                       <Avatar sx={{ bgcolor: "rgba(101, 85, 238, 1)" }}>1</Avatar>

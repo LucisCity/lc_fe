@@ -1,86 +1,64 @@
-import { Box, Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
-import AnimComponent from "../../anim/anim_component";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import zIndex from "@mui/material/styles/zIndex";
+import { useSwiper } from "swiper/react";
 
-export default function FabButton() {
-  const [isShow, setIsShow] = useState(false);
+const actions = [
+  { icon: <TelegramIcon />, name: "Telegram" },
+  { icon: <img src="/assets/imgs/landing/ic_zalo.svg" alt="zalo icon" />, name: "Zalo" },
+  { icon: <LiveHelpIcon />, name: "FAQs" },
+  { icon: <KeyboardArrowUpIcon />, name: "Jump to top" },
+];
 
+export const FabButton = () => {
+  const swiper = useSwiper();
+
+  const fabAction = (name: string) => {
+    switch (name) {
+      case "Jump to top":
+        swiper.slideTo(0);
+        break;
+
+      default:
+        break;
+    }
+  };
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        bottom: "103px",
-        right: "53px",
-        zIndex: zIndex.fab,
-      }}
-    >
-      <AnimComponent enable={isShow}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 2,
-            marginBottom: 2,
-          }}
-        >
-          <Box
-            component="img"
-            src="/assets/imgs/landing/ic_zalo.svg"
-            sx={{
-              width: "32px",
-              heiht: "32px",
-            }}
-          />
-          <Box
-            component="img"
-            src="/assets/imgs/landing/ic_discoard.svg"
-            sx={{
-              width: "32px",
-              heiht: "32px",
-            }}
-          />
-          <Box
-            component="img"
-            src="/assets/imgs/landing/ic_telegram.svg"
-            sx={{
-              width: "32px",
-              heiht: "32px",
-            }}
-          />
-          <Box
-            component="img"
-            src="/assets/imgs/landing/ic_facebook.svg"
-            sx={{
-              width: "32px",
-              heiht: "32px",
-            }}
-          />
-          {/* //tele -fb */}
-        </Box>
-      </AnimComponent>
-      <AnimComponent
-        variants={{
-          visible: { opacity: 1, rotate: 90 },
-          hidden: { opacity: 1, rotate: -90 },
+    <>
+      <SpeedDial
+        ariaLabel="fab button"
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+          zIndex: zIndex.fab,
         }}
-        enable={isShow}
+        FabProps={{
+          sx: {
+            background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+            filter: "drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))",
+            ":hover": {
+              background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+            },
+          },
+        }}
+        icon={<SpeedDialIcon sx={{ color: "#504C67" }} />}
       >
-        <Fab
-          sx={{
-            boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.25)",
-            backdropFilter: "blur(3px)",
-            color: "primary",
-          }}
-          onClick={() => {
-            setIsShow((pre) => !pre);
-          }}
-        >
-          <AddIcon />
-        </Fab>
-      </AnimComponent>
-    </Box>
+        {actions.map((item) => (
+          <SpeedDialAction
+            key={item.name}
+            icon={item.icon}
+            tooltipTitle={item.name}
+            onClick={() => fabAction(item.name)}
+          />
+        ))}
+      </SpeedDial>
+    </>
   );
-}
+};

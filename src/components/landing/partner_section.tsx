@@ -67,9 +67,9 @@ export default function PartnerSection(props: Props) {
               "/assets/imgs/landing/img_partner_logo2.svg",
               "/assets/imgs/landing/img_partner_logo.svg",
               "/assets/imgs/landing/img_partner_logo2.svg",
-            ].map((url) => (
+            ].map((url, index) => (
               <Box
-                key={url}
+                key={url + index}
                 component="img"
                 src={url}
                 alt=""

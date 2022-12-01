@@ -129,10 +129,12 @@ const Ul = styled("ul")(({ theme }) => ({
   },
 }));
 
-export const HeaderNextLink = styled(Link)<{
+export const HeaderNextLink = styled(Link, {
+  shouldForwardProp: (props) => props !== "activeCss" && props !== "isSidebar",
+})<{
   isSidebar?: boolean;
-  active?: boolean;
-}>(({ theme, isSidebar, active }) => ({
+  activeCss?: boolean;
+}>(({ theme, isSidebar, activeCss }) => ({
   color: "#504C67",
   fontWeight: 500,
   fontSize: 16,
@@ -144,7 +146,7 @@ export const HeaderNextLink = styled(Link)<{
     width: "0%",
     borderBottom: "2px solid #504C67",
     transition: (theme.transitions as any).create(["width"]),
-    ...(active && {
+    ...(activeCss && {
       width: "100%",
       transition: (theme.transitions as any).create(["width"]),
     }),
@@ -190,7 +192,11 @@ export const ToggleDrawer = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
-const pages = [
+export interface IPage {
+  name: string;
+  href: string;
+}
+export const pages: Array<IPage> = [
   {
     name: "Home",
     href: "/",
@@ -229,7 +235,7 @@ const Header = (props: IProps) => {
   }, [router.pathname]);
   return (
     <Box position={"relative"}>
-      <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} />
+      <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} activePage={activePage} />
       <HeaderStyled open={slideActive === 0}>
         <Container>
           <Grid container>
@@ -252,7 +258,7 @@ const Header = (props: IProps) => {
                   <Ul>
                     {pages.map((page) => (
                       <li key={page.name}>
-                        <HeaderNextLink href={page.href} active={page.href === activePage.href}>
+                        <HeaderNextLink href={page.href} activeCss={page.href === activePage.href}>
                           {page.name}
                         </HeaderNextLink>
                       </li>

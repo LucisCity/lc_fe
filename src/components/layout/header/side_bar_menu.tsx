@@ -1,7 +1,7 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import { Box, styled } from "@mui/system";
-import { headerHeight, HeaderNextLink, LogoImage, ToggleDrawer } from ".";
+import { headerHeight, HeaderNextLink, IPage, LogoImage, pages, ToggleDrawer } from ".";
 import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
@@ -40,46 +40,17 @@ const Ul = styled("ul")(({ theme }) => ({
   color: "#504C67",
 }));
 
-const MenuList = () => (
+const MenuList = ({ activePage }: { activePage: IPage }) => (
   <MenuListStyled>
     <nav>
       <Ul>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Home{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Member{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Invest{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Marketplace{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Blog{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Contact{" "}
-          </HeaderNextLink>
-        </li>
+        {pages.map((link) => (
+          <li key={link.name}>
+            <HeaderNextLink href={link.href} isSidebar activeCss={activePage.href === link.href}>
+              {link.name}
+            </HeaderNextLink>
+          </li>
+        ))}
         <li>
           <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
             Login
@@ -98,6 +69,7 @@ const MenuList = () => (
 interface IProps {
   open: boolean;
   onClose: () => void;
+  activePage: IPage;
 }
 
 export const SideBarMenu = (props: IProps) => {
@@ -142,7 +114,7 @@ export const SideBarMenu = (props: IProps) => {
             </Grid>
           </Container>
         </DrawerHeader>
-        <MenuList />
+        <MenuList activePage={props.activePage} />
       </Drawer>
     </>
   );

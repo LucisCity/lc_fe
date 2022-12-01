@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
 import "swiper/css";
@@ -17,7 +17,7 @@ import { CardSection } from "./card_section";
 import { useWindowSize } from "../../hooks/use_window_size";
 import s from "./landing.module.sass";
 import Indicator from "./components/indicator";
-import FabButton from "./components/fab_button";
+import { FabButton } from "./components/fab_button";
 import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
 import BottomNavigation from "../layout/bottom_navigation";
@@ -160,7 +160,7 @@ export default function LandingPage() {
               right: "12px",
               top: "50%",
               transform: "translate(0px, -50%)",
-              zIndex: zIndex.appBar,
+              zIndex: 900,
             }}
           >
             <Indicator title="Lucis City" isActive={paging.activeIndex === 1} index={1} />
@@ -173,9 +173,9 @@ export default function LandingPage() {
             <Indicator title="Partner & Investor" isActive={paging.activeIndex === 8} index={8} />
             <Indicator title="Community" isActive={paging.activeIndex === 9} index={9} />
           </Box>
+          <FabButton />
         </Swiper>
       </PagingCtx.Provider>
-      <FabButton />
     </Box>
   );
 }
