@@ -1,10 +1,12 @@
-import { Avatar, Box, Container, Divider, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";
 
-const FooterStyled = styled("footer")(({ theme }) => ({
+const FooterStyled = styled("footer", { shouldForwardProp: (propName) => propName !== "disabledBackground" })<{
+  disabledBackground: boolean;
+}>(({ theme, disabledBackground }) => ({
   width: "100%",
-  background: `url("/assets/imgs/footer/background.jpg")`,
+  background: disabledBackground ? "none" : `url("/assets/imgs/footer/background.jpg")`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backdropFilter: "blur(12px)",
@@ -34,6 +36,7 @@ const Logo = styled("img")(({ theme }) => ({
 
 const StartIcon = styled("img")(({ theme }) => ({
   height: 18,
+  width: 18,
   marginRight: theme.spacing(5),
 }));
 
@@ -43,7 +46,7 @@ export const TextItem = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const FooterNextLink = styled(Link)<{
+export const FooterNextLink = styled(Link, { shouldForwardProp: (props) => props !== "active" })<{
   active?: boolean;
 }>(({ theme, active }) => ({
   color: "#504C67",
@@ -80,15 +83,17 @@ export const FooterNextLink = styled(Link)<{
 
   [theme.breakpoints.down("md")]: {
     fontSize: 12,
+    width: 75,
   },
 }));
 
 interface IProps {
   style?: any;
+  disabledBackground?: boolean;
 }
-export default function Footer({ style }: IProps) {
+export default function Footer({ style, disabledBackground }: IProps) {
   return (
-    <FooterStyled style={style}>
+    <FooterStyled style={style} disabledBackground={!!disabledBackground}>
       <Container>
         <Logo src="/assets/imgs/logo/logo-color.svg" alt="logo" />
         <Grid container spacing={{ sm: 0, xs: 4 }}>
@@ -102,7 +107,7 @@ export default function Footer({ style }: IProps) {
             </Typography>
             <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
               <StartIcon src="/assets/imgs/footer/map.svg" alt="map icon" />
-              2972 Westheimer Rd. Santa Ana, Illinois 85486{" "}
+              2972 Westheimer Rd. Santa Ana, Illinois 85486
             </TextItem>
             <Box>
               <Grid container>
@@ -137,26 +142,26 @@ export default function Footer({ style }: IProps) {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Grid container>
+            <Grid container spacing={3}>
               <Grid item xs={4}>
                 <Typography mb={{ md: 14, xs: 10 }}>
                   <strong>Công ty</strong>
                 </Typography>
                 <UlComponent>
                   <li>
-                    <FooterNextLink href={"/"}>Tuyển dụng</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Tuyển dụng</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Quy chế hoạt động</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Quy chế hoạt động</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Điều khoản thỏa thuận</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Điều khoản thỏa thuận</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Chính sách bảo mật</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Chính sách bảo mật</FooterNextLink>
                   </li>
                 </UlComponent>
               </Grid>
@@ -166,19 +171,19 @@ export default function Footer({ style }: IProps) {
                 </Typography>
                 <UlComponent>
                   <li>
-                    <FooterNextLink href={"/"}>Quy định đăng tin</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Quy định đăng tin</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Liên hệ</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Liên hệ</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Báo giá</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Báo giá</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Trợ giúp</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Trợ giúp</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Sitemap</FooterNextLink>{" "}
+                    <FooterNextLink href={"/"}>Sitemap</FooterNextLink>
                   </li>
                 </UlComponent>
               </Grid>

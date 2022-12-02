@@ -5,9 +5,8 @@ import { headerHeight, HeaderNextLink, IPage, LogoImage, pages, ToggleDrawer } f
 import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
-import { Left } from "../../common/left";
 
-const widthSidebar = 390;
+const widthSidebar = 360;
 const MenuListStyled = styled("div")(({ theme }) => ({
   width: widthSidebar,
   height: "100%",
@@ -15,9 +14,7 @@ const MenuListStyled = styled("div")(({ theme }) => ({
   backdropFilter: "blur(9px)",
   paddingTop: theme.spacing(10),
   paddingBottom: theme.spacing(10),
-  borderTop: "1px solid",
-  borderImageSlice: 1,
-  borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  borderTop: "1px solid #ffffff3b",
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -94,13 +91,7 @@ export const SideBarMenu = (props: IProps) => {
           <Container sx={{ height: "100%" }}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={6}>
-                <Box
-                  display={"flex"}
-                  justifyContent={{ md: "center", xs: "flex-start" }}
-                  width={"100%"}
-                  height={"100%"}
-                  alignItems={"center"}
-                >
+                <Box display={"flex"} width={"100%"} height={"100%"} alignItems={"center"}>
                   <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
                 </Box>
               </Grid>

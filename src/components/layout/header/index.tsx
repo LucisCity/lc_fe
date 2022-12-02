@@ -1,5 +1,5 @@
 import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
-import { Box, styled, useTheme } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import Link from "next/link";
 import { Right } from "../../common/right";
 import { SideBarMenu } from "./side_bar_menu";
@@ -9,7 +9,6 @@ import zIndex from "@mui/material/styles/zIndex";
 
 export const headerHeight = 90;
 export const mobileHeaderHeight = 60;
-export const extendHeaderHeight = 500;
 const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
   isFixed?: boolean;
@@ -21,9 +20,10 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
   position: isFixed ? "absolute" : "fixed",
   top: 0,
   zIndex: zIndex.appBar,
-  borderBottom: "1px solid",
-  borderImageSlice: 1,
-  borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  borderBottom: "1px solid #ffffff3b",
+  boxShadow: "0px 3px 8px 0px #b3b3b34d",
+  // borderImageSlice: 1,
+  // borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
   //@ts-ignore
   transition: theme.transitions.create(["height"], { duration: 800 }),
   [theme.breakpoints.down("sm")]: {
@@ -40,6 +40,7 @@ const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open
     },
   }),
 }));
+export const extendHeaderHeight = 500;
 const MenuBar = styled("div")(({ theme }) => ({
   width: "100%",
   height: headerHeight,
@@ -142,7 +143,7 @@ export const HeaderNextLink = styled(Link, {
   "&:before": {
     content: `""`,
     position: "absolute",
-    bottom: -20,
+    bottom: !isSidebar ? -20 : -4,
     width: "0%",
     borderBottom: "2px solid #504C67",
     transition: (theme.transitions as any).create(["width"]),
