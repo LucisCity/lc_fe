@@ -29,7 +29,8 @@ export class ErrorBoundary extends React.Component {
     // @ts-ignore
     if (this.state.error) {
       // You can render any custom fallback UI
-      return <ErrorSection code="APP_EXCEPTION" message="" />;
+      // @ts-ignore
+      return <ErrorSection code="APP_EXCEPTION" message={this.state.error.message} />;
     }
     // @ts-ignore
     return this.props.children;
