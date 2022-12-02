@@ -30,7 +30,13 @@ export function EcosystemSection(props: Props) {
       data-swiper-parallax="-300"
     >
       <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
-        <Box justifyContent={"center"} display={"flex"} alignItems={"center"} height={"100%"}>
+        <Box
+          justifyContent={"center"}
+          display={"flex"}
+          flexDirection={["column", "row"]}
+          alignItems={"center"}
+          height={"100%"}
+        >
           <Box
             component="img"
             src="/assets/imgs/landing/img_ecosystem.svg"

@@ -27,9 +27,10 @@ export default function NftSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px`, pb: [`${headerHeight}px`, 0] }}>
         <Center
           sx={{
+            justifyContent: "flex-start",
             [theme.breakpoints.down("sm")]: {
               flexDirection: "column",
             },
@@ -41,6 +42,7 @@ export default function NftSection(props: Props) {
                 display: "flex",
                 flexDirection: "column",
                 borderRadius: "16px",
+                transform: "translateZ(0)",
                 width: "270px",
                 height: "470px",
                 overflow: "hidden",
@@ -82,7 +84,6 @@ export default function NftSection(props: Props) {
           </AnimWhenVisible>
           <Box
             sx={{
-              width: "100%",
               // height: "444px",
               overflow: "hidden",
               marginLeft: 10,
@@ -146,7 +147,7 @@ export default function NftSection(props: Props) {
               </Grid>
             </AnimWhenVisible>
           </Box>
-          <Center sx={{ flex: 1 }}>
+          <Box sx={{ flex: 1, ml: [0, 44] }}>
             <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 100 } }} index={props.index}>
               <Center
                 sx={{
@@ -162,7 +163,7 @@ export default function NftSection(props: Props) {
                 <Box component="img" src="/assets/imgs/landing/ic_arrow_landing.svg" alt="" />
               </Center>
             </AnimWhenVisible>
-          </Center>
+          </Box>
         </Center>
       </Container>
     </Box>

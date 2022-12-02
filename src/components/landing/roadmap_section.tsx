@@ -28,7 +28,7 @@ export default function RoadmapSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px`, pb: [`${headerHeight}px`, 0] }}>
         <Box
           sx={{
             // width: "100%",
@@ -43,7 +43,7 @@ export default function RoadmapSection(props: Props) {
             <Typography
               variant="h3"
               sx={{
-                mb: 15.75,
+                mb: 4,
               }}
             >
               Roadmap
@@ -53,8 +53,7 @@ export default function RoadmapSection(props: Props) {
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              gap: "20px",
-              mb: "20px",
+              mb: 3,
             }}
           >
             <IconButton
@@ -205,7 +204,7 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
         flexDirection: "column",
       }}
     >
-      <Typography variant="h5" sx={{ p: 6 }}>
+      <Typography variant="h5" sx={{ px: 6, pt: 7 }}>
         {title}
       </Typography>
       <Box
@@ -213,8 +212,8 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
           background: "rgba(255, 255, 255, 1)",
           height: "1px",
           mx: 6,
-          mt: 7,
-          mb: 9,
+          mt: 8,
+          mb: 4,
         }}
       />
       <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
