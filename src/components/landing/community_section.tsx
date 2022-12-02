@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import Grid2 from "@mui/material/Unstable_Grid2";
 
@@ -12,7 +12,7 @@ export default function ComunitySection(props: Props) {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
@@ -24,25 +24,14 @@ export default function ComunitySection(props: Props) {
         },
       }}
     >
-      <Box
-        sx={{
-          maxWidth: "1440px",
-          px: 36,
-          height: "100%",
-          pt: 38,
-          [theme.breakpoints.down("md")]: {
-            px: 6,
-            paddingTop: 29.5,
-            marginBottom: 19.25,
-          },
-        }}
-      >
+      <Container sx={{ height: "100%" }}>
         <Box
           sx={{
             width: "100%",
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
@@ -132,7 +121,7 @@ export default function ComunitySection(props: Props) {
             </Box>
           </Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

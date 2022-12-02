@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, IconButton, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import ISwiper, { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
@@ -15,7 +15,7 @@ export default function RoadmapSection(props: Props) {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
@@ -27,19 +27,7 @@ export default function RoadmapSection(props: Props) {
         },
       }}
     >
-      <Box
-        sx={{
-          maxWidth: "1440px",
-          px: 36,
-          paddingTop: 8,
-          height: "100%",
-          [theme.breakpoints.down("md")]: {
-            px: 6,
-            pt: 20,
-            pb: 26,
-          },
-        }}
-      >
+      <Container sx={{ height: "100%" }}>
         <Box
           sx={{
             // width: "100%",
@@ -197,7 +185,7 @@ export default function RoadmapSection(props: Props) {
             </Swiper>
           </Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

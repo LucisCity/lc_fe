@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 
@@ -12,7 +12,7 @@ export default function NftSection(props: Props) {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
         background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
@@ -21,25 +21,15 @@ export default function NftSection(props: Props) {
         backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
+          paddingTop: theme.spacing(5),
+          paddingBottom: theme.spacing(5),
         },
       }}
     >
-      <Box
-        sx={{
-          maxWidth: "1440px",
-          px: 36,
-          paddingTop: 8,
-          height: "100%",
-          [theme.breakpoints.down("md")]: {
-            px: 6,
-            pt: 20,
-            pb: 26,
-          },
-        }}
-      >
+      <Container sx={{ height: "100%" }}>
         <Center
           sx={{
-            [theme.breakpoints.down("md")]: {
+            [theme.breakpoints.down("sm")]: {
               flexDirection: "column",
             },
           }}
@@ -95,7 +85,7 @@ export default function NftSection(props: Props) {
               // height: "444px",
               overflow: "hidden",
               marginLeft: 10,
-              [theme.breakpoints.down("md")]: {
+              [theme.breakpoints.down("sm")]: {
                 marginLeft: "0px",
                 marginTop: 4,
               },
@@ -173,7 +163,7 @@ export default function NftSection(props: Props) {
             </AnimWhenVisible>
           </Center>
         </Center>
-      </Box>
+      </Container>
     </Box>
   );
 }

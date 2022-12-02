@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
 import { useWindowSize } from "../../hooks/use_window_size";
@@ -16,7 +16,7 @@ export function ReasonChooseSection(props: Props) {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
@@ -31,22 +31,10 @@ export function ReasonChooseSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Box
-        sx={{
-          maxWidth: "1440px",
-          px: 36,
-          paddingTop: 8,
-          [theme.breakpoints.down("md")]: {
-            px: 6,
-            pt: 20,
-            pb: 26,
-          },
-          height: "100%",
-        }}
-      >
+      <Container sx={{ height: "100%" }}>
         <Center>
           <Grid container spacing={6}>
-            <Grid md={12} lg={6}>
+            <Grid xs={12} lg={6}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? -300 : 0 } }}
                 index={props.index}
@@ -56,7 +44,7 @@ export function ReasonChooseSection(props: Props) {
               </AnimWhenVisible>
             </Grid>
 
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -68,7 +56,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -83,7 +71,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: -300 } }}
                 style={{ height: "100%" }}
@@ -98,7 +86,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: -300 } }}
                 style={{ height: "100%" }}
@@ -111,7 +99,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -126,7 +114,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -141,7 +129,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
           </Grid>
         </Center>
-      </Box>
+      </Container>
     </Box>
   );
 }
