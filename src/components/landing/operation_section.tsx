@@ -2,6 +2,7 @@ import { Box, Container, Typography, useTheme } from "@mui/material";
 import React from "react";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
@@ -27,7 +28,7 @@ export function OperationSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Box display={"flex"} height={"100%"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300 } }} index={props.index}>
             <Box
@@ -39,8 +40,9 @@ export function OperationSection(props: Props) {
                 flexDirection: ["column", "row"],
               }}
             >
-              <Typography variant="h3" whiteSpace="pre-line">{`Basic operation
-            of Lucis city`}</Typography>
+              <Typography variant="h3" whiteSpace="pre-line">
+                Vận hành <br /> của Lucis City
+              </Typography>
               <Typography
                 variant="subtitle2"
                 // whiteSpace="pre-line"

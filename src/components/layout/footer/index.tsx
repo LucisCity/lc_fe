@@ -107,14 +107,14 @@ export default function Footer({ style, disabledBackground }: IProps) {
             </Typography>
             <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
               <StartIcon src="/assets/imgs/footer/map.svg" alt="map icon" />
-              2972 Westheimer Rd. Santa Ana, Illinois 85486
+              43TT3C - Khu đô Thị Phùng Khoang - Nam Từ Liêm - Hà Nội
             </TextItem>
             <Box>
               <Grid container>
                 <Grid item xs={6}>
                   <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
                     <StartIcon src="/assets/imgs/footer/email.svg" alt="email icon" />
-                    company@luciscity.io
+                    contact@luciscity.io
                   </TextItem>
                   <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
                     <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
@@ -131,7 +131,7 @@ export default function Footer({ style, disabledBackground }: IProps) {
                   </TextItem>
                   <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
                     <StartIcon src="/assets/imgs/footer/email.svg" alt="email icon" />
-                    company@luciscity.io
+                    contact@luciscity.io
                   </TextItem>
                   <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
                     <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
@@ -143,50 +143,53 @@ export default function Footer({ style, disabledBackground }: IProps) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={3}>
-              <Grid item xs={4}>
+              <Grid item xs={8}>
                 <Typography mb={{ md: 14, xs: 10 }}>
                   <strong>Công ty</strong>
                 </Typography>
                 <UlComponent>
                   <li>
-                    <FooterNextLink href={"/"}>Tuyển dụng</FooterNextLink>
+                    <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>
+                  </li>
+                  {/*<li>*/}
+                  {/*  <FooterNextLink href={"/"}>Tuyển dụng</FooterNextLink>*/}
+                  {/*</li>*/}
+                  <li>
+                    <FooterNextLink href={"/"}>Điều khoản thỏa thuận</FooterNextLink>
                   </li>
                   <li>
                     <FooterNextLink href={"/"}>Quy chế hoạt động</FooterNextLink>
                   </li>
                   <li>
-                    <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Điều khoản thỏa thuận</FooterNextLink>
+                    <FooterNextLink href={"/"}>Cam kết của nhà đầu tư</FooterNextLink>
                   </li>
                   <li>
                     <FooterNextLink href={"/"}>Chính sách bảo mật</FooterNextLink>
                   </li>
                 </UlComponent>
               </Grid>
-              <Grid item xs={4}>
-                <Typography mb={{ md: 14, xs: 10 }}>
-                  <strong>Hỗ trợ</strong>
-                </Typography>
-                <UlComponent>
-                  <li>
-                    <FooterNextLink href={"/"}>Quy định đăng tin</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Liên hệ</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Báo giá</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Trợ giúp</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Sitemap</FooterNextLink>
-                  </li>
-                </UlComponent>
-              </Grid>
+              {/*<Grid item xs={4}>*/}
+              {/*  <Typography mb={{ md: 14, xs: 10 }}>*/}
+              {/*    <strong>Hỗ trợ</strong>*/}
+              {/*  </Typography>*/}
+              {/*  <UlComponent>*/}
+              {/*    <li>*/}
+              {/*      <FooterNextLink href={"/"}>Quy định đăng tin</FooterNextLink>*/}
+              {/*    </li>*/}
+              {/*    <li>*/}
+              {/*      <FooterNextLink href={"/"}>Liên hệ</FooterNextLink>*/}
+              {/*    </li>*/}
+              {/*    <li>*/}
+              {/*      <FooterNextLink href={"/"}>Báo giá</FooterNextLink>*/}
+              {/*    </li>*/}
+              {/*    <li>*/}
+              {/*      <FooterNextLink href={"/"}>Trợ giúp</FooterNextLink>*/}
+              {/*    </li>*/}
+              {/*    <li>*/}
+              {/*      <FooterNextLink href={"/"}>Sitemap</FooterNextLink>*/}
+              {/*    </li>*/}
+              {/*  </UlComponent>*/}
+              {/*</Grid>*/}
               <Grid item xs={4}>
                 <Typography mb={{ md: 14, xs: 10 }}>
                   <strong>Liên kết</strong>

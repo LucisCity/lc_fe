@@ -3,6 +3,7 @@ import AnimWhenVisible from "../anim";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import ISwiper, { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
 import { useState } from "react";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
@@ -27,7 +28,7 @@ export default function RoadmapSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Box
           sx={{
             // width: "100%",

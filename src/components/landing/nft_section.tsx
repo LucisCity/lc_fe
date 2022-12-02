@@ -1,6 +1,7 @@
 import { Box, Button, Container, Grid, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
@@ -26,7 +27,7 @@ export default function NftSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Center
           sx={{
             [theme.breakpoints.down("sm")]: {
@@ -138,7 +139,7 @@ export default function NftSection(props: Props) {
                       }}
                       endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
                     >
-                      Buy NFT
+                      Mua NFT
                     </Button>
                   </Box>
                 </Grid>

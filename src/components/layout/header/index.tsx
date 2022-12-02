@@ -199,15 +199,15 @@ export interface IPage {
 }
 export const pages: Array<IPage> = [
   {
-    name: "Home",
+    name: "Trang chủ",
     href: "/",
   },
   {
-    name: "Member",
+    name: "Thành viên",
     href: "/member",
   },
   {
-    name: "Invest",
+    name: "Đầu tư",
     href: "/invest",
   },
   {
@@ -215,11 +215,11 @@ export const pages: Array<IPage> = [
     href: "/marketplace",
   },
   {
-    name: "Blog",
+    name: "Tin tức",
     href: "/blog",
   },
   {
-    name: "Contact",
+    name: "Liên hệ",
     href: "/contact",
   },
 ];
@@ -280,7 +280,7 @@ const Header = (props: IProps) => {
               >
                 <Right>
                   <Button LinkComponent={Link} href={"/login"} variant="contained">
-                    Log in{" "}
+                    Đăng nhập{" "}
                   </Button>
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
@@ -315,14 +315,14 @@ const Header = (props: IProps) => {
                     variant="h2"
                     sx={(theme) => ({
                       pt: "40px",
-                      fontSize: 56,
+                      fontSize: 46,
                       fontWeight: 400,
                       [theme.breakpoints.down("md")]: {
-                        fontSize: 46,
+                        fontSize: 36,
                       },
                     })}
                   >
-                    Established reader distracted
+                    TRỞ THÀNH NHÀ ĐẦU TƯ TẠI LUCIS CITY
                   </Typography>
                   <Typography
                     sx={(theme) => ({
@@ -332,7 +332,9 @@ const Header = (props: IProps) => {
                       },
                     })}
                   >
-                    Fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                    Dân chủ - Minh bạch - Tin cậy - Linh hoạt
+                    <br /> Lucis City cho phép Nhà đầu tư tham gia Cộng đồng - trải nghiệm và hưởng các đặc quyền tiện
+                    ích tối ưu nhất.
                   </Typography>
                   <Button
                     sx={(theme) => ({
@@ -344,7 +346,7 @@ const Header = (props: IProps) => {
                     })}
                     endIcon={<img style={{ marginLeft: 8 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />}
                   >
-                    LEARN MORE
+                    Xem thêm
                   </Button>
                 </ExtendBox>
                 <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />

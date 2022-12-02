@@ -1,6 +1,7 @@
 import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import Grid2 from "@mui/material/Unstable_Grid2";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
@@ -24,7 +25,7 @@ export default function ComunitySection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Box
           sx={{
             width: "100%",
@@ -35,7 +36,7 @@ export default function ComunitySection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-            <Typography variant="h3">Lucis City in the media</Typography>
+            <Typography variant="h3">Truyền thông nói gì về chúng tôi </Typography>
           </AnimWhenVisible>
 
           <Grid2

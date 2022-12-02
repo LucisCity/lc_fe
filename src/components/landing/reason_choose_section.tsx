@@ -4,6 +4,7 @@ import React from "react";
 import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
@@ -31,7 +32,7 @@ export function ReasonChooseSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Center>
           <Grid container spacing={6}>
             <Grid xs={12} lg={6}>

@@ -4,6 +4,7 @@ import React from "react";
 import AnimWhenVisible from "../anim";
 import { CardAnimation } from "./components/card_animation";
 import Link from "next/link";
+import { headerHeight } from "../layout/header";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -169,7 +170,7 @@ export const CardSection = (props: IProps) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%", padding: "1px" }}>
+      <Container sx={{ height: "100%", padding: "1px", pt: `${headerHeight}px` }}>
         <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
           <Grid item xs={12} md={6} width={"100%"}>
             <Box
@@ -219,8 +220,8 @@ export const CardSection = (props: IProps) => {
                 mt={{ md: 5, xs: 5 }}
                 mb={{ md: 3, xs: 3 }}
               >
-                Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi nhuận từ
-                toàn bộ các tiện ích trong Hệ sinh thái....
+                Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi nhuận
+                từ toàn bộ các tiện ích trong Hệ sinh thái....
               </Typography>
               <Box
                 mb={{ md: 9, xs: 5 }}
@@ -250,7 +251,7 @@ export const CardSection = (props: IProps) => {
                   LinkComponent={Link}
                   href={"/invest"}
                 >
-                  Become an investor
+                  Trở thành thành viên
                 </Button>
                 {!disabledReadmoreButton && (
                   <Button
@@ -258,7 +259,7 @@ export const CardSection = (props: IProps) => {
                     href={"/member"}
                     sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
                   >
-                    Read more
+                    Xem thêm
                   </Button>
                 )}
               </Box>

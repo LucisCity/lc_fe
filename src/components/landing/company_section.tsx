@@ -5,6 +5,7 @@ import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
 import AnimWhenVisible from "../anim";
 import Link from "next/link";
+import { headerHeight } from "../layout/header";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -52,7 +53,7 @@ export const CompanySection = (props: Props) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Box position="relative" height={"100%"}>
           <Box height={"100%"} component="section">
             <Grid container sx={{ height: "100%" }}>
@@ -76,14 +77,14 @@ export const CompanySection = (props: Props) => {
                     variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}
                     index={props.index}
                   >
-                    <Button
-                      variant="contained"
-                      endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
-                      LinkComponent={Link}
-                      href={"/invest"}
-                    >
-                      Become an investor
-                    </Button>
+                    {/*<Button*/}
+                    {/*  variant="contained"*/}
+                    {/*  endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}*/}
+                    {/*  LinkComponent={Link}*/}
+                    {/*  href={"/invest"}*/}
+                    {/*>*/}
+                    {/*  Become an investor*/}
+                    {/*</Button>*/}
                   </AnimWhenVisible>
                 </Box>
               </Grid>

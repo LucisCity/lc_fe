@@ -69,7 +69,7 @@ export default function LandingPage() {
         <PartnerSection />
         <ComunitySection />
         <Footer />
-        <Box display={{ xs: "block", sm: "nome" }} width={"100%"} position={"fixed"} bottom={0} zIndex={zIndex.appBar}>
+        <Box display={{ sm: "nome" }} width={"100%"} position={"fixed"} bottom={0} zIndex={zIndex.appBar}>
           <BottomNavigation />
         </Box>
       </Box>

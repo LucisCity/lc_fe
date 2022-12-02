@@ -1,5 +1,6 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
@@ -23,7 +24,7 @@ export default function PartnerSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
         <Box
           sx={{
             width: "100%",
