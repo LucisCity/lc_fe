@@ -24,6 +24,7 @@ import BottomNavigation from "../layout/bottom_navigation";
 import zIndex from "@mui/material/styles/zIndex";
 import Footer from "../layout/footer";
 import ComunitySection from "./community_section";
+import { Background } from "./components/background";
 
 export enum Section {
   OnTop, // start
@@ -108,17 +109,19 @@ export default function LandingPage() {
           <Box
             slot="container-start"
             sx={{
-              background: `url(${"/assets/imgs/member/background.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
+              // background: `url(${"/assets/imgs/member/background.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
               position: "absolute",
               left: "0",
               top: "0",
               width: "130%",
               height: "150%",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              // backgroundSize: "cover",
+              // backgroundPosition: "center",
             }}
             data-swiper-parallax="-23%"
-          ></Box>
+          >
+            <Background />
+          </Box>
 
           <SwiperSlide>
             <TopSection />
@@ -127,7 +130,7 @@ export default function LandingPage() {
             <CompanySection index={1} />
           </SwiperSlide>
           <SwiperSlide>
-            <CardSection index={2} />
+            <CardSection index={2} disabledBackground />
           </SwiperSlide>
           <SwiperSlide>
             <EcosystemSection index={3} />
@@ -151,7 +154,7 @@ export default function LandingPage() {
             <ComunitySection index={9} />
           </SwiperSlide>
           <SwiperSlide>
-            <Footer style={{ position: "absolute", bottom: 0 }} />
+            <Footer style={{ position: "absolute", bottom: 0 }} disabledBackground />
           </SwiperSlide>
 
           <Box
