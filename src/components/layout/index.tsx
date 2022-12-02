@@ -1,29 +1,29 @@
-import DocHead from "./doc_head";
+import {observer} from "mobx-react-lite";
 import Footer from "./footer";
-import Header, { headerHeight, mobileHeaderHeight } from "./header";
-import { Box, useTheme } from "@mui/system";
+import Header from "./header";
 import BottomNavigation from "./bottom_navigation";
+import LayoutStore from "./layout.store";
 
 type Props = {
   children: any;
-  isShowHeader?: boolean;
-  isShowFooter?: boolean;
 };
-function AppLayout(props: Props) {
-  const { children, isShowHeader, isShowFooter } = props;
+export default observer(function Layout(props: Props) {
+  const { children } = props;
+  const {isShowHeader, isShowFooter, hasBottomNav} = LayoutStore
+
+  const pageRelativeStyle = {
+    paddingBottom: hasBottomNav ? 56 : 0,
+    // paddingTop: isShowHeader ? 60 : 0,
+  }
+
   return (
     <>
-      {/* DocHead should in each page */}
-      <DocHead />
-      {isShowHeader === false ? null : <Header />}
-      {children}
-
-      {isShowFooter === false ? null : <Footer />}
-      <Box display={"none"}>
-        <BottomNavigation />
-      </Box>
+      {isShowHeader && <Header />}
+      <main className="page-relative-c" style={pageRelativeStyle}>
+        {children}
+        {isShowFooter && <Footer />}
+      </main>
+      {hasBottomNav && <BottomNavigation/>}
     </>
   );
-}
-
-export default AppLayout;
+})

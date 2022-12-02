@@ -228,6 +228,8 @@ interface IProps {
   isFixed?: boolean;
 }
 const Header = (props: IProps) => {
+  // console.log('{Header} render: ');
+
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();

@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 import DocHead from "../components/layout/doc_head";
 import { MemberPage } from "../components/member";
-import AppLayout from "../components/layout";
+import PageLayout from "../components/layout/PageLayout";
 
 const Member: NextPage = () => {
   return (
     <>
       <DocHead />
-      <AppLayout>
+      <PageLayout>
         <MemberPage />
-      </AppLayout>
+      </PageLayout>
     </>
   );
 };

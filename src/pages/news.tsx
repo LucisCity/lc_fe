@@ -8,7 +8,7 @@ const Invest: NextPage = () => {
     <>
       <DocHead />
       <PageLayout>
-        <h1>Invest</h1>
+        <h1>news</h1>
       </PageLayout>
     </>
   );

@@ -1,12 +1,14 @@
 import type { NextPage } from "next";
 import LoginPage from "../components/auth/login";
-import AppLayout from "../components/layout";
+import PageLayout from "../components/layout/PageLayout";
+import DocHead from "../components/layout/doc_head";
 
 const Login: NextPage = () => {
   return (
-    <AppLayout isShowHeader={false} isShowFooter={false}>
+    <PageLayout isShowHeader={false} isShowFooter={false} hasBottomNav={false}>
+      <DocHead />
       <LoginPage />
-    </AppLayout>
+    </PageLayout>
   );
 };
 
