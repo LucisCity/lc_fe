@@ -1,13 +1,13 @@
 import * as React from "react";
 import BottomNavigationMui from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import {Box, styled} from "@mui/system";
+import { Box, styled } from "@mui/system";
 import Link from "next/link";
 import zIndex from "@mui/material/styles/zIndex";
-import {useRouter} from "next/router";
-import {useCallback, useEffect} from "react";
-import { isMobile, isTablet } from 'react-device-detect';
-import {isClient} from "../../../utils/env";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
+import { isMobile, isTablet } from "react-device-detect";
+import { isClient } from "../../../utils/env";
 
 const IconNav = styled("img")(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
@@ -15,16 +15,8 @@ const IconNav = styled("img")(({ theme }) => ({
   },
 }));
 function AppNavAction(props: any) {
-  const {label, icon, to, ...others} = props;
-  return (
-    <BottomNavigationAction
-      component={Link}
-      href={to}
-      label={label}
-      icon={icon}
-      {...others}
-    />
-  )
+  const { label, icon, to, ...others } = props;
+  return <BottomNavigationAction component={Link} href={to} label={label} icon={icon} {...others} />;
 }
 
 function BottomNavigationUI() {
@@ -32,11 +24,14 @@ function BottomNavigationUI() {
   const router = useRouter();
   const [tabIdx, setTabIdx] = React.useState(-1);
 
-  const setTabIdxMemo = useCallback((i: number) => {
-    if (i !== tabIdx) {
-      setTabIdx(i);
-    }
-  }, [tabIdx]);
+  const setTabIdxMemo = useCallback(
+    (i: number) => {
+      if (i !== tabIdx) {
+        setTabIdx(i);
+      }
+    },
+    [tabIdx],
+  );
 
   useEffect(() => {
     let initialTabIdx: number;
@@ -58,26 +53,30 @@ function BottomNavigationUI() {
     }
 
     setTabIdxMemo(initialTabIdx);
-  }, [router.pathname])
+  }, [router.pathname]);
 
   return (
-      <BottomNavigationMui
-        showLabels
-        value={tabIdx}
-        onChange={(event, newValue) => {
-          setTabIdxMemo(newValue);
-        }}
-      >
-        <AppNavAction label="Đầu tư" to="/invest" icon={<IconNav src={"/assets/imgs/bottom_navbar/status-up.svg"} />} />
-        <AppNavAction label="Thành viên" to="/member" icon={<IconNav src={"/assets/imgs/bottom_navbar/cards.svg"} />} />
-        <AppNavAction label="Tin tức" to="/news" icon={<IconNav src={"/assets/imgs/bottom_navbar/book.svg"} />} />
-        <AppNavAction label="Cá nhân" to="/profile" icon={<IconNav src={"/assets/imgs/bottom_navbar/user-square.svg"} />} />
-      </BottomNavigationMui>
+    <BottomNavigationMui
+      showLabels
+      value={tabIdx}
+      onChange={(event, newValue) => {
+        setTabIdxMemo(newValue);
+      }}
+    >
+      <AppNavAction label="Đầu tư" to="/invest" icon={<IconNav src={"/assets/imgs/bottom_navbar/status-up.svg"} />} />
+      <AppNavAction label="Thành viên" to="/member" icon={<IconNav src={"/assets/imgs/bottom_navbar/cards.svg"} />} />
+      <AppNavAction label="Tin tức" to="/news" icon={<IconNav src={"/assets/imgs/bottom_navbar/book.svg"} />} />
+      <AppNavAction
+        label="Cá nhân"
+        to="/profile"
+        icon={<IconNav src={"/assets/imgs/bottom_navbar/user-square.svg"} />}
+      />
+    </BottomNavigationMui>
   );
 }
 
 export function deviceSupport(): boolean {
-  return isClient ? (isMobile || isTablet) : false;
+  return isClient ? isMobile || isTablet : false;
 }
 
 export default function BottomNavigation() {
@@ -85,5 +84,5 @@ export default function BottomNavigation() {
     <Box width={"100%"} position={"fixed"} bottom={0} zIndex={zIndex.appBar}>
       <BottomNavigationUI />
     </Box>
-  )
+  );
 }

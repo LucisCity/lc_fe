@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   return (
     <>
       <DocHead />
-      <PageLayout isShowHeader={false}>
+      <PageLayout isShowHeader={false} isShowFooter={false}>
         <LandingPage />
       </PageLayout>
     </>

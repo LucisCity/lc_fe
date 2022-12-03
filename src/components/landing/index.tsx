@@ -112,7 +112,7 @@ export default function LandingPage() {
               // backgroundSize: "cover",
               // backgroundPosition: "center",
             }}
-            data-swiper-parallax="-23%"
+            // data-swiper-parallax="-23%"
           >
             <Background />
           </Box>
