@@ -5,6 +5,7 @@ import AnimWhenVisible from "../anim";
 import { CardAnimation } from "./components/card_animation";
 import Link from "next/link";
 import { headerHeight } from "../layout/header";
+import { Center } from "../common/center";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -171,102 +172,104 @@ export const CardSection = (props: IProps) => {
       }}
     >
       <Container sx={{ height: "100%", padding: "1px", pt: `${headerHeight}px` }}>
-        <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
-          <Grid item xs={12} md={6} width={"100%"}>
-            <Box
-              display="flex"
-              justifyContent="center"
-              position={"relative"}
-              zIndex={1}
-              alignItems={{ xs: "flex-end", sm: "center" }}
-              width={"100%"}
-              height={"100%"}
-            >
-              <CardAnimation animationIndex={props.index} enable={!disabledAnimation} />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ height: "100%" }}>
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              justifyContent="center"
-              // alignItems={"center"}
-              gap={2}
-              height="100%"
-              sx={(theme) => ({
-                [theme.breakpoints.down("md")]: {
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                },
-              })}
-            >
-              <Box>
-                <CardSupportTitle>Card</CardSupportTitle>
-                <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
-              </Box>
-              <Typography
-                sx={(theme) => ({
-                  color: "#6555EE",
-                  textTransform: "uppercase",
-                  fontWeight: 600,
-                  fontSize: 16,
-                })}
-                mt={2}
-              >
-                đẳng cấp công nghệ
-              </Typography>
-              <Typography
-                sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
-                mt={{ md: 5, xs: 5 }}
-                mb={{ md: 3, xs: 3 }}
-              >
-                Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi nhuận
-                từ toàn bộ các tiện ích trong Hệ sinh thái....
-              </Typography>
+        <Center>
+          <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
+            <Grid item xs={12} md={6} width={"100%"}>
               <Box
-                mb={{ md: 9, xs: 5 }}
+                display="flex"
+                justifyContent="center"
+                position={"relative"}
+                zIndex={1}
+                alignItems={{ xs: "flex-end", sm: "center" }}
                 width={"100%"}
-                sx={{ overflowX: "auto" }}
-                display={"flex"}
-                justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                height={"100%"}
               >
-                {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
+                <CardAnimation animationIndex={props.index} enable={!disabledAnimation} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ height: "100%" }}>
+              <Box
+                display="flex"
+                flexDirection={"column"}
+                justifyContent="center"
+                // alignItems={"center"}
+                gap={2}
+                height="100%"
+                sx={(theme) => ({
+                  [theme.breakpoints.down("md")]: {
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  },
+                })}
+              >
                 <Box>
-                  <ListContent listContent={contentItems1} animeIndex={props?.index} />
-                  <ListContent listContent={contentItems2} animeIndex={props?.index} />
-                  <ListContent listContent={contentItems3} animeIndex={props?.index} />
+                  <CardSupportTitle>Card</CardSupportTitle>
+                  <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
+                </Box>
+                <Typography
+                  sx={(theme) => ({
+                    color: "#6555EE",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                    fontSize: 16,
+                  })}
+                  mt={2}
+                >
+                  đẳng cấp công nghệ
+                </Typography>
+                <Typography
+                  sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
+                  mt={{ md: 5, xs: 5 }}
+                  mb={{ md: 3, xs: 3 }}
+                >
+                  Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi
+                  nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
+                </Typography>
+                <Box
+                  mb={{ md: 9, xs: 5 }}
+                  width={"100%"}
+                  sx={{ overflowX: "auto" }}
+                  display={"flex"}
+                  justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                >
+                  {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
+                  <Box>
+                    <ListContent listContent={contentItems1} animeIndex={props?.index} />
+                    <ListContent listContent={contentItems2} animeIndex={props?.index} />
+                    <ListContent listContent={contentItems3} animeIndex={props?.index} />
+                  </Box>
+                </Box>
+                <Box
+                  display={"flex"}
+                  width={{ sm: "100%", xs: 270 }}
+                  justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                  flexDirection={{ sm: "row", xs: "column" }}
+                  pb={5}
+                  gap={3}
+                >
+                  <Button
+                    variant="contained"
+                    endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                    LinkComponent={Link}
+                    href={"/invest"}
+                  >
+                    Trở thành thành viên
+                  </Button>
+                  {!disabledReadmoreButton && (
+                    <Button
+                      LinkComponent={Link}
+                      href={"/member"}
+                      sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
+                    >
+                      Xem thêm
+                    </Button>
+                  )}
                 </Box>
               </Box>
-              <Box
-                display={"flex"}
-                width={{ sm: "100%", xs: 270 }}
-                justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
-                flexDirection={{ sm: "row", xs: "column" }}
-                pb={5}
-                gap={3}
-              >
-                <Button
-                  variant="contained"
-                  endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
-                  LinkComponent={Link}
-                  href={"/invest"}
-                >
-                  Trở thành thành viên
-                </Button>
-                {!disabledReadmoreButton && (
-                  <Button
-                    LinkComponent={Link}
-                    href={"/member"}
-                    sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
-                  >
-                    Xem thêm
-                  </Button>
-                )}
-              </Box>
-            </Box>
+            </Grid>
+            <Grid item xs={0} lg={1} />
           </Grid>
-          <Grid item xs={0} lg={1} />
-        </Grid>
+        </Center>
         {/*<CoinImage src="/assets/imgs/landing/coin4.png" alt="" />*/}
       </Container>
     </MainItemComponent>

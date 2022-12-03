@@ -34,7 +34,7 @@ export function ReasonChooseSection(props: Props) {
     >
       <Container sx={{ height: "100%", pt: `${headerHeight}px`, pb: [`${headerHeight}px`, 0] }}>
         <Center>
-          <Grid container spacing={6}>
+          <Grid container spacing={4}>
             <Grid xs={12} lg={6}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? -300 : 0 } }}
@@ -161,9 +161,9 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
       <Typography
         variant="body1"
         sx={{
-          mt: 6,
+          mt: 4,
           [theme.breakpoints.down("sm")]: {
-            mt: 4,
+            mt: 2,
           },
         }}
       >

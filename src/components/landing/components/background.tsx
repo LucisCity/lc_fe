@@ -50,6 +50,7 @@ export const Background = () => {
               background: `url("/assets/imgs/background/${item}.jpg")`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
+              backgroundPosition: "left",
             }}
           />
         );

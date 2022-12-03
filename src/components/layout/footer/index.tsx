@@ -144,7 +144,7 @@ export default function Footer({ style, disabledBackground }: IProps) {
           <Grid item xs={12} sm={6}>
             <Grid container spacing={3}>
               <Grid item xs={8}>
-                <Typography mb={{ md: 14, xs: 10 }}>
+                <Typography mb={{ md: 14, xs: 6 }}>
                   <strong>Công ty</strong>
                 </Typography>
                 <UlComponent>
@@ -191,19 +191,19 @@ export default function Footer({ style, disabledBackground }: IProps) {
               {/*  </UlComponent>*/}
               {/*</Grid>*/}
               <Grid item xs={4}>
-                <Typography mb={{ md: 14, xs: 10 }}>
+                <Typography mb={{ md: 14, xs: 6 }}>
                   <strong>Liên kết</strong>
                 </Typography>
-                <Box display={"flex"} alignItems={"center"} m={0} mb={10}>
+                <Box display={"flex"} alignItems={"center"} m={0} mb={{ md: 10, xs: 6 }}>
                   <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
                   <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
                   <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
                 </Box>
                 <Box>
-                  <Typography>
+                  <Typography mb={{ md: 10, xs: 6 }}>
                     <strong>Tải ứng dụng</strong>
                   </Typography>
-                  <img src="" alt="" />
+                  <img src="/assets/imgs/footer/download_app.png" alt="" />
                 </Box>
               </Grid>
             </Grid>

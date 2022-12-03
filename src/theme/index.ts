@@ -13,7 +13,7 @@ const theme = (mode: PaletteMode) =>
     breakpoints: {
       values: {
         xs: 0,
-        sm: 768,
+        sm: 769,
         md: 1024,
         lg: 1200,
         xl: 1440,
@@ -28,6 +28,7 @@ const theme = (mode: PaletteMode) =>
           containedPrimary: ({ theme }) => ({
             background: "#6555EE",
             borderRadius: 8,
+            height: 50,
             gap: 8,
             padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
             fontWeight: 500,
@@ -37,6 +38,11 @@ const theme = (mode: PaletteMode) =>
             textTransform: "none",
             ":hover": {
               background: "#5946FF",
+            },
+            [theme.breakpoints.down("md")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
             },
           }),
           outlinedPrimary: ({ theme }) => ({

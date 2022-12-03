@@ -48,7 +48,7 @@ export default function LandingPage() {
 
   const size = useWindowSize();
 
-  if (size.width <= theme.breakpoints.values.sm) {
+  if (size.width < theme.breakpoints.values.sm) {
     return (
       <Box
         sx={{

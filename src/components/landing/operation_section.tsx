@@ -65,10 +65,11 @@ export function OperationSection(props: Props) {
               <Box
                 component="img"
                 src="/assets/imgs/landing/img_operation.svg"
-                alt=""
+                alt="lucis operation flow"
+                mt={{ sm: 6, xs: 4 }}
                 sx={{
                   maxWidth: "100%",
-                  marginTop: 25,
+                  // marginTop: 25,
                 }}
               />
             </Center>
