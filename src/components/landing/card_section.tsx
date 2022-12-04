@@ -20,6 +20,7 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 
 interface IProps {
   index?: number;
+  fullscreen?: boolean;
   disabledBackground?: boolean;
   disabledReadmoreButton?: boolean;
   disabledAnimation?: boolean;
@@ -163,7 +164,9 @@ export const CardSection = (props: IProps) => {
   const disabledAnimation = props?.disabledAnimation ?? false;
   return (
     <MainItemComponent
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         background: !disabledBackground ? `url(${"assets/imgs/member/background.jpg"})` : "none",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -171,7 +174,7 @@ export const CardSection = (props: IProps) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%", padding: "1px", pt: { xs: 0, sm: `${headerHeight}px` } }}>
+      <Container sx={{ height: "100%" }}>
         <Center>
           <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
             <Grid item xs={12} sm={6} width={"100%"}>

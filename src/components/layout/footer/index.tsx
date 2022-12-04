@@ -90,10 +90,15 @@ export const FooterNextLink = styled(Link, { shouldForwardProp: (props) => props
 interface IProps {
   style?: any;
   disabledBackground?: boolean;
+  hasBottomNav?: boolean;
 }
-export default function Footer({ style, disabledBackground }: IProps) {
+export default function Footer({ style, disabledBackground, hasBottomNav }: IProps) {
   return (
-    <FooterStyled style={style} disabledBackground={!!disabledBackground}>
+    <FooterStyled
+      style={style}
+      disabledBackground={!!disabledBackground}
+      className={hasBottomNav ? 'fullscreenPage' : undefined}
+    >
       <Container>
         <Logo src="/assets/imgs/logo/logo-color.svg" alt="logo" />
         <Grid container spacing={{ sm: 0, xs: 4 }}>

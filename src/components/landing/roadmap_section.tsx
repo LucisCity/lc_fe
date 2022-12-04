@@ -7,6 +7,7 @@ import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 
 export default function RoadmapSection(props: Props) {
@@ -15,7 +16,9 @@ export default function RoadmapSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         width: "100%",
         height: "100vh",
         overflow: "hidden",
@@ -28,7 +31,7 @@ export default function RoadmapSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px`, pb: [`${headerHeight}px`, 0] }}>
+      <Container sx={{ height: "100%" }}>
         <Box
           sx={{
             // width: "100%",

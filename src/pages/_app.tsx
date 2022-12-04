@@ -14,6 +14,7 @@ import { ErrorBoundary } from "../components/layout/error_boundary";
 import Layout from "../components/layout";
 
 // font
+import "../styles/globals.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";

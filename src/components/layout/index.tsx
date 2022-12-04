@@ -11,17 +11,24 @@ export default observer(function Layout(props: Props) {
   const { children } = props;
   const { isShowHeader, isShowFooter, hasBottomNav } = LayoutStore;
 
+  // Comment this out because let each page handle the padding, so we have page background underneath the header and bar
   const pageRelativeStyle = {
-    paddingBottom: hasBottomNav ? 56 : 0,
-    // paddingTop: isShowHeader ? 60 : 0,
+    // paddingBottom: hasBottomNav ? 60 : 0,
+    // paddingTop: isShowHeader ? 90 : 0,
+    "--page-padding-bottom": hasBottomNav ? "60px" : 0,
+    "--page-padding-top": isShowHeader ? "90px" : 0, // landing always on PC always has header 90px
   };
 
   return (
     <>
       {isShowHeader && <Header />}
-      <main className="page-relative-c" style={pageRelativeStyle}>
+      <main
+        className="page-relative-c"
+        // @ts-ignore
+        style={pageRelativeStyle}
+      >
         {children}
-        {isShowFooter && <Footer disabledBackground />}
+        {isShowFooter && <Footer disabledBackground hasBottomNav={hasBottomNav}/>}
       </main>
       {hasBottomNav && <BottomNavigation />}
     </>

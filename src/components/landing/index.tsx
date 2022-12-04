@@ -121,31 +121,31 @@ export default function LandingPage() {
             <TopSection />
           </SwiperSlide>
           <SwiperSlide>
-            <CompanySection index={1} />
+            <CompanySection index={1} fullscreen={true}/>
           </SwiperSlide>
           <SwiperSlide>
-            <CardSection index={2} disabledBackground />
+            <CardSection index={2} disabledBackground fullscreen={true}/>
           </SwiperSlide>
           <SwiperSlide>
-            <EcosystemSection index={3} />
+            <EcosystemSection index={3} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <ReasonChooseSection index={4} />
+            <ReasonChooseSection index={4} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <OperationSection index={5} />
+            <OperationSection index={5} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <NftSection index={6} />;
+            <NftSection index={6} fullscreen={true} />;
           </SwiperSlide>
           <SwiperSlide>
-            <RoadmapSection index={7} />;
+            <RoadmapSection index={7} fullscreen={true} />;
           </SwiperSlide>
           <SwiperSlide>
-            <PartnerSection index={8} />
+            <PartnerSection index={8} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <ComunitySection index={9} />
+            <ComunitySection index={9} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
             <Footer style={{ position: "absolute", bottom: 0 }} disabledBackground />

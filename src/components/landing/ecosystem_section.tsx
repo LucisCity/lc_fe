@@ -2,11 +2,11 @@ import { Box, Container, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
-import { Center } from "../common/center";
 import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 export function EcosystemSection(props: Props) {
   const theme = useTheme();
@@ -14,10 +14,12 @@ export function EcosystemSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
         width: "100%",
         height: "100vh",
         overflow: "hidden",
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         [theme.breakpoints.down("sm")]: {
           background: `url(/assets/imgs/member/background.jpg)`,
           backgroundRepeat: "no-repeat",
@@ -29,7 +31,7 @@ export function EcosystemSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
+      <Container sx={{ height: "100%" }}>
         <Box
           justifyContent={"center"}
           display={"flex"}

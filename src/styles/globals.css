@@ -35,3 +35,13 @@ body {
     background: black;
   }
 } */
+
+/**
+ * Full screen page need this class in case of bottom nav show/hide
+ * To avoid cover the page content by bottom nav
+ * But maintain the page background underneath the bottom nav
+ */
+.fullscreenPage {
+  padding-bottom: var(--page-padding-bottom);
+  padding-top: var(--page-padding-top);
+}

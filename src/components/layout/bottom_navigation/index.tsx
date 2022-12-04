@@ -53,7 +53,7 @@ function BottomNavigationUI() {
     }
 
     setTabIdxMemo(initialTabIdx);
-  }, [router.pathname]);
+  }, [router.pathname, setTabIdxMemo]);
 
   return (
     <BottomNavigationMui
@@ -61,6 +61,12 @@ function BottomNavigationUI() {
       value={tabIdx}
       onChange={(event, newValue) => {
         setTabIdxMemo(newValue);
+      }}
+      sx={{
+        height: 60,
+        backgroundColor: 'rgb(255 255 255 / 20%)',
+        backdropFilter: 'blur(2px)',
+        borderTop: '1px solid #ffffff3b',
       }}
     >
       <AppNavAction label="Đầu tư" to="/invest" icon={<IconNav src={"/assets/imgs/bottom_navbar/status-up.svg"} />} />

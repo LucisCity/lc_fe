@@ -41,11 +41,14 @@ const TitleImage = styled("img")(({ theme }) => ({
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 export const CompanySection = (props: Props) => {
   return (
     <MainItemComponent
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -53,7 +56,7 @@ export const CompanySection = (props: Props) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px` }}>
+      <Container sx={{ height: "100%" }}>
         <Box position="relative" height={"100%"}>
           <Box height={"100%"} component="section">
             <Grid container sx={{ height: "100%" }}>

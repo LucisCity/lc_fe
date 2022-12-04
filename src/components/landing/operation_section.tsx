@@ -6,6 +6,7 @@ import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 
 export function OperationSection(props: Props) {
@@ -13,7 +14,9 @@ export function OperationSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         width: "100%",
         height: "100vh",
         overflow: "hidden",
@@ -28,7 +31,7 @@ export function OperationSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px`, pb: [`${headerHeight}px`, 0] }}>
+      <Container sx={{ height: "100%" }}>
         <Box display={"flex"} height={"100%"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300 } }} index={props.index}>
             <Box

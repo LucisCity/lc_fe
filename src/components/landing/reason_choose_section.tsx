@@ -8,6 +8,7 @@ import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 
 export function ReasonChooseSection(props: Props) {
@@ -16,7 +17,9 @@ export function ReasonChooseSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         width: "100%",
         height: "100vh",
         overflow: "hidden",
@@ -32,7 +35,7 @@ export function ReasonChooseSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%", pt: `${headerHeight}px`, pb: [`${headerHeight}px`, 0] }}>
+      <Container sx={{ height: "100%" }}>
         <Center>
           <Grid container spacing={4}>
             <Grid xs={12} lg={6}>
