@@ -161,6 +161,8 @@ export default function LandingPage() {
               top: "50%",
               transform: "translate(0px, -50%)",
               zIndex: 900,
+              "--title-opa": 0,
+              "&:hover": {"--title-opa": 1}
             }}
           >
             <Indicator title="Lucis City" isActive={paging.activeIndex === 1} index={1} />

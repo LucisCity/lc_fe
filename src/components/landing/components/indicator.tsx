@@ -23,7 +23,14 @@ export default function Indicator({ isActive, title, index }: { isActive: boolea
         sx={{
           fontSize: isActive ? "14px" : "12px",
           color: isActive ? "#504C67" : "white",
-          marginRight: "10px",
+          marginRight: "6px",
+          opacity: isActive ? 1 : "var(--title-opa)",
+          transition: "opacity 500ms",
+          willChange: "opacity",
+          padding: "0 4px",
+          backdropFilter: "blur(3px)",
+          borderRadius: 10,
+          textShadow: isActive ? "none" : "0 0 3px black",
         }}
       >
         {title}
