@@ -69,6 +69,28 @@ const theme = (mode: PaletteMode) =>
           },
         },
       },
+
+      MuiBottomNavigation: {
+        styleOverrides: {
+          root: {
+            backgroundColor: 'rgb(255 255 255 / 50%)',
+            backdropFilter: 'blur(2px)',
+            borderTop: '1px solid #ffffff3b',
+          }
+        }
+      },
+      MuiBottomNavigationAction: {
+        styleOverrides: {
+          label: {
+            color: "#666",
+            fontSize: 12,
+            "&.Mui-selected": {
+              color: "#6555EE",
+              fontSize: 12,
+            }
+          },
+        }
+      }
     },
     typography: TYPO_THEME,
     spacing: 4,

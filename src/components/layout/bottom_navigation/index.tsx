@@ -62,12 +62,7 @@ function BottomNavigationUI() {
       onChange={(event, newValue) => {
         setTabIdxMemo(newValue);
       }}
-      sx={{
-        height: getHeight(),
-        backgroundColor: 'rgb(255 255 255 / 50%)',
-        backdropFilter: 'blur(2px)',
-        borderTop: '1px solid #ffffff3b',
-      }}
+      sx={{ height: getHeight() }}
     >
       <AppNavAction label="Đầu tư" to="/invest" icon={<IconNav src={"/assets/imgs/bottom_navbar/status-up.svg"} />} />
       <AppNavAction label="Thành viên" to="/member" icon={<IconNav src={"/assets/imgs/bottom_navbar/cards.svg"} />} />
