@@ -15,14 +15,33 @@ const actions = [
   { icon: <LiveHelpIcon />, name: "FAQs" },
   { icon: <KeyboardArrowUpIcon />, name: "Jump to top" },
 ];
-
-export const FabButton = () => {
+type Props = {
+  bOffset?: number;
+}
+export const FabButton = (props: Props) => {
   const swiper = useSwiper();
 
   const fabAction = (name: string) => {
     switch (name) {
       case "Jump to top":
-        swiper.slideTo(0);
+        if (swiper) {
+          swiper.slideTo(0);
+        }
+        else {
+          // try swiper on landing
+          try {
+            // @ts-ignore
+            const swiper = document.querySelector('#landing-page-c').swiper;
+            swiper.slideTo(0);
+          } catch (e) {
+            // No swiper or on mobile UI
+            window.scroll({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            })
+          }
+        }
         break;
 
       default:
@@ -32,10 +51,10 @@ export const FabButton = () => {
   return (
     <>
       <SpeedDial
-        ariaLabel="fab button"
+        ariaLabel="Live Support"
         sx={{
           position: "fixed",
-          bottom: 16,
+          bottom: 16 + (props.bOffset ?? 0),
           right: 16,
           zIndex: zIndex.fab,
         }}

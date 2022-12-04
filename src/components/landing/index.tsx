@@ -17,7 +17,6 @@ import { CardSection } from "./card_section";
 import { useWindowSize } from "../../hooks/use_window_size";
 import s from "./landing.module.sass";
 import Indicator from "./components/indicator";
-import { FabButton } from "./components/fab_button";
 import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
 import Footer from "../layout/footer";
@@ -78,6 +77,7 @@ export default function LandingPage() {
     <Box className={s.container}>
       <PagingCtx.Provider value={paging}>
         <Swiper
+          id="landing-page-c"
           direction={"vertical"}
           slidesPerView={1}
           spaceBetween={0}
@@ -173,7 +173,6 @@ export default function LandingPage() {
             <Indicator title="Partner & Investor" isActive={paging.activeIndex === 8} index={8} />
             <Indicator title="Community" isActive={paging.activeIndex === 9} index={9} />
           </Box>
-          <FabButton />
         </Swiper>
       </PagingCtx.Provider>
     </Box>

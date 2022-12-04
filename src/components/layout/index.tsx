@@ -3,6 +3,7 @@ import Footer from "./footer";
 import Header from "./header";
 import BottomNavigation, {getHeight} from "./bottom_navigation";
 import LayoutStore from "./layout.store";
+import {FabButton} from "../landing/components/fab_button";
 
 type Props = {
   children: any;
@@ -30,6 +31,7 @@ export default observer(function Layout(props: Props) {
         {isShowFooter && <Footer disabledBackground hasBottomNav={bottomNavVisible}/>}
       </main>
       {bottomNavVisible && <BottomNavigation />}
+      <FabButton bOffset={bottomNavVisible ? bottomNavHeight : 0}/>
     </>
   );
 });
