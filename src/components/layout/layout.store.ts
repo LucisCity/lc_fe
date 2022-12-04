@@ -1,27 +1,31 @@
 import { makeAutoObservable } from "mobx";
 import {isClientDevMode} from "../../utils/env";
-import {deviceSupport} from "./bottom_navigation";
+import {deviceSupport, getHeight} from "./bottom_navigation";
 
 export type LayoutState = {
   isShowHeader?: boolean;
   isShowFooter?: boolean;
-  hasBottomNav?: boolean;
+  bottomNavVisible?: boolean;
+  bottomNavHeight?: number;
 }
 class LayoutStore implements LayoutState {
   public isShowHeader!: boolean;
   public isShowFooter!: boolean;
-  public hasBottomNav!: boolean;
+  public bottomNavVisible!: boolean;
+  public bottomNavHeight!: number;
 
   constructor() {
     this.resetState();
-    this.hasBottomNav = false; // sync Initial UI with server
+    this.bottomNavVisible = false; // sync Initial UI with server
+    this.bottomNavHeight = 0; // sync Initial UI with server
     makeAutoObservable(this);
   }
 
   resetState() {
     this.isShowHeader = true;
     this.isShowFooter = true;
-    this.hasBottomNav = getDefaultHasBottomNav();
+    this.bottomNavVisible = getDefaultHasBottomNav();
+    this.bottomNavHeight = getHeight();
   }
 
   setState(s: LayoutState) {
@@ -32,7 +36,8 @@ class LayoutStore implements LayoutState {
   setStateOrDefault(s: LayoutState) {
     this.isShowFooter = s.isShowFooter ?? true;
     this.isShowHeader = s.isShowHeader ?? true;
-    this.hasBottomNav = s.hasBottomNav ?? getDefaultHasBottomNav();
+    this.bottomNavVisible = s.bottomNavVisible ?? getDefaultHasBottomNav();
+    this.bottomNavHeight = s.bottomNavHeight ?? getHeight();
   }
 }
 

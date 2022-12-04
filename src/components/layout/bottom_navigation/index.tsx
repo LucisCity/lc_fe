@@ -6,8 +6,8 @@ import Link from "next/link";
 import zIndex from "@mui/material/styles/zIndex";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
-import { isMobile, isTablet } from "react-device-detect";
-import { isClient } from "../../../utils/env";
+import {isChrome, isChromium, isIOS, isMobile, isMobileSafari, isTablet} from "react-device-detect";
+import {isClient, isStandaloneMode} from "../../../utils/env";
 
 const IconNav = styled("img")(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
@@ -63,8 +63,8 @@ function BottomNavigationUI() {
         setTabIdxMemo(newValue);
       }}
       sx={{
-        height: 60,
-        backgroundColor: 'rgb(255 255 255 / 20%)',
+        height: getHeight(),
+        backgroundColor: 'rgb(255 255 255 / 50%)',
         backdropFilter: 'blur(2px)',
         borderTop: '1px solid #ffffff3b',
       }}
@@ -83,6 +83,24 @@ function BottomNavigationUI() {
 
 export function deviceSupport(): boolean {
   return isClient ? isMobile || isTablet : false;
+}
+
+export function getHeight() {
+  // On ios device, we need to avoid ios home indicator at the bottom of screen
+  let coveredByIosIndicator = false;
+  if (isIOS) {
+    if (isChrome || isChromium) {
+      coveredByIosIndicator = true;
+    }
+
+    // NOTE: This will raise hydration error because server state is differ from client initial state
+    // So we need to use this on NoSSR only
+    else if (isClient && isStandaloneMode) {
+      coveredByIosIndicator = true;
+    }
+  }
+
+  return 60 + (coveredByIosIndicator ? 6 : 0);
 }
 
 export default function BottomNavigation() {

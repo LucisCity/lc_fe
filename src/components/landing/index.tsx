@@ -23,6 +23,7 @@ import PartnerSection from "./partner_section";
 import Footer from "../layout/footer";
 import ComunitySection from "./community_section";
 import { Background } from "./components/background";
+import LayoutStore from "../layout/layout.store";
 
 export enum Section {
   OnTop, // start
@@ -47,6 +48,7 @@ export default function LandingPage() {
   const { position } = useScroll();
 
   const size = useWindowSize();
+  const bottomNavVisible = LayoutStore.bottomNavVisible;
 
   if (size.width < theme.breakpoints.values.sm) {
     return (
@@ -67,6 +69,7 @@ export default function LandingPage() {
         <RoadmapSection />
         <PartnerSection />
         <ComunitySection />
+        <Footer hasBottomNav={bottomNavVisible} />
       </Box>
     );
   }
@@ -148,7 +151,7 @@ export default function LandingPage() {
             <ComunitySection index={9} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <Footer style={{ position: "absolute", bottom: 0 }} disabledBackground />
+            <Footer style={{ position: "absolute", bottom: 0 }} disabledBackground hasBottomNav={bottomNavVisible} />
           </SwiperSlide>
 
           <Box

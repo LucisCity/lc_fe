@@ -18,7 +18,7 @@ export default function PageLayout(props: Props) {
     LayoutStore.setStateOrDefault({
       isShowHeader,
       isShowFooter,
-      hasBottomNav,
+      bottomNavVisible: hasBottomNav,
     })
   }, [])
 
