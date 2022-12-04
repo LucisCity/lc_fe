@@ -35,7 +35,7 @@ export function ReasonChooseSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", padding: '50px 0' }}>
         <Center>
           <Grid container spacing={4}>
             <Grid xs={12} lg={6}>

@@ -31,7 +31,7 @@ export function EcosystemSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", padding: '30px 0' }}>
         <Box
           justifyContent={"center"}
           display={"flex"}

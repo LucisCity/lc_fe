@@ -12,7 +12,7 @@ const FooterStyled = styled("footer", { shouldForwardProp: (propName) => propNam
   backdropFilter: "blur(12px)",
   display: "flex",
   alignItems: "center",
-  paddingTop: theme.spacing(20),
+  paddingTop: theme.spacing(20) + '!important',
 }));
 
 const UlComponent = styled("ul")(({ theme }) => ({

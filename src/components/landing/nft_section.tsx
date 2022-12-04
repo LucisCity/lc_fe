@@ -30,7 +30,7 @@ export default function NftSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", padding: '50px 0' }}>
         <Center
           sx={{
             justifyContent: "flex-start",

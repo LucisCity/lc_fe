@@ -27,7 +27,7 @@ export default function PartnerSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", padding: '50px 0' }}>
         <Box
           sx={{
             width: "100%",
