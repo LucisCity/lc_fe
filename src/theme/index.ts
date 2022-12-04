@@ -81,11 +81,15 @@ const theme = (mode: PaletteMode) =>
       },
       MuiBottomNavigationAction: {
         styleOverrides: {
-          label: {
-            color: "#666",
-            fontSize: 12,
+          root: {
+            color: "#292D32",
             "&.Mui-selected": {
               color: "#6555EE",
+            }
+          },
+          label: {
+            fontSize: 12,
+            "&.Mui-selected": {
               fontSize: 12,
             }
           },
