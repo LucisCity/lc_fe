@@ -6,6 +6,9 @@ import { TYPO_THEME } from "./typo.theme";
 const theme = (mode: PaletteMode) =>
   createTheme({
     palette: {
+      primary: {
+        main: '#6555EE'
+      },
       text: {
         primary: "#504C67",
       },

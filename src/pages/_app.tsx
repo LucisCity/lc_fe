@@ -55,7 +55,7 @@ export default function MyApp(props: MyAppProps) {
       <ApolloProvider client={client}>
         <CacheProvider value={emotionCache}>
           <Head>
-            {/* TODO: Add main color */}
+            {/* This will show a background ios bunny notch on safari */}
             <meta name="theme-color" content={theme.palette.primary.main} />
           </Head>
           <ThemeProvider theme={theme}>
