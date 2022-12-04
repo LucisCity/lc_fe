@@ -25,7 +25,7 @@ const ImageItem = styled(Box, { shouldForwardProp: (prop) => prop !== "open" })<
   }),
 }));
 
-export const Background = () => {
+export const Background = ({ style }: { style?: React.CSSProperties }) => {
   const [screenIndex, setScreenIndex] = React.useState(1);
   React.useEffect(() => {
     const id = setInterval(() => {
@@ -40,7 +40,7 @@ export const Background = () => {
     return () => clearInterval(id);
   }, []);
   return (
-    <Main>
+    <Main style={style}>
       {[1, 2, 3, 4, 5, 6].map((item) => {
         return (
           <ImageItem

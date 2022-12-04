@@ -39,11 +39,16 @@ const theme = (mode: PaletteMode) =>
             ":hover": {
               background: "#5946FF",
             },
-            [theme.breakpoints.down("md")]: {
+            [theme.breakpoints.down("lg")]: {
               height: 40,
               fontSize: 14,
               padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
             },
+            // [theme.breakpoints.down("md")]: {
+            //   height: 40,
+            //   fontSize: 14,
+            //   padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
+            // },
           }),
           outlinedPrimary: ({ theme }) => ({
             // fontWeight: 500,

@@ -171,10 +171,10 @@ export const CardSection = (props: IProps) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%", padding: "1px", pt: `${headerHeight}px` }}>
+      <Container sx={{ height: "100%", padding: "1px", pt: { xs: 0, sm: `${headerHeight}px` } }}>
         <Center>
           <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
-            <Grid item xs={12} md={6} width={"100%"}>
+            <Grid item xs={12} sm={6} width={"100%"}>
               <Box
                 display="flex"
                 justifyContent="center"
@@ -187,7 +187,7 @@ export const CardSection = (props: IProps) => {
                 <CardAnimation animationIndex={props.index} enable={!disabledAnimation} />
               </Box>
             </Grid>
-            <Grid item xs={12} md={6} sx={{ height: "100%" }}>
+            <Grid item xs={12} sm={6} sx={{ height: "100%" }}>
               <Box
                 display="flex"
                 flexDirection={"column"}
@@ -196,7 +196,7 @@ export const CardSection = (props: IProps) => {
                 gap={2}
                 height="100%"
                 sx={(theme) => ({
-                  [theme.breakpoints.down("md")]: {
+                  [theme.breakpoints.down("sm")]: {
                     justifyContent: "flex-start",
                     alignItems: "center",
                   },
@@ -230,7 +230,7 @@ export const CardSection = (props: IProps) => {
                   width={"100%"}
                   sx={{ overflowX: "auto" }}
                   display={"flex"}
-                  justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                  justifyContent={{ xs: "flex-start", sm: "flex-start", md: "flex-start" }}
                 >
                   {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
                   <Box>

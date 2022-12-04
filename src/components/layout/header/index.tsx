@@ -172,6 +172,9 @@ export const HeaderNextLink = styled(Link, {
   [theme.breakpoints.down("md")]: {
     fontSize: 12,
   },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: 14,
+  },
   ...(isSidebar && {
     fontSize: "20px !important",
     fontWeight: "700 !important",
