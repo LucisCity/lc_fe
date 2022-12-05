@@ -31,7 +31,7 @@ const DebugPage: NextPage = () => {
 						<table>
 							<tr><th>Key:</th><th>Value</th></tr>
 							<tr><td>Version (commit id)</td><td>LUCIS_VERSION_COMMIT_ID</td></tr>
-							<tr><td>APP_ENV</td><td>{appEnv}</td></tr>
+							{/*<tr><td>APP_ENV</td><td>{appEnv}</td></tr>*/}
 						</table>
 					</div>
 					<button onClick={handClick}>Test 500 Error</button>
