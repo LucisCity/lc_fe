@@ -204,29 +204,30 @@ export const CardSection = (props: IProps) => {
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} sx={{ height: "100%" }}>
-              <Box
-                display="flex"
-                flexDirection={"column"}
-                justifyContent="center"
-                // alignItems={"center"}
-                gap={2}
-                height="100%"
-                sx={(theme) => ({
-                  [theme.breakpoints.down("sm")]: {
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  },
-                })}
+              <AnimWhenVisible
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
+                }}
+                transition={{ duration: 1, delay: props.index ? 1 : 0 }}
+                index={props.index}
+                // enable={props?.enable ?? true}
+                enable={true}
+                style={{ height: "100%" }}
               >
-                <AnimWhenVisible
-                  variants={{
-                    visible: { opacity: 1, y: 0 },
-                    hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
-                  }}
-                  transition={{ duration: 1, delay: props.index ? 1 : 0 }}
-                  index={props.index}
-                  // enable={props?.enable ?? true}
-                  enable={true}
+                <Box
+                  display="flex"
+                  flexDirection={"column"}
+                  justifyContent="center"
+                  // alignItems={"center"}
+                  gap={2}
+                  height="100%"
+                  sx={(theme) => ({
+                    [theme.breakpoints.down("sm")]: {
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    },
+                  })}
                 >
                   <Box>
                     <CardSupportTitle>Card</CardSupportTitle>
@@ -291,8 +292,8 @@ export const CardSection = (props: IProps) => {
                       </Button>
                     )}
                   </Box>
-                </AnimWhenVisible>
-              </Box>
+                </Box>
+              </AnimWhenVisible>
             </Grid>
             <Grid item xs={0} lg={1} />
           </Grid>

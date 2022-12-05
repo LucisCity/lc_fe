@@ -31,7 +31,7 @@ export function OperationSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%", padding: '50px 0' }}>
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Box display={"flex"} height={"100%"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -300 } }} index={props.index}>
             <Box
@@ -67,7 +67,11 @@ export function OperationSection(props: Props) {
             <Center>
               <Box
                 component="img"
-                src="/assets/imgs/landing/img_operation.svg"
+                src={
+                  props.index
+                    ? "/assets/imgs/landing/img_operation.svg"
+                    : "/assets/imgs/landing/img_operation_mobile.svg"
+                }
                 alt="lucis operation flow"
                 mt={{ sm: 6, xs: 4 }}
                 sx={{

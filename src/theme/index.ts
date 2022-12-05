@@ -7,7 +7,7 @@ const theme = (mode: PaletteMode) =>
   createTheme({
     palette: {
       primary: {
-        main: "#6555EE",
+        main: "#5946FF",
       },
       text: {
         primary: "#504C67",
@@ -74,7 +74,37 @@ const theme = (mode: PaletteMode) =>
           }),
         },
       },
-
+      MuiFilledInput: {
+        defaultProps: {
+          disableUnderline: true,
+          hiddenLabel: true,
+        },
+        styleOverrides: {
+          root: ({ theme }) => ({
+            borderRadius: 8,
+            // height: 52,
+            background: "rgba(255, 255, 255, 0.5)",
+            border: `1px solid transparent`,
+            "&.Mui-focused": {
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              border: `1px solid ${theme.palette.primary.main} !important`,
+            },
+            ":hover": {
+              background: "rgba(255, 255, 255, 0.7)",
+            },
+          }),
+          // focused: ({ theme }) => ({
+          //   backgroundColor: "red",
+          //   borderRadius: `1px solid ${theme.palette.primary.main}`,
+          // }),
+          input: ({ theme }) => ({
+            padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
+          }),
+          inputMultiline: {
+            padding: 0,
+          },
+        },
+      },
       // container
       MuiContainer: {
         styleOverrides: {

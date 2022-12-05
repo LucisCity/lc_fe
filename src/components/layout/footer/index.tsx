@@ -12,7 +12,7 @@ const FooterStyled = styled("footer", { shouldForwardProp: (propName) => propNam
   backdropFilter: "blur(12px)",
   display: "flex",
   alignItems: "center",
-  paddingTop: theme.spacing(20) + '!important',
+  paddingTop: theme.spacing(20) + "!important",
 }));
 
 const UlComponent = styled("ul")(({ theme }) => ({
@@ -34,7 +34,7 @@ const Logo = styled("img")(({ theme }) => ({
   },
 }));
 
-const StartIcon = styled("img")(({ theme }) => ({
+export const StartIcon = styled("img")(({ theme }) => ({
   height: 18,
   width: 18,
   marginRight: theme.spacing(5),
@@ -97,7 +97,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
     <FooterStyled
       style={style}
       disabledBackground={!!disabledBackground}
-      className={hasBottomNav ? 'fullscreenPage' : undefined}
+      className={hasBottomNav ? "fullscreenPage" : undefined}
     >
       <Container>
         <Logo src="/assets/imgs/logo/logo-color.svg" alt="logo" />
