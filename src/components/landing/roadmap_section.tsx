@@ -31,7 +31,7 @@ export default function RoadmapSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", padding: '50px 0' }}>
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Box
           sx={{
             // width: "100%",
@@ -111,9 +111,10 @@ export default function RoadmapSection(props: Props) {
                   title="Quý 4/2022"
                   checklists={[
                     "Xây dựng và phát triển kênh nhận diện Lucis City",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
+                    "Tích hợp tiện ích và đặc quyền Galaxy Platinum Card",
+                    "Giao diện mở bán 200 Galaxy Platinum Card",
                     "Private Sale",
+                    "Phát hành thẻ vật lý Galaxy Platinum Card",
                   ]}
                 />
               </SwiperSlide>
@@ -121,34 +122,28 @@ export default function RoadmapSection(props: Props) {
                 <RoadmapCard
                   title="Quý 1/2023"
                   checklists={[
-                    "Public Sale",
-                    "Các sự kiện hoạt động Marketing",
-                    "NFTs bất động sản",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
-                    "Private Sale",
+                    "Số hóa bất động sản sinh lời",
+                    "Triển khai vận hành bất động sản đã số hóa thành công",
+                    "Liên kết Wallet",
                   ]}
                 />
               </SwiperSlide>
               <SwiperSlide style={{ height: "auto" }}>
                 <RoadmapCard
-                  title="Quý 2/2023"
+                  title="Quý 2/2022"
                   checklists={[
-                    "Xây dựng và phát triển kênh nhận diện Lucis City",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
-                    "Private Sale",
+                    "Tối ưu vận hành lợi nhuận",
+                    "Số hóa động sản sinh lời",
+                    "Phát triển thị trường bất động sản tại các quốc gia khác",
                   ]}
                 />
               </SwiperSlide>
               <SwiperSlide style={{ height: "auto" }}>
                 <RoadmapCard
-                  title="Quý 3/2022"
+                  title="Quý 3/2023"
                   checklists={[
-                    "Xây dựng và phát triển kênh nhận diện Lucis City",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
-                    "Private Sale",
+                    "Nền tảng phiên bản mở rộng với 40000 thành viên",
+                    "Cho phép User gửi tài sản để số hóa",
                   ]}
                 />
               </SwiperSlide>
@@ -156,32 +151,9 @@ export default function RoadmapSection(props: Props) {
                 <RoadmapCard
                   title="Quý 4/2022"
                   checklists={[
-                    "Xây dựng và phát triển kênh nhận diện Lucis City",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
-                    "Private Sale",
-                  ]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <RoadmapCard
-                  title="Quý 1/2024"
-                  checklists={[
-                    "Xây dựng và phát triển kênh nhận diện Lucis City",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
-                    "Private Sale",
-                  ]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <RoadmapCard
-                  title="Quý 2/2024"
-                  checklists={[
-                    "Xây dựng và phát triển kênh nhận diện Lucis City",
-                    "Tích hợp tiện ích và đặc quyền Thẻ Hawk Card",
-                    "Giao diện mở bán 200 Thẻ Hawk Card",
-                    "Private Sale",
+                    "NFTs các loại hình tài sản khác",
+                    "Số hóa mô hình kinh doanh",
+                    "Phát hành token quản trị",
                   ]}
                 />
               </SwiperSlide>
@@ -197,8 +169,8 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
   return (
     <Box
       sx={{
-        background: "rgba(255, 255, 255, 0.5)",
-        backdropFilter: "blur(3px)",
+        background: "rgba(255, 255, 255)",
+        backdropFilter: "blur(15px)",
         borderRadius: "12px",
         height: "100%",
         // width: "100%",

@@ -28,7 +28,7 @@ export default function ComunitySection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", padding: '50px 0' }}>
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Box
           sx={{
             width: "100%",
@@ -36,6 +36,7 @@ export default function ComunitySection(props: Props) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
@@ -85,40 +86,46 @@ export default function ComunitySection(props: Props) {
               display: "flex",
               justifyContent: "space-between",
               flexDirection: ["column", "row"],
+              alignItems: "center",
               mt: 18,
+              width: "100%",
             }}
           >
             <Typography variant="h6">Join our community</Typography>
-            <Box sx={{ display: "flex", mt: [6, 0] }}>
+            <Box
+              sx={{ display: "flex", mt: [6, 0], flexDirection: { xs: "column", sm: "row" }, gap: theme.spacing(1) }}
+            >
               <Button
                 variant="outlined"
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_discord_blue.svg" alt="" />}
-                sx={{
-                  height: ["40px", "50px"],
-                  width: "167px",
-                }}
+                sx={
+                  {
+                    //height: ["40px", "50px"],
+                    // width: "167px",
+                  }
+                }
               >
                 Discord
               </Button>
               <Button
                 variant="outlined"
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_telegram_blue.svg" alt="" />}
-                sx={{
-                  height: ["40px", "50px"],
-                  width: "167px",
-                  ml: "4px",
-                }}
+                sx={
+                  {
+                    //height: ["40px", "50px"],
+                  }
+                }
               >
                 Telegram
               </Button>
               <Button
                 variant="outlined"
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_twitter_blue.svg" alt="" />}
-                sx={{
-                  height: ["40px", "50px"],
-                  width: "167px",
-                  ml: "4px",
-                }}
+                sx={
+                  {
+                    //height: ["40px", "50px"],
+                  }
+                }
               >
                 Twitter
               </Button>

@@ -142,7 +142,7 @@ export const MemberPage = () => {
           zIndex: -1,
         }}
       />
-      <CardSection disabledBackground={true} disabledAnimation={true} disabledReadmoreButton={true} />
+      <CardSection disabledBackground={true} disabledReadmoreButton={true} />
       <Box pb={10} position={"relative"}>
         <Container>
           <Box

@@ -35,7 +35,7 @@ export function ReasonChooseSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%", padding: '50px 0' }}>
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Center>
           <Grid container spacing={4}>
             <Grid xs={12} lg={6}>
@@ -144,7 +144,8 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
   return (
     <Box
       sx={{
-        backgroundColor: "rgba(223, 231, 253, 0.7)",
+        backgroundColor: "#fff",
+        backdropFilter: "blur(15px)",
         borderRadius: "8px",
         padding: 4.5,
         height: "100%",
@@ -156,7 +157,7 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
           alignItems: "center",
         }}
       >
-        <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} alt="" />
+        <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} />
         <Typography variant="h5" whiteSpace="pre-line" marginLeft={3}>
           {title}
         </Typography>
