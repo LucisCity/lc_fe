@@ -20,15 +20,12 @@ const DebugPage: NextPage = () => {
 
 	return (
 		<section className="lucis-container" style={{marginTop: "120px"}}>
-
 			<div>
 				<h1>Debug Page</h1>
-
 				<div>
 					<h3>App</h3>
 					<button onClick={handClick}>Test 500 Error</button>
 				</div>
-
 			</div>
 		</section>
 	);
