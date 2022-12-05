@@ -1,8 +1,12 @@
 /* eslint-disable */
 import {useState} from "react";
 import type {NextPage} from "next";
-import {NoSsr} from "@mui/material";
+import { NoSsr, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import {appEnv, appVersionCommitId} from "../utils/env";
+import DocHead from "../components/layout/doc_head";
+import PageLayout from "../components/layout/PageLayout";
+import { ContactPage } from "../components/contact";
+import Button from "@mui/material/Button";
 
 
 const DebugPage: NextPage = () => {
@@ -13,32 +17,48 @@ const DebugPage: NextPage = () => {
   }
 
   return (
-    <NoSsr>
-      <section className="lucis-container" style={{marginTop: "120px"}}>
-        <div>
-          <h1>Debug Page</h1>
-          <div>
-            <h3>App</h3>
+    <>
+      <DocHead />
+      <PageLayout>
+        <NoSsr>
+          <section className="lucis-container" style={{marginTop: "120px"}}>
             <div>
-              <table>
-                <tbody>
-                  <tr><th>Key:</th><th>Value</th></tr>
-                  <tr><td>Version (commit id)</td><td>{appVersionCommitId}</td></tr>
-                  <tr><td>APP_ENV</td><td>{appEnv}</td></tr>
-                </tbody>
-              </table>
-            </div>
+              <h1>Debug Page</h1>
+              <div>
+                <h3>App</h3>
+                <div>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Key</TableCell>
+                        <TableCell align="center">Value</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                          <TableCell align="center">Version (commit id)</TableCell>
+                          <TableCell align="center">{appVersionCommitId}</TableCell>
+                        </TableRow>
+                      <TableRow>
+                        <TableCell align="center">APP_ENV</TableCell>
+                        <TableCell align="center">{appEnv}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
 
-            <hr />
-            <h1>Error debug</h1>
-            <div>
-              <button onClick={makeAppCrash}>Test 500 Error</button>
-              {errorComponentVisible && <DebugErrorComponent />}
+
+                <h1>Error debug</h1>
+                <div>
+                  <Button variant="contained" onClick={makeAppCrash}>Test 500 Error</Button>
+                  {errorComponentVisible && <DebugErrorComponent />}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-    </NoSsr>
+          </section>
+        </NoSsr>
+      </PageLayout>
+    </>
   );
 };
 
