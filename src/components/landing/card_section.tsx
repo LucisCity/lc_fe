@@ -4,6 +4,8 @@ import React from "react";
 import AnimWhenVisible from "../anim";
 import { CardAnimation } from "./components/card_animation";
 import Link from "next/link";
+import { headerHeight } from "../layout/header";
+import { Center } from "../common/center";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
@@ -18,6 +20,7 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 
 interface IProps {
   index?: number;
+  fullscreen?: boolean;
   disabledBackground?: boolean;
   disabledReadmoreButton?: boolean;
   disabledAnimation?: boolean;
@@ -161,7 +164,9 @@ export const CardSection = (props: IProps) => {
   const disabledAnimation = props?.disabledAnimation ?? false;
   return (
     <MainItemComponent
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         background: !disabledBackground ? `url(${"assets/imgs/member/background.jpg"})` : "none",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -169,102 +174,130 @@ export const CardSection = (props: IProps) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%", padding: "1px" }}>
-        <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
-          <Grid item xs={12} md={6} width={"100%"}>
-            <Box
-              display="flex"
-              justifyContent="center"
-              position={"relative"}
-              zIndex={1}
-              alignItems={{ xs: "flex-end", sm: "center" }}
-              width={"100%"}
-              height={"100%"}
-            >
-              <CardAnimation animationIndex={props.index} enable={!disabledAnimation} />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ height: "100%" }}>
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              justifyContent="center"
-              // alignItems={"center"}
-              gap={2}
-              height="100%"
-              sx={(theme) => ({
-                [theme.breakpoints.down("md")]: {
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                },
-              })}
-            >
-              <Box>
-                <CardSupportTitle>Card</CardSupportTitle>
-                <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
-              </Box>
-              <Typography
-                sx={(theme) => ({
-                  color: "#6555EE",
-                  textTransform: "uppercase",
-                  fontWeight: 600,
-                  fontSize: 16,
-                })}
-                mt={2}
-              >
-                đẳng cấp công nghệ
-              </Typography>
-              <Typography
-                sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
-                mt={{ md: 5, xs: 5 }}
-                mb={{ md: 3, xs: 3 }}
-              >
-                Thẻ Hawk Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi nhuận từ
-                toàn bộ các tiện ích trong Hệ sinh thái....
-              </Typography>
+      <Box
+        sx={{
+          background: disabledBackground ? `url(${"assets/imgs/landing/card_ellipse.svg"})` : "none",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          // zIndex: 1,
+        }}
+      />
+      <Container sx={{ height: "100%", padding: "0px 0" }}>
+        <Center>
+          <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
+            <Grid item xs={12} sm={6} width={"100%"}>
               <Box
-                mb={{ md: 9, xs: 5 }}
+                display="flex"
+                justifyContent="center"
+                position={"relative"}
+                zIndex={1}
+                alignItems={{ xs: "flex-end", sm: "center" }}
                 width={"100%"}
-                sx={{ overflowX: "auto" }}
-                display={"flex"}
-                justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                height={"100%"}
               >
-                {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
-                <Box>
-                  <ListContent listContent={contentItems1} animeIndex={props?.index} />
-                  <ListContent listContent={contentItems2} animeIndex={props?.index} />
-                  <ListContent listContent={contentItems3} animeIndex={props?.index} />
-                </Box>
+                <CardAnimation animationIndex={props.index} enable={!disabledAnimation} />
               </Box>
-              <Box
-                display={"flex"}
-                width={{ sm: "100%", xs: 270 }}
-                justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
-                flexDirection={{ sm: "row", xs: "column" }}
-                pb={5}
+            </Grid>
+            <Grid item xs={12} sm={6} sx={{ height: "100%" }}>
+              <AnimWhenVisible
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
+                }}
+                transition={{ duration: 1, delay: props.index ? 1 : 0 }}
+                index={props.index}
+                // enable={props?.enable ?? true}
+                enable={true}
+                style={{ height: "100%" }}
               >
-                <Button
-                  variant="contained"
-                  endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
-                  LinkComponent={Link}
-                  href={"/invest"}
+                <Box
+                  display="flex"
+                  flexDirection={"column"}
+                  justifyContent="center"
+                  // alignItems={"center"}
+                  gap={2}
+                  height="100%"
+                  sx={(theme) => ({
+                    [theme.breakpoints.down("sm")]: {
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    },
+                  })}
                 >
-                  Become an investor
-                </Button>
-                {!disabledReadmoreButton && (
-                  <Button
-                    LinkComponent={Link}
-                    href={"/member"}
-                    sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
+                  <Box>
+                    <CardSupportTitle>Card</CardSupportTitle>
+                    <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
+                  </Box>
+                  <Typography
+                    sx={(theme) => ({
+                      color: "#6555EE",
+                      textTransform: "uppercase",
+                      fontWeight: 600,
+                      fontSize: 16,
+                    })}
+                    mt={2}
                   >
-                    Read more
-                  </Button>
-                )}
-              </Box>
-            </Box>
+                    đẳng cấp công nghệ
+                  </Typography>
+                  <Typography
+                    sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
+                    mt={{ md: 5, xs: 5 }}
+                    mb={{ md: 3, xs: 3 }}
+                  >
+                    Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi
+                    nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
+                  </Typography>
+                  <Box
+                    mb={{ md: 9, xs: 5 }}
+                    width={"100%"}
+                    sx={{ overflowX: "auto" }}
+                    display={"flex"}
+                    justifyContent={{ xs: "flex-start", sm: "flex-start", md: "flex-start" }}
+                  >
+                    {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
+                    <Box>
+                      <ListContent listContent={contentItems1} animeIndex={props?.index} />
+                      <ListContent listContent={contentItems2} animeIndex={props?.index} />
+                      <ListContent listContent={contentItems3} animeIndex={props?.index} />
+                    </Box>
+                  </Box>
+                  <Box
+                    display={"flex"}
+                    width={{ sm: "100%", xs: 270 }}
+                    justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                    flexDirection={{ sm: "row", xs: "column" }}
+                    pb={5}
+                    gap={3}
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                      LinkComponent={Link}
+                      href={"/invest"}
+                    >
+                      Trở thành thành viên
+                    </Button>
+                    {!disabledReadmoreButton && (
+                      <Button
+                        LinkComponent={Link}
+                        href={"/member"}
+                        sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
+                      >
+                        Xem thêm
+                      </Button>
+                    )}
+                  </Box>
+                </Box>
+              </AnimWhenVisible>
+            </Grid>
+            <Grid item xs={0} lg={1} />
           </Grid>
-          <Grid item xs={0} lg={1} />
-        </Grid>
+        </Center>
         {/*<CoinImage src="/assets/imgs/landing/coin4.png" alt="" />*/}
       </Container>
     </MainItemComponent>

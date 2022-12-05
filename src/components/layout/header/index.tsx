@@ -1,49 +1,53 @@
 import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
-import { Box, styled, useTheme } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import Link from "next/link";
-import { Left } from "../../common/left";
 import { Right } from "../../common/right";
-import { Center } from "../../common/center";
 import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
 import { useRouter } from "next/router";
+import zIndex from "@mui/material/styles/zIndex";
+
 export const headerHeight = 90;
-export const extendHeaderHeight = 500;
-const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
-  ({ theme, open }) => ({
-    width: "100%",
-    height: extendHeaderHeight,
-    background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
-    backdropFilter: "blur(12px)",
-    position: "absolute",
-    top: 0,
-    zIndex: 2,
-    borderBottom: "1px solid",
-    borderImageSlice: 1,
-    borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+export const mobileHeaderHeight = 60;
+const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{
+  open?: boolean;
+  isFixed?: boolean;
+}>(({ theme, open, isFixed }) => ({
+  width: "100%",
+  height: extendHeaderHeight,
+  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+  backdropFilter: "blur(12px)",
+  position: isFixed ? "absolute" : "fixed",
+  top: 0,
+  zIndex: zIndex.appBar,
+  borderBottom: "1px solid #ffffff3b",
+  boxShadow: "0px 3px 8px 0px #b3b3b34d",
+  // borderImageSlice: 1,
+  // borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  //@ts-ignore
+  transition: theme.transitions.create(["height"], { duration: 800 }),
+  [theme.breakpoints.down("sm")]: {
+    position: "fixed",
+  },
+  ...(!open && {
     //@ts-ignore
     transition: theme.transitions.create(["height"], { duration: 800 }),
+    height: headerHeight,
     [theme.breakpoints.down("sm")]: {
       position: "fixed",
+      height: mobileHeaderHeight,
+      zIndex: zIndex.appBar,
     },
-    ...(!open && {
-      //@ts-ignore
-      transition: theme.transitions.create(["height"], { duration: 800 }),
-      height: headerHeight,
-      [theme.breakpoints.down("sm")]: {
-        position: "fixed",
-        height: 60,
-      },
-    }),
   }),
-);
+}));
+export const extendHeaderHeight = 500;
 const MenuBar = styled("div")(({ theme }) => ({
   width: "100%",
   height: headerHeight,
 
   [theme.breakpoints.down("sm")]: {
     display: "none",
-    height: 60,
+    height: mobileHeaderHeight,
   },
 }));
 
@@ -64,6 +68,7 @@ const ExtendBox = styled("div")(({ theme }) => ({
     border: "none",
     paddingLeft: 0,
     paddingRight: 0,
+    // height: "100vh",
   },
 }));
 
@@ -121,14 +126,16 @@ const Ul = styled("ul")(({ theme }) => ({
     gap: theme.spacing(4),
   },
   [theme.breakpoints.down("sm")]: {
-    height: 60,
+    height: mobileHeaderHeight,
   },
 }));
 
-export const HeaderNextLink = styled(Link)<{
+export const HeaderNextLink = styled(Link, {
+  shouldForwardProp: (props) => props !== "activeCss" && props !== "isSidebar",
+})<{
   isSidebar?: boolean;
-  active?: boolean;
-}>(({ theme, isSidebar, active }) => ({
+  activeCss?: boolean;
+}>(({ theme, isSidebar, activeCss }) => ({
   color: "#504C67",
   fontWeight: 500,
   fontSize: 16,
@@ -136,11 +143,11 @@ export const HeaderNextLink = styled(Link)<{
   "&:before": {
     content: `""`,
     position: "absolute",
-    bottom: -20,
+    bottom: !isSidebar ? -20 : -4,
     width: "0%",
     borderBottom: "2px solid #504C67",
     transition: (theme.transitions as any).create(["width"]),
-    ...(active && {
+    ...(activeCss && {
       width: "100%",
       transition: (theme.transitions as any).create(["width"]),
     }),
@@ -165,6 +172,9 @@ export const HeaderNextLink = styled(Link)<{
   [theme.breakpoints.down("md")]: {
     fontSize: 12,
   },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: 14,
+  },
   ...(isSidebar && {
     fontSize: "20px !important",
     fontWeight: "700 !important",
@@ -186,17 +196,21 @@ export const ToggleDrawer = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
-const pages = [
+export interface IPage {
+  name: string;
+  href: string;
+}
+export const pages: Array<IPage> = [
   {
-    name: "Home",
+    name: "Trang chủ",
     href: "/",
   },
   {
-    name: "Member",
+    name: "Thành viên",
     href: "/member",
   },
   {
-    name: "Invest",
+    name: "Đầu tư",
     href: "/invest",
   },
   {
@@ -204,18 +218,21 @@ const pages = [
     href: "/marketplace",
   },
   {
-    name: "Blog",
-    href: "/blog",
+    name: "Tin tức",
+    href: "/news",
   },
   {
-    name: "Contact",
+    name: "Liên hệ",
     href: "/contact",
   },
 ];
 interface IProps {
   slideActive?: number;
+  isFixed?: boolean;
 }
 const Header = (props: IProps) => {
+  // console.log('{Header} render: ');
+
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();
@@ -224,7 +241,7 @@ const Header = (props: IProps) => {
   }, [router.pathname]);
   return (
     <Box position={"relative"}>
-      <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} />
+      <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} activePage={activePage} />
       <HeaderStyled open={slideActive === 0}>
         <Container>
           <Grid container>
@@ -247,9 +264,8 @@ const Header = (props: IProps) => {
                   <Ul>
                     {pages.map((page) => (
                       <li key={page.name}>
-                        <HeaderNextLink href={page.href} active={page.href === activePage.href}>
-                          {" "}
-                          {page.name}{" "}
+                        <HeaderNextLink href={page.href} activeCss={page.href === activePage.href}>
+                          {page.name}
                         </HeaderNextLink>
                       </li>
                     ))}
@@ -269,7 +285,7 @@ const Header = (props: IProps) => {
               >
                 <Right>
                   <Button LinkComponent={Link} href={"/login"} variant="contained">
-                    Log in{" "}
+                    Đăng nhập{" "}
                   </Button>
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
@@ -304,14 +320,14 @@ const Header = (props: IProps) => {
                     variant="h2"
                     sx={(theme) => ({
                       pt: "40px",
-                      fontSize: 56,
+                      fontSize: 46,
                       fontWeight: 400,
                       [theme.breakpoints.down("md")]: {
-                        fontSize: 46,
+                        fontSize: 36,
                       },
                     })}
                   >
-                    Established reader distracted
+                    TRỞ THÀNH NHÀ ĐẦU TƯ TẠI LUCIS CITY
                   </Typography>
                   <Typography
                     sx={(theme) => ({
@@ -321,7 +337,9 @@ const Header = (props: IProps) => {
                       },
                     })}
                   >
-                    Fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                    Dân chủ - Minh bạch - Tin cậy - Linh hoạt
+                    <br /> Lucis City cho phép Nhà đầu tư tham gia Cộng đồng - trải nghiệm và hưởng các đặc quyền tiện
+                    ích tối ưu nhất.
                   </Typography>
                   <Button
                     sx={(theme) => ({
@@ -333,7 +351,7 @@ const Header = (props: IProps) => {
                     })}
                     endIcon={<img style={{ marginLeft: 8 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />}
                   >
-                    LEARN MORE
+                    Xem thêm
                   </Button>
                 </ExtendBox>
                 <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />

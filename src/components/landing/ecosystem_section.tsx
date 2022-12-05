@@ -1,11 +1,12 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
-import { Center } from "../common/center";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 export function EcosystemSection(props: Props) {
   const theme = useTheme();
@@ -13,99 +14,78 @@ export function EcosystemSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
-        // position: "relative",
-        // background: "transparent",
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         [theme.breakpoints.down("sm")]: {
-          background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+          background: `url(/assets/imgs/member/background.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",
           padding: 6,
           height: "auto",
-          // overflow: "auto",
         },
       }}
       data-swiper-parallax="-300"
     >
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        height="100%"
-        sx={{
-          [theme.breakpoints.down("md")]: {
-            flexDirection: "column",
-          },
-        }}
-      >
+      <Container sx={{ height: "100%", padding: '30px 0' }}>
         <Box
-          component="img"
-          src="/assets/imgs/landing/img_ecosystem.png"
-          alt=""
-          sx={{
-            [theme.breakpoints.down("sm")]: {
-              maxHeight: "250px",
-              marginTop: 35,
-            },
-          }}
-        />
-        <Box
-          sx={{
-            marginLeft: 28,
-            [theme.breakpoints.down("md")]: {
-              marginLeft: 0,
-              marginTop: 10.75,
-            },
-          }}
+          justifyContent={"center"}
+          display={"flex"}
+          flexDirection={["column", "row"]}
+          alignItems={"center"}
+          height={"100%"}
         >
-          <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
-            <Typography
-              variant="h3"
-              whiteSpace="pre-line"
-              id="es_header"
-              sx={{
-                lineHeight: "56px",
-                fontSize: "48px",
-                fontWeight: "700",
-                [theme.breakpoints.down("md")]: {
-                  marginTop: 8,
-                  fontSize: "30px",
-                  lineHeight: "43px",
-                },
-              }}
-            >{`Hệ sinh thái
-          Lucis City`}</Typography>
-          </AnimWhenVisible>
-
-          <AnimWhenVisible
-            variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? 300 : 0 } }}
-            index={props.index}
+          <Box
+            component="img"
+            src="/assets/imgs/landing/img_ecosystem.svg"
+            alt=""
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                maxHeight: "85vw",
+                marginTop: 20,
+              },
+            }}
+          />
+          <Box
+            sx={{
+              marginLeft: 28,
+              [theme.breakpoints.down("md")]: {
+                marginLeft: 0,
+                marginTop: 13,
+              },
+            }}
           >
-            <Typography
-              whiteSpace="pre-line"
-              sx={{
-                marginTop: 15,
-                fontSize: "12px",
-                fontWeight: "500",
-                lineHeight: "21px",
-                [theme.breakpoints.down("sm")]: {
-                  marginTop: 10.75,
-                  marginBottom: 19.25,
-                },
-              }}
+            <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
+              <Typography variant="h3" whiteSpace="pre-line">{`Hệ sinh thái
+          Lucis City`}</Typography>
+            </AnimWhenVisible>
+
+            <AnimWhenVisible
+              variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? 300 : 0 } }}
+              index={props.index}
             >
-              {`Lucis City là hệ sinh thái số Bất Động sản
-          và các ngành sản phẩm - dịch vụ giải trí
-          cao cấp như: Du thuyền,
-          Siêu xe, Lounge...`}
-            </Typography>
-          </AnimWhenVisible>
+              <Typography
+                whiteSpace="pre-line"
+                variant="body1"
+                sx={{
+                  maxWidth: "426px",
+                  mt: 8,
+                  mb: 26,
+                }}
+              >
+                Nhà Đầu tư có cơ hội đầu tư trực tiếp các sản phẩm - dịch vụ thực của Hệ sinh thái Lucis City từ nhiều
+                nền tảng khác nhau cũng như được trải nghiệm tất cả các tiện ích của hệ sinh thái. Lucis City xây dựng
+                một mạng lưới nhà đầu tư có tiềm lực và cùng đam mê để tăng giá trị kết nối và xúc tiến thương mại hiệu
+                quả.
+              </Typography>
+            </AnimWhenVisible>
+          </Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

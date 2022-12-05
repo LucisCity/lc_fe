@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
 import "swiper/css";
@@ -17,11 +17,12 @@ import { CardSection } from "./card_section";
 import { useWindowSize } from "../../hooks/use_window_size";
 import s from "./landing.module.sass";
 import Indicator from "./components/indicator";
-import { ZIndex } from "../../theme/config";
-import FabButton from "./components/fab_button";
 import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
-import BottomNavigation from "../layout/bottom_navigation";
+import Footer from "../layout/footer";
+import ComunitySection from "./community_section";
+import { Background } from "./components/background";
+import LayoutStore from "../layout/layout.store";
 
 export enum Section {
   OnTop, // start
@@ -46,8 +47,9 @@ export default function LandingPage() {
   const { position } = useScroll();
 
   const size = useWindowSize();
+  const bottomNavVisible = LayoutStore.bottomNavVisible;
 
-  if (size.width <= theme.breakpoints.values.sm) {
+  if (size.width < theme.breakpoints.values.sm) {
     return (
       <Box
         sx={{
@@ -56,7 +58,7 @@ export default function LandingPage() {
         }}
       >
         <Header slideActive={position > 100 ? 1 : 0} />
-        {/*<TopSection />*/}
+        <TopSection />
         <CompanySection />
         <CardSection />
         <EcosystemSection />
@@ -65,10 +67,8 @@ export default function LandingPage() {
         <NftSection />
         <RoadmapSection />
         <PartnerSection />
-        <TopSection />
-        <Box display={{ xs: "none" }} width={"100%"} position={"fixed"} bottom={0} zIndex={ZIndex.fixed}>
-          <BottomNavigation />
-        </Box>
+        <ComunitySection />
+        <Footer hasBottomNav={bottomNavVisible} />
       </Box>
     );
   }
@@ -77,6 +77,7 @@ export default function LandingPage() {
     <Box className={s.container}>
       <PagingCtx.Provider value={paging}>
         <Swiper
+          id="landing-page-c"
           direction={"vertical"}
           slidesPerView={1}
           spaceBetween={0}
@@ -105,52 +106,63 @@ export default function LandingPage() {
           <Box
             slot="container-start"
             sx={{
-              background: `url(${"/assets/imgs/landing/background-card.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
+              // background: `url(${"/assets/imgs/member/background.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
               position: "absolute",
               left: "0",
               top: "0",
               width: "130%",
               height: "150%",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              // backgroundSize: "cover",
+              // backgroundPosition: "center",
             }}
-            data-swiper-parallax="-23%"
-          ></Box>
+            // data-swiper-parallax="-23%"
+          >
+            <Background />
+          </Box>
 
           <SwiperSlide>
             <TopSection />
           </SwiperSlide>
           <SwiperSlide>
-            <CompanySection index={1} />
+            <CompanySection index={1} fullscreen={true}/>
           </SwiperSlide>
           <SwiperSlide>
-            <CardSection index={2} />
+            <CardSection index={2} disabledBackground fullscreen={true}/>
           </SwiperSlide>
           <SwiperSlide>
-            <EcosystemSection index={3} />
+            <EcosystemSection index={3} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <ReasonChooseSection index={4} />
+            <ReasonChooseSection index={4} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <OperationSection index={5} />
+            <OperationSection index={5} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <NftSection index={6} />;
+            <NftSection index={6} fullscreen={true} />;
           </SwiperSlide>
           <SwiperSlide>
-            <RoadmapSection index={7} />;
+            <RoadmapSection index={7} fullscreen={true} />;
           </SwiperSlide>
           <SwiperSlide>
-            <PartnerSection index={8} />
+            <PartnerSection index={8} fullscreen={true} />
           </SwiperSlide>
+          <SwiperSlide>
+            <ComunitySection index={9} fullscreen={true} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Footer style={{ position: "absolute", bottom: 0 }} disabledBackground hasBottomNav={bottomNavVisible} />
+          </SwiperSlide>
+
           <Box
             sx={{
               position: "absolute",
               right: "12px",
               top: "50%",
               transform: "translate(0px, -50%)",
-              zIndex: ZIndex.fixed,
+              zIndex: 900,
+              "--title-opa": 0,
+              "&:hover": {"--title-opa": 1}
             }}
           >
             <Indicator title="Lucis City" isActive={paging.activeIndex === 1} index={1} />
@@ -161,10 +173,10 @@ export default function LandingPage() {
             <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} index={6} />
             <Indicator title="Roadmap" isActive={paging.activeIndex === 7} index={7} />
             <Indicator title="Partner & Investor" isActive={paging.activeIndex === 8} index={8} />
+            <Indicator title="Community" isActive={paging.activeIndex === 9} index={9} />
           </Box>
         </Swiper>
       </PagingCtx.Provider>
-      <FabButton />
     </Box>
   );
 }

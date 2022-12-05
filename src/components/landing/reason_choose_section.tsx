@@ -1,12 +1,14 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
 import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 
 export function ReasonChooseSection(props: Props) {
@@ -15,12 +17,14 @@ export function ReasonChooseSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
-        width: "100vw",
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
-          background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+          background: `url(/assets/imgs/member/background.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",
@@ -31,56 +35,20 @@ export function ReasonChooseSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Box
-        sx={{
-          maxWidth: "1440px",
-          padding: "1px 144px",
-          paddingTop: 8,
-          [theme.breakpoints.down("lg")]: {
-            px: 6,
-          },
-          [theme.breakpoints.down("sm")]: {
-            paddingTop: 29.5,
-            marginBottom: 19.25,
-          },
-          height: "100%",
-        }}
-      >
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Center>
-          <Grid container spacing={6}>
-            <Grid md={0} lg={3}></Grid>
-            <Grid md={12} lg={9}>
+          <Grid container spacing={4}>
+            <Grid xs={12} lg={6}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? -300 : 0 } }}
                 index={props.index}
               >
-                <Typography
-                  variant="h3"
-                  whiteSpace="pre-line"
-                  sx={{
-                    marginTop: 32,
-                    lineHeight: "56px",
-                    fontSize: "48px",
-                    fontWeight: "700",
-                    [theme.breakpoints.down("md")]: {
-                      marginTop: 8,
-                      fontSize: "30px",
-                      lineHeight: "43px",
-                    },
-                  }}
-                >{`Why you should
-          choose?`}</Typography>
+                <Typography variant="h3" whiteSpace="pre-line">{`Lựa chọn 
+                Lucis City....`}</Typography>
               </AnimWhenVisible>
             </Grid>
-            <Grid
-              lg={6}
-              sx={{
-                [theme.breakpoints.down("lg")]: {
-                  display: "none",
-                },
-              }}
-            ></Grid>
-            <Grid md={6} lg={3}>
+
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -92,7 +60,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -107,7 +75,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: -300 } }}
                 style={{ height: "100%" }}
@@ -122,7 +90,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: -300 } }}
                 style={{ height: "100%" }}
@@ -135,7 +103,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -150,7 +118,7 @@ export function ReasonChooseSection(props: Props) {
                 />
               </AnimWhenVisible>
             </Grid>
-            <Grid md={6} lg={3}>
+            <Grid md={6} xs={12} lg={3}>
               <AnimWhenVisible
                 variants={{ hidden: { opacity: 0, x: 300 } }}
                 style={{ height: "100%" }}
@@ -165,7 +133,7 @@ export function ReasonChooseSection(props: Props) {
             </Grid>
           </Grid>
         </Center>
-      </Box>
+      </Container>
     </Box>
   );
 }
@@ -176,7 +144,8 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
   return (
     <Box
       sx={{
-        backgroundColor: "rgba(223, 231, 253, 0.7)",
+        backgroundColor: "#fff",
+        backdropFilter: "blur(15px)",
         borderRadius: "8px",
         padding: 4.5,
         height: "100%",
@@ -188,28 +157,17 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
           alignItems: "center",
         }}
       >
-        <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} alt="" />
-        <Typography
-          variant="h5"
-          whiteSpace="pre-line"
-          marginLeft={3}
-          sx={{
-            fontSize: "20px",
-            fontWeight: "700",
-            lineHeight: "43px",
-          }}
-        >
+        <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} />
+        <Typography variant="h5" whiteSpace="pre-line" marginLeft={3}>
           {title}
         </Typography>
       </Box>
       <Typography
         variant="body1"
         sx={{
-          mt: 6,
-          fontSize: "12px",
-          lineHeight: "24px",
+          mt: 4,
           [theme.breakpoints.down("sm")]: {
-            mt: 4,
+            mt: 2,
           },
         }}
       >

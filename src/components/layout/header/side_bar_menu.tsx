@@ -1,13 +1,12 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import { Box, styled } from "@mui/system";
-import { headerHeight, HeaderNextLink, LogoImage, ToggleDrawer } from ".";
+import { headerHeight, HeaderNextLink, IPage, LogoImage, pages, ToggleDrawer } from ".";
 import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
-import { Left } from "../../common/left";
 
-const widthSidebar = 390;
+const widthSidebar = 360;
 const MenuListStyled = styled("div")(({ theme }) => ({
   width: widthSidebar,
   height: "100%",
@@ -15,9 +14,7 @@ const MenuListStyled = styled("div")(({ theme }) => ({
   backdropFilter: "blur(9px)",
   paddingTop: theme.spacing(10),
   paddingBottom: theme.spacing(10),
-  borderTop: "1px solid",
-  borderImageSlice: 1,
-  borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  borderTop: "1px solid #ffffff3b",
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -40,46 +37,17 @@ const Ul = styled("ul")(({ theme }) => ({
   color: "#504C67",
 }));
 
-const MenuList = () => (
+const MenuList = ({ activePage }: { activePage: IPage }) => (
   <MenuListStyled>
     <nav>
       <Ul>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Home{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Member{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Invest{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Marketplace{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Blog{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Contact{" "}
-          </HeaderNextLink>
-        </li>
+        {pages.map((link) => (
+          <li key={link.name}>
+            <HeaderNextLink href={link.href} isSidebar activeCss={activePage.href === link.href}>
+              {link.name}
+            </HeaderNextLink>
+          </li>
+        ))}
         <li>
           <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
             Login
@@ -98,6 +66,7 @@ const MenuList = () => (
 interface IProps {
   open: boolean;
   onClose: () => void;
+  activePage: IPage;
 }
 
 export const SideBarMenu = (props: IProps) => {
@@ -122,13 +91,7 @@ export const SideBarMenu = (props: IProps) => {
           <Container sx={{ height: "100%" }}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={6}>
-                <Box
-                  display={"flex"}
-                  justifyContent={{ md: "center", xs: "flex-start" }}
-                  width={"100%"}
-                  height={"100%"}
-                  alignItems={"center"}
-                >
+                <Box display={"flex"} width={"100%"} height={"100%"} alignItems={"center"}>
                   <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
                 </Box>
               </Grid>
@@ -142,7 +105,7 @@ export const SideBarMenu = (props: IProps) => {
             </Grid>
           </Container>
         </DrawerHeader>
-        <MenuList />
+        <MenuList activePage={props.activePage} />
       </Drawer>
     </>
   );

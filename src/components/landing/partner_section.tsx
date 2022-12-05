@@ -1,11 +1,10 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
-import { Center } from "../common/center";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, Pagination } from "swiper";
+import { headerHeight } from "../layout/header";
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 
 export default function PartnerSection(props: Props) {
@@ -13,153 +12,69 @@ export default function PartnerSection(props: Props) {
 
   return (
     <Box
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
-        width: "100vw",
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
+        width: "100%",
         height: "100vh",
-        background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
-          overflowX: "hidden",
+          background: `url(/assets/imgs/member/background.jpg)`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "left",
         },
       }}
     >
-      <Box
-        sx={{
-          maxWidth: "1440px",
-          padding: "1px 144px",
-          margin: "0px auto",
-          height: "100%",
-          [theme.breakpoints.down("md")]: {
-            height: "auto",
-            px: 6,
-            pt: 29.5,
-            pb: 19.25,
-          },
-        }}
-      >
-        <Center
+      <Container sx={{ height: "100%", padding: '50px 0' }}>
+        <Box
           sx={{
             width: "100%",
             height: "100%",
-            // display: "flex",
+            display: "flex",
             flexDirection: "column",
-
-            // mt: "-100px",
-            // [theme.breakpoints.down("xl")]: {
-            //   mt: "-30px",
-            // },
-            // [theme.breakpoints.down("md")]: {
-            //   mt: "-20px",
-            // },
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-            <Typography
-              variant="h6"
-              marginTop={1}
-              // color="#9FA4BC"
-              sx={{
-                lineHeight: "56px",
-                fontSize: "48px",
-                fontWeight: "700",
-                my: 15.75,
-                [theme.breakpoints.down("md")]: {
-                  fontSize: "30px",
-                  lineHeight: "43px",
-                },
-              }}
-            >
-              Partners & Investors
-            </Typography>
+            <Typography variant="h3">Partners & Investors</Typography>
           </AnimWhenVisible>
           <Box
             sx={{
               width: "100%",
-              mt: 51,
-              px: 8,
-              [theme.breakpoints.down("xl")]: {
-                mt: 21,
-              },
+              display: "flex",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              columnGap: 21,
+              mt: [21, 36],
             }}
           >
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={80}
-              breakpoints={{
-                768: {
-                  slidesPerView: 4,
-                },
-              }}
-              mousewheel={true}
-              speed={800}
-              centeredSlides={true}
-              pagination={{
-                clickable: true,
-              }}
-              modules={[Mousewheel, Pagination]}
-              style={{
-                overflow: "hidden",
-                width: "100%",
-                height: "100%",
-                padding: "1px",
-              }}
-            >
-              <SwiperSlide style={{ height: "auto" }}>
-                <PartnerCard
-                  urls={["/assets/imgs/landing/img_partner_logo.svg", "/assets/imgs/landing/img_partner_logo2.svg"]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <PartnerCard
-                  urls={["/assets/imgs/landing/img_partner_logo2.svg", "/assets/imgs/landing/img_partner_logo.svg"]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <PartnerCard
-                  urls={["/assets/imgs/landing/img_partner_logo.svg", "/assets/imgs/landing/img_partner_logo2.svg"]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <PartnerCard
-                  urls={["/assets/imgs/landing/img_partner_logo.svg", "/assets/imgs/landing/img_partner_logo2.svg"]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <PartnerCard
-                  urls={["/assets/imgs/landing/img_partner_logo.svg", "/assets/imgs/landing/img_partner_logo2.svg"]}
-                />
-              </SwiperSlide>
-              <SwiperSlide style={{ height: "auto" }}>
-                <PartnerCard
-                  urls={["/assets/imgs/landing/img_partner_logo.svg", "/assets/imgs/landing/img_partner_logo2.svg"]}
-                />
-              </SwiperSlide>
-            </Swiper>
+            {[
+              "/assets/imgs/landing/img_partner_logo.svg",
+              "/assets/imgs/landing/img_partner_logo2.svg",
+              "/assets/imgs/landing/img_partner_logo.svg",
+              "/assets/imgs/landing/img_partner_logo2.svg",
+              "/assets/imgs/landing/img_partner_logo.svg",
+              "/assets/imgs/landing/img_partner_logo2.svg",
+              "/assets/imgs/landing/img_partner_logo.svg",
+              "/assets/imgs/landing/img_partner_logo2.svg",
+            ].map((url, index) => (
+              <Box
+                key={url + index}
+                component="img"
+                src={url}
+                alt=""
+                mb="80px"
+                sx={{
+                  mb: 8,
+                }}
+              />
+            ))}
           </Box>
-        </Center>
-      </Box>
-    </Box>
-  );
-}
-
-function PartnerCard({ urls }: { urls: string[] }) {
-  return (
-    <Box
-      sx={{
-        height: "100%",
-        // width: "100%",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      {urls.map((url) => (
-        <Box key={url} component="img" src={url} alt="" mb="80px" />
-      ))}
+        </Box>
+      </Container>
     </Box>
   );
 }

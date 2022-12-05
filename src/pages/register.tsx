@@ -1,13 +1,15 @@
 import type { NextPage } from "next";
 import RegisterPage from "../components/auth/register";
-import AppLayout from "../components/layout";
+import PageLayout from "../components/layout/PageLayout";
+import DocHead from "../components/layout/doc_head";
 
-const Home: NextPage = () => {
+const Register: NextPage = () => {
   return (
-    <AppLayout isShowHeader={false}>
+    <PageLayout isShowHeader={false} isShowFooter={false} hasBottomNav={false}>
+      <DocHead />
       <RegisterPage />
-    </AppLayout>
+    </PageLayout>
   );
 };
 
-export default Home;
+export default Register;

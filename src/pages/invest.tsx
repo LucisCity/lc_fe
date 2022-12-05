@@ -1,17 +1,15 @@
 import type { NextPage } from "next";
 import DocHead from "../components/layout/doc_head";
-import AppLayout from "../components/layout";
-import { TopSection } from "../components/landing/top_section";
+import { Background } from "../components/landing/components/background";
+import PageLayout from "../components/layout/PageLayout";
 
 const Invest: NextPage = () => {
   return (
     <>
       <DocHead />
-      {/*<LandingHeader />*/}
-      <AppLayout>
-        <TopSection />
-      </AppLayout>
-      {/* <Footer /> */}
+      <PageLayout>
+        <h1>Invest</h1>
+      </PageLayout>
     </>
   );
 };
