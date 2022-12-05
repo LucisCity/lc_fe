@@ -1,5 +1,5 @@
 import PageLayout from "../components/layout/PageLayout";
-import Error404 from "../components/error/400/Error404";
+import Error404 from "../components/error_page/400/Error404";
 
 export default function Custom404() {
 	return (

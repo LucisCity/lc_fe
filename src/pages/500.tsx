@@ -1,5 +1,5 @@
 import PageLayout from "../components/layout/PageLayout";
-import Error500 from "../components/error/500/Error500";
+import Error500 from "../components/error_page/500/Error500";
 import {NextPage} from "next";
 
 const Custom500: NextPage = () => {

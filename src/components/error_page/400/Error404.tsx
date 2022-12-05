@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { useEffect, useRef } from "react";
 import anime from "animejs";
+import s from "./Error404.module.scss";
 
 export default function Error404() {
   useEffect(() => {
@@ -18,66 +19,14 @@ export default function Error404() {
       translateX: 10,
       autoplay: true,
       loop: true,
-      easing: "easeInOutSine",
-      direction: "alternate",
-      scale: [{ value: 1 }, { value: 1.4 }, { value: 1, delay: 250 }],
-      rotateY: { value: "+=180", delay: 200 },
+      easing: 'easeInOutSine',
+      direction: 'alternate',
+      scale: [{value: 1}, {value: 1.4}, {value: 1, delay: 250}],
+      rotateY: {value: '+=180', delay: 200},
     });
   }, []);
   return (
-    <div className="mainBody">
-      <style jsx>
-        {`
-          .mainBody {
-            background-color: #141019;
-            background: radial-gradient(at 50% -20%, #908392, #0d060e) fixed;
-            height: 100vh;
-          }
-
-          #handboy {
-            animation: swing ease-in-out 1.3s infinite alternate;
-            transformorigin: 98% 98%;
-            transformbox: fill-box;
-          }
-
-          #girllight {
-            animation: swing ease-in-out 1.3s infinite alternate;
-            transformorigin: 0% 97%;
-            transformbox: fill-box;
-          }
-
-          #hairgirl {
-            animation: swinghair ease-in-out 1.3s infinite alternate;
-            transformorigin: 60% 0%;
-            transformbox: fill-box;
-          }
-
-          #zero {
-            transformorigin: bottom;
-            transformbox: fill-box;
-          }
-
-          /*************swing************/
-          @keyframes swing {
-            0% {
-              transform: rotate(10deg);
-            }
-            100% {
-              transform: rotate(-10deg);
-            }
-          }
-
-          /*************swing hair************/
-          @keyframes swinghair {
-            0% {
-              transform: rotate(6deg);
-            }
-            100% {
-              transform: rotate(-6deg);
-            }
-          }
-        `}
-      </style>
+    <div className={s.mainBody}>
       <a target="_blank">
         <div className="container">
           <div className="row">
@@ -250,7 +199,7 @@ export default function Error404() {
                       fill="black"
                     />
                   </g>
-                  <g id="zero">
+                  <g className={s.zero} id="zero">
                     <path
                       id="Vector_25"
                       d="M361.2 110.3C351.9 99 338.7 93.3 321.6 93.3C304.6 93.3 291.4 98.9 282.1 110.2C272.8 121.5 268.1 137.4 268.1 158.2V186.3C268.1 206.9 272.8 222.9 282.1 234.2C291.5 245.5 304.7 251.2 321.8 251.2C338.7 251.2 351.9 245.6 361.2 234.3C370.5 223 375.2 207.1 375.2 186.3V158.3C375.2 137.6 370.5 121.6 361.2 110.3ZM303.8 151.3C304 141 305.5 133.4 308.3 128.3C311.1 123.2 315.5 120.7 321.6 120.7C327.9 120.7 332.4 123.4 335.3 128.9C338.2 134.4 339.6 142.6 339.6 153.6V191.6C339.5 202.6 338.1 210.7 335.2 215.9C332.3 221.1 327.8 223.7 321.8 223.7C315.5 223.7 311 221 308.1 215.7C305.4 210.7 303.9 202.9 303.8 192.5C303.8 191.9 303.8 191.2 303.8 190.6V151.3V151.3Z"
@@ -269,7 +218,7 @@ export default function Error404() {
                         d="M569.9 241.4V244.7C569.3 244.6 567.9 244.7 566.7 244.9C565.9 245 565.2 245 564.8 245.1L564.5 242.3L565.8 242.1L569.9 241.4Z"
                         fill="url(#paint10_linear)"
                       />
-                      <g id="handboy">
+                      <g className={s.hand}>
                         <path
                           id="Vector_32"
                           d="M529.1 188C529.1 188 529.2 188.3 528.8 188.7C528.5 189 528 189.3 527.1 189.7C521.7 191.8 510.6 186.7 504.5 183.3C498.5 179.9 481.3 182.7 469.7 181.1C458.1 179.5 453.2 173.3 442.8 170.7C432.4 168.1 393.6 179.3 391.4 170.6C389.2 161.9 432.8 77.2 436.6 83.1C440.3 89 453.2 89.4 462.3 94.1C471.4 98.8 479.1 122.1 489.2 124.4C490.6 124.7 491.9 125.2 493.2 125.9C501.2 130.2 507 140.9 507.2 149.7C507.4 159.9 521.4 168.1 526.5 173.6C531.5 179.2 529.1 188 529.1 188Z"
@@ -721,7 +670,7 @@ export default function Error404() {
                         d="M98.7 198.7C98.7 198.8 98.5 199 98.3 199.1C96 200.7 84.4 204.1 80.1 199.7C79.5 199.1 79.8 198.5 80.3 197.8C80.9 198.3 82 198.8 84 199.2C87.9 199.8 94.7 198.8 98 196.4C98.4 197.4 98.8 198.2 98.7 198.7Z"
                         fill="black"
                       />
-                      <g id="girllight">
+                      <g className={s.light}>
                         <path
                           id="Vector_102"
                           d="M121.8 188C121.8 188 119.4 179.3 124.5 173.8C129.6 168.3 143.5 160.1 143.8 149.9C144.1 139.7 151.7 126.9 161.8 124.5C171.9 122.2 179.6 98.8 188.7 94.2C197.8 89.5 210.7 89.1 214.4 83.2C218.1 77.3 261.7 162 259.6 170.7C257.4 179.4 218.6 168.2 208.2 170.8C197.8 173.4 192.9 179.6 181.3 181.2C169.7 182.8 152.5 180 146.5 183.4C140.5 186.8 129.4 191.8 123.9 189.8C121.6 188.8 121.8 188 121.8 188Z"
@@ -756,7 +705,7 @@ export default function Error404() {
                         d="M97.9 164.4C97.1 166.2 95.8 168.2 95.5 168.3C95.1 168.4 94.9 165.1 93.7 164.9C92.5 164.6 92.3 166.9 93.1 167.7C93.5 168.1 93.2 169 92.6 169.8C91.9 170.6 90.9 171.2 89.8 170.5C87.8 169.3 87.4 161.5 87.4 160.9C87.4 160.9 87.4 160.4 87.5 159.7C88.5 159.6 90.8 159.8 91.3 161.8C91.8 163.8 91.8 164.7 91.8 165.1C91.9 164.5 92.4 162.8 94.3 163.2C95.4 163.3 96.7 164.1 97.9 164.4Z"
                         fill="black"
                       />
-                      <g id="hairgirl">
+                      <g className={s.hair}>
                         <path
                           id="Vector_108"
                           d="M89.6 161.6C89.6 161.6 88.8 159.9 86.1 160.4C83.5 160.9 82.3 164.3 83.5 169.8C83.5 164.9 84.2 163.8 84.2 163.8C84.2 163.8 83.1 166.8 84.5 173.5C85.9 180.2 86.8 186.7 83.2 189.5C90.3 185.5 90.8 180.7 90.3 174.9C90 169.1 91.3 164 89.6 161.6Z"
