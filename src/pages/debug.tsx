@@ -16,6 +16,7 @@ import type { NextPage } from "next";
 const DebugPage: NextPage = () => {
 
 	const handClick = () => {
+		//@ts-ignore
 		undefinedFunc();
 	}
 
