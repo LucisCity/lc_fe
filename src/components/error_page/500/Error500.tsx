@@ -3,12 +3,18 @@ import s from "./Error500.module.scss";
 import { useEffect } from "react";
 // @ts-ignore
 import Parallax from "parallax-js";
+import { useRouter } from "next/router";
 
 export default function Error500() {
+  const router = useRouter();
   useEffect(() => {
     const scene = document.getElementById("scene");
     const parallax = new Parallax(scene);
   });
+
+  const handleClick = () => {
+    router.push("/");
+  }
 
   return (
     <div className={s.mainBody}>
@@ -80,7 +86,7 @@ export default function Error500() {
                 Uh oh! Looks like you got lost. <br />
                 Go back to the homepage if you dare!
               </p>
-              <button>i dare!</button>
+              <button onClick={handleClick}>i dare!</button>
             </article>
           </div>
         </div>

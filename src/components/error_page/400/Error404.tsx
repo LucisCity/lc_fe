@@ -27,7 +27,7 @@ export default function Error404() {
   }, []);
   return (
     <div className={s.mainBody}>
-      <a target="_blank">
+      <a href="/">
         <div className="container">
           <div className="row">
             <div className="col-sm-12 col-md-12 mt-5 mb-5">
