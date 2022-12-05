@@ -3,6 +3,11 @@ import Router from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import PasswordValidator = require("password-validator");
+
+// --- Create password validator schema
+const schema = new PasswordValidator();
+schema.is().min(8).is().max(32).has().letters().has().digits();
 
 const REGISTER_MUT = gql`
   mutation register($email: String!, $password: String!) {
@@ -25,6 +30,14 @@ export default function useRegister() {
   });
 
   async function onRegister(email: string, password: string, confirmPass: string) {
+    if (!schema.validate(password)) {
+      form.setError(
+        "password",
+        { message: "Password require legnth from 8 to 32 character, has letter and degits" },
+        { shouldFocus: true },
+      );
+      return;
+    }
     if (confirmPass !== password) {
       form.setError("confirm_pass", { message: "Confirm password does not match" }, { shouldFocus: true });
       return;
