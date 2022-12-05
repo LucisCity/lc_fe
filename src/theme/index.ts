@@ -7,7 +7,7 @@ const theme = (mode: PaletteMode) =>
   createTheme({
     palette: {
       primary: {
-        main: '#6555EE'
+        main: "#6555EE",
       },
       text: {
         primary: "#504C67",
@@ -35,30 +35,42 @@ const theme = (mode: PaletteMode) =>
             gap: 8,
             padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
             fontWeight: 500,
-            fontStyle: "normal",
-            fontSize: 16,
-            lineHeight: "100%",
             textTransform: "none",
             ":hover": {
               background: "#5946FF",
+            },
+            [theme.breakpoints.down("sm")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(2)} ${theme.spacing(6)}`,
             },
             [theme.breakpoints.down("lg")]: {
               height: 40,
               fontSize: 14,
               padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
             },
-            // [theme.breakpoints.down("md")]: {
-            //   height: 40,
-            //   fontSize: 14,
-            //   padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
-            // },
           }),
           outlinedPrimary: ({ theme }) => ({
-            // fontWeight: 500,
-            // fontStyle: "normal",
-            // fontSize: "16px",
-            // lineHeight: "100%",
             textTransform: "none",
+            height: 50,
+            background: "#fff",
+            border: "1px solid #6555EE",
+            borderRadius: 8,
+            gap: 8,
+            padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
+            ":hover": {
+              background: "rgba(255,255,255,0.6)",
+            },
+            [theme.breakpoints.down("sm")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(2)} ${theme.spacing(6)}`,
+            },
+            [theme.breakpoints.down("lg")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
+            },
           }),
         },
       },
@@ -76,11 +88,11 @@ const theme = (mode: PaletteMode) =>
       MuiBottomNavigation: {
         styleOverrides: {
           root: {
-            backgroundColor: 'rgb(255 255 255 / 50%)',
-            backdropFilter: 'blur(2px)',
-            borderTop: '1px solid #ffffff3b',
-          }
-        }
+            backgroundColor: "rgb(255 255 255 / 50%)",
+            backdropFilter: "blur(2px)",
+            borderTop: "1px solid #ffffff3b",
+          },
+        },
       },
       MuiBottomNavigationAction: {
         styleOverrides: {
@@ -88,16 +100,16 @@ const theme = (mode: PaletteMode) =>
             color: "#292D32",
             "&.Mui-selected": {
               color: "#6555EE",
-            }
+            },
           },
           label: {
             fontSize: 12,
             "&.Mui-selected": {
               fontSize: 12,
-            }
+            },
           },
-        }
-      }
+        },
+      },
     },
     typography: TYPO_THEME,
     spacing: 4,

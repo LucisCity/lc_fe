@@ -174,7 +174,20 @@ export const CardSection = (props: IProps) => {
         width: "100%",
       }}
     >
-      <Container sx={{ height: "100%", padding: '0px 0' }}>
+      <Box
+        sx={{
+          background: disabledBackground ? `url(${"assets/imgs/landing/card_ellipse.svg"})` : "none",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          // zIndex: 1,
+        }}
+      />
+      <Container sx={{ height: "100%", padding: "0px 0" }}>
         <Center>
           <Grid container sx={{ height: "100%" }} spacing={{ md: 12, sx: 0 }}>
             <Grid item xs={12} sm={6} width={"100%"}>
@@ -205,69 +218,80 @@ export const CardSection = (props: IProps) => {
                   },
                 })}
               >
-                <Box>
-                  <CardSupportTitle>Card</CardSupportTitle>
-                  <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
-                </Box>
-                <Typography
-                  sx={(theme) => ({
-                    color: "#6555EE",
-                    textTransform: "uppercase",
-                    fontWeight: 600,
-                    fontSize: 16,
-                  })}
-                  mt={2}
+                <AnimWhenVisible
+                  variants={{
+                    visible: { opacity: 1, y: 0 },
+                    hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
+                  }}
+                  transition={{ duration: 1, delay: props.index ? 1 : 0 }}
+                  index={props.index}
+                  // enable={props?.enable ?? true}
+                  enable={true}
                 >
-                  đẳng cấp công nghệ
-                </Typography>
-                <Typography
-                  sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
-                  mt={{ md: 5, xs: 5 }}
-                  mb={{ md: 3, xs: 3 }}
-                >
-                  Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi
-                  nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
-                </Typography>
-                <Box
-                  mb={{ md: 9, xs: 5 }}
-                  width={"100%"}
-                  sx={{ overflowX: "auto" }}
-                  display={"flex"}
-                  justifyContent={{ xs: "flex-start", sm: "flex-start", md: "flex-start" }}
-                >
-                  {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
                   <Box>
-                    <ListContent listContent={contentItems1} animeIndex={props?.index} />
-                    <ListContent listContent={contentItems2} animeIndex={props?.index} />
-                    <ListContent listContent={contentItems3} animeIndex={props?.index} />
+                    <CardSupportTitle>Card</CardSupportTitle>
+                    <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
                   </Box>
-                </Box>
-                <Box
-                  display={"flex"}
-                  width={{ sm: "100%", xs: 270 }}
-                  justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
-                  flexDirection={{ sm: "row", xs: "column" }}
-                  pb={5}
-                  gap={3}
-                >
-                  <Button
-                    variant="contained"
-                    endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
-                    LinkComponent={Link}
-                    href={"/invest"}
+                  <Typography
+                    sx={(theme) => ({
+                      color: "#6555EE",
+                      textTransform: "uppercase",
+                      fontWeight: 600,
+                      fontSize: 16,
+                    })}
+                    mt={2}
                   >
-                    Trở thành thành viên
-                  </Button>
-                  {!disabledReadmoreButton && (
+                    đẳng cấp công nghệ
+                  </Typography>
+                  <Typography
+                    sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
+                    mt={{ md: 5, xs: 5 }}
+                    mb={{ md: 3, xs: 3 }}
+                  >
+                    Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi
+                    nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
+                  </Typography>
+                  <Box
+                    mb={{ md: 9, xs: 5 }}
+                    width={"100%"}
+                    sx={{ overflowX: "auto" }}
+                    display={"flex"}
+                    justifyContent={{ xs: "flex-start", sm: "flex-start", md: "flex-start" }}
+                  >
+                    {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
+                    <Box>
+                      <ListContent listContent={contentItems1} animeIndex={props?.index} />
+                      <ListContent listContent={contentItems2} animeIndex={props?.index} />
+                      <ListContent listContent={contentItems3} animeIndex={props?.index} />
+                    </Box>
+                  </Box>
+                  <Box
+                    display={"flex"}
+                    width={{ sm: "100%", xs: 270 }}
+                    justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
+                    flexDirection={{ sm: "row", xs: "column" }}
+                    pb={5}
+                    gap={3}
+                  >
                     <Button
+                      variant="contained"
+                      endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
                       LinkComponent={Link}
-                      href={"/member"}
-                      sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
+                      href={"/invest"}
                     >
-                      Xem thêm
+                      Trở thành thành viên
                     </Button>
-                  )}
-                </Box>
+                    {!disabledReadmoreButton && (
+                      <Button
+                        LinkComponent={Link}
+                        href={"/member"}
+                        sx={{ textTransform: "capitalize", ml: 2, color: "#504C67" }}
+                      >
+                        Xem thêm
+                      </Button>
+                    )}
+                  </Box>
+                </AnimWhenVisible>
               </Box>
             </Grid>
             <Grid item xs={0} lg={1} />

@@ -219,7 +219,7 @@ export const pages: Array<IPage> = [
   },
   {
     name: "Tin tức",
-    href: "/blog",
+    href: "/news",
   },
   {
     name: "Liên hệ",
