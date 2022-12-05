@@ -3,7 +3,7 @@ import Router from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
-import PasswordValidator = require("password-validator");
+import PasswordValidator from "password-validator";
 
 // --- Create password validator schema
 const schema = new PasswordValidator();
