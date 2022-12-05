@@ -169,7 +169,7 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
       height: 40%;
       min-width: 400px;
       min-height: 500px;
-      position: absolute;
+      //position: absolute;
       margin: 40px 0;
       animation: text 0.6s 1.8s ease backwards;
 
@@ -275,8 +275,8 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
       &:before {
         content: "";
         position: absolute;
-        width: 800px;
-        height: 800px;
+        width: 600px;
+        height: 600px;
         background-color: rgba($bg-02, 0.2);
         border-radius: 100%;
         top: 50%;
@@ -306,8 +306,8 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
         &:before {
           content: "";
           position: absolute;
-          width: 600px;
-          height: 600px;
+          width: 450px;
+          height: 450px;
           background-color: rgba($bg-02, 0.3);
           border-radius: 100%;
           box-shadow: $circleShadow;
