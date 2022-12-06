@@ -30,7 +30,7 @@ export default function NftSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", padding: '50px 0' }}>
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Center
           sx={{
             justifyContent: "flex-start",
@@ -67,17 +67,15 @@ export default function NftSection(props: Props) {
               >
                 <Typography
                   variant="h5"
-                  sx={{
-                    lineHeight: "36px",
-                  }}
+                  //
                 >
                   Navaland Phú Yên
                 </Typography>
                 <Typography
-                  variant="subtitle2"
                   sx={{
                     marginTop: 1,
                     color: "#9FA4BC",
+                    fontSize: 14,
                   }}
                 >
                   Bất động sản nghỉ dưỡng
@@ -97,7 +95,7 @@ export default function NftSection(props: Props) {
             }}
           >
             <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
-              <Typography variant="h3" whiteSpace="pre-line" sx={{ mt: [13, 0] }}>{`NFT hóa 
+              <Typography variant="h1" whiteSpace="pre-line" sx={{ mt: [13, 0] }}>{`NFT hóa 
             bất động sản`}</Typography>
             </AnimWhenVisible>
             <AnimWhenVisible variants={{ hidden: { opacity: 0, y: 100 } }} index={props.index}>

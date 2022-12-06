@@ -27,7 +27,7 @@ export default function PartnerSection(props: Props) {
         },
       }}
     >
-      <Container sx={{ height: "100%", padding: '50px 0' }}>
+      <Container sx={{ height: "100%", padding: "50px 0" }}>
         <Box
           sx={{
             width: "100%",
@@ -39,7 +39,7 @@ export default function PartnerSection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-            <Typography variant="h3">Partners & Investors</Typography>
+            <Typography variant="h1">Partners & Investors</Typography>
           </AnimWhenVisible>
           <Box
             sx={{

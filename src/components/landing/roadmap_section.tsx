@@ -44,7 +44,7 @@ export default function RoadmapSection(props: Props) {
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
             <Typography
-              variant="h3"
+              variant="h1"
               sx={{
                 mb: 4,
               }}
@@ -169,7 +169,7 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
   return (
     <Box
       sx={{
-        background: "rgba(255, 255, 255)",
+        background: "rgba(255, 255, 255, 0.5)",
         backdropFilter: "blur(15px)",
         borderRadius: "12px",
         height: "100%",
@@ -179,7 +179,7 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
         flexDirection: "column",
       }}
     >
-      <Typography variant="h5" sx={{ px: 6, pt: 7 }}>
+      <Typography variant="h5" sx={{ px: 6, pt: 7, fontSize: 20, fontWeight: 700, lineHeight: "36px" }}>
         {title}
       </Typography>
       <Box
@@ -206,7 +206,7 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
                 }}
               />
               <Typography
-                variant="subtitle2"
+                variant="body2"
                 sx={{
                   flex: "1",
                 }}

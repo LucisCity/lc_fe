@@ -40,7 +40,7 @@ export default function ComunitySection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-            <Typography variant="h3">Truyền thông nói gì về chúng tôi </Typography>
+            <Typography variant="h1">Truyền thông nói gì về chúng tôi </Typography>
           </AnimWhenVisible>
 
           <Grid2

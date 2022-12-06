@@ -31,7 +31,7 @@ export function EcosystemSection(props: Props) {
       }}
       data-swiper-parallax="-300"
     >
-      <Container sx={{ height: "100%", padding: '30px 0' }}>
+      <Container sx={{ height: "100%", padding: "30px 0" }}>
         <Box
           justifyContent={"center"}
           display={"flex"}
@@ -60,7 +60,7 @@ export function EcosystemSection(props: Props) {
             }}
           >
             <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
-              <Typography variant="h3" whiteSpace="pre-line">{`Hệ sinh thái
+              <Typography variant="h1" whiteSpace="pre-line">{`Hệ sinh thái
           Lucis City`}</Typography>
             </AnimWhenVisible>
 
@@ -70,7 +70,7 @@ export function EcosystemSection(props: Props) {
             >
               <Typography
                 whiteSpace="pre-line"
-                variant="body1"
+                variant="h5"
                 sx={{
                   maxWidth: "426px",
                   mt: 8,

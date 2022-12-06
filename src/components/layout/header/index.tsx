@@ -137,8 +137,6 @@ export const HeaderNextLink = styled(Link, {
   activeCss?: boolean;
 }>(({ theme, isSidebar, activeCss }) => ({
   color: "#504C67",
-  fontWeight: 500,
-  fontSize: 16,
   position: "relative",
   "&:before": {
     content: `""`,
@@ -264,9 +262,11 @@ const Header = (props: IProps) => {
                   <Ul>
                     {pages.map((page) => (
                       <li key={page.name}>
-                        <HeaderNextLink href={page.href} activeCss={page.href === activePage.href}>
-                          {page.name}
-                        </HeaderNextLink>
+                        <Typography variant={"h5"}>
+                          <HeaderNextLink href={page.href} activeCss={page.href === activePage.href}>
+                            {page.name}
+                          </HeaderNextLink>
+                        </Typography>
                       </li>
                     ))}
                   </Ul>
@@ -285,7 +285,7 @@ const Header = (props: IProps) => {
               >
                 <Right>
                   <Button LinkComponent={Link} href={"/login"} variant="contained">
-                    Đăng nhập{" "}
+                    Đăng nhập
                   </Button>
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
@@ -320,8 +320,6 @@ const Header = (props: IProps) => {
                     variant="h2"
                     sx={(theme) => ({
                       pt: "40px",
-                      fontSize: 46,
-                      fontWeight: 400,
                       [theme.breakpoints.down("md")]: {
                         fontSize: 36,
                       },

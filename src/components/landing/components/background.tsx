@@ -16,11 +16,11 @@ const ImageItem = styled(Box, { shouldForwardProp: (prop) => prop !== "open" })<
   width: "100%",
   opacity: 0,
   //@ts-ignore
-  transition: theme.transitions.create(["opacity"], { duration: 2000 }),
+  transition: theme.transitions.create(["opacity"], { duration: 1000 }),
 
   ...(open && {
     //@ts-ignore
-    transition: theme.transitions.create(["opacity"], { duration: 2000 }),
+    transition: theme.transitions.create(["opacity"], { duration: 500 }),
     opacity: 1,
   }),
 }));

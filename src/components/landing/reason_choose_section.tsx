@@ -43,7 +43,7 @@ export function ReasonChooseSection(props: Props) {
                 variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? -300 : 0 } }}
                 index={props.index}
               >
-                <Typography variant="h3" whiteSpace="pre-line">{`Lựa chọn 
+                <Typography variant="h1" whiteSpace="pre-line">{`Lựa chọn 
                 Lucis City....`}</Typography>
               </AnimWhenVisible>
             </Grid>
@@ -144,7 +144,7 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
   return (
     <Box
       sx={{
-        backgroundColor: "#fff",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
         backdropFilter: "blur(15px)",
         borderRadius: "8px",
         padding: 4.5,
@@ -158,12 +158,11 @@ function ReasonBox({ title, content, icon }: { title: string; content: string; i
         }}
       >
         <img src={icon ?? "/assets/imgs/landing/ic_marketplace.svg"} />
-        <Typography variant="h5" whiteSpace="pre-line" marginLeft={3}>
+        <Typography variant="h3" whiteSpace="pre-line" marginLeft={3}>
           {title}
         </Typography>
       </Box>
       <Typography
-        variant="body1"
         sx={{
           mt: 4,
           [theme.breakpoints.down("sm")]: {

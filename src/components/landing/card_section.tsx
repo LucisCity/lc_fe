@@ -245,7 +245,8 @@ export const CardSection = (props: IProps) => {
                     đẳng cấp công nghệ
                   </Typography>
                   <Typography
-                    sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
+                    variant={"h5"}
+                    // sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
                     mt={{ md: 5, xs: 5 }}
                     mb={{ md: 3, xs: 3 }}
                   >
