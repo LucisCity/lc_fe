@@ -2,7 +2,7 @@ import React from "react";
 import { Background } from "../landing/components/background";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { Container, FilledInput, Stack } from "@mui/material";
+import { Container, FilledInput, IconButton, Stack } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { headerHeight } from "../layout/header";
 import Typography from "@mui/material/Typography";
@@ -41,28 +41,48 @@ export const ContactPage = () => {
       <Container>
         <Grid container>
           <Grid item xs={12} sm={6} md={7}>
-            <Typography mb={10} sx={{ fontSize: { xs: 28, sm: 32 }, fontWeight: 700 }}>
-              Liên hệ với chung tôi
-            </Typography>
-            <Typography mb={10} width={{ sm: 400, xs: "auto" }}>
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
-              enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-            </Typography>
-            <Box>
-              <Stack spacing={2}>
-                <ItemStack elevation={0} active>
-                  <StartIcon src="/assets/imgs/footer/email.svg" alt="email icon" />
-                  contact@luciscity.io
-                </ItemStack>
-                <ItemStack elevation={0}>
-                  <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
-                  (319) 555-0115
-                </ItemStack>
-                <ItemStack elevation={0}>
-                  <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />
-                  (319) 555-0115
-                </ItemStack>
-              </Stack>
+            <Box p={3} display={"flex"} flexDirection={"column"} height={"100%"}>
+              <Typography mb={10} sx={{ fontSize: { xs: 28, sm: 32 }, fontWeight: 700 }}>
+                Liên hệ với chung tôi
+              </Typography>
+              <Typography mb={10} width={{ sm: 400, xs: "auto" }}>
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
+                enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+              </Typography>
+              <Box>
+                <Stack spacing={2}>
+                  <ItemStack elevation={0} active>
+                    <StartIcon src="/assets/imgs/footer/email.svg" alt="email icon" />
+                    contact@luciscity.io
+                  </ItemStack>
+                  <ItemStack elevation={0}>
+                    <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
+                    (319) 555-0115
+                  </ItemStack>
+                  <ItemStack elevation={0}>
+                    <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />
+                    (319) 555-0115
+                  </ItemStack>
+                </Stack>
+              </Box>
+              <Box flex={1} display={"flex"} alignItems={"flex-end"} mt={3} mb={3}>
+                <Box>
+                  <Stack spacing={2} direction={"row"}>
+                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                      <img src="/assets/imgs/contact/ic_facebook.svg" alt="icon facebook" />
+                    </IconButton>
+                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                      <img src="/assets/imgs/contact/ic_discord.svg" alt="icon discord" />
+                    </IconButton>
+                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                      <img src="/assets/imgs/contact/ic_telegram.svg" alt="icon telegram" />
+                    </IconButton>
+                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                      <img src="/assets/imgs/contact/ic_twitter.svg" alt="icon twitter" />
+                    </IconButton>
+                  </Stack>
+                </Box>
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={5}>
