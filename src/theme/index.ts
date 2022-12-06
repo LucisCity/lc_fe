@@ -83,14 +83,15 @@ const theme = (mode: PaletteMode) =>
           root: ({ theme }) => ({
             borderRadius: 8,
             // height: 52,
-            background: "rgba(255, 255, 255, 0.5)",
+            padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
+            background: "rgba(255, 255, 255)",
             border: `1px solid transparent`,
             "&.Mui-focused": {
-              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              backgroundColor: "rgba(255, 255, 255)",
               border: `1px solid ${theme.palette.primary.main} !important`,
             },
             ":hover": {
-              background: "rgba(255, 255, 255, 0.7)",
+              background: "rgba(255, 255, 255)",
             },
           }),
           // focused: ({ theme }) => ({
@@ -98,7 +99,7 @@ const theme = (mode: PaletteMode) =>
           //   borderRadius: `1px solid ${theme.palette.primary.main}`,
           // }),
           input: ({ theme }) => ({
-            padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
+            padding: 0,
           }),
           inputMultiline: {
             padding: 0,

@@ -45,12 +45,11 @@ export const ContactPage = () => {
           <Grid item xs={12} sm={6} md={7}>
             <Box p={3} display={"flex"} flexDirection={"column"} height={"100%"}>
               <Typography mb={10} variant={"h2"} sx={{ fontSize: { xs: 28, sm: 32 } }}>
-                Liên hệ với chung tôi
+                Liên hệ với chúng tôi
               </Typography>
-              <Typography mb={10} variant={"body2"} width={{ sm: 400, xs: "auto" }}>
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
-                enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-              </Typography>
+              {/*<Typography mb={10} variant={"body2"} width={{ sm: 400, xs: "auto" }}>*/}
+              {/*  Chúng tôi ở đây và sẵn sàng hỗ trợ bạn.*/}
+              {/*</Typography>*/}
               <Box>
                 <Stack spacing={2}>
                   <ItemStack elevation={0} active>
@@ -98,19 +97,29 @@ export const ContactPage = () => {
             >
               <Box mb={2}>
                 <Typography mb={1}>Tên</Typography>
-                <FilledInput fullWidth />
+                <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"Nguyễn Đức Tân"} />
               </Box>
               <Box mb={2}>
                 <Typography mb={1}>Email</Typography>
-                <FilledInput fullWidth />
+                <FilledInput
+                  sx={{ background: "rgba(255,255,255,0.5)" }}
+                  fullWidth
+                  placeholder={"lucis@luciscity.io"}
+                />
               </Box>
               <Box mb={2}>
                 <Typography mb={1}>Số điện thoại</Typography>
-                <FilledInput fullWidth />
+                <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"(+84) 123456789"} />
               </Box>
               <Box mb={2}>
                 <Typography mb={1}>Câu hỏi của bạn là gì ?</Typography>
-                <FilledInput fullWidth multiline rows={6} />
+                <FilledInput
+                  sx={{ background: "rgba(255,255,255,0.5)" }}
+                  fullWidth
+                  multiline
+                  rows={6}
+                  placeholder={"Câu hỏi của bạn là gì ...."}
+                />
               </Box>
               <Button variant={"contained"} fullWidth sx={{ mt: 10 }}>
                 Gửi

@@ -124,10 +124,10 @@ export default function LandingPage() {
             <TopSection />
           </SwiperSlide>
           <SwiperSlide>
-            <CompanySection index={1} fullscreen={true}/>
+            <CompanySection index={1} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <CardSection index={2} disabledBackground fullscreen={true}/>
+            <CardSection index={2} disabledBackground fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
             <EcosystemSection index={3} fullscreen={true} />
@@ -162,18 +162,18 @@ export default function LandingPage() {
               transform: "translate(0px, -50%)",
               zIndex: 900,
               "--title-opa": 0,
-              "&:hover": {"--title-opa": 1}
+              "&:hover": { "--title-opa": 1 },
             }}
           >
             <Indicator title="Lucis City" isActive={paging.activeIndex === 1} index={1} />
-            <Indicator title="Galaxy Platinum" isActive={paging.activeIndex === 2} index={2} />
+            <Indicator title="Galaxy Platinum Card" isActive={paging.activeIndex === 2} index={2} />
             <Indicator title="Hệ sinh thái" isActive={paging.activeIndex === 3} index={3} />
-            <Indicator title="Should choose" isActive={paging.activeIndex === 4} index={4} />
-            <Indicator title="Openration" isActive={paging.activeIndex === 5} index={5} />
+            <Indicator title="Đầu tư" isActive={paging.activeIndex === 4} index={4} />
+            <Indicator title="Vận hành" isActive={paging.activeIndex === 5} index={5} />
             <Indicator title="NFT hóa BĐS" isActive={paging.activeIndex === 6} index={6} />
             <Indicator title="Roadmap" isActive={paging.activeIndex === 7} index={7} />
-            <Indicator title="Partner & Investor" isActive={paging.activeIndex === 8} index={8} />
-            <Indicator title="Community" isActive={paging.activeIndex === 9} index={9} />
+            <Indicator title="Đối tác & NDT" isActive={paging.activeIndex === 8} index={8} />
+            <Indicator title="Cộng đồng" isActive={paging.activeIndex === 9} index={9} />
           </Box>
         </Swiper>
       </PagingCtx.Provider>

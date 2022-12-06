@@ -39,7 +39,9 @@ export default function PartnerSection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-            <Typography variant="h1">Partners & Investors</Typography>
+            <Typography variant="h2" textTransform={"uppercase"}>
+              Đối tác & Nhà đầu tư
+            </Typography>
           </AnimWhenVisible>
           <Box
             sx={{

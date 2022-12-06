@@ -1,13 +1,28 @@
-import { Box, Container, Typography, useTheme } from "@mui/material";
+import { Box, Container, Paper, Stack, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useWindowSize } from "../../hooks/use_window_size";
 import AnimWhenVisible from "../anim";
 import { headerHeight } from "../layout/header";
+import { styled } from "@mui/system";
 
 type Props = {
   index?: number;
   fullscreen?: boolean;
 };
+
+const Item = styled(Box)(({ theme }) => ({
+  display: "flex",
+  img: {
+    marginRight: theme.spacing(3),
+    alignSelf: "flex-start",
+    display: "flex",
+    paddingTop: theme.spacing(1),
+  },
+  [theme.breakpoints.down("md")]: {
+    // fontSize: 14,
+    // height: 62,
+  },
+}));
 export function EcosystemSection(props: Props) {
   const theme = useTheme();
   const size = useWindowSize();
@@ -60,8 +75,7 @@ export function EcosystemSection(props: Props) {
             }}
           >
             <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 300, y: -300 } }} index={props.index}>
-              <Typography variant="h1" whiteSpace="pre-line">{`Hệ sinh thái
-          Lucis City`}</Typography>
+              <Typography variant="h2" textTransform={"uppercase"}>{`Hệ sinh thái Lucis City`}</Typography>
             </AnimWhenVisible>
 
             <AnimWhenVisible
@@ -70,17 +84,31 @@ export function EcosystemSection(props: Props) {
             >
               <Typography
                 whiteSpace="pre-line"
-                variant="h5"
                 sx={{
                   maxWidth: "426px",
                   mt: 8,
                   mb: 26,
                 }}
               >
-                Nhà Đầu tư có cơ hội đầu tư trực tiếp các sản phẩm - dịch vụ thực của Hệ sinh thái Lucis City từ nhiều
-                nền tảng khác nhau cũng như được trải nghiệm tất cả các tiện ích của hệ sinh thái. Lucis City xây dựng
-                một mạng lưới nhà đầu tư có tiềm lực và cùng đam mê để tăng giá trị kết nối và xúc tiến thương mại hiệu
-                quả.
+                <Stack spacing={3}>
+                  <Item>
+                    <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                    Lucis City là hệ sinh thái số hóa Bất Động sản và các tài sản giá trị khác bao gồm: Động sản và Tài
+                    sản vô hình...
+                  </Item>
+
+                  <Item>
+                    <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                    Tại Lucis City, các Nhà Đầu tư có cơ hội đầu tư trực tiếp các sản phẩm - dịch vụ thực của Hệ sinh
+                    thái từ nhiều nền tảng khác nhau cũng như được trải nghiệm tất cả các tiện ích của hệ sinh thái.
+                  </Item>
+
+                  <Item>
+                    <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                    Lucis City xây dựng một mạng lưới nhà đầu tư có tiềm lực và cùng đam mê để tăng giá trị kết nối và
+                    xúc tiến thương mại hiệu quả.
+                  </Item>
+                </Stack>
               </Typography>
             </AnimWhenVisible>
           </Box>
