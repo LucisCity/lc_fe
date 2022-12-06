@@ -44,3 +44,12 @@
   transform-box:fill-box;
 
 }
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow-x: hidden;
+}

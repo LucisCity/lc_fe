@@ -208,6 +208,13 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
           letter-spacing: 0.6px;
           margin-bottom: 40px;
           text-shadow: 6px 6px 10px $bg-03;
+
+          @media screen and (max-width: 400px) {
+            width: 90vw;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+          }
         }
 
         button {

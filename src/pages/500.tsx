@@ -4,7 +4,7 @@ import {NextPage} from "next";
 
 const Custom500: NextPage = () => {
 	return (
-		<PageLayout isShowHeader={true} isShowFooter={true} hasBottomNav={false}>
+		<PageLayout isShowHeader={true} isShowFooter={false} hasBottomNav={false}>
 			<Error500 />
 		</PageLayout>
 	);
