@@ -1,27 +1,19 @@
 /* eslint-disable */
-import type { NextPage } from "next";
-import { appEnv } from "../utils/env";
+import {useState} from "react";
+import type {NextPage} from "next";
+import {NoSsr} from "@mui/material";
+import {appEnv, appVersionCommitId} from "../utils/env";
 
-// export async function getServerSideProps() {
-// 	// Fetch data from external API
-// 	const res = await fetch('https://dummyjson.com/products/1');
-// 	const data = await res.json();
-//
-// 	if (data !== '!!!!') {
-// 		throw new Error('Internal Server Error');
-// 	}
-// 	// Pass data to the page via props
-// 	return { props: { data } };
-// }
 
 const DebugPage: NextPage = () => {
+  const [errorComponentVisible, setErrorComponentVisible] = useState(false);
 
-	const handClick = () => {
-			// @ts-ignore
-			undefinedFunc();
-	}
+  const makeAppCrash = () => {
+    setErrorComponentVisible(true);
+  }
 
 	return (
+		<NoSsr>
 		<section className="lucis-container" style={{marginTop: "120px"}}>
 			<div>
 				<h1>Debug Page</h1>
@@ -29,16 +21,33 @@ const DebugPage: NextPage = () => {
 					<h3>App</h3>
 					<div>
 						<table>
+							<tbody>
 							<tr><th>Key:</th><th>Value</th></tr>
-							<tr><td>Version (commit id)</td><td>LUCIS_VERSION_COMMIT_ID</td></tr>
+							<tr><td>Version (commit id)</td><td>{appVersionCommitId}</td></tr>
 							<tr><td>APP_ENV</td><td>{appEnv}</td></tr>
+							</tbody>
 						</table>
 					</div>
-					<button onClick={handClick}>Test 500 Error</button>
+
+					<hr/>
+					<h1>Error debug</h1>
+					<div>
+						<button onClick={makeAppCrash}>Test 500 Error</button>
+						{errorComponentVisible && <DebugErrorComponent />}
+					</div>
 				</div>
 			</div>
 		</section>
+		</NoSsr>
 	);
 };
+
+function DebugErrorComponent() {
+	throw new Error("Force cause error");
+
+	return (
+		<h1>this is error</h1>
+	);
+}
 
 export default DebugPage;
