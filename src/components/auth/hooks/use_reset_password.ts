@@ -1,22 +1,25 @@
 import { gql, useMutation } from "@apollo/client";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { isStrongPass } from "../../../utils/password.util";
 
-const REGISTER_MUT = gql`
-  mutation register($email: String!, $password: String!) {
-    register(email: $email, password: $password)
+const RESET_PASSWORD_MUT = gql`
+  mutation resetPassword($token: String!, $password: String!) {
+    resetPassword(token: $token, password: $password)
   }
 `;
 
-export default function useRegister() {
+export default function useResetPassword() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+  const token = router.query["token"] as string;
 
-  const [register, { loading }] = useMutation(REGISTER_MUT, {
+  const [reset, { loading }] = useMutation(RESET_PASSWORD_MUT, {
     onCompleted: () => {
+      enqueueSnackbar("Reset password successfully", { variant: "success" });
       Router.push("/login");
     },
     onError: (e) => {
@@ -25,7 +28,7 @@ export default function useRegister() {
     },
   });
 
-  async function onRegister(email: string, password: string, confirmPass: string) {
+  async function onReset(password: string, confirmPass: string) {
     if (!isStrongPass(password)) {
       form.setError(
         "password",
@@ -38,17 +41,21 @@ export default function useRegister() {
       form.setError("confirm_pass", { message: "Confirm password does not match" }, { shouldFocus: true });
       return;
     }
+    if (!token) {
+      console.log("Token not exist");
+      return;
+    }
 
-    register({
+    reset({
       variables: {
-        email: email,
+        token,
         password: password,
       },
     });
   }
 
   return {
-    onRegister,
+    onReset,
     form,
     loading,
   };

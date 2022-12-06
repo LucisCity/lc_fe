@@ -87,6 +87,36 @@ function SignInSide() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+            <Center mt="12px" mb="24px">
+              <Stack direction="row" spacing="8px">
+                <Button
+                  onClick={() => {
+                    loginGG();
+                  }}
+                  variant="outlined"
+                  sx={{
+                    height: "39px",
+                  }}
+                  startIcon={<Box component="img" src="/assets/imgs/auth/ic_google.svg" alt="" />}
+                ></Button>
+                <FacebookLogin
+                  appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
+                  // autoLoad
+                  callback={fbLogin}
+                  render={(renderProps: any) => (
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        height: "39px",
+                      }}
+                      onClick={renderProps.onClick}
+                    >
+                      <Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />
+                    </Button>
+                  )}
+                />
+              </Stack>
+            </Center>
             <TextField
               margin="normal"
               //   required
@@ -124,7 +154,7 @@ function SignInSide() {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
-            <Center>
+            {/* <Center>
               <Typography>Or Sign in with</Typography>
             </Center>
             <Center mt="12px" mb="24px">
@@ -147,7 +177,7 @@ function SignInSide() {
                   )}
                 />
               </Stack>
-            </Center>
+            </Center> */}
             <Grid container>
               <Grid item xs>
                 <Link href="/forgot" variant="body2">
