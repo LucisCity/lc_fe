@@ -213,6 +213,7 @@ export const CardSection = (props: IProps) => {
                 index={props.index}
                 // enable={props?.enable ?? true}
                 enable={true}
+                style={{ height: "100%" }}
               >
                 <Box
                   display="flex"
