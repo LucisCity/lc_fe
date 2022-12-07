@@ -1,12 +1,16 @@
 /* eslint-disable */
 import s from "./error_500.module.scss";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 // @ts-ignore
 import Parallax from "parallax-js";
 import { useRouter } from "next/router";
 import { Grid } from "@mui/material";
 
-export default function Error500() {
+type IProps = {
+  code?: string;
+  message?: string;
+};
+export default function Error500(props: IProps) {
   const router = useRouter();
   useEffect(() => {
     const scene = document.getElementById("scene");
@@ -83,12 +87,14 @@ export default function Error500() {
           </div>
           <div className={s.text}>
             <article>
-              <h1 style={{padding: "10px", color: "white"}}> Unexpected Error!</h1>
+              <h1 style={{padding: "5px", color: "white"}}> Unexpected Error!</h1>
               <p>
-                An error has occurred and we're currently fixing the problem.
-                Feel free to report to us if the problem persists.
+                An error has occurred and we're currently fixing the problem.<br/>
+                {props.code ? `Error code: ${props.code}<br/>` : null}
+                {props.message ? `Message: ${props.message}<br/>` : null}
+                Please report to us if the problem persists.
               </p>
-              <Grid container spacing={0}>
+              <Grid container mt={-2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={4}>
                   <button onClick={handleClick}>Go Home</button>
