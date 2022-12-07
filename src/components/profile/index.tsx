@@ -1,25 +1,21 @@
 import React from "react";
-import { Box, styled } from "@mui/system";
-import { Button, Card, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { Card, Grid, Paper, Typography } from "@mui/material";
 import { Background } from "../landing/components/background";
-import Avatar from "@mui/material/Avatar";
-import Stack from '@mui/material/Stack';
-import Link from "next/link";
-import { useRouter } from 'next/router'
 import { NavigationBar } from "./components/navbar";
 import CustomPaginationActionsTable from "./components/table";
 
 const DashBoard = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: "#F9F9F9", width: {md: "75%", sx: "100%"} }}>
+    <Box sx={{display: 'flex', flexDirection: 'column', backgroundColor: "#F9F9F9", width: {md: "75%", sx: "100%"}}}>
       <Box m={10}>
         <Typography fontWeight={700} fontSize={32}>Dashboard</Typography>
         <Box my={5}>
           <Grid container spacing={5} height={"auto"}>
-            <TutorialStepComponent />
+            <TutorialStepComponent/>
           </Grid>
         </Box>
-        <CustomPaginationActionsTable />
+        <CustomPaginationActionsTable/>
       </Box>
     </Box>
   )
@@ -46,7 +42,7 @@ const TutorialStepComponent = () => {
         <React.Fragment key={item.title}>
           <Grid item xs={4} height={"inherit"}>
             <Box component={Paper} elevation={0} borderRadius={4} p={4} height={"100%"}>
-              <Typography sx={{ fontSize: 16 }}>
+              <Typography sx={{fontSize: 16}}>
                 {item.title}
               </Typography>
               <Typography fontSize={32} fontStyle="bold" my={4}>{item.content}</Typography>
@@ -83,7 +79,7 @@ export const ProfilePage = () => {
           my: {sm: 27, xs: 20},
           mx: {sm: "10%", xs: "5%"},
           display: "flex",
-          flexDirection: { md: "row", xs: "column" },
+          flexDirection: {md: "row", xs: "column"},
           background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
           backdropFilter: "blur(16px)",
           borderRadius: 4
@@ -91,9 +87,9 @@ export const ProfilePage = () => {
         // zIndex={2}
         // position={"relative"}
       >
-        <NavigationBar />
+        <NavigationBar/>
         {/*<Divider orientation="vertical" flexItem />*/}
-        <DashBoard />
+        <DashBoard/>
       </Card>
     </>
   );
