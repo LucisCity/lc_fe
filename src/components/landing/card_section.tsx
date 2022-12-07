@@ -194,8 +194,6 @@ export const CardSection = (props: IProps) => {
               <Box
                 display="flex"
                 justifyContent="center"
-                position={"relative"}
-                zIndex={1}
                 alignItems={{ xs: "flex-end", sm: "center" }}
                 width={"100%"}
                 height={"100%"}
@@ -209,7 +207,7 @@ export const CardSection = (props: IProps) => {
                   visible: { opacity: 1, y: 0 },
                   hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
                 }}
-                transition={{ duration: 1, delay: props.index ? 1 : 0 }}
+                transition={{ duration: 1, delay: props.index ? 0.2 : 0 }}
                 index={props.index}
                 // enable={props?.enable ?? true}
                 enable={true}
@@ -297,7 +295,7 @@ export const CardSection = (props: IProps) => {
                     width={{ sm: "100%", xs: 270 }}
                     justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
                     flexDirection={{ sm: "row", xs: "column" }}
-                    pb={5}
+                    pb={{xs: 5, md: 0}}
                     gap={3}
                   >
                     <Button
@@ -321,7 +319,6 @@ export const CardSection = (props: IProps) => {
                 </Box>
               </AnimWhenVisible>
             </Grid>
-            <Grid item xs={0} lg={1} />
           </Grid>
         </Center>
         {/*<CoinImage src="/assets/imgs/landing/coin4.png" alt="" />*/}

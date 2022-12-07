@@ -95,7 +95,7 @@ export const CardAnimation = (props: IProps) => {
   }
 
   return (
-    <Box position="relative" width={"100%"} height={380} mt={{ xs: 20, sm: 30, md: 40 }}>
+    <Box position="relative" width={"100%"} height={380} mt={{ xs: 18, sm: 26, md: 36 }}>
       <AnimWhenVisible
         index={props.animationIndex}
         style={{ width: "100%", height: "100%" }}
