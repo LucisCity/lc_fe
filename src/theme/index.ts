@@ -11,6 +11,7 @@ const theme = (mode: PaletteMode) =>
       },
       text: {
         primary: "#504C67",
+        secondary: "#737373",
       },
     },
     breakpoints: {
@@ -38,6 +39,30 @@ const theme = (mode: PaletteMode) =>
             textTransform: "none",
             ":hover": {
               background: "#5946FF",
+            },
+            [theme.breakpoints.down("sm")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(2)} ${theme.spacing(6)}`,
+            },
+            [theme.breakpoints.down("lg")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
+            },
+          }),
+
+          containedSecondary: ({ theme }) => ({
+            background: "#fff",
+            color: theme.palette.text.primary,
+            borderRadius: 8,
+            height: 50,
+            gap: 8,
+            padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
+            fontWeight: 500,
+            textTransform: "none",
+            ":hover": {
+              background: "#fff",
             },
             [theme.breakpoints.down("sm")]: {
               height: 40,
@@ -82,7 +107,7 @@ const theme = (mode: PaletteMode) =>
         styleOverrides: {
           root: ({ theme }) => ({
             borderRadius: 8,
-            // height: 52,
+            fontSize: theme.typography.caption.fontSize,
             padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
             background: "rgba(255, 255, 255)",
             border: `1px solid transparent`,
@@ -94,10 +119,16 @@ const theme = (mode: PaletteMode) =>
               background: "rgba(255, 255, 255)",
             },
           }),
-          // focused: ({ theme }) => ({
-          //   backgroundColor: "red",
-          //   borderRadius: `1px solid ${theme.palette.primary.main}`,
-          // }),
+          colorSecondary: {
+            background: "rgba(101, 85, 238, 1)",
+            color: "#fff",
+            "&.Mui-focused": {
+              backgroundColor: "rgba(101, 85, 238, 1)",
+            },
+            ":hover": {
+              background: "rgba(101, 85, 238, 1)",
+            },
+          },
           input: ({ theme }) => ({
             padding: 0,
           }),

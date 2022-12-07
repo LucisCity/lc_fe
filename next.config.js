@@ -1,15 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Os = require("os")
+const Os = require("os");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
 
-
   // https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files
-  output: 'standalone',
-
+  output: "standalone",
 
   /**
    * From Static structure: /about.html
@@ -25,7 +23,6 @@ const nextConfig = {
     loader: "imgix",
     path: "",
   },
-
 
   /**
    * Custom webpack config
@@ -43,14 +40,13 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-
 /**
  * Determine whether the Node.js process runs on Windows.
  *
  * @returns {Boolean}
  */
 function isWindows() {
-  return Os.platform() === 'win32'
+  return Os.platform() === "win32";
 }
 
 function inject_git_commit_id_to_page(rules) {
@@ -61,12 +57,9 @@ function inject_git_commit_id_to_page(rules) {
   /**
    * Inject git commit id into debug page
    */
-  let git_commit_id = '';
+  let git_commit_id = "";
   try {
-    git_commit_id = require("child_process")
-      .execSync("git rev-parse --short HEAD")
-      .toString()
-      .trim();
+    git_commit_id = require("child_process").execSync("git rev-parse --short HEAD").toString().trim();
   } catch (e) {
     throw new Error("Please install git first");
   }
@@ -96,15 +89,15 @@ function inject_app_env(rules) {
     .toString()
     .trim();
 
-  let app_env = '';
+  let app_env = "";
   if (git_branch === "ref: refs/heads/main") {
-    app_env = 'prod'
+    app_env = "prod";
   } else if (git_branch === "ref: refs/heads/beta") {
-    app_env = 'beta'
+    app_env = "beta";
   } else if (git_branch === "ref: refs/heads/test") {
-    app_env = 'stg'
+    app_env = "stg";
   } else {
-    app_env = 'dev'
+    app_env = "dev";
   }
 
   rules.push({
@@ -116,7 +109,6 @@ function inject_app_env(rules) {
     },
   });
 }
-
 
 function show_testnet_text_on_header(rules) {
   /**
