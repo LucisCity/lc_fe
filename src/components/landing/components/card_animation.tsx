@@ -52,7 +52,7 @@ export const CardAnimation = (props: IProps) => {
     controls.start("visible");
   }, [paging, props.enable]);
   return (
-    <Box position="relative" width={"100%"} height={380} mt={{ xs: 20, sm: 30, md: 40 }}>
+    <Box position="relative" width={"100%"} height={380} mt={{ xs: 22, sm: 32, md: 42 }}>
       <AnimWhenVisible
         index={props.animationIndex}
         style={{ width: "100%", height: "100%" }}
