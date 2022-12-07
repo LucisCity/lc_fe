@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Box } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
 import { Button, Divider, Typography, useMediaQuery } from "@mui/material";
