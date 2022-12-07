@@ -3,6 +3,7 @@ import { Box, styled } from "@mui/system";
 import { CardSection } from "../landing/card_section";
 import { Avatar, Container, Grid, Paper, Typography } from "@mui/material";
 import { Background } from "../landing/components/background";
+import ScrollPage from "../layout/scroll_page";
 
 const data = [
   {
@@ -133,7 +134,7 @@ const DataItem = () => {
 };
 export const MemberPage = () => {
   return (
-    <>
+    <ScrollPage pt={0}>
       <Background
         style={{
           position: "fixed",
@@ -142,7 +143,9 @@ export const MemberPage = () => {
           zIndex: -1,
         }}
       />
-      <CardSection disabledBackground={true} disabledReadmoreButton={true} />
+      <Box mt={-10}>
+        <CardSection disabledBackground={true} disabledReadmoreButton={true} />
+      </Box>
       <Box pb={10} position={"relative"}>
         <Container>
           <Box
@@ -225,6 +228,6 @@ export const MemberPage = () => {
           </Box>
         </Container>
       </Box>
-    </>
+    </ScrollPage>
   );
 };

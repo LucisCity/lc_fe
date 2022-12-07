@@ -27,6 +27,7 @@ import { Background } from "../components/landing/components/background";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { StartIcon } from "../components/layout/footer";
+import ScrollPage from "../components/layout/scroll_page";
 
 
 const DebugPage: NextPage = () => {
@@ -41,7 +42,7 @@ const DebugPage: NextPage = () => {
       <DocHead />
       <PageLayout>
         <NoSsr>
-          <Box paddingTop={`${headerHeight}px`} mt={10}>
+          <ScrollPage>
             <Background
               style={{
                 position: "fixed",
@@ -121,7 +122,7 @@ const DebugPage: NextPage = () => {
                 </Grid>
               </Grid>
             </Container>
-          </Box>
+          </ScrollPage>
         </NoSsr>
       </PageLayout>
     </>

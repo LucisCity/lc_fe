@@ -45,3 +45,7 @@ body {
   padding-bottom: var(--page-padding-bottom);
   padding-top: var(--page-padding-top);
 }
+.scrollPage {
+  padding-bottom: var(--page-padding-bottom);
+  padding-top: var(--page-padding-top);
+}

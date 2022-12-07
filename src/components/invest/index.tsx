@@ -9,13 +9,14 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { StartIcon } from "../layout/footer";
+import ScrollPage from "../layout/scroll_page";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({}),
 );
 export const InvestPage = () => {
   return (
-    <Box paddingTop={`${headerHeight}px`} mt={10}>
+    <ScrollPage>
       <Background
         style={{
           position: "fixed",
@@ -32,6 +33,6 @@ export const InvestPage = () => {
           />
         </FilterView>
       </Container>
-    </Box>
+    </ScrollPage>
   );
 };
