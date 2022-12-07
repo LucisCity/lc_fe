@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Os = require("os")
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -31,8 +34,8 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     const rules = config.module.rules;
 
-    // inject_git_commit_id_to_page(rules);
-    // inject_app_env(rules);
+    inject_git_commit_id_to_page(rules);
+    inject_app_env(rules);
 
     return config;
   },
@@ -41,16 +44,35 @@ const nextConfig = {
 module.exports = nextConfig;
 
 
+/**
+ * Determine whether the Node.js process runs on Windows.
+ *
+ * @returns {Boolean}
+ */
+function isWindows() {
+  return Os.platform() === 'win32'
+}
+
 function inject_git_commit_id_to_page(rules) {
+  if (isWindows()) {
+    throw new Error("NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows");
+  }
+
   /**
    * Inject git commit id into debug page
    */
-  const git_commit_id = require("child_process")
-    .execSync("git rev-parse --short HEAD")
-    .toString()
-    .trim();
+  let git_commit_id = '';
+  try {
+    git_commit_id = require("child_process")
+      .execSync("git rev-parse --short HEAD")
+      .toString()
+      .trim();
+  } catch (e) {
+    throw new Error("Please install git first");
+  }
+
   const stringReplaceLoaderRule = {
-    test: /pages\/lucis-debug\/index\.tsx$/,
+    test: /src\/utils\/env\.ts$/,
     loader: "string-replace-loader",
     options: {
       search: "LUCIS_VERSION_COMMIT_ID",
@@ -61,6 +83,10 @@ function inject_git_commit_id_to_page(rules) {
 }
 
 function inject_app_env(rules) {
+  if (isWindows()) {
+    throw new Error("NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows");
+  }
+
   const git_branch = require("child_process")
     /**
      * NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows

@@ -72,7 +72,7 @@ export const CompanySection = (props: Props) => {
                   <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
                     <TitleImage src="/assets/imgs/logo/logo-color.svg" alt="lucis - title" />
                   </AnimWhenVisible>
-                  <Typography sx={{ mb: 22 }}>
+                  <Typography sx={{ mb: 22 }} variant={"h5"}>
                     Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng. Mở ra cơ hội đầu tư vào thị
                     trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
                   </Typography>

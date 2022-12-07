@@ -1,3 +1,5 @@
+import Error500 from "../error_page/500/error_500";
+
 type Props = {
   code: string;
   message: string;
@@ -7,12 +9,7 @@ export default function ErrorSection(props: Props) {
   return (
     <div>
       <div>
-        <p>Our app has caught a exception, sorry for inconvenient.</p>
-        <p>We&apos;re try our best to fix it asap.</p>
-        <br />
-        <p>This is the error detail:</p>
-        <pre>code: {code}</pre>
-        <pre>message: {message}</pre>
+        <Error500 code={code} message={message}/>
       </div>
     </div>
   );

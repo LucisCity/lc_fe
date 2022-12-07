@@ -45,7 +45,7 @@ const CardItem = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  // justifyContent: "center",
   background: "rgba(255, 255, 255, 0.5)",
   backdropFilter: "blur(3.5px)",
   fontSize: 14,
@@ -91,7 +91,7 @@ const CardSupportTitle = styled("div")(({ theme }) => ({
 
 const contentItems1 = [
   {
-    text: "Cộng đồng Nhà Đầu tư đẳng cấp - cơ hội kết nối",
+    text: "Cộng đồng Nhà Đầu tư đẳng cấp - Cơ hội kết nối",
     delay: 0,
     width: 215,
   },
@@ -104,7 +104,7 @@ const contentItems1 = [
 
 const contentItems2 = [
   {
-    text: "Trải nghiệm tiện ích, đặc quyền chủ thẻ tích hợp trong hệ sinh thái",
+    text: "Đặc quyền chủ thẻ tích hợp trong hệ sinh thái",
     delay: 0.8,
     width: 275,
   },
@@ -234,23 +234,24 @@ export const CardSection = (props: IProps) => {
                     <Title src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
                   </Box>
                   <Typography
+                    variant={"h4"}
                     sx={(theme) => ({
                       color: "#6555EE",
                       textTransform: "uppercase",
-                      fontWeight: 600,
-                      fontSize: 16,
+                      fontWeight: 700,
                     })}
                     mt={2}
                   >
                     đẳng cấp công nghệ
                   </Typography>
                   <Typography
-                    sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
+                    variant={"h5"}
+                    // sx={(theme) => ({ color: "rgba(80, 76, 103, 1)" })}
                     mt={{ md: 5, xs: 5 }}
                     mb={{ md: 3, xs: 3 }}
                   >
-                    Thẻ Galaxy Platinum được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi
-                    nhuận từ toàn bộ các tiện ích trong Hệ sinh thái....
+                    Galaxy Platinum Card được phát triển bởi Lucis City giúp Nhà Đầu tư có thể trải nghiệm và hưởng lợi
+                    nhuận từ toàn bộ các tiện ích trong Hệ sinh thái.
                   </Typography>
                   <Box
                     mb={{ md: 9, xs: 5 }}
@@ -261,9 +262,34 @@ export const CardSection = (props: IProps) => {
                   >
                     {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
                     <Box>
-                      <ListContent listContent={contentItems1} animeIndex={props?.index} />
-                      <ListContent listContent={contentItems2} animeIndex={props?.index} />
-                      <ListContent listContent={contentItems3} animeIndex={props?.index} />
+                      <Grid container spacing={3}>
+                        {contentItems1.map((item, index) => (
+                          <Grid item xs={6} key={"content_" + index}>
+                            <CardItem elevation={0}>
+                              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                              {item.text}
+                            </CardItem>
+                          </Grid>
+                        ))}
+                        {contentItems2.map((item, index) => (
+                          <Grid item xs={6} key={"content_" + index}>
+                            <CardItem elevation={0}>
+                              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                              {item.text}
+                            </CardItem>
+                          </Grid>
+                        ))}
+                        {contentItems3.map((item, index) => (
+                          <Grid item xs={6} key={"content_" + index}>
+                            <CardItem elevation={0}>
+                              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
+                              {item.text}
+                            </CardItem>
+                          </Grid>
+                        ))}
+                      </Grid>
+                      {/*<ListContent listContent={contentItems2} animeIndex={props?.index} />*/}
+                      {/*<ListContent listContent={contentItems3} animeIndex={props?.index} />*/}
                     </Box>
                   </Box>
                   <Box
@@ -278,7 +304,7 @@ export const CardSection = (props: IProps) => {
                       variant="contained"
                       endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
                       LinkComponent={Link}
-                      href={"/invest"}
+                      href={"/contact"}
                     >
                       Trở thành thành viên
                     </Button>

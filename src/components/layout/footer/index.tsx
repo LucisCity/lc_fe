@@ -130,76 +130,56 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                     (229) 555-0109
                   </TextItem>
                 </Grid>
-                <Grid item xs={6}>
-                  <TextItem component={"strong"} display={"flex"} alignItems={"center"} m={0} mb={5}>
-                    Bộ phận kinh doanh
-                  </TextItem>
-                  <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
-                    <StartIcon src="/assets/imgs/footer/email.svg" alt="email icon" />
-                    contact@luciscity.io
-                  </TextItem>
-                  <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
-                    <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
-                    (319) 555-0115
-                  </TextItem>
-                </Grid>
+                {/*<Grid item xs={6}>*/}
+                {/*  <TextItem component={"strong"} display={"flex"} alignItems={"center"} m={0} mb={5}>*/}
+                {/*    Bộ phận kinh doanh*/}
+                {/*  </TextItem>*/}
+                {/*  <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>*/}
+                {/*    <StartIcon src="/assets/imgs/footer/email.svg" alt="email icon" />*/}
+                {/*    contact@luciscity.io*/}
+                {/*  </TextItem>*/}
+                {/*  <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>*/}
+                {/*    <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />*/}
+                {/*    (319) 555-0115*/}
+                {/*  </TextItem>*/}
+                {/*</Grid>*/}
               </Grid>
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={3}>
-              <Grid item xs={8}>
-                <Typography mb={{ md: 14, xs: 6 }}>
-                  <strong>Công ty</strong>
-                </Typography>
-                <UlComponent>
-                  <li>
-                    <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>
-                  </li>
-                  {/*<li>*/}
-                  {/*  <FooterNextLink href={"/"}>Tuyển dụng</FooterNextLink>*/}
-                  {/*</li>*/}
-                  <li>
-                    <FooterNextLink href={"/"}>Điều khoản thỏa thuận</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Quy chế hoạt động</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Cam kết của nhà đầu tư</FooterNextLink>
-                  </li>
-                  <li>
-                    <FooterNextLink href={"/"}>Chính sách bảo mật</FooterNextLink>
-                  </li>
-                </UlComponent>
-              </Grid>
-              {/*<Grid item xs={4}>*/}
-              {/*  <Typography mb={{ md: 14, xs: 10 }}>*/}
-              {/*    <strong>Hỗ trợ</strong>*/}
-              {/*  </Typography>*/}
-              {/*  <UlComponent>*/}
-              {/*    <li>*/}
-              {/*      <FooterNextLink href={"/"}>Quy định đăng tin</FooterNextLink>*/}
-              {/*    </li>*/}
-              {/*    <li>*/}
-              {/*      <FooterNextLink href={"/"}>Liên hệ</FooterNextLink>*/}
-              {/*    </li>*/}
-              {/*    <li>*/}
-              {/*      <FooterNextLink href={"/"}>Báo giá</FooterNextLink>*/}
-              {/*    </li>*/}
-              {/*    <li>*/}
-              {/*      <FooterNextLink href={"/"}>Trợ giúp</FooterNextLink>*/}
-              {/*    </li>*/}
-              {/*    <li>*/}
-              {/*      <FooterNextLink href={"/"}>Sitemap</FooterNextLink>*/}
-              {/*    </li>*/}
-              {/*  </UlComponent>*/}
-              {/*</Grid>*/}
               <Grid item xs={4}>
-                <Typography mb={{ md: 14, xs: 6 }}>
-                  <strong>Liên kết</strong>
-                </Typography>
-                <Box display={"flex"} alignItems={"center"} m={0} mb={{ md: 10, xs: 6 }}>
+                <Box mt={20}>
+                  <UlComponent>
+                    <li>
+                      <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>
+                    </li>
+                    {/*<li>*/}
+                    {/*  <FooterNextLink href={"/"}>Tuyển dụng</FooterNextLink>*/}
+                    {/*</li>*/}
+                    <li>
+                      <FooterNextLink href={"/"}>Điều khoản thỏa thuận</FooterNextLink>
+                    </li>
+                    <li>
+                      <FooterNextLink href={"/"}>Quy chế hoạt động</FooterNextLink>
+                    </li>
+                  </UlComponent>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box mt={20}>
+                  <UlComponent>
+                    <li>
+                      <FooterNextLink href={"/"}>Cam kết của NDT</FooterNextLink>
+                    </li>
+                    <li>
+                      <FooterNextLink href={"/"}>Chính sách bảo mật</FooterNextLink>
+                    </li>
+                  </UlComponent>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box display={"flex"} alignItems={"center"} m={0} mb={{ md: 10, xs: 6 }} mt={20}>
                   <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
                   <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
                   <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
@@ -214,7 +194,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
             </Grid>
           </Grid>
         </Grid>
-        <Box width={"100%"} borderBottom={"1px solid #fff"} mt={{ md: 20, xs: 16 }} mb={6} />
+        <Box width={"100%"} borderBottom={"1px solid #fff"} mt={{ md: 12, xs: 10 }} mb={6} />
         <Box display={"flex"} justifyContent="space-between" pb={4}>
           <Typography fontSize={{ xs: 12, md: 16 }}>{new Date().getFullYear()} @ Lucis City</Typography>
         </Box>

@@ -58,7 +58,7 @@ const ExtendBox = styled("div")(({ theme }) => ({
   height: extendHeaderHeight,
   paddingLeft: theme.spacing(3),
   paddingRight: theme.spacing(3),
-  paddingTop: theme.spacing(20),
+  paddingTop: theme.spacing(40),
   borderLeft: "1px solid",
   borderImageSlice: 1,
   borderImageSource: "linear-gradient(102.67deg, #C5CEE8 -18.34%, #DFE7FD -18.33%, rgba(207, 216, 241, 0.12) 92.76%)",
@@ -70,6 +70,9 @@ const ExtendBox = styled("div")(({ theme }) => ({
     paddingRight: 0,
     // height: "100vh",
   },
+
+  // display: "flex",
+  // flexDirection: "column",
 }));
 
 const SupportPage = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
@@ -137,8 +140,6 @@ export const HeaderNextLink = styled(Link, {
   activeCss?: boolean;
 }>(({ theme, isSidebar, activeCss }) => ({
   color: "#504C67",
-  fontWeight: 500,
-  fontSize: 16,
   position: "relative",
   "&:before": {
     content: `""`,
@@ -183,6 +184,7 @@ export const HeaderNextLink = styled(Link, {
 
 export const LogoImage = styled("img")(({ theme }) => ({
   height: 48,
+  alignSelf: "left",
 
   [theme.breakpoints.down("md")]: {
     height: 36,
@@ -248,7 +250,7 @@ const Header = (props: IProps) => {
             <Grid item sm={3} xs={6}>
               <Box
                 display={"flex"}
-                justifyContent={{ sm: "center", xs: "flex-start" }}
+                justifyContent={{ xs: "flex-start" }}
                 width={"100%"}
                 height={"100%"}
                 alignItems={"center"}
@@ -264,9 +266,11 @@ const Header = (props: IProps) => {
                   <Ul>
                     {pages.map((page) => (
                       <li key={page.name}>
-                        <HeaderNextLink href={page.href} activeCss={page.href === activePage.href}>
-                          {page.name}
-                        </HeaderNextLink>
+                        <Typography variant={"h5"}>
+                          <HeaderNextLink href={page.href} activeCss={page.href === activePage.href}>
+                            {page.name}
+                          </HeaderNextLink>
+                        </Typography>
                       </li>
                     ))}
                   </Ul>
@@ -285,7 +289,7 @@ const Header = (props: IProps) => {
               >
                 <Right>
                   <Button LinkComponent={Link} href={"/login"} variant="contained">
-                    Đăng nhập{" "}
+                    Đăng nhập
                   </Button>
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
@@ -318,13 +322,12 @@ const Header = (props: IProps) => {
                 <ExtendBox>
                   <Typography
                     variant="h2"
+                    fontSize={28}
                     sx={(theme) => ({
-                      pt: "40px",
-                      fontSize: 46,
-                      fontWeight: 400,
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: 36,
-                      },
+                      // pt: "40px",
+                      // [theme.breakpoints.down("md")]: {
+                      //   fontSize: 36,
+                      // },
                     })}
                   >
                     TRỞ THÀNH NHÀ ĐẦU TƯ TẠI LUCIS CITY
@@ -344,12 +347,15 @@ const Header = (props: IProps) => {
                   <Button
                     sx={(theme) => ({
                       mt: 16,
-                      color: "#504C67",
                       [theme.breakpoints.down("md")]: {
                         fontSize: 14,
                       },
                     })}
-                    endIcon={<img style={{ marginLeft: 8 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />}
+                    // endIcon={<img style={{ marginLeft: 8 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />}
+                    variant={"contained"}
+                    endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                    LinkComponent={Link}
+                    href={"/contact"}
                   >
                     Xem thêm
                   </Button>

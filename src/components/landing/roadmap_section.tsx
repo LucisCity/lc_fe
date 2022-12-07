@@ -2,7 +2,7 @@ import { Box, Button, Container, Grid, IconButton, Typography, useTheme } from "
 import AnimWhenVisible from "../anim";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import ISwiper, { FreeMode, Mousewheel, Pagination, Parallax } from "swiper";
-import { useState } from "react";
+import React, { useState } from "react";
 import { headerHeight } from "../layout/header";
 
 type Props = {
@@ -44,7 +44,8 @@ export default function RoadmapSection(props: Props) {
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
             <Typography
-              variant="h3"
+              variant="h2"
+              textTransform={"uppercase"}
               sx={{
                 mb: 4,
               }}
@@ -130,7 +131,7 @@ export default function RoadmapSection(props: Props) {
               </SwiperSlide>
               <SwiperSlide style={{ height: "auto" }}>
                 <RoadmapCard
-                  title="Quý 2/2022"
+                  title="Quý 2/2023"
                   checklists={[
                     "Tối ưu vận hành lợi nhuận",
                     "Số hóa động sản sinh lời",
@@ -142,14 +143,14 @@ export default function RoadmapSection(props: Props) {
                 <RoadmapCard
                   title="Quý 3/2023"
                   checklists={[
-                    "Nền tảng phiên bản mở rộng với 40000 thành viên",
+                    "Nền tảng phiên bản mở rộng với 40.000 thành viên",
                     "Cho phép User gửi tài sản để số hóa",
                   ]}
                 />
               </SwiperSlide>
               <SwiperSlide style={{ height: "auto" }}>
                 <RoadmapCard
-                  title="Quý 4/2022"
+                  title="Quý 4/2023"
                   checklists={[
                     "NFTs các loại hình tài sản khác",
                     "Số hóa mô hình kinh doanh",
@@ -169,7 +170,7 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
   return (
     <Box
       sx={{
-        background: "rgba(255, 255, 255)",
+        background: "rgba(255, 255, 255, 0.5)",
         backdropFilter: "blur(15px)",
         borderRadius: "12px",
         height: "100%",
@@ -179,7 +180,11 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
         flexDirection: "column",
       }}
     >
-      <Typography variant="h5" sx={{ px: 6, pt: 7 }}>
+      <Typography
+        variant="h5"
+        sx={{ px: 6, pt: 7, fontSize: 20, fontWeight: 700, lineHeight: "36px" }}
+        textTransform={"uppercase"}
+      >
         {title}
       </Typography>
       <Box
@@ -194,19 +199,10 @@ function RoadmapCard({ title, checklists }: { title: string; checklists: string[
       <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
         <Box p={5}>
           {checklists.map((item) => (
-            <Box key={`checklist_${item}`} sx={{ display: "flex" }}>
-              <Box
-                sx={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "3px",
-                  background: "black",
-                  mt: "8px",
-                  mr: "8px",
-                }}
-              />
+            <Box key={`checklist_${item}`} sx={{ display: "flex", alignItems: "flex-start", gap: 2, mb: 1 }}>
+              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" style={{ height: 15, marginTop: 4 }} />
               <Typography
-                variant="subtitle2"
+                variant="body1"
                 sx={{
                   flex: "1",
                 }}

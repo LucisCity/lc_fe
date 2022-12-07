@@ -43,11 +43,11 @@ export function OperationSection(props: Props) {
                 flexDirection: ["column", "row"],
               }}
             >
-              <Typography variant="h3" whiteSpace="pre-line">
+              <Typography variant="h2" whiteSpace="pre-line" textTransform={"uppercase"}>
                 Vận hành <br /> của Lucis City
               </Typography>
               <Typography
-                variant="subtitle2"
+                variant="h5"
                 // whiteSpace="pre-line"
                 sx={{
                   ml: 6,

@@ -40,7 +40,9 @@ export default function ComunitySection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-            <Typography variant="h3">Truyền thông nói gì về chúng tôi </Typography>
+            <Typography variant="h2" textTransform={"uppercase"}>
+              Truyền thông nói gì về chúng tôi
+            </Typography>
           </AnimWhenVisible>
 
           <Grid2
@@ -84,17 +86,49 @@ export default function ComunitySection(props: Props) {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
-              flexDirection: ["column", "row"],
+              flexDirection: ["column"],
               alignItems: "center",
               mt: 18,
               width: "100%",
             }}
           >
-            <Typography variant="h6">Join our community</Typography>
+            <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
+              <Typography variant="h2" textTransform={"uppercase"}>
+                Cộng đồng của chúng tôi
+              </Typography>
+            </AnimWhenVisible>
             <Box
-              sx={{ display: "flex", mt: [6, 0], flexDirection: { xs: "column", sm: "row" }, gap: theme.spacing(1) }}
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: theme.spacing(1),
+                mt: 10,
+              }}
             >
+              <Button
+                variant="outlined"
+                endIcon={<Box component="img" src="/assets/imgs/landing/ic_discord_blue.svg" alt="" />}
+                sx={
+                  {
+                    //height: ["40px", "50px"],
+                    // width: "167px",
+                  }
+                }
+              >
+                Facebook
+              </Button>
+              <Button
+                variant="outlined"
+                endIcon={<Box component="img" src="/assets/imgs/landing/ic_discord_blue.svg" alt="" />}
+                sx={
+                  {
+                    //height: ["40px", "50px"],
+                    // width: "167px",
+                  }
+                }
+              >
+                Zalo
+              </Button>
               <Button
                 variant="outlined"
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_discord_blue.svg" alt="" />}
@@ -140,13 +174,13 @@ export default function ComunitySection(props: Props) {
 function CommunityCard({ imgUrl, title, content }: { imgUrl: string; title: string; content: string }) {
   return (
     <Box sx={{ overflow: "hidden" }}>
-      <Box component="img" src={imgUrl} alt="" sx={{ width: "100% " }} />
-      <Typography variant="h6" mt="6px">
-        {title}
-      </Typography>
-      <Typography variant="body1" mt="6px">
-        {content}
-      </Typography>
+      <Box component="img" src={imgUrl} alt="" sx={{ width: "100% ", cursor: "pointer" }} />
+      {/*<Typography variant="h6" mt="6px">*/}
+      {/*  {title}*/}
+      {/*</Typography>*/}
+      {/*<Typography variant="body1" mt="6px">*/}
+      {/*  {content}*/}
+      {/*</Typography>*/}
     </Box>
   );
 }
