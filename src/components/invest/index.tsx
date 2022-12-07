@@ -13,8 +13,6 @@ import { Card } from "./components/card";
 import GoogleMapReact from "google-map-react";
 import { CardInMap } from "./components/card_in_map";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
     display: "flex",
@@ -123,7 +121,9 @@ export const InvestPage = () => {
                   defaultZoom={defaultProps.zoom}
                 >
                   <div
+                    //@ts-ignore
                     lat={defaultProps.center.lat}
+                    //@ts-ignore
                     lng={defaultProps.center.lng}
                     style={{
                       width: 400,
