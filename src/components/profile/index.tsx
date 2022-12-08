@@ -1,60 +1,9 @@
 /* eslint-disable */
 import React from "react";
-import { Box } from "@mui/system";
-import { Card, Grid, Paper, Typography } from "@mui/material";
+import { Card } from "@mui/material";
 import { Background } from "../landing/components/background";
 import { NavigationBar } from "./components/navbar";
-import CustomPaginationActionsTable from "./components/table";
-
-const DashBoard = () => {
-  return (
-    <Box sx={{display: 'flex', flexDirection: 'column', backgroundColor: "#F9F9F9", width: {md: "75%", sx: "100%"}}}>
-      <Box m={10}>
-        <Typography fontWeight={700} fontSize={32}>Dashboard</Typography>
-        <Box my={5}>
-          <Grid container spacing={5} height={"auto"}>
-            <TutorialStepComponent/>
-          </Grid>
-        </Box>
-        <CustomPaginationActionsTable/>
-      </Box>
-    </Box>
-  )
-}
-const tutorialStepData = [
-  {
-    title: "Tổng tài sản ước tính",
-    content: "$ 362.454,21",
-  },
-  {
-    title: "Số tiền đã đầu tư",
-    content: "$ 22.851,09",
-  },
-  {
-    title: "Số dư hiện tại",
-    content: "$ 2.721,45",
-  },
-];
-
-const TutorialStepComponent = () => {
-  return (
-    <>
-      {tutorialStepData.map((item) => (
-        <React.Fragment key={item.title}>
-          <Grid item xs={4} height={"inherit"}>
-            <Box component={Paper} elevation={0} borderRadius={4} p={4} height={"100%"}>
-              <Typography sx={{fontSize: 16}}>
-                {item.title}
-              </Typography>
-              <Typography fontSize={32} fontStyle="bold" my={4}>{item.content}</Typography>
-            </Box>
-          </Grid>
-        </React.Fragment>
-      ))}
-    </>
-  );
-};
-
+import { DashBoard } from "./dashboard";
 
 export const ProfilePage = () => {
   return (
@@ -78,13 +27,18 @@ export const ProfilePage = () => {
         sx={{
           width: "inherit",
           my: {sm: 27, xs: 20},
-          mx: {sm: "10%", xs: "5%"},
+          mx: {sm: "10.5%", xs: "5%"},
           display: "flex",
           flexDirection: {md: "row", xs: "column"},
           background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
           backdropFilter: "blur(16px)",
-          borderRadius: 4
+          borderRadius: 4,
+          borderLeft: "2px solid #fff",
+          borderTop: "2px solid #fff",
+          borderBottom: "2px solid #fff",
+          borderRight: {md: "none", xs: "2px solid #fff"},
         }}
+        elevation={0}
         // zIndex={2}
         // position={"relative"}
       >

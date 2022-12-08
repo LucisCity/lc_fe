@@ -1,13 +1,10 @@
 /* eslint-disable */
-
 import { Box } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
 import { Button, Divider, Typography, useMediaQuery } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import React from "react";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import { useTheme } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -16,24 +13,42 @@ import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsAc
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-const ItemStack = styled(Paper, {shouldForwardProp: (propsName) => propsName !== "active"})<{ active?: boolean }>(
-  ({theme, active}) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: `${theme.spacing(5)} ${theme.spacing(3)}`,
-    color: theme.palette.text.secondary,
-    borderRadius: 8,
-    background: "transparent",
-    ":hover": {
-      background: "rgba(255, 255, 255, 0.5)",
-      backdropFilter: "blur(4px)",
-    },
-    ...(active && {
-      background: "rgba(255, 255, 255, 0.5)",
-      backdropFilter: "blur(4px)",
-    }),
-  }),
-);
+interface TabProps {
+  href: string;
+  textColor?: string;
+  children?: any;
+  background?: string;
+  borderRadius?: number;
+}
+
+const Tab = (props: TabProps) => {
+
+  const borderRadius = props.borderRadius ?? 8;
+  return (
+    <Button
+      href={props.href}
+      LinkComponent={Link}
+      sx={{
+        background: `${props.background ?? 'transparent'}`,
+        ":hover": {
+          background: "rgba(255, 255, 255, 0.2)",
+          backdropFilter: "blur(4px)",
+          color: '#504C67',
+        },
+        color: `${props.textColor ?? '#504C67'}`,
+        textTransform: "none",
+        height: {md: "56px"},
+        borderRadius: {borderRadius},
+        display: "flex",
+        justifyContent: {sm: "left", xs: "center"},
+        width: {md: "auto", xs: "25%"},
+        padding: {xl: 5, xs: 0},
+      }}
+    >
+      {props.children}
+    </Button>
+  )
+};
 
 
 export const NavigationBar = () => {
@@ -42,32 +57,36 @@ export const NavigationBar = () => {
   const largeScreen = useMediaQuery(theme.breakpoints.up('md'));
   // @ts-ignore
   const smallScreen = useMediaQuery(theme.breakpoints.not('xs'));
+  const avatarSize = {sm: "8.5vw", xs: "15vw"};
 
   return (
     <Box sx={{
       display: 'flex',
       flexDirection: {md: 'column', sx: 'row'},
-      width: {md: "25%", sx: "100%"},
-      p: {md: 5},
-      pt: {xs: 2}
+      width: {md: "26%", sx: "100%"},
+      py: {md: 4},
+      px: {md: 2},
+      pt: {xs: 2},
     }}>
       <Box px={2}>
         <Avatar
           src="https://www.cgv.vn/media/catalog/product/cache/3/image/1800x/71252117777b696995f01934522c402d/a/v/avatar-1615695904-2089-1615696022.jpg"
-          sx={{height: {sm: "10vw", xs: "15vw"}, width: {sm: "10vw", xs: "15vw"}, m: "auto", mt: {md: 10}}}
+          sx={{height: avatarSize, width: avatarSize, m: "auto", mt: {md: 7}}}
         />
-        <Typography align="center">Galaxy Platinum</Typography>
+        <img width={"80%"} height={"12vh"} style={{display: "block", margin: "auto", marginTop: 26}}
+             src="/assets/imgs/landing/card_title.png" alt="galaxy card"/>
         <Button
           variant="outlined"
           sx={{
             color: "#6555EE",
             textTransform: "none",
-            backgroundColor: "transparent",
+            background: "transparent",
             my: {md: 5},
             textAlign: "center",
             width: "100%",
-            height: {md: "45px", xs: "fit-content"},
-            p: {xs: 0}
+            height: {md: "50px", xs: "fit-content"},
+            p: {xs: 0},
+            border: "2px solid",
           }}
           LinkComponent={Link}
           href="/verification"
@@ -75,7 +94,18 @@ export const NavigationBar = () => {
           <Typography fontSize={16} fontWeight={500}>Xác thực tài khoản</Typography>
         </Button>
       </Box>
-      <Divider variant="middle" sx={{mb: 7, mt: 2, borderBottomWidth: 1.5, backgroundColor: "white"}}/>
+      {largeScreen ?
+        <Divider
+          variant="middle"
+          sx={{mx: 6, mb: 9, mt: 4, borderBottomWidth: 1.5, borderBottomColor: "#fff"}}
+        /> :
+        <Divider
+          orientation="vertical"
+          variant="middle"
+          flexItem
+          sx={{borderRightWidth: 1.5, borderRightColor: "#fff"}}
+        />
+      }
       <Grid
         container
         direction={largeScreen ? "row" : "column-reverse"}
@@ -86,50 +116,44 @@ export const NavigationBar = () => {
             spacing={{sm: 2}}
             mx={{sm: 2}}
           >
-            <Button
-              variant="contained"
-              LinkComponent={Link}
+            <Tab
               href="/dashboard"
+              background="#6555EE"
+              textColor="#fff"
             >
-              <GridViewIcon/>
+              <GridViewIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Dashboard</Typography>
                 : null
               }
-            </Button>
-            <Button
-              sx={{color: "#504C67", textTransform: "none", height: {md: "45px"}}}
-              LinkComponent={Link}
+            </Tab>
+            <Tab
               href="/account"
             >
-              <AccountCircleOutlinedIcon/>
+              <AccountCircleOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Tài khoản</Typography>
                 : null
               }
-            </Button>
-            <Button
-              sx={{color: "#504C67", textTransform: "none", height: {md: "45px"}}}
-              LinkComponent={Link}
+            </Tab>
+            <Tab
               href="/investment"
             >
-              <PaidOutlinedIcon/>
+              <PaidOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Sản phẩm đầu tư</Typography>
                 : null
               }
-            </Button>
-            <Button
-              sx={{color: "#504C67", textTransform: "none", height: {md: "45px"}}}
-              LinkComponent={Link}
+            </Tab>
+            <Tab
               href="/notification"
             >
-              <NotificationsActiveOutlinedIcon/>
+              <NotificationsActiveOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Thông báo</Typography>
                 : null
               }
-            </Button>
+            </Tab>
           </Stack>
         </Grid>
         <Grid
@@ -137,17 +161,21 @@ export const NavigationBar = () => {
           xs={6}
           md={12}
           mx={{sm: 2}}
-          mt={{md: 50}}
+          position={{md: "absolute"}}
+          bottom={{md: 20}}
+          width={{md: "23%"}}
         >
-          <Button
-            variant="contained"
-            LinkComponent={Link}
-            href="/login"
-            sx={{width: "100%"}}
-            startIcon={<LogoutOutlinedIcon/>}
-          >
-            <Typography fontSize={16} fontWeight={500}>Đăng xuất</Typography>
-          </Button>
+          <Box>
+            <Tab
+              href="/login"
+              textColor="#000000"
+              borderRadius={16}
+              background="rgba(255, 255, 255, 0.2)"
+            >
+              <LogoutOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
+              <Typography fontSize={16} fontWeight={500}>Đăng xuất</Typography>
+            </Tab>
+          </Box>
         </Grid>
       </Grid>
     </Box>
