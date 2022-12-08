@@ -1,0 +1,48 @@
+{
+  "short_name": "Lucis City",
+  "name": "Lucis City Invest",
+  "description": "Lucis City investment platform",
+  "id": "/?source=pwa",
+  "start_url": "/invest?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#5946FF",
+  "theme_color": "#5946FF",
+  "icons": [
+    {
+      "src": "/assets/imgs/logo/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/imgs/logo/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Lucis City > Invest",
+      "short_name": "Invest",
+      "description": "View investment assets",
+      "url": "/invest?source=pwa",
+      "icons": [{ "src": "/assets/imgs/logo/icon192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Lucis City > My Profile",
+      "short_name": "My Profile",
+      "description": "View my profile on Lucis City",
+      "url": "/profile?source=pwa",
+      "icons": [{ "src": "/assets/imgs/logo/icon192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshot/lcity-screenshot-card.png",
+      "type": "image/png",
+      "sizes": "1422x644",
+      "form_factor": "wide"
+    }
+  ]
+}

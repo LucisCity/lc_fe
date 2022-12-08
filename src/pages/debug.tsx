@@ -3,32 +3,28 @@ import React, {useState} from "react";
 import type {NextPage} from "next";
 import {
   Container,
-  FilledInput,
   IconButton,
   NoSsr,
   Stack,
   Table,
   TableBody,
   TableCell,
-  tableCellClasses,
   TableHead,
   TableRow
 } from "@mui/material";
 import {appEnv, appVersionCommitId} from "../utils/env";
 import DocHead from "../components/layout/doc_head";
 import PageLayout from "../components/layout/PageLayout";
-import { ContactPage } from "../components/contact";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
-import { headerHeight } from "../components/layout/header";
 import { Background } from "../components/landing/components/background";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { StartIcon } from "../components/layout/footer";
 import ScrollPage from "../components/layout/scroll_page";
-
+import {SyncOutlined} from "@mui/icons-material";
+import PwaVersionHelper from "../utils/pwa_version_helper";
 
 const DebugPage: NextPage = () => {
   const [errorComponentVisible, setErrorComponentVisible] = useState(false);
@@ -52,12 +48,13 @@ const DebugPage: NextPage = () => {
               }}
             />
             <Container>
+              <Typography mb={10} variant={"h2"} sx={{ fontSize: { xs: 28, sm: 32 } }}>
+                Debug Page
+              </Typography>
+
               <Grid container>
                 <Grid item xs={12} sm={3} md={5}>
                   <Box p={3} display={"flex"} flexDirection={"column"} height={"100%"}>
-                    <Typography mb={10} variant={"h2"} sx={{ fontSize: { xs: 28, sm: 32 } }}>
-                      Debug Page
-                    </Typography>
                     {/*<Typography mb={10} variant={"body2"} width={{ sm: 400, xs: "auto" }}>*/}
                     {/*  Chúng tôi ở đây và sẵn sàng hỗ trợ bạn.*/}
                     {/*</Typography>*/}
@@ -87,38 +84,9 @@ const DebugPage: NextPage = () => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={9} md={7}>
-                  <Box
-                    component={Paper}
-                    elevation={0}
-                    p={{ lg: 7, xs: 5 }}
-                    borderRadius={2}
-                    bgcolor={"rgba(255, 255, 255, 0.5)"}
-                    sx={{ backdropFilter: "blur(8px)" }}
-                  >
-                    <Table
-                      sx={{
-                      [`& .${tableCellClasses.root}`]: {
-                        borderBottom: "none",
-                      }
-                    }}>
-                      <TableHead>
-                        <TableRow hover={true}>
-                          <TableCell align="center">Key</TableCell>
-                          <TableCell align="center">Value</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <TableRow hover={true}>
-                          <TableCell align="center">Version (commit id)</TableCell>
-                          <TableCell align="center">{appVersionCommitId}</TableCell>
-                        </TableRow>
-                        <TableRow hover={true}>
-                          <TableCell align="center">APP_ENV</TableCell>
-                          <TableCell align="center">{appEnv}</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </Box>
+
+                  <AppInfo/>
+
                 </Grid>
               </Grid>
             </Container>
@@ -128,6 +96,50 @@ const DebugPage: NextPage = () => {
     </>
   );
 };
+
+function AppInfo() {
+  return (
+    <Box
+      component={Paper}
+      elevation={0}
+      p={{ lg: 7, xs: 5 }}
+      borderRadius={2}
+      bgcolor={"rgba(255, 255, 255, 0.5)"}
+      sx={{ backdropFilter: "blur(8px)" }}
+    >
+      <Typography variant={"h5"}>App Info</Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="right">Key</TableCell>
+            <TableCell align="left">Value</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow hover={true}>
+            <TableCell align="right">Build Version</TableCell>
+            <TableCell align="left">
+              {appVersionCommitId}
+              <Button
+                variant="contained" color="info" size="small" startIcon={<SyncOutlined/>}
+                sx={{marginLeft: 10}}
+                onClick={() => PwaVersionHelper.getInstance().ensureNewestVersion((from, to) => {
+                  alert(`New version Updated: ${from} => ${to}`);
+                }, (e) => {
+                  alert(`Cannot update: ${e.message}`);
+                })}
+              >Force Update</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow hover={true}>
+            <TableCell align="right">APP_ENV</TableCell>
+            <TableCell align="left">{appEnv}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Box>
+  )
+}
 
 function DebugErrorComponent() {
   throw new Error("Force cause error");

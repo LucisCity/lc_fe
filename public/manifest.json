@@ -1,0 +1,32 @@
+{
+  "short_name": "Lucis City",
+  "name": "Lucis City Invest",
+  "description": "Lucis City investment platform",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#5946FF",
+  "theme_color": "#5946FF",
+  "icons": [
+    {
+      "src": "/assets/imgs/logo/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/imgs/logo/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshot/lcity-screenshot-card.png",
+      "type": "image/png",
+      "sizes": "1422x644",
+      "form_factor": "wide"
+    }
+  ]
+}

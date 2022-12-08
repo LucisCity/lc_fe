@@ -166,7 +166,7 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
     // Text and Button container
     .text {
       width: 60%;
-      height: 40%;
+      height: 70vh;
       min-width: 400px;
       min-height: 500px;
       //position: absolute;
@@ -182,11 +182,11 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
 
       @include sm {
         min-height: 400px;
-        height: 80%;
+        //height: 80%;
       }
 
       article {
-        width: 400px;
+        width: 530px;
         position: absolute;
         bottom: 0;
         z-index: 4;
@@ -197,6 +197,10 @@ inset 5px 0px 5px rgba($bg-03, 0.3), inset 5px 5px 20px rgba($bg-03, 0.25),
         text-align: center;
         left: 50%;
         transform: translateX(-50%);
+
+        @media (max-width: 600px) {
+          width: 100%;
+        }
 
         @include sm {
           width: 100%;

@@ -13,6 +13,7 @@ import ScrollPage from "../layout/scroll_page";
 import { Card } from "./components/card";
 import GoogleMapReact from "google-map-react";
 import { CardInMap } from "./components/card_in_map";
+import { Masonry } from "@mui/lab";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -97,50 +98,56 @@ export const InvestPage = () => {
           </Box>
         </FilterView>
         <ContentView>
-          <Grid container spacing={6}>
-            <Grid item xs={6}>
-              <Grid container spacing={6}>
-                <Grid item xs={6}>
-                  <Card />
-                </Grid>
-                <Grid item xs={6}>
-                  <Card />
-                </Grid>
-                <Grid item xs={6}>
-                  <Card />
-                </Grid>
-                <Grid item xs={6}>
-                  <Card />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={6}>
-              <Box height={700}>
-                <GoogleMapReact
-                  bootstrapURLKeys={{ key: "" }}
-                  defaultCenter={defaultProps.center}
-                  defaultZoom={defaultProps.zoom}
-                >
-                  <div
-                    //@ts-ignore
-                    lat={defaultProps.center.lat}
-                    //@ts-ignore
-                    lng={defaultProps.center.lng}
-                    style={{
-                      width: 400,
-                      height: 400,
-                    }}
-                  >
-                    <CardInMap />
-                  </div>
-                </GoogleMapReact>
-              </Box>
-            </Grid>
-          </Grid>
+          {/*<Grid container spacing={6}>*/}
+          {/*  <Grid item xs={6}>*/}
+          {/*    <Grid container spacing={6}>*/}
+          {/*      <Grid item xs={6}>*/}
+          {/*        <Card />*/}
+          {/*      </Grid>*/}
+          {/*      <Grid item xs={6}>*/}
+          {/*        <Card />*/}
+          {/*      </Grid>*/}
+          {/*      <Grid item xs={6}>*/}
+          {/*        <Card />*/}
+          {/*      </Grid>*/}
+          {/*      <Grid item xs={6}>*/}
+          {/*        <Card />*/}
+          {/*      </Grid>*/}
+          {/*    </Grid>*/}
+          {/*  </Grid>*/}
+          {/*  <Grid item xs={6}>*/}
+          {/*    <Box height={700}>*/}
+          {/*      <GoogleMapReact*/}
+          {/*        bootstrapURLKeys={{ key: "" }}*/}
+          {/*        defaultCenter={defaultProps.center}*/}
+          {/*        defaultZoom={defaultProps.zoom}*/}
+          {/*      >*/}
+          {/*        <div*/}
+          {/*          //@ts-ignore*/}
+          {/*          lat={defaultProps.center.lat}*/}
+          {/*          //@ts-ignore*/}
+          {/*          lng={defaultProps.center.lng}*/}
+          {/*          style={{*/}
+          {/*            width: 400,*/}
+          {/*            height: 400,*/}
+          {/*          }}*/}
+          {/*        >*/}
+          {/*          <CardInMap />*/}
+          {/*        </div>*/}
+          {/*      </GoogleMapReact>*/}
+          {/*    </Box>*/}
+          {/*  </Grid>*/}
+          {/*</Grid>*/}
+          <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={6}>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => {
+              const isCollapseContent = item % 2 === 1;
+              return <Card key={item} isCollapseContent={isCollapseContent} />;
+            })}
+          </Masonry>
         </ContentView>
         <Box mt={8}>
           <Grid container>
-            <Grid item xs={6} sx={{ textAlign: "center" }}>
+            <Grid item xs={12} sx={{ textAlign: "center" }}>
               <Button
                 variant={"contained"}
                 endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}

@@ -1,4 +1,4 @@
-import Error500 from "../error_page/500/error_500";
+import ErrorScreen from "../error_page/500/error_500";
 
 type Props = {
   code: string;
@@ -9,7 +9,7 @@ export default function ErrorSection(props: Props) {
   return (
     <div>
       <div>
-        <Error500 code={code} message={message}/>
+        <ErrorScreen errorTitle="5xx" code={code} message={message}/>
       </div>
     </div>
   );
