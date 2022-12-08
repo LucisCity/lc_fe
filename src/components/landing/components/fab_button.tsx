@@ -8,6 +8,9 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import zIndex from "@mui/material/styles/zIndex";
 import { useSwiper } from "swiper/react";
+import {useReleaseOver} from "../../../hooks/use_long_press";
+import {useCallback} from "react";
+import {useRouter} from "next/router";
 
 const actions = [
   { icon: <TelegramIcon />, name: "Telegram" },
@@ -20,6 +23,9 @@ type Props = {
 }
 export const FabButton = (props: Props) => {
   const swiper = useSwiper();
+  const router = useRouter();
+  const onReleaseAfterEnoughTime = useCallback(() => router.push('/debug'), [router]);
+  const [onPressStart, onPressRelease] = useReleaseOver(6000, onReleaseAfterEnoughTime);
 
   const fabAction = (name: string) => {
     switch (name) {
@@ -49,7 +55,12 @@ export const FabButton = (props: Props) => {
     }
   };
   return (
-    <>
+    <div
+      onMouseDown={onPressStart}
+      onMouseUp={onPressRelease}
+      onTouchStart={onPressStart}
+      onTouchEnd={onPressRelease}
+    >
       <SpeedDial
         ariaLabel="Live Support"
         sx={{
@@ -78,6 +89,6 @@ export const FabButton = (props: Props) => {
           />
         ))}
       </SpeedDial>
-    </>
+    </div>
   );
 };

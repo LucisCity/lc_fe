@@ -8,8 +8,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* PWA primary color */}
-          <link rel="shortcut icon" href="/assets/imgs/logo/logo-L.svg" />
           <meta name="emotion-insertion-point" content="" />
           {(this.props as any).emotionStyleTags}
         </Head>

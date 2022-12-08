@@ -55,8 +55,30 @@ export default function MyApp(props: MyAppProps) {
       <ApolloProvider client={client}>
         <CacheProvider value={emotionCache}>
           <Head>
+            <link rel="icon" href="/favicon.png" />
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+            />
+            <meta charSet="utf-8" />
+
+            {/* Additional for PWA app */}
+            <link rel="manifest" href="/manifest.json"/>
+            <meta name="mobile-web-app-capable" content="yes" />
+            <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+            <meta name="msapplication-TileColor" content="#2B5797" />
+            <meta name="msapplication-TileImage" content="/assets/imgs/logo/icon192.png"/>
+            <meta name="msapplication-tap-highlight" content="no" />
             {/* This will show a background ios bunny notch on safari */}
             <meta name="theme-color" content={theme.palette.primary.main} />
+
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+            {/*<link rel='apple-touch-startup-image' href='/assets/imgs/logo/icon192.png' sizes='192x192' />*/}
+            <link rel="apple-touch-icon" href="/assets/imgs/logo/icon192.png" />
+            {/*<link rel="apple-touch-icon" sizes="152x152" href="/assets/imgs/logo/icon192.png" />*/}
+            {/*<link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png" />*/}
+            {/*<link rel="apple-touch-icon" sizes="167x167" href="/icons/touch-icon-ipad-retina.png" />*/}
           </Head>
           <ThemeProvider theme={theme}>
             <NotistackWrapper>
