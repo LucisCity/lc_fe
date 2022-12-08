@@ -3,7 +3,7 @@ const Os = require("os");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   swcMinify: true,
 
   // https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files
