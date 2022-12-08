@@ -35,14 +35,14 @@ export const InvestPage = () => {
   };
   return (
     <ScrollPage>
-      <Background
+      {/* <Background
         style={{
           position: "fixed",
           top: 0,
           width: "100%",
           zIndex: -1,
         }}
-      />
+      /> */}
       <Container>
         <FilterView mb={5}>
           <Box mr={5}>

@@ -56,7 +56,6 @@ export const TYPO_THEME: TypographyOptions | ((palette: Palette) => TypographyOp
     fontWeight: 500,
     lineHeight: "24px",
   },
-
   button: {
     fontSize: 16,
     fontWeight: 500,

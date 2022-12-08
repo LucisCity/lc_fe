@@ -9,9 +9,18 @@ const theme = (mode: PaletteMode) =>
       primary: {
         main: "#5946FF",
       },
+
       text: {
         primary: "#504C67",
         secondary: "#737373",
+      },
+      success: {
+        main: "#00DA57",
+        contrastText: "white",
+      },
+      background: {
+        default: "#F8F8F8",
+        // paper: "#F8F8F8",
       },
     },
     breakpoints: {
