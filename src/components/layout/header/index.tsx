@@ -6,6 +6,9 @@ import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
 import { useRouter } from "next/router";
 import zIndex from "@mui/material/styles/zIndex";
+import { useStores } from "../../../store";
+import AvatarMenu from "./avatar_menu";
+import { observer } from "mobx-react-lite";
 
 export const headerHeight = 90;
 export const mobileHeaderHeight = 60;
@@ -232,8 +235,9 @@ interface IProps {
   slideActive?: number;
   isFixed?: boolean;
 }
-const Header = (props: IProps) => {
+const Header = observer((props: IProps) => {
   // console.log('{Header} render: ');
+  const { userStore } = useStores();
 
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
@@ -241,6 +245,7 @@ const Header = (props: IProps) => {
   const activePage = React.useMemo(() => {
     return pages.find((item) => item.href === router.pathname) ?? pages[0];
   }, [router.pathname]);
+
   return (
     <Box position={"relative"}>
       <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} activePage={activePage} />
@@ -288,12 +293,23 @@ const Header = (props: IProps) => {
                 })}
               >
                 <Right>
-                  <Button LinkComponent={Link} href={"/login"} variant="contained">
-                    Đăng nhập
-                  </Button>
+                  {!userStore.isLogedIn ? (
+                    <Button LinkComponent={Link} href={"/login"} variant="contained">
+                      Đăng nhập
+                    </Button>
+                  ) : null}
+
                   <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>
+                  {userStore.isLogedIn ? (
+                    <AvatarMenu
+                      avatar={userStore.user?.profile?.avatar?.toString()}
+                      onLogout={() => {
+                        userStore.logout();
+                      }}
+                    />
+                  ) : null}
                 </Right>
               </Box>
               <Box
@@ -371,5 +387,5 @@ const Header = (props: IProps) => {
       </HeaderStyled>
     </Box>
   );
-};
+});
 export default Header;

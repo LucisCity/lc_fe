@@ -12,9 +12,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import useRegister from "./hooks/use_register";
 import { LoadingButton } from "@mui/lab";
+import useLogin from "./hooks/use_login";
+//@ts-ignore
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { Divider, Stack } from "@mui/material";
-import { Center } from "../common/center";
+import { Stack } from "@mui/material";
 
 function Copyright(props: any) {
   return (
@@ -38,6 +41,12 @@ export default function LoginPage() {
 }
 
 function SignInSide() {
+  const { fbLogin, ggLogin } = useLogin();
+  const loginGG = useGoogleLogin({
+    onSuccess: ggLogin,
+    // ux_mode: "popup",
+    // flow: "auth-code",
+  });
   const { loading, onRegister, form } = useRegister();
 
   async function onSubmit(values: any) {
@@ -75,6 +84,36 @@ function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
+          <Stack direction="row" width="100%" spacing="8px" my="12px">
+            <Button
+              onClick={() => {
+                loginGG();
+              }}
+              variant="outlined"
+              sx={{
+                height: "39px",
+                flex: "1",
+              }}
+              startIcon={<Box component="img" src="/assets/imgs/auth/ic_google.svg" alt="" />}
+            ></Button>
+            <FacebookLogin
+              appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
+              // autoLoad
+              callback={fbLogin}
+              render={(renderProps: any) => (
+                <Button
+                  variant="outlined"
+                  sx={{
+                    height: "39px",
+                    flex: "1",
+                  }}
+                  onClick={renderProps.onClick}
+                >
+                  <Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />
+                </Button>
+              )}
+            />
+          </Stack>
           <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
             <TextField
               label="Email Address"

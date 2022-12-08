@@ -63,7 +63,7 @@ export default function ForgotPage() {
           <Typography component="h1" variant="h5">
             Forgot password
           </Typography>
-          <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1, width: "100%" }}>
             <TextField
               label="Email Address"
               margin="normal"

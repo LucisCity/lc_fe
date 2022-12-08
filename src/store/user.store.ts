@@ -50,7 +50,9 @@ export default class UserStore {
     StorageHelper.setUser(this._user);
   }
 
-  async logout(): Promise<void> {
+  logout() {
+    this._user = null;
+    this._token = null;
     StorageHelper.clearSession();
   }
 }

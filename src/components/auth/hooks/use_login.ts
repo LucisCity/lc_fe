@@ -12,6 +12,10 @@ const LOGIN_MUT = gql`
       user {
         id
         email
+        profile {
+          user_id
+          avatar
+        }
       }
     }
   }
@@ -24,6 +28,10 @@ const LOGIN_GG_MUT = gql`
       user {
         id
         email
+        profile {
+          user_id
+          avatar
+        }
       }
     }
   }
@@ -36,6 +44,10 @@ const LOGIN_FB_MUT = gql`
       user {
         id
         email
+        profile {
+          user_id
+          avatar
+        }
       }
     }
   }

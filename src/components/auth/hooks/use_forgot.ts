@@ -17,7 +17,9 @@ export default function useForgot() {
   const [forgot, { loading }] = useMutation(FORGOT_MUT, {
     onCompleted: () => {
       // Router.push("/login");
-      enqueueSnackbar("Request successfully! Please check your email", { variant: "success" });
+      enqueueSnackbar("Request successfully! Please check your email to get reset password link", {
+        variant: "success",
+      });
       form.reset();
     },
     onError: (e) => {

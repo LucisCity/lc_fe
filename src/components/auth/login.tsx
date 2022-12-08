@@ -87,36 +87,44 @@ function SignInSide() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
-            <Center mt="12px" mb="24px">
-              <Stack direction="row" spacing="8px">
-                <Button
-                  onClick={() => {
-                    loginGG();
-                  }}
-                  variant="outlined"
-                  sx={{
-                    height: "39px",
-                  }}
-                  startIcon={<Box component="img" src="/assets/imgs/auth/ic_google.svg" alt="" />}
-                ></Button>
-                <FacebookLogin
-                  appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
-                  // autoLoad
-                  callback={fbLogin}
-                  render={(renderProps: any) => (
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        height: "39px",
-                      }}
-                      onClick={renderProps.onClick}
-                    >
-                      <Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />
-                    </Button>
-                  )}
-                />
-              </Stack>
-            </Center>
+            <Stack direction="row" spacing="8px" my="12px">
+              <Button
+                onClick={() => {
+                  loginGG();
+                }}
+                variant="outlined"
+                sx={{
+                  height: "39px",
+                  flex: "1",
+                }}
+                startIcon={<Box component="img" src="/assets/imgs/auth/ic_google.svg" alt="" />}
+              ></Button>
+              <FacebookLogin
+                appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
+                // autoLoad
+                callback={fbLogin}
+                render={(renderProps: any) => (
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      height: "39px",
+                      flex: "1",
+                    }}
+                    onClick={renderProps.onClick}
+                  >
+                    <Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />
+                  </Button>
+                )}
+              />
+            </Stack>
+            {/* <Divider
+              sx={{
+                margin: "0px auto",
+                mt: "16px",
+                mb: "12",
+                width: "200px",
+              }}
+            /> */}
             <TextField
               margin="normal"
               //   required
@@ -186,7 +194,7 @@ function SignInSide() {
               </Grid>
               <Grid item>
                 <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Sign Up"}
                 </Link>
               </Grid>
             </Grid>
