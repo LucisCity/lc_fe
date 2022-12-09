@@ -32,8 +32,8 @@ const DashBoardItem = () => {
                 px: 4,
                 py: 7,
                 height: "100%",
-                background: `${item.title == "Tổng tài sản ước tính"? "#6555EE" : "#fff"}`,
-                color: `${item.title == "Tổng tài sản ước tính"? "#fff" : '#504C67'}`,
+                background: `${item.title == "Tổng tài sản ước tính" ? "#6555EE" : "#fff"}`,
+                color: `${item.title == "Tổng tài sản ước tính" ? "#fff" : '#504C67'}`,
               }}
             >
               <Typography sx={{fontSize: 16}} fontWeight={500}>
