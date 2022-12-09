@@ -14,7 +14,7 @@ interface TabProps {
   textColor?: string;
   children?: any;
   background?: string;
-  borderRadius?: number;
+  borderRadius?: any;
 }
 
 const Tab = (props: TabProps) => {
@@ -33,10 +33,10 @@ const Tab = (props: TabProps) => {
         },
         color: `${props.textColor ?? '#504C67'}`,
         textTransform: "none",
-        height: {md: "56px"},
+        height: {md: "56px", sm: 50, xs: 38},
         borderRadius: {borderRadius},
         display: "flex",
-        justifyContent: {sm: "left", xs: "center"},
+        justifyContent: {md: "left", sm: "center", xs: "center"},
         width: {md: "auto", xs: "25%"},
         padding: {xl: 5, xs: 0},
       }}
@@ -58,8 +58,6 @@ export const NavigationBar = () => {
   // console.log("profile navbar render");
   return (
     <Box sx={{
-      display: 'flex',
-      flexDirection: {md: 'column', sx: 'row'},
       width: {md: "26%", sx: "100%"},
       py: {md: 4},
       px: {md: 2},
@@ -92,14 +90,19 @@ export const NavigationBar = () => {
       >
       </Box>
       <Box
-        sx={{zIndex: 1}}
+        sx={{
+          zIndex: 1,
+          display: 'flex',
+          flexDirection: {md: 'column', sx: 'row'},
+        }}
       >
         <Box px={2}>
           <Avatar
             src="https://images.pexels.com/photos/236599/pexels-photo-236599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             sx={{height: avatarSize, width: avatarSize, m: "auto", mt: {md: 7}}}
           />
-          <img width={"80%"} height={"12vh"} style={{display: "block", margin: "auto", marginTop: 26}}
+          <img width={`${largeScreen ? '80%' : '100%'}`} height={`${largeScreen ? '12vh' : '7vh'}`}
+               style={{display: "block", margin: "auto", marginTop: `${largeScreen ? '26px' : '6px'}`}}
                src="/assets/imgs/landing/card_title.png" alt="galaxy card"/>
           <Button
             variant="outlined"
@@ -107,7 +110,7 @@ export const NavigationBar = () => {
               color: "#6555EE",
               textTransform: "none",
               background: "transparent",
-              my: {md: 5},
+              my: {md: 5, xs: 2},
               textAlign: "center",
               width: "100%",
               height: {md: "50px", xs: "fit-content"},
@@ -117,7 +120,8 @@ export const NavigationBar = () => {
             LinkComponent={Link}
             href="/verification"
           >
-            <Typography fontSize={16} fontWeight={500}>Xác thực tài khoản</Typography>
+            <Typography fontSize={{sm: 16, xs: 12}} fontWeight={500}>Xác
+              thực {smallScreen ? 'tài khoản' : ''}</Typography>
           </Button>
         </Box>
         {largeScreen ?
@@ -141,72 +145,87 @@ export const NavigationBar = () => {
               direction={largeScreen ? "column" : "row"}
               spacing={{sm: 2}}
               mx={{sm: 2}}
+              height={{xs: "100%"}}
+              display={{md: "block", xs: "flex"}}
+              alignItems={{xs: "flex-end"}}
+              // pb={{md: 0, xs: 2}}
             >
               <Tab
                 href="/dashboard"
                 background="#6555EE"
                 textColor="#fff"
+                borderRadius={{md: 8, xs: 0}}
               >
-                <Box sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
-                }}>
+                <Box
+                  sx={{
+                    display: {md: "flex", sm: "none", xs: "flex"},
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    mx: {lg: 7, md: 4, sm: 2, xs: 0},
+                  }}
+                >
                   <SvgIcon src={"/assets/imgs/icon/dashboard.svg"}/>
                 </Box>
-                {smallScreen ?
-                  <Typography fontSize={16} fontWeight={500}>Dashboard</Typography>
-                  : null
-                }
+                <Typography
+                  display={{sm: "inline", xs: "none"}}
+                  fontSize={16} fontWeight={500}
+                >
+                  Dashboard
+                </Typography>
               </Tab>
               <Tab
                 href="/account"
               >
                 <Box sx={{
-                  display: "flex",
+                  display: {md: "flex", sm: "none", xs: "flex"},
                   flexDirection: "row",
                   justifyContent: "center",
                   mx: {lg: 7, md: 4, sm: 2, xs: 1}
                 }}>
                   <SvgIcon src={"/assets/imgs/icon/user_account.svg"}/>
                 </Box>
-                {smallScreen ?
-                  <Typography fontSize={16} fontWeight={500}>Tài khoản</Typography>
-                  : null
-                }
+                <Typography
+                  display={{sm: "inline", xs: "none"}}
+                  fontSize={16} fontWeight={500}
+                >
+                  Tài khoản
+                </Typography>
               </Tab>
               <Tab
                 href="/investment"
               >
                 <Box sx={{
-                  display: "flex",
+                  display: {md: "flex", sm: "none", xs: "flex"},
                   flexDirection: "row",
                   justifyContent: "center",
                   mx: {lg: 7, md: 4, sm: 2, xs: 1}
                 }}>
                   <SvgIcon src={"/assets/imgs/icon/investment.svg"}/>
                 </Box>
-                {smallScreen ?
-                  <Typography fontSize={16} fontWeight={500}>Sản phẩm đầu tư</Typography>
-                  : null
-                }
+                <Typography
+                  display={{sm: "inline", xs: "none"}}
+                  fontSize={16} fontWeight={500}
+                >
+                  Sản phẩm đầu tư
+                </Typography>
               </Tab>
               <Tab
                 href="/notification"
               >
                 <Box sx={{
-                  display: "flex",
+                  display: {md: "flex", sm: "none", xs: "flex"},
                   flexDirection: "row",
                   justifyContent: "center",
                   mx: {lg: 7, md: 4, sm: 2, xs: 1}
                 }}>
                   <SvgIcon src={"/assets/imgs/icon/notification.svg"}/>
                 </Box>
-                {smallScreen ?
-                  <Typography fontSize={16} fontWeight={500}>Thông báo</Typography>
-                  : null
-                }
+                <Typography
+                  display={{sm: "inline", xs: "none"}}
+                  fontSize={16} fontWeight={500}
+                >
+                  Thông báo
+                </Typography>
               </Tab>
             </Stack>
           </Grid>
@@ -218,8 +237,16 @@ export const NavigationBar = () => {
             position={{md: "absolute"}}
             bottom={{md: 20}}
             width={{md: "23%"}}
+            display={{md: "inline", xs: "flex"}}
+            justifyContent={{xs: "right"}}
           >
-            <Box>
+            <Box
+              width={{md: "100%", xs: "100%"}}
+              display={{md: "inline", xs: "flex"}}
+              justifyContent={"right"}
+              pr={{sm: 0, xs: 4}}
+              py={{sm: 0, xs: 2}}
+            >
               <Tab
                 href="/login"
                 textColor="#000000"
@@ -230,11 +257,17 @@ export const NavigationBar = () => {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1},
                 }}>
                   <SvgIcon src={"/assets/imgs/icon/log_out.svg"}/>
                 </Box>
-                <Typography fontSize={16} fontWeight={500}>Đăng xuất</Typography>
+                <Typography
+                  display={{sm: "inline", xs: "none"}}
+                  fontSize={16}
+                  fontWeight={500}
+                >
+                  Đăng xuất
+                </Typography>
               </Tab>
             </Box>
           </Grid>

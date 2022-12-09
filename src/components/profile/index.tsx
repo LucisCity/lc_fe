@@ -4,10 +4,11 @@ import { Card } from "@mui/material";
 import { NavigationBar } from "./components/navbar";
 import { DashBoard } from "./dashboard";
 import { Background } from "../common/background/background";
+import ScrollPage from "../layout/scroll_page";
 
 export const ProfilePage = () => {
   return (
-    <>
+    <ScrollPage pt={0}>
       <Background
         style={{
           position: "fixed",
@@ -26,7 +27,8 @@ export const ProfilePage = () => {
         // border={"1px solid #f9f9f9"}
         sx={{
           width: "inherit",
-          my: {sm: 27, xs: 20},
+          mt: 4,
+          mb: 15,
           mx: {sm: "10.5%", xs: "5%"},
           display: "flex",
           flexDirection: {md: "row", xs: "column"},
@@ -47,6 +49,6 @@ export const ProfilePage = () => {
         {/*<Divider orientation="vertical" flexItem />*/}
         <DashBoard/>
       </Card>
-    </>
+    </ScrollPage>
   );
 };
