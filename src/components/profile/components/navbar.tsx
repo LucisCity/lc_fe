@@ -27,8 +27,8 @@ const Tab = (props: TabProps) => {
       sx={{
         background: `${props.background ?? 'transparent'}`,
         ":hover": {
-          background: "rgba(255, 255, 255, 0.2)",
-          backdropFilter: "blur(4px)",
+          background: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(100px)",
           color: '#504C67',
         },
         color: `${props.textColor ?? '#504C67'}`,
@@ -71,7 +71,7 @@ export const NavigationBar = () => {
           left: "0px",
           top: "90px",
           background: "radial-gradient(57.77% 87.77% at 31.87% 41.97%, #FFBC6C 0%, #6555EE 100%)",
-          filter: "blur(40px)",
+          filter: "blur(60px)",
           zIndex: -2,
         }}
       >
@@ -84,7 +84,7 @@ export const NavigationBar = () => {
           left: "17%",
           top: "464px",
           background: "linear-gradient(180deg, #778AED 0%, #8274F9 0.01%, #6555EE 53.65%, #4A3CC1 98.44%)",
-          filter: "blur(60px)",
+          filter: "blur(70px)",
           zIndex: -2,
         }}
       >
@@ -109,7 +109,11 @@ export const NavigationBar = () => {
             sx={{
               color: "#6555EE",
               textTransform: "none",
-              background: "transparent",
+              background: "rgba(255, 255, 255, 0.2)",
+              ":hover": {
+                background: "rgba(255, 255, 255, 0.5)",
+                backdropFilter: "blur(4px)",
+              },
               my: {md: 5, xs: 2},
               textAlign: "center",
               width: "100%",
