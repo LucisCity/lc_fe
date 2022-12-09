@@ -12,6 +12,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import SvgIcon from "../../common/svg_icon";
 
 interface TabProps {
   href: string;
@@ -59,6 +60,7 @@ export const NavigationBar = () => {
   const smallScreen = useMediaQuery(theme.breakpoints.not('xs'));
   const avatarSize = {sm: "8.5vw", xs: "15vw"};
 
+  // console.log("profile navbar render");
   return (
     <Box sx={{
       display: 'flex',
@@ -97,13 +99,13 @@ export const NavigationBar = () => {
       {largeScreen ?
         <Divider
           variant="middle"
-          sx={{mx: 6, mb: 9, mt: 4, borderBottomWidth: 1.5, borderBottomColor: "#fff"}}
+          sx={{mx: 6, mb: 9, mt: 4, borderBottomWidth: 1, borderBottomColor: "#fff"}}
         /> :
         <Divider
           orientation="vertical"
           variant="middle"
           flexItem
-          sx={{borderRightWidth: 1.5, borderRightColor: "#fff"}}
+          sx={{borderRightWidth: 1, borderRightColor: "#fff"}}
         />
       }
       <Grid
@@ -121,7 +123,9 @@ export const NavigationBar = () => {
               background="#6555EE"
               textColor="#fff"
             >
-              <GridViewIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
+              <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <SvgIcon src={"/assets/imgs/icon/dashboard.svg"}/>
+              </Box>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Dashboard</Typography>
                 : null
@@ -130,7 +134,9 @@ export const NavigationBar = () => {
             <Tab
               href="/account"
             >
-              <AccountCircleOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
+              <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <SvgIcon src={"/assets/imgs/icon/user_account.svg"}/>
+              </Box>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Tài khoản</Typography>
                 : null
@@ -139,7 +145,9 @@ export const NavigationBar = () => {
             <Tab
               href="/investment"
             >
-              <PaidOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
+              <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <SvgIcon src={"/assets/imgs/icon/investment.svg"}/>
+              </Box>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Sản phẩm đầu tư</Typography>
                 : null
@@ -148,7 +156,9 @@ export const NavigationBar = () => {
             <Tab
               href="/notification"
             >
-              <NotificationsActiveOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
+              <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <SvgIcon src={"/assets/imgs/icon/notification.svg"}/>
+              </Box>
               {smallScreen ?
                 <Typography fontSize={16} fontWeight={500}>Thông báo</Typography>
                 : null
@@ -172,7 +182,9 @@ export const NavigationBar = () => {
               borderRadius={16}
               background="rgba(255, 255, 255, 0.2)"
             >
-              <LogoutOutlinedIcon sx={{mx: {lg: 7, md: 4, sm: 2, xs: 1}}}/>
+              <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <SvgIcon src={"/assets/imgs/icon/log_out.svg"}/>
+              </Box>
               <Typography fontSize={16} fontWeight={500}>Đăng xuất</Typography>
             </Tab>
           </Box>

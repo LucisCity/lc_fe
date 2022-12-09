@@ -11,7 +11,7 @@ const ColorSvgIcon = styled("svg")(({ theme }) => ({
 export default function SvgIcon(props: { src: string }) {
   return (
     <ColorSvgIcon width="24" height="24" viewBox="0 0 24 24">
-      {/* NOTE: You must set svg#svg_id inside the origin svg img */}
+      {/* NOTE: You must set svg#my inside the origin svg img */}
       <use href={`${props.src}#my`}></use>
     </ColorSvgIcon>
   )

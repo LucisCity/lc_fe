@@ -33,10 +33,10 @@ export const ProfilePage = () => {
           background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
           backdropFilter: "blur(16px)",
           borderRadius: 4,
-          borderLeft: "2px solid #fff",
-          borderTop: "2px solid #fff",
-          borderBottom: "2px solid #fff",
-          borderRight: {md: "none", xs: "2px solid #fff"},
+          borderLeft: "1px solid #fff",
+          borderTop: "1px solid #fff",
+          borderBottom: "1px solid #fff",
+          borderRight: {md: "none", xs: "1px solid #fff"},
         }}
         elevation={0}
         // zIndex={2}
