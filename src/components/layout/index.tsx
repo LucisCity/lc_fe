@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import Footer from "./footer";
 import Header from "./header";
-import BottomNavigation, {getHeight} from "./bottom_navigation";
+import BottomNavigation from "./bottom_navigation";
 import LayoutStore from "./layout.store";
 import {FabButton} from "../landing/components/fab_button";
 
@@ -16,7 +16,8 @@ export default observer(function Layout(props: Props) {
     // paddingBottom: hasBottomNav ? 60 : 0,
     // paddingTop: isShowHeader ? 90 : 0,
     "--page-padding-bottom": bottomNavVisible ? bottomNavHeight + "px" : 0,
-    "--page-padding-top": isShowHeader ? "90px" : 0, // landing always on PC always has header 90px
+    "--page-padding-top": isShowHeader ? "90px" : 0,
+    "--page-padding-top-mobile": isShowHeader ? "60px" : 0,
   };
 
   return (

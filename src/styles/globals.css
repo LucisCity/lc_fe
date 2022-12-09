@@ -49,3 +49,9 @@ a {
   padding-bottom: var(--page-padding-bottom);
   padding-top: var(--page-padding-top);
 }
+/* This must be synced with mui theme.breakpoint.sm */
+@media (max-width: 768px) {
+  .scrollPage {
+    padding-top: var(--page-padding-top-mobile);
+  }
+}
