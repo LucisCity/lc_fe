@@ -1,0 +1,70 @@
+/* Blue */
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+
+    background: #FFFFFF;
+}
+
+.d1 {
+    position: absolute;
+    width: 690px;
+    height: 522px;
+    left: 246px;
+    top: -105px;
+
+    background: #7B6EE8;
+    filter: blur(400px);
+}
+
+.d2 {
+    position: absolute;
+    width: 730px;
+    height: 387px;
+    left: 729px;
+    top: 0px;
+
+    background: #7B6EE8;
+    filter: blur(400px);
+
+}
+
+.d3 {
+    position: absolute;
+    width: 493px;
+    height: 503px;
+    left: 907px;
+    top: 579px;
+
+    background: #6CCAFF;
+    filter: blur(400px);
+
+}
+
+.d4 {
+    position: absolute;
+    width: 619px;
+    height: 619px;
+    left: 420px;
+    top: 550px;
+
+    background: #6CCAFF;
+    filter: blur(400px);
+
+}
+
+.d5 {
+    position: absolute;
+    width: 807px;
+    height: 807px;
+    left: -275px;
+    top: 246px;
+
+    background: #6CCAFF;
+    filter: blur(400px);
+
+}
+

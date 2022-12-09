@@ -1,9 +1,9 @@
 /* eslint-disable */
 import React from "react";
 import { Card } from "@mui/material";
-import { Background } from "../landing/components/background";
 import { NavigationBar } from "./components/navbar";
 import { DashBoard } from "./dashboard";
+import { Background } from "../common/background/background";
 
 export const ProfilePage = () => {
   return (
@@ -12,7 +12,7 @@ export const ProfilePage = () => {
         style={{
           position: "fixed",
           top: 0,
-          width: "100%",
+          width: "100vw",
           zIndex: -1,
         }}
       />
@@ -37,6 +37,7 @@ export const ProfilePage = () => {
           borderTop: "1px solid #fff",
           borderBottom: "1px solid #fff",
           borderRight: {md: "none", xs: "1px solid #fff"},
+          zIndex: 2,
         }}
         elevation={0}
         // zIndex={2}
