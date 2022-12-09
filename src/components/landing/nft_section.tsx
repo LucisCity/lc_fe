@@ -186,17 +186,17 @@ export default function NftSection(props: Props) {
   );
 }
 
-function NftInfoCard(props: { title: string; content: string; icon?: string }) {
+export function NftInfoCard(props: { title: string; content: string; icon?: string; bgColor?: string }) {
   return (
     <Box
       sx={{
-        background: "rgba(255, 255, 255, 0.4)",
+        background: props.bgColor ?? "rgba(255, 255, 255, 0.4)",
         backdropFilter: "blur(3px)",
         borderRadius: 2,
         padding: 2,
       }}
     >
-      <Typography variant="caption">{props.title}</Typography>
+      <Typography variant="subtitle1">{props.title}</Typography>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         {props.icon != null ? <Box component="img" src={props.icon} alt="" mr="2px" /> : null}
         <Typography variant="subtitle2">{props.content}</Typography>

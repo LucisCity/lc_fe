@@ -20,8 +20,8 @@ const theme = (mode: PaletteMode) =>
         contrastText: "white",
       },
       background: {
-        default: "#F8F8F8",
-        // paper: "#F8F8F8",
+        default: "#F3F8FF",
+        // paper: "#F3F8FF", //F8F8F8
       },
     },
     breakpoints: {
@@ -183,7 +183,7 @@ const theme = (mode: PaletteMode) =>
           root: {
             // backgroundColor: "rgb(255 255 255 / 50%)",
             // backdropFilter: "blur(2px)",
-            background: 'linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)',
+            background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
             backdropFilter: "blur(12px)",
             borderTop: "1px solid #ffffff3b",
           },

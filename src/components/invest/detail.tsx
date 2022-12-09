@@ -1,6 +1,12 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
+import { Center } from "../common/center";
+import { NftInfoCard } from "../landing/nft_section";
 import InvestImageBox from "./components/image_box";
+import InvestDetailHeader from "./components/invest_detail_header";
+import InvestDetailNftCard from "./components/invest_detail_nft_card";
+import Invest_detail_nft_card from "./components/invest_detail_nft_card";
+import InvestDetailSteper from "./components/invest_detail_steper";
 
 export function InvestDetailPage() {
   return (
@@ -17,78 +23,55 @@ export function InvestDetailPage() {
           pt: 22.5,
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            mt: 6,
-          }}
-        >
-          <Typography variant="h2">Navaland Max</Typography>
-          <Button color="success" variant="contained" sx={{ ml: 6 }}>
-            Sinh lời
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            mt: 2,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" />
-            <Typography variant="h5">.</Typography>
-            <Typography variant="h5" mx={3}>
-              120 Đánh giá
-            </Typography>
-            <Typography variant="h5" ml={7}>
-              2118 Thornridge Cir. Syracuse, Connecticut 35624
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 3,
-            }}
-          >
-            <Button
-              variant="contained"
-              color={"secondary"}
-              sx={{
-                color: "#FF6C6C",
-                width: "84px",
-              }}
-              endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
-            >
-              235
-            </Button>
-            <Button
-              variant="contained"
-              endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_share.svg" alt="" />}
-            >
-              Chia sẻ
-            </Button>
-          </Box>
-        </Box>
+        <InvestDetailHeader />
         <InvestImageBox />
-        <Box mt={8}>
-          <Typography variant="h6">Chuẩn bị mở bán</Typography>
+        <InvestDetailSteper />
+        <Box
+          sx={{
+            width: "100%",
+            mt: 13,
+            display: ["block", "block", "flex"],
+            gap: 17,
+          }}
+        >
           <Box
             sx={{
-              background: "#6555EE",
-              height: "4px",
-              width: "100%",
-              my: "12px",
+              flex: "1",
             }}
-          />
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 17,
+              }}
+            >
+              <Button variant="text">Pitch</Button>
+              <Button variant="text" disabled>
+                Updates
+              </Button>
+              <Button variant="text" disabled>
+                Investors
+              </Button>
+            </Box>
+            <Divider sx={{ mt: 4 }} />
+            <Box>
+              <Typography variant="h3" mt={4}>
+                Hightlight
+              </Typography>
+              <Typography variant="h5" mt={6}>
+                Tầm view đẹp nhất: đối diện công viên ánh sáng 36 hecta, khu biệt thự thấp tầng Mannhattan, bến du
+                thuyền, sông Tắc và cả sông Đồng Nai. Không gian tựa resort nghỉ dưỡng 5 sao, xanh mát, rộng rãi, kiến
+                trúc sang trọng – độc đáo – khác biệt. Các tiện ích đặc quyền C-class dành riêng: phòng lounge cigar,
+                khu chơi golf 3D, kid club, business lounge, phòng ballroom. Hồ bơi vô cực giật cấp 3 tầng, hồ bơi thác
+                tràn, khu tập gym dưới nước, đảo dưỡng sinh,…
+              </Typography>
+              <Typography variant="h3" mt={8}>
+                What this place offers
+              </Typography>
+            </Box>
+          </Box>
+          <InvestDetailNftCard />
         </Box>
       </Container>
     </Box>
