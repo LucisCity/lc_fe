@@ -1,7 +1,7 @@
 import { styled } from "@mui/system";
 import * as React from "react";
 
-const ColorSvgIcon = styled("svg")(({ theme }) => ({
+const ColorSvgIcon = styled("svg")(({theme}) => ({
   color: "inherit",
   [theme.breakpoints.down("md")]: {
     fontSize: 12,

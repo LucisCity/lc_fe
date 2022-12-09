@@ -7,11 +7,6 @@ import Link from "next/link";
 import React from "react";
 import { useTheme } from "@mui/styles";
 import Grid from "@mui/material/Grid";
-import GridViewIcon from '@mui/icons-material/GridView';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SvgIcon from "../../common/svg_icon";
 
 interface TabProps {
@@ -152,7 +147,12 @@ export const NavigationBar = () => {
                 background="#6555EE"
                 textColor="#fff"
               >
-                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <Box sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                }}>
                   <SvgIcon src={"/assets/imgs/icon/dashboard.svg"}/>
                 </Box>
                 {smallScreen ?
@@ -163,7 +163,12 @@ export const NavigationBar = () => {
               <Tab
                 href="/account"
               >
-                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <Box sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                }}>
                   <SvgIcon src={"/assets/imgs/icon/user_account.svg"}/>
                 </Box>
                 {smallScreen ?
@@ -174,7 +179,12 @@ export const NavigationBar = () => {
               <Tab
                 href="/investment"
               >
-                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <Box sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                }}>
                   <SvgIcon src={"/assets/imgs/icon/investment.svg"}/>
                 </Box>
                 {smallScreen ?
@@ -185,7 +195,12 @@ export const NavigationBar = () => {
               <Tab
                 href="/notification"
               >
-                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <Box sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                }}>
                   <SvgIcon src={"/assets/imgs/icon/notification.svg"}/>
                 </Box>
                 {smallScreen ?
@@ -211,7 +226,12 @@ export const NavigationBar = () => {
                 borderRadius={16}
                 background="rgba(255, 255, 255, 0.2)"
               >
-                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center",mx: {lg: 7, md: 4, sm: 2, xs: 1}}}>
+                <Box sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                }}>
                   <SvgIcon src={"/assets/imgs/icon/log_out.svg"}/>
                 </Box>
                 <Typography fontSize={16} fontWeight={500}>Đăng xuất</Typography>
