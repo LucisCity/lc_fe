@@ -1,19 +1,10 @@
 import * as React from 'react';
-import FormControlUnstyled, {
-  useFormControlUnstyledContext,
-} from '@mui/base/FormControlUnstyled';
+import FormControlUnstyled from '@mui/base/FormControlUnstyled';
 import InputUnstyled, { inputUnstyledClasses } from '@mui/base/InputUnstyled';
 import { styled } from '@mui/system';
-import clsx from 'clsx';
 import Grid from "@mui/material/Grid";
-import { Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 
-const blue = {
-  100: '#DAECFF',
-  200: '#80BFFF',
-  400: '#3399FF',
-  600: '#0072E5',
-};
 
 const grey = {
   50: '#F3F6F9',
@@ -28,100 +19,115 @@ const grey = {
   900: '#1A2027',
 };
 
-const Input = styled(InputUnstyled)(
-  ({ theme }) => `
-  
+const Input = styled(InputUnstyled, {
+  shouldForwardProp: (prop) => prop !== 'email',
+})<{ email?: boolean }>(({email, theme}) => `
   .${inputUnstyledClasses.input} {
-    width: 320px;
-    font-size: 0.875rem;
-    font-family: IBM Plex Sans, sans-serif;
-    font-weight: 400;
+    width: ${useMediaQuery(theme.breakpoints.up('md')) ? '90%' : '100%'};
+    font-size: 16px;
+    font-weight: 500;
     line-height: 1.5;
-    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-    background: #ECECEC;
+    color: ${email ? '#787494' : '#504C67'};
+    background: ${email ? '#504C67' : '#ECECEC'};
     border: none;
     border-radius: 8px;
-    padding: 12px 12px;
+    height: 50px;
+    // padding: 12px 12px;
+    padding-left: 17px;
+    
 
-    &:hover {
-      background: ${theme.palette.mode === 'dark' ? '' : grey[100]};
-      border-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
-    }
-
-    &:focus {
-      outline: 3px solid ${theme.palette.mode === 'dark' ? blue[600] : blue[100]};
-    }
+    // '&:hover': {
+    //   background: ${theme.palette.mode === 'dark' ? '' : grey[100]};
+    //   border-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
+    // }
   }
-`,
+`
 );
 
+// const CustomInput = React.forwardRef(function CustomInput(
+//   props: InputUnstyledProps,
+//   ref: React.ForwardedRef<HTMLDivElement>,
+// ) {
+//   return (
+//     <InputUnstyled slots={{input: Input}} {...props} ref={ref}/>
+//   );
+// });
+
+
 const Label = styled(Typography)(
-  ({ theme }) => ({
+  ({theme}) => ({
     color: '#504C67',
     fontWeight: 500,
     fontSize: 16,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 7,
   })
 );
 
-const HelperText = styled((props: {}) => {
-  const formControlContext = useFormControlUnstyledContext();
-  const [dirty, setDirty] = React.useState(false);
+interface labelWithIndex {
+  idx: number;
+  value: string;
+}
 
-  React.useEffect(() => {
-    if (formControlContext?.filled) {
-      setDirty(true);
-    }
-  }, [formControlContext]);
-
-  if (formControlContext === undefined) {
-    return null;
+const labels: labelWithIndex[] = [
+  {
+    idx: 0,
+    value: 'Tên'
+  },
+  {
+    idx: 1,
+    value: 'Họ'
+  },
+  {
+    idx: 2,
+    value: 'Nickname'
+  },
+  {
+    idx: 3,
+    value: 'Ngày sinh'
+  },
+  {
+    idx: 4,
+    value: 'Email'
   }
+];
 
-  const { required, filled } = formControlContext;
-  const showRequiredError = dirty && required && !filled;
-
-  return showRequiredError ? <p {...props}>This field is required.</p> : null;
-})`
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-`;
+const data = [
+  'Richards',
+  'Ethers',
+  'Richards_998',
+  '24 May, 2020',
+  'estherrichards_998@example.com',
+]
 
 export default function InfoForm() {
+
   return (
-    <form>
-      <Grid container spacing={2}>
-        <Grid item sm={6} xs={12}>
-          <FormControlUnstyled defaultValue="">
-            <Label>Name</Label>
-            <Input />
-            <HelperText />
-          </FormControlUnstyled>
-          <FormControlUnstyled defaultValue="">
-            <Label>Name</Label>
-            <Input />
-            <HelperText />
-          </FormControlUnstyled>
-          <FormControlUnstyled defaultValue="">
-            <Label>Name</Label>
-            <Input />
-            <HelperText />
-          </FormControlUnstyled>
+    <Box pl={{lg: 2}} pt={{lg: 3}} px={{md: 0, sm: 30}}>
+      <form>
+        <Grid container spacing={2}>
+          {labels.map((label) => {
+            return (
+              <Grid item key={label.idx} md={label.value === 'Email' ? 7 : 6} xs={12}>
+                <FormControlUnstyled defaultValue={data[label.idx]} disabled={label.value == 'Email'}>
+                  <Label>{label.value}</Label>
+                  {label.value === 'Email' ?
+                    <Input disabled={true} email={true}/> :
+                    <Input/>}
+                </FormControlUnstyled>
+              </Grid>
+            )
+          })}
         </Grid>
-        <Grid item sm={6} xs={12}>
-          <FormControlUnstyled defaultValue="">
-            <Label>Name</Label>
-            <Input />
-            <HelperText />
-          </FormControlUnstyled>
-          <FormControlUnstyled defaultValue="">
-            <Label>Name</Label>
-            <Input />
-            <HelperText />
-          </FormControlUnstyled>
-        </Grid>
-      </Grid>
-    </form>
+        <Box mt={15} display={"flex"} justifyContent={"center"}>
+          <Button
+            variant="contained"
+            sx={{fontSize: 16, fontWeight: 500}}
+          >
+            Cập nhật thông tin
+          </Button>
+        </Box>
+      </form>
+    </Box>
   );
 }

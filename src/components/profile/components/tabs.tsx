@@ -16,6 +16,8 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
     TabIndicatorProps={{children: <span className="MuiTabs-indicatorSpan"/>}}
+    scrollButtons="auto"
+    variant="scrollable"
   />
 ))({
   '& .MuiTabs-indicator': {
@@ -74,7 +76,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{p: 3}}>
+        <Box>
           {children}
         </Box>
       )}
