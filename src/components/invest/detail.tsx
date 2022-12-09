@@ -1,11 +1,8 @@
-import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
-import { Center } from "../common/center";
-import { NftInfoCard } from "../landing/nft_section";
 import InvestImageBox from "./components/image_box";
 import InvestDetailHeader from "./components/invest_detail_header";
 import InvestDetailNftCard from "./components/invest_detail_nft_card";
-import Invest_detail_nft_card from "./components/invest_detail_nft_card";
 import InvestDetailSteper from "./components/invest_detail_steper";
 
 export function InvestDetailPage() {
