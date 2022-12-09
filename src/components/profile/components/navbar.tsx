@@ -96,7 +96,7 @@ export const NavigationBar = () => {
       >
         <Box px={2}>
           <Avatar
-            src="https://www.cgv.vn/media/catalog/product/cache/3/image/1800x/71252117777b696995f01934522c402d/a/v/avatar-1615695904-2089-1615696022.jpg"
+            src="https://images.pexels.com/photos/236599/pexels-photo-236599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             sx={{height: avatarSize, width: avatarSize, m: "auto", mt: {md: 7}}}
           />
           <img width={"80%"} height={"12vh"} style={{display: "block", margin: "auto", marginTop: 26}}

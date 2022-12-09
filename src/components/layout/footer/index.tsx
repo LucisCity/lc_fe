@@ -184,13 +184,14 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                   </UlComponent>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={4} direction={{xs: 'row', sm: 'column'}} justifyContent={"space-between"}>
-                <Box alignItems={"center"} m={0} mb={{ md: 5, sm: 4, xs: 6 }} mt={20} display={'inline-flex'}>
-                  <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
-                  <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
-                  <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
+              <Grid container item xs={12} sm={4} direction={{xs: 'row', sm: 'column'}}
+                    justifyContent={"space-between"}>
+                <Box alignItems={"center"} m={0} mb={{md: 5, sm: 4, xs: 6}} mt={20} display={'inline-flex'}>
+                  <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon"/>
+                  <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon"/>
+                  <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon"/>
                 </Box>
-                <Box mb={{ md: 10, xs: 6 }} ml={{sm: -1, xs: 10}} display={'inline-flex'}>
+                <Box mb={{md: 10, xs: 6}} ml={{sm: -1, xs: 10}} display={'inline-flex'}>
                   <Button
                     sx={{textTransform: "none"}}
                     startIcon={isMobile ? <InstallMobileOutlined/> : <InstallDesktopOutlined/>}
