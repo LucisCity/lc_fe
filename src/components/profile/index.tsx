@@ -2,9 +2,11 @@
 import React from "react";
 import { Card } from "@mui/material";
 import { NavigationBar } from "./components/navbar";
-import { DashBoard } from "./dashboard";
+import { ProfileDashboard } from "./dashboard";
 import { Background } from "../common/background/background";
 import ScrollPage from "../layout/scroll_page";
+import { Box } from "@mui/system";
+import { ProfileAccount } from "./account";
 
 export const ProfilePage = () => {
   return (
@@ -26,6 +28,7 @@ export const ProfilePage = () => {
         // pr={{ xs: 5, sm: 10, md: 18, lg: 22 }}
         // border={"1px solid #f9f9f9"}
         sx={{
+          minHeight: 800,
           width: "inherit",
           mt: 4,
           mb: 15,
@@ -46,8 +49,15 @@ export const ProfilePage = () => {
         // position={"relative"}
       >
         <NavigationBar/>
-        {/*<Divider orientation="vertical" flexItem />*/}
-        <DashBoard/>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: "#f9f9f9",
+          width: {md: "74%", sx: "100%"},
+        }}>
+          {/*<ProfileDashboard/>*/}
+          <ProfileAccount/>
+        </Box>
       </Card>
     </ScrollPage>
   );

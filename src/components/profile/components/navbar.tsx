@@ -151,7 +151,7 @@ export const NavigationBar = () => {
               // pb={{md: 0, xs: 2}}
             >
               <Tab
-                href="/dashboard"
+                href="/profile/dashboard"
                 background="#6555EE"
                 textColor="#fff"
                 borderRadius={{md: 8, xs: 0}}
@@ -174,7 +174,7 @@ export const NavigationBar = () => {
                 </Typography>
               </Tab>
               <Tab
-                href="/account"
+                href="/profile/account"
               >
                 <Box sx={{
                   display: {md: "flex", sm: "none", xs: "flex"},
@@ -192,7 +192,7 @@ export const NavigationBar = () => {
                 </Typography>
               </Tab>
               <Tab
-                href="/investment"
+                href="/profile/investment"
               >
                 <Box sx={{
                   display: {md: "flex", sm: "none", xs: "flex"},
@@ -210,7 +210,7 @@ export const NavigationBar = () => {
                 </Typography>
               </Tab>
               <Tab
-                href="/notification"
+                href="/profile/notification"
               >
                 <Box sx={{
                   display: {md: "flex", sm: "none", xs: "flex"},

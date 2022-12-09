@@ -57,29 +57,22 @@ const DashBoardItem = () => {
   );
 };
 
-export const DashBoard = () => {
+export const ProfileDashboard = () => {
   return (
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: "#f9f9f9",
-      width: {md: "74%", sx: "100%"},
-    }}>
-      <Box mx={{md: 10, xs: 3}} my={{md: 7, xs: 3}}>
-        <Typography
-          fontWeight={700}
-          fontSize={{md: 32, xs: 25}}
-          textAlign={{md: "left", xs: "center"}}
-        >
-          Dashboard
-        </Typography>
-        <Box mt={{md: 5, xs: 2}} mb={3} mx={{sm: 0, xs: 10}}>
-          <Grid container direction={{sm: "row", xs: "column"}} spacing={3} height={"auto"}>
-            <DashBoardItem/>
-          </Grid>
-        </Box>
-        <CustomPaginationActionsTable/>
+    <Box mx={{md: 10, xs: 3}} my={{md: 7, xs: 3}}>
+      <Typography
+        fontWeight={700}
+        fontSize={{md: 32, xs: 25}}
+        textAlign={{md: "left", xs: "center"}}
+      >
+        Dashboard
+      </Typography>
+      <Box mt={{md: 5, xs: 2}} mb={3} mx={{sm: 0, xs: 10}}>
+        <Grid container direction={{sm: "row", xs: "column"}} spacing={3} height={"auto"}>
+          <DashBoardItem/>
+        </Grid>
       </Box>
+      <CustomPaginationActionsTable/>
     </Box>
   )
 }
