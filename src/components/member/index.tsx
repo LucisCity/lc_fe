@@ -135,12 +135,15 @@ const DataItem = () => {
 export const MemberPage = () => {
   return (
     <ScrollPage pt={0}>
-      <Background
-        style={{
+      <Box
+        sx={{
           position: "fixed",
           top: 0,
           width: "100%",
           zIndex: -1,
+          background: `url("/assets/imgs/background/6.jpg")`,
+          backgroundSize: "cover",
+          height: "100vh",
         }}
       />
       <Box mt={-10}>

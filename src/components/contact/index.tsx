@@ -30,15 +30,25 @@ const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !=
     }),
   }),
 );
+
+const ImageDecor = styled("img")(({ theme }) => ({
+  position: "absolute",
+  bottom: 0,
+  right: -50,
+  zIndex: -1,
+}));
 export const ContactPage = () => {
   return (
     <ScrollPage>
-      <Background
-        style={{
+      <Box
+        sx={{
           position: "fixed",
           top: 0,
           width: "100%",
           zIndex: -1,
+          background: `url("/assets/imgs/background/6.jpg")`,
+          backgroundSize: "cover",
+          height: "100vh",
         }}
       />
       <Container>
@@ -87,44 +97,48 @@ export const ContactPage = () => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={5}>
-            <Box
-              component={Paper}
-              elevation={0}
-              p={{ lg: 7, xs: 5 }}
-              borderRadius={2}
-              bgcolor={"rgba(255, 255, 255, 0.5)"}
-              sx={{ backdropFilter: "blur(8px)" }}
-            >
-              <Box mb={2}>
-                <Typography mb={1}>Tên</Typography>
-                <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"Nguyễn Đức Tân"} />
+          <Grid item xs={12} sm={6} md={5} component={Box} position={"relative"}>
+            <Box>
+              <Box
+                component={Paper}
+                elevation={0}
+                p={{ lg: 7, xs: 5 }}
+                borderRadius={2}
+                bgcolor={"rgba(255, 255, 255, 0.5)"}
+                sx={{ backdropFilter: "blur(8px)" }}
+                zIndex={1}
+              >
+                <Box mb={2}>
+                  <Typography mb={1}>Tên</Typography>
+                  <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"Nguyễn Đức Tân"} />
+                </Box>
+                <Box mb={2}>
+                  <Typography mb={1}>Email</Typography>
+                  <FilledInput
+                    sx={{ background: "rgba(255,255,255,0.5)" }}
+                    fullWidth
+                    placeholder={"lucis@luciscity.io"}
+                  />
+                </Box>
+                <Box mb={2}>
+                  <Typography mb={1}>Số điện thoại</Typography>
+                  <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"(+84) 123456789"} />
+                </Box>
+                <Box mb={2}>
+                  <Typography mb={1}>Câu hỏi của bạn là gì ?</Typography>
+                  <FilledInput
+                    sx={{ background: "rgba(255,255,255,0.5)" }}
+                    fullWidth
+                    multiline
+                    rows={6}
+                    placeholder={"Câu hỏi của bạn là gì ...."}
+                  />
+                </Box>
+                <Button variant={"contained"} fullWidth sx={{ mt: 10 }}>
+                  Gửi
+                </Button>
               </Box>
-              <Box mb={2}>
-                <Typography mb={1}>Email</Typography>
-                <FilledInput
-                  sx={{ background: "rgba(255,255,255,0.5)" }}
-                  fullWidth
-                  placeholder={"lucis@luciscity.io"}
-                />
-              </Box>
-              <Box mb={2}>
-                <Typography mb={1}>Số điện thoại</Typography>
-                <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"(+84) 123456789"} />
-              </Box>
-              <Box mb={2}>
-                <Typography mb={1}>Câu hỏi của bạn là gì ?</Typography>
-                <FilledInput
-                  sx={{ background: "rgba(255,255,255,0.5)" }}
-                  fullWidth
-                  multiline
-                  rows={6}
-                  placeholder={"Câu hỏi của bạn là gì ...."}
-                />
-              </Box>
-              <Button variant={"contained"} fullWidth sx={{ mt: 10 }}>
-                Gửi
-              </Button>
+              <ImageDecor src={"/assets/imgs/contact/circle.png"} alt={"img-decor"} />
             </Box>
           </Grid>
         </Grid>

@@ -1,6 +1,7 @@
 import { PaletteMode } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { TYPO_THEME } from "./typo.theme";
+import { SelectIcon } from "./select_icon";
 
 // Create a theme instance.
 const theme = (mode: PaletteMode) =>
@@ -108,6 +109,18 @@ const theme = (mode: PaletteMode) =>
           }),
         },
       },
+
+      MuiSelect: {
+        defaultProps: {
+          IconComponent: (props) => SelectIcon(props),
+        },
+
+        styleOverrides: {
+          icon: ({ theme }) => ({
+            transition: (theme.transitions as any).create(["all"]),
+          }),
+        },
+      },
       MuiFilledInput: {
         defaultProps: {
           disableUnderline: true,
@@ -139,13 +152,22 @@ const theme = (mode: PaletteMode) =>
             },
           },
           input: ({ theme }) => ({
-            padding: 0,
+            // padding: 0,
+            padding: `${theme.spacing(3)} 0`,
           }),
           inputMultiline: {
             padding: 0,
           },
         },
       },
+
+      // MuiAutocomplete: {
+      //   styleOverrides: {
+      //     popper: {
+      //       width: "auto !important",
+      //     },
+      //   },
+      // },
       // container
       MuiContainer: {
         styleOverrides: {

@@ -258,36 +258,37 @@ export const CardSection = (props: IProps) => {
                     display={"flex"}
                     justifyContent={{ xs: "flex-start", sm: "flex-start", md: "flex-start" }}
                   >
-                    {/*<Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>*/}
-                    <Box>
-                      <Grid container spacing={3}>
-                        {contentItems1.map((item, index) => (
-                          <Grid item xs={6} key={"content_" + index}>
-                            <CardItem elevation={0}>
-                              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                              {item.text}
-                            </CardItem>
-                          </Grid>
-                        ))}
-                        {contentItems2.map((item, index) => (
-                          <Grid item xs={6} key={"content_" + index}>
-                            <CardItem elevation={0}>
-                              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                              {item.text}
-                            </CardItem>
-                          </Grid>
-                        ))}
-                        {contentItems3.map((item, index) => (
-                          <Grid item xs={6} key={"content_" + index}>
-                            <CardItem elevation={0}>
-                              <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
-                              {item.text}
-                            </CardItem>
-                          </Grid>
-                        ))}
-                      </Grid>
-                      {/*<ListContent listContent={contentItems2} animeIndex={props?.index} />*/}
-                      {/*<ListContent listContent={contentItems3} animeIndex={props?.index} />*/}
+                    <Box sx={(theme) => ({ [theme.breakpoints.down("sm")]: { width: 620 } })}>
+                      {/*<Box>*/}
+                      {/*  <Grid container spacing={3}>*/}
+                      {/*    {contentItems1.map((item, index) => (*/}
+                      {/*      <Grid item xs={12} sm={6} key={"content_" + index}>*/}
+                      {/*        <CardItem elevation={0}>*/}
+                      {/*          <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />*/}
+                      {/*          {item.text}*/}
+                      {/*        </CardItem>*/}
+                      {/*      </Grid>*/}
+                      {/*    ))}*/}
+                      {/*    {contentItems2.map((item, index) => (*/}
+                      {/*      <Grid item xs={12} sm={6} key={"content_" + index}>*/}
+                      {/*        <CardItem elevation={0}>*/}
+                      {/*          <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />*/}
+                      {/*          {item.text}*/}
+                      {/*        </CardItem>*/}
+                      {/*      </Grid>*/}
+                      {/*    ))}*/}
+                      {/*    {contentItems3.map((item, index) => (*/}
+                      {/*      <Grid item xs={12} sm={6} key={"content_" + index}>*/}
+                      {/*        <CardItem elevation={0}>*/}
+                      {/*          <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />*/}
+                      {/*          {item.text}*/}
+                      {/*        </CardItem>*/}
+                      {/*      </Grid>*/}
+                      {/*    ))}*/}
+                      {/*  </Grid>*/}
+                      <ListContent listContent={contentItems1} animeIndex={props?.index} />
+                      <ListContent listContent={contentItems2} animeIndex={props?.index} />
+                      <ListContent listContent={contentItems3} animeIndex={props?.index} />
                     </Box>
                   </Box>
                   <Box
@@ -295,7 +296,7 @@ export const CardSection = (props: IProps) => {
                     width={{ sm: "100%", xs: 270 }}
                     justifyContent={{ xs: "flex-start", sm: "center", md: "flex-start" }}
                     flexDirection={{ sm: "row", xs: "column" }}
-                    pb={{xs: 5, md: 0}}
+                    pb={{ xs: 5, md: 0 }}
                     gap={3}
                   >
                     <Button

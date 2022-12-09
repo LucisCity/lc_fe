@@ -61,7 +61,7 @@ export default function NftSection(props: Props) {
                       src="/assets/imgs/landing/img_bg_estate.png"
                       alt=""
                       width="100%"
-                      sx={{ flex: "1" }}
+                      // sx={{ flex: "1" }}
                       borderRadius={4}
                     />
                   </Box>

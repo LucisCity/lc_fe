@@ -8,34 +8,43 @@ import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Button from "@mui/material/Button";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(3),
   width: 10,
+  height: 10,
+}));
+
+const ImageContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  position: "absolute",
+  top: 0,
+  padding: theme.spacing(3),
+  width: "100%",
 }));
 
 interface IProps {
   isCollapseContent?: boolean;
+  name?: string;
+  address?: string;
+  price?: string;
+  image?: string;
 }
 export const Card = (props: IProps) => {
   const [state, setState] = React.useState(props?.isCollapseContent ?? true);
 
   return (
-    <MuiCard sx={{ maxWidth: 300, borderRadius: 4, background: "#F2F2F2" }} elevation={3}>
+    <MuiCard sx={{ borderRadius: 4, position: "relative" }} elevation={3}>
       <CardActionArea>
-        <CardMedia
-          sx={{ borderRadius: 4 }}
-          component="img"
-          height="130"
-          image="https://pyxis.nymag.com/v1/imgs/328/e2c/b53d1ba1965696d1175212c08bfb6a1fec-neverland-ranch-lede.rsocial.w1200.jpg"
-          alt="green iguana"
-        />
+        <CardMedia sx={{ borderRadius: 4 }} component="img" height="130" image={props.image} alt="green iguana" />
         <CardContent sx={{ p: 5, pb: 0 }}>
           <Typography variant="h3" mb={1}>
-            Navaland Max
+            {props.name}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            1901 Thornridge Cir. Shiloh, Hawaii 81063
+            {props.address}
           </Typography>
           <Box mt={5} mb={5}>
             <LinearProgress variant="determinate" value={30} />
@@ -47,7 +56,7 @@ export const Card = (props: IProps) => {
                   <Icon src="/assets/imgs/invest/icons/dollar.svg" />
                   Total raise
                 </Typography>
-                <Typography variant={"caption"}>$95,492.13</Typography>
+                <Typography variant={"caption"}>${props.price}</Typography>
               </Box>
               <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                 <Typography variant={"caption"}>
@@ -81,6 +90,38 @@ export const Card = (props: IProps) => {
           </Collapse>
         </CardContent>
       </CardActionArea>
+      <ImageContent>
+        <Button
+          variant="contained"
+          color={"secondary"}
+          sx={(theme) => ({
+            background: "rgba(71, 204, 233, 0.8)",
+            color: "#fff",
+            width: 80,
+            height: 40,
+            padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+
+            ":hover": {
+              background: "rgba(71, 204, 233, 0.8)",
+            },
+          })}
+        >
+          <Typography whiteSpace={"nowrap"}>Sắp bán</Typography>
+        </Button>
+        <Button
+          variant="contained"
+          color={"secondary"}
+          sx={(theme) => ({
+            color: "#FF6C6C",
+            width: 80,
+            height: 40,
+            padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+          })}
+          endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
+        >
+          235
+        </Button>
+      </ImageContent>
       <CardActions sx={{ p: 0, pb: 1 }}>
         <Box display={"flex"} justifyContent={"center"} width={"100%"}>
           <IconButton onClick={() => setState(!state)} size={"small"}>
