@@ -159,8 +159,10 @@ const theme = (mode: PaletteMode) =>
       MuiBottomNavigation: {
         styleOverrides: {
           root: {
-            backgroundColor: "rgb(255 255 255 / 50%)",
-            backdropFilter: "blur(2px)",
+            // backgroundColor: "rgb(255 255 255 / 50%)",
+            // backdropFilter: "blur(2px)",
+            background: 'linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)',
+            backdropFilter: "blur(12px)",
             borderTop: "1px solid #ffffff3b",
           },
         },
