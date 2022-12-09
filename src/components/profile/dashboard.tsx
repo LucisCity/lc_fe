@@ -24,22 +24,31 @@ const DashBoardItem = () => {
     <>
       {tutorialStepData.map((item) => (
         <React.Fragment key={item.title}>
-          <Grid item xs={4} height={"inherit"} my={2}>
+          <Grid item xs={4} height={"inherit"} my={{md: 2}}>
             <Paper
               elevation={item.title == "Tổng tài sản ước tính" ? 5 : 0}
               sx={{
                 borderRadius: 4,
-                px: 4,
-                py: 7,
+                px: {sm: 4, xs: 7},
+                // pl: {md: 4, sm: 4, xs: 1},
+                py: {md: 7, xs: 3},
                 height: "100%",
                 background: `${item.title == "Tổng tài sản ước tính" ? "#6555EE" : "#fff"}`,
                 color: `${item.title == "Tổng tài sản ước tính" ? "#fff" : '#504C67'}`,
               }}
             >
-              <Typography sx={{fontSize: 16}} fontWeight={500}>
+              <Typography
+                fontSize={{lg: 16, md: 13.5, xs: 16}}
+                fontWeight={500}>
                 {item.title}
               </Typography>
-              <Typography fontSize={32} fontWeight={600} my={4}>{item.content}</Typography>
+              <Typography
+                fontSize={{md: '2.1vw', xs: 20}}
+                fontWeight={600}
+                my={{lg: 4, sm: 2, xs: 0}}
+              >
+                {item.content}
+              </Typography>
             </Paper>
           </Grid>
         </React.Fragment>
@@ -56,10 +65,16 @@ export const DashBoard = () => {
       backgroundColor: "#f9f9f9",
       width: {md: "74%", sx: "100%"},
     }}>
-      <Box mx={10} my={7}>
-        <Typography fontWeight={700} fontSize={32}>Dashboard</Typography>
-        <Box mt={5} mb={3}>
-          <Grid container spacing={3} height={"auto"}>
+      <Box mx={{md: 10, xs: 3}} my={{md: 7, xs: 3}}>
+        <Typography
+          fontWeight={700}
+          fontSize={{md: 32, xs: 25}}
+          textAlign={{md: "left", xs: "center"}}
+        >
+          Dashboard
+        </Typography>
+        <Box mt={{md: 5, xs: 2}} mb={3} mx={{sm: 0, xs: 10}}>
+          <Grid container direction={{sm: "row", xs: "column"}} spacing={3} height={"auto"}>
             <DashBoardItem/>
           </Grid>
         </Box>
