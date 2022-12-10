@@ -199,7 +199,7 @@ export function NftInfoCard(props: { title: string; content: string; icon?: stri
       <Typography variant="subtitle1">{props.title}</Typography>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         {props.icon != null ? <Box component="img" src={props.icon} alt="" mr="2px" /> : null}
-        <Typography variant="subtitle2">{props.content}</Typography>
+        <Typography variant="h5">{props.content}</Typography>
       </Box>
     </Box>
   );

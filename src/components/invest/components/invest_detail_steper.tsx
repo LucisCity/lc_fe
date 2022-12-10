@@ -4,10 +4,9 @@ import { BoxProps } from "@mui/system";
 export default function InvestDetailSteper() {
   return (
     <Box
-      mt={8}
+      mt={7}
       sx={{
         position: "relative",
-        // background: "red",
       }}
     >
       <Box
@@ -21,24 +20,21 @@ export default function InvestDetailSteper() {
           position: "absolute",
           top: "31.5%",
           left: "0px",
-          zIndex: 1,
-          // transform: "translateY(-50%)",
         }}
       />
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
-          zIndex: 2,
-          // background: "grey",
         }}
       >
-        <Step title="Chuẩn bị mở bán" content="" active alignItems="left" />
+        <Step title="Chuẩn bị mở bán" content="" active alignItems="flex-start" />
         <Step title="Mở bán" content="05, Nov, 2022" active />
-        <Step title="Dự kiến sinh lời" content="05, Nov, 2022" active />
-        <Step title="Đang sinh lời" content="05, Nov, 2022" active />
-        <Step title="Đang chờ bán" content="05, Nov, 2022" active={false} />
-        <Dot />
+        <Step title="Dự kiến sinh lời" content="15, Nov, 2022" active />
+        <Step title="Đang sinh lời" content="20, Nov, 2022" active />
+        <Step title="Đang chờ bán" content="25, Nov, 2022" active />
+        <Step title="Kết thúc" content="" active alignItems="flex-end" />
+        {/* <Dot /> */}
       </Box>
     </Box>
   );

@@ -9,7 +9,7 @@ export default function InvestImageBox() {
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
         gap: 1,
-        mt: 6,
+        mt: 4,
       }}
     >
       <Box

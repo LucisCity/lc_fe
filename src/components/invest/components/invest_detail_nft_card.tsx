@@ -12,12 +12,14 @@ export default function InvestDetailNftCard() {
         borderRadius: 4,
       }}
     >
-      <Typography variant="subtitle1">Tổng NFT đã bán</Typography>
+      <Typography variant="subtitle1" mt="12px">
+        Tổng NFT đã bán
+      </Typography>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "flex-end",
           mt: "10px",
         }}
       >
@@ -25,7 +27,7 @@ export default function InvestDetailNftCard() {
         <Typography variant="caption">126,214 NFT đang bán</Typography>
       </Box>
 
-      <Grid container spacing={2} sx={{ mt: 9 }}>
+      <Grid container spacing={2} mt={5}>
         <Grid item xs={6}>
           <NftInfoCard title="Total raise" content="$ 45,948.55" bgColor="#CFD8F11F" />
         </Grid>

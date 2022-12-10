@@ -107,6 +107,27 @@ const theme = (mode: PaletteMode) =>
               padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
             },
           }),
+          textSecondary: ({ theme }) => ({
+            textTransform: "none",
+            height: 50,
+            borderRadius: 8,
+            color: theme.palette.text.primary,
+            fontSize: 18,
+            padding: theme.spacing(4),
+            ":hover": {
+              background: "rgba(255,255,255,0.6)",
+            },
+            [theme.breakpoints.down("sm")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(2)} ${theme.spacing(6)}`,
+            },
+            [theme.breakpoints.down("lg")]: {
+              height: 40,
+              fontSize: 14,
+              padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
+            },
+          }),
         },
       },
 

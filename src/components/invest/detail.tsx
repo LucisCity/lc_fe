@@ -1,12 +1,17 @@
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
+import { useState } from "react";
+import { Center } from "../common/center";
 import { Card } from "./components/card";
 import InvestImageBox from "./components/image_box";
 import InvestDetailHeader from "./components/invest_detail_header";
 import InvestDetailNftCard from "./components/invest_detail_nft_card";
 import InvestDetailSteper from "./components/invest_detail_steper";
+import PlaceOfferSection from "./components/place_offers";
 
 export function InvestDetailPage() {
+  const [tabIdx, setTabIdx] = useState(0);
+
   return (
     <Box
       sx={{
@@ -42,14 +47,44 @@ export function InvestDetailPage() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 17,
+                gap: 14,
+                ml: 5,
               }}
             >
-              <Button variant="text">Pitch</Button>
-              <Button variant="text" disabled>
+              <Button
+                variant="text"
+                color="secondary"
+                sx={{
+                  opacity: tabIdx === 0 ? 1 : 0.2,
+                }}
+                onClick={() => {
+                  setTabIdx(0);
+                }}
+              >
+                Pitch
+              </Button>
+              <Button
+                variant="text"
+                color="secondary"
+                sx={{
+                  opacity: tabIdx === 1 ? 1 : 0.2,
+                }}
+                onClick={() => {
+                  setTabIdx(1);
+                }}
+              >
                 Updates
               </Button>
-              <Button variant="text" disabled>
+              <Button
+                variant="text"
+                color="secondary"
+                sx={{
+                  opacity: tabIdx === 2 ? 1 : 0.2,
+                }}
+                onClick={() => {
+                  setTabIdx(2);
+                }}
+              >
                 Investors
               </Button>
             </Box>
@@ -65,16 +100,65 @@ export function InvestDetailPage() {
                 khu chơi golf 3D, kid club, business lounge, phòng ballroom. Hồ bơi vô cực giật cấp 3 tầng, hồ bơi thác
                 tràn, khu tập gym dưới nước, đảo dưỡng sinh,…
               </Typography>
+              <PlaceOfferSection />
+            </Box>
+            <Box>
               <Typography variant="h3" mt={8}>
-                What this place offers
+                Why Invest?
+              </Typography>
+              <Typography variant="h5" mt={6}>
+                The Tropicana Garden Eco Village gives you valuable experiences when owning a unique position with Pure
+                Green Echoes. Right here, the whole poetic sound of life is experienced by all the senses; creating a
+                civilized, prosperous and peaceful population of The Tropicana Garden Eco Village.
+              </Typography>
+              <Typography variant="h5" mt={6}>
+                The project is located in a convenient traffic area, with complete infrastructure, easy connection to
+                key administrative, commercial and tourist areas of Bao Loc City. Convenient to move to Da Lat, Bien
+                Hoa, Ho Chi Minh City via National Highway 20 as well as easy links to neighboring provinces.
               </Typography>
             </Box>
           </Box>
-          <InvestDetailNftCard />
+          <Box>
+            <InvestDetailNftCard />
+            <Typography variant="h3" mt="24px">
+              Giấy tờ pháp lý
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_download.svg" alt="" />}
+              sx={{
+                height: "81px",
+                width: "100%",
+                mt: "20px",
+                color: "#6555EE",
+              }}
+            >
+              Giấy tờ sử dụng nhà đất.PDF
+            </Button>
+          </Box>
         </Box>
+
         <Divider sx={{ my: 8 }} />
         <Typography variant="h3" mb={6}>
           Có thể bạn quan tâm
+        </Typography>
+
+        <Box
+          sx={{
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: ["1fr", "repeat(2, 1fr)", "repeat(4, 1fr)", "repeat(4, 1fr)"],
+            gap: 6,
+          }}
+        >
+          {fakeData.map((item, index) => {
+            return <Card key={"invest" + index} {...item} isCollapseContent={false} />;
+          })}
+        </Box>
+        <Divider sx={{ my: 8 }} />
+        <Typography variant="h3" mb={6}>
+          Dự án bạn đã xem
         </Typography>
 
         <Box

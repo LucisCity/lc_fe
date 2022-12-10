@@ -11,7 +11,7 @@ export default function InvestDetailHeader() {
         }}
       >
         <Typography variant="h2">Navaland Max</Typography>
-        <Button color="success" variant="contained" sx={{ ml: 6 }}>
+        <Button color="success" variant="contained" sx={{ ml: 6, textTransform: "none", fontWeight: 400, px: "12px" }}>
           Sinh lời
         </Button>
       </Box>
@@ -20,7 +20,6 @@ export default function InvestDetailHeader() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          mt: 2,
         }}
       >
         <Box
@@ -30,10 +29,19 @@ export default function InvestDetailHeader() {
           }}
         >
           <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" />
-          <Typography variant="h5">.</Typography>
-          <Typography variant="h5" mx={3}>
-            120 Đánh giá
+          <Typography variant="h5" ml="2px">
+            4
           </Typography>
+          <Box
+            sx={{
+              background: "black",
+              width: "4px",
+              height: "4px",
+              borderRadius: "50%",
+              mx: 4,
+            }}
+          />
+          <Typography variant="h5">120 Đánh giá</Typography>
           <Typography variant="h5" ml={7}>
             2118 Thornridge Cir. Syracuse, Connecticut 35624
           </Typography>
