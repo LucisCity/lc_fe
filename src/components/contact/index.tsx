@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { StartIcon } from "../layout/footer";
 import ScrollPage from "../layout/scroll_page";
+import AnimWhenVisible from "../anim";
 
 const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -33,7 +34,7 @@ const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !=
 
 const ImageDecor = styled("img")(({ theme }) => ({
   position: "absolute",
-  bottom: 0,
+  bottom: 41,
   right: -50,
   zIndex: -1,
 }));
@@ -99,6 +100,15 @@ export const ContactPage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={5} component={Box} position={"relative"}>
             <Box>
+              <AnimWhenVisible
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
+                }}
+                transition={{ duration: 0.5 }}
+                enable={true}
+                style={{ height: "100%" }}
+              >
               <Box
                 component={Paper}
                 elevation={0}
@@ -138,6 +148,7 @@ export const ContactPage = () => {
                   Gửi
                 </Button>
               </Box>
+              </AnimWhenVisible>
               <ImageDecor src={"/assets/imgs/contact/circle.png"} alt={"img-decor"} />
             </Box>
           </Grid>
