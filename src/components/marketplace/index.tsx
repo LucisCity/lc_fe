@@ -37,6 +37,7 @@ export const MarketplacePage = () => {
             // top: "50%",
             // left: "50%",
             // transform: "translate(-50%, -50%)",
+            borderRadius: 2,
           }}
         >
           <Typography color="#999" variant={"h2"}>

@@ -12,11 +12,13 @@ const defaultVariant = {
 // TODO: Support pass other props
 type Props = {
   order: number,
+  step?: number,
   children: any,
 }
 export default function StackAnim(props: Props) {
+  const {order, step} = props;
   return <AnimComponent
     variants={defaultVariant}
-    transition={{ duration: 0.3, delay: getStackDelay(props.order) }}
+    transition={{ duration: 0.3, delay: getStackDelay(order, step) }}
   >{props.children}</AnimComponent>
 }
