@@ -10,6 +10,7 @@ export default function InvestDetailNftCard() {
         background: "white",
         p: "18px",
         borderRadius: 4,
+        mt: [6, 0],
       }}
     >
       <Typography variant="subtitle1" mt="12px">

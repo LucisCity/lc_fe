@@ -7,6 +7,7 @@ export default function InvestDetailHeader() {
         sx={{
           display: "flex",
           alignItems: "center",
+          justifyContent: ["space-between", "flex-start"],
           mt: 6,
         }}
       >
@@ -20,6 +21,7 @@ export default function InvestDetailHeader() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          mt: [6, 0],
         }}
       >
         <Box
@@ -39,10 +41,13 @@ export default function InvestDetailHeader() {
               height: "4px",
               borderRadius: "50%",
               mx: 4,
+              display: ["none", "inherit"],
             }}
           />
-          <Typography variant="h5">120 Đánh giá</Typography>
-          <Typography variant="h5" ml={7}>
+          <Typography variant="h5" sx={{ display: ["none", "inherit"] }}>
+            120 Đánh giá
+          </Typography>
+          <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"] }}>
             2118 Thornridge Cir. Syracuse, Connecticut 35624
           </Typography>
         </Box>

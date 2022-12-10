@@ -7,6 +7,7 @@ export default function InvestDetailSteper() {
       mt={7}
       sx={{
         position: "relative",
+        display: ["none", "inherit"],
       }}
     >
       <Box
