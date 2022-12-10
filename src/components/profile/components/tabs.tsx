@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
 import InfoForm from "../account/info";
+import ChangePasswordForm from "../account/security";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -122,7 +123,7 @@ export default function CustomizedTabs() {
         <InfoForm/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <ChangePasswordForm/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
