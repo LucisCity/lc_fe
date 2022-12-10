@@ -9,6 +9,7 @@ import { styled } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from "@mui/material/Button";
+import Link from "next/link";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(3),
@@ -37,59 +38,62 @@ export const Card = (props: IProps) => {
 
   return (
     <MuiCard sx={{ borderRadius: 4, position: "relative" }} elevation={3}>
-      <CardActionArea>
-        <CardMedia sx={{ borderRadius: 4 }} component="img" height="130" image={props.image} alt="green iguana" />
-        <CardContent sx={{ p: 5, pb: 0 }}>
-          <Typography variant="h3" mb={1}>
-            {props.name}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {props.address}
-          </Typography>
-          <Box mt={5} mb={5}>
-            <LinearProgress variant="determinate" value={30} />
-          </Box>
-          <Collapse in={state}>
-            <Box>
-              <Box display={"flex"} justifyContent={"space-between"} mb={3}>
-                <Typography variant={"caption"}>
-                  <Icon src="/assets/imgs/invest/icons/dollar.svg" />
-                  Total raise
-                </Typography>
-                <Typography variant={"caption"}>${props.price}</Typography>
-              </Box>
-              <Box display={"flex"} justifyContent={"space-between"} mb={3}>
-                <Typography variant={"caption"}>
-                  <Icon src="/assets/imgs/invest/icons/total_supply.svg" />
-                  Total supply
-                </Typography>
-                <Typography variant={"caption"}>2M Tokens</Typography>
-              </Box>
-              <Box display={"flex"} justifyContent={"space-between"} mb={3}>
-                <Typography variant={"caption"}>
-                  <Icon src="/assets/imgs/invest/icons/dollar_cirle.svg" />
-                  Accepted currency
-                </Typography>
-                <Typography variant={"caption"}>USDT</Typography>
-              </Box>
-              <Box display={"flex"} justifyContent={"space-between"} mb={3}>
-                <Typography variant={"caption"}>
-                  <Icon src="/assets/imgs/invest/icons/home.svg" />
-                  Underlying Asset
-                </Typography>
-                <Typography variant={"caption"}>Real Estate</Typography>
-              </Box>
-              <Box display={"flex"} justifyContent={"space-between"}>
-                <Typography variant={"caption"}>
-                  <Icon src="/assets/imgs/invest/icons/sale.svg" />
-                  Total expected return
-                </Typography>
-                <Typography variant={"caption"}>30%</Typography>
-              </Box>
+      <Link href={`/invest/${props.name}`}>
+        <CardActionArea>
+          <CardMedia sx={{ borderRadius: 4 }} component="img" height="130" image={props.image} alt="green iguana" />
+          <CardContent sx={{ p: 5, pb: 0 }}>
+            <Typography variant="h3" mb={1}>
+              {props.name}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {props.address}
+            </Typography>
+            <Box mt={5} mb={5}>
+              <LinearProgress variant="determinate" value={30} />
             </Box>
-          </Collapse>
-        </CardContent>
-      </CardActionArea>
+
+            <Collapse in={state}>
+              <Box>
+                <Box display={"flex"} justifyContent={"space-between"} mb={3}>
+                  <Typography variant={"caption"}>
+                    <Icon src="/assets/imgs/invest/icons/dollar.svg" />
+                    Total raise
+                  </Typography>
+                  <Typography variant={"caption"}>${props.price}</Typography>
+                </Box>
+                <Box display={"flex"} justifyContent={"space-between"} mb={3}>
+                  <Typography variant={"caption"}>
+                    <Icon src="/assets/imgs/invest/icons/total_supply.svg" />
+                    Total supply
+                  </Typography>
+                  <Typography variant={"caption"}>2M Tokens</Typography>
+                </Box>
+                <Box display={"flex"} justifyContent={"space-between"} mb={3}>
+                  <Typography variant={"caption"}>
+                    <Icon src="/assets/imgs/invest/icons/dollar_cirle.svg" />
+                    Accepted currency
+                  </Typography>
+                  <Typography variant={"caption"}>USDT</Typography>
+                </Box>
+                <Box display={"flex"} justifyContent={"space-between"} mb={3}>
+                  <Typography variant={"caption"}>
+                    <Icon src="/assets/imgs/invest/icons/home.svg" />
+                    Underlying Asset
+                  </Typography>
+                  <Typography variant={"caption"}>Real Estate</Typography>
+                </Box>
+                <Box display={"flex"} justifyContent={"space-between"}>
+                  <Typography variant={"caption"}>
+                    <Icon src="/assets/imgs/invest/icons/sale.svg" />
+                    Total expected return
+                  </Typography>
+                  <Typography variant={"caption"}>30%</Typography>
+                </Box>
+              </Box>
+            </Collapse>
+          </CardContent>
+        </CardActionArea>
+      </Link>
       <ImageContent>
         <Button
           variant="contained"

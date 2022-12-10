@@ -6,7 +6,7 @@ export default function InvestDetailNftCard() {
   return (
     <Box
       sx={{
-        width: "404px",
+        width: ["100%", "404px"],
         background: "white",
         p: "18px",
         borderRadius: 4,
