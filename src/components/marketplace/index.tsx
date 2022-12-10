@@ -4,6 +4,7 @@ import { Container, Skeleton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ScrollPage from "../layout/scroll_page";
 import Typography from "@mui/material/Typography";
+import StackAnim from "../anim/stack_anim";
 
 export const MarketplacePage = () => {
   return (
@@ -20,6 +21,7 @@ export const MarketplacePage = () => {
         }}
       />
       <Container>
+        <StackAnim order={0}>
         <Box
           sx={{
             height: 200,
@@ -35,19 +37,22 @@ export const MarketplacePage = () => {
             // top: "50%",
             // left: "50%",
             // transform: "translate(-50%, -50%)",
+            borderRadius: 2,
           }}
         >
-          <Typography color={"rgba(197, 206, 232, 1)"} variant={"h2"}>
+          <Typography color="#999" variant={"h2"}>
             Coming Soon
           </Typography>
-          <Typography color={"rgba(197, 206, 232, 1)"}>
+          <Typography color="#999">
             Where you can trade your investment package or NFT items here
           </Typography>
         </Box>
+        </StackAnim>
         <Box position={"relative"}>
           <Grid container spacing={6}>
             {Array.from({ length: 8 }).map((item, index) => (
               <Grid key={"mtp" + index} item lg={3} md={4} sm={6} xs={12}>
+                <StackAnim order={index + 1}>
                 <Box
                   sx={{
                     background: "rgba(255, 255, 255, 0.5)",
@@ -64,6 +69,7 @@ export const MarketplacePage = () => {
                     </Box>
                   </Box>
                 </Box>
+                </StackAnim>
               </Grid>
             ))}
           </Grid>

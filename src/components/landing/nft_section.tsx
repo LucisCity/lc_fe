@@ -6,6 +6,7 @@ import { headerHeight } from "../layout/header";
 type Props = {
   index?: number;
   fullscreen?: boolean;
+  projects: { name: string; description: string }[];
 };
 
 export default function NftSection(props: Props) {
@@ -95,7 +96,7 @@ export default function NftSection(props: Props) {
                         variant="h3"
                         //
                       >
-                        Navaland Phú Yên
+                        {props.projects[0].name}
                       </Typography>
                       <Typography
                         variant={"h5"}
@@ -105,7 +106,7 @@ export default function NftSection(props: Props) {
                           fontSize: 14,
                         }}
                       >
-                        Bất động sản nghỉ dưỡng
+                        {props.projects[0].description}
                       </Typography>
                     </Box>
                     <Grid container spacing={2} sx={{ mt: 9 }}>

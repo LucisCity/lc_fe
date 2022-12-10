@@ -11,6 +11,7 @@ import { CardInMap } from "./components/card_in_map";
 import { Masonry } from "@mui/lab";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import StackAnim from "../anim/stack_anim";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -228,7 +229,11 @@ export const InvestPage = () => {
           <Masonry defaultColumns={4} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={6} sx={{ m: 0 }}>
             {fakeData.map((item, index) => {
               const isCollapseContent = (index + 1) % 2 === 1;
-              return <Card key={"invest" + index} isCollapseContent={isCollapseContent} {...item} />;
+              const visibleOrder = Math.floor(index / 3);
+              // TODO: Never use index as key for real data
+              return <StackAnim order={visibleOrder} step={0.1} key={"invest" + index}>
+                <Card isCollapseContent={isCollapseContent} {...item} />
+              </StackAnim>
             })}
           </Masonry>
         </ContentView>
