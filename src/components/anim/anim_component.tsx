@@ -13,7 +13,7 @@ export default function AnimComponent(props: Props) {
   const controls = useAnimation();
 
   useEffect(() => {
-    if (props.enable) {
+    if (props.enable !== false) {
       controls.start("visible");
     } else {
       controls.start("hidden");

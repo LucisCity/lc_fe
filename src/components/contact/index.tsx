@@ -11,6 +11,7 @@ import { styled } from "@mui/material/styles";
 import { StartIcon } from "../layout/footer";
 import ScrollPage from "../layout/scroll_page";
 import AnimWhenVisible from "../anim";
+import AnimComponent from "../anim/anim_component";
 
 const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -100,7 +101,7 @@ export const ContactPage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={5} component={Box} position={"relative"}>
             <Box>
-              <AnimWhenVisible
+              <AnimComponent
                 variants={{
                   visible: { opacity: 1, y: 0 },
                   hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
@@ -148,7 +149,7 @@ export const ContactPage = () => {
                   Gửi
                 </Button>
               </Box>
-              </AnimWhenVisible>
+              </AnimComponent>
               <ImageDecor src={"/assets/imgs/contact/circle.png"} alt={"img-decor"} />
             </Box>
           </Grid>
