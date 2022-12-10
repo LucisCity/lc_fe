@@ -37,7 +37,7 @@ export enum Section {
   Community,
 }
 
-export default function LandingPage() {
+export default function LandingPage({ projects }: { projects: { name: string; description: string }[] }) {
   const [slideActive, setSlideActive] = useState(0);
   const theme = useTheme();
   const [paging, setPaging] = useState<PagingContextType>({
@@ -64,7 +64,7 @@ export default function LandingPage() {
         <EcosystemSection />
         <ReasonChooseSection />
         <OperationSection />
-        <NftSection />
+        <NftSection projects={projects} />
         <RoadmapSection />
         <PartnerSection />
         <ComunitySection />
@@ -139,7 +139,7 @@ export default function LandingPage() {
             <OperationSection index={5} fullscreen={true} />
           </SwiperSlide>
           <SwiperSlide>
-            <NftSection index={6} fullscreen={true} />;
+            <NftSection index={6} fullscreen={true} projects={projects} />;
           </SwiperSlide>
           <SwiperSlide>
             <RoadmapSection index={7} fullscreen={true} />;
