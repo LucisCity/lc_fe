@@ -41,6 +41,11 @@ export const TYPO_THEME: TypographyOptions | ((palette: Palette) => TypographyOp
     fontWeight: 400,
     lineHeight: "14.06px",
   },
+  caption: {
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: "14.06px",
+  },
   // subtitle2: {
   //   fontSize: "16px",
   //   fontWeight: "500",

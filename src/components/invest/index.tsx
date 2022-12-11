@@ -175,6 +175,9 @@ export const InvestPage = () => {
                   pr: 5,
                   fontSize: theme.typography.caption.fontSize,
                   fontWeight: theme.typography.caption.fontWeight,
+                  [theme.breakpoints.down("md")]: {
+                    padding: theme.spacing(5),
+                  },
                 })}
                 variant={"contained"}
                 color={"secondary"}
@@ -231,9 +234,11 @@ export const InvestPage = () => {
               const isCollapseContent = (index + 1) % 2 === 1;
               const visibleOrder = Math.floor(index / 3);
               // TODO: Never use index as key for real data
-              return <StackAnim order={visibleOrder} step={0.1} key={"invest" + index}>
-                <Card isCollapseContent={isCollapseContent} {...item} />
-              </StackAnim>
+              return (
+                <StackAnim order={visibleOrder} step={0.1} key={"invest" + index}>
+                  <Card isCollapseContent={isCollapseContent} {...item} />
+                </StackAnim>
+              );
             })}
           </Masonry>
         </ContentView>
