@@ -12,6 +12,7 @@ import { truncateStr } from "../../utils/string.util";
 import he from "he";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
+import Link from "next/link";
 
 const imageHighlightHeight = 390;
 export const ImageHighlight = styled("img")(({ theme }) => ({
@@ -57,82 +58,86 @@ export const NewsPage = ({ posts }: { posts: any[] }) => {
         }}
       />
       <Container>
-        <Box
-          component={Paper}
-          elevation={0}
-          height={{ xs: "auto", md: imageHighlightHeight }}
-          borderRadius={4}
-          bgcolor="rgba(255, 255, 255, 0.5)"
-        >
-          <Grid container>
-            <Grid item xs={12} md={7}>
-              <ImageHighlight
-                src={highlightPost?.yoast_head_json?.og_image?.[0]?.url ?? ""}
-                alt={highlightPost?.yoast_head_json?.title ?? "lucis city post"}
-              />
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Box
-                pl={{ xs: 4, lg: 10 }}
-                pr={{ xs: 4, lg: 10 }}
-                pt={8}
-                pb={8}
-                display={"flex"}
-                flexDirection="column"
-                height={"100%"}
-                justifyContent="space-between"
-              >
-                <Box>
+        <Link href={`${newsEndpoint}/${highlightPost.slug}`} target="_blank">
+          <Box
+            component={Paper}
+            elevation={0}
+            height={{ xs: "auto", md: imageHighlightHeight }}
+            borderRadius={4}
+            bgcolor="rgba(255, 255, 255, 0.5)"
+            sx={{
+              cursor: "pointer",
+            }}
+          >
+            <Grid container>
+              <Grid item xs={12} md={7}>
+                <ImageHighlight
+                  src={highlightPost?.yoast_head_json?.og_image?.[0]?.url ?? ""}
+                  alt={highlightPost?.yoast_head_json?.title ?? "lucis city post"}
+                />
+              </Grid>
+              <Grid item xs={12} md={5}>
+                <Box
+                  pl={{ xs: 4, lg: 10 }}
+                  pr={{ xs: 4, lg: 10 }}
+                  pt={8}
+                  pb={8}
+                  display={"flex"}
+                  flexDirection="column"
+                  height={"100%"}
+                  justifyContent="space-between"
+                >
                   <Box>
-                    <Chip
-                      sx={{
-                        background: "rgba(101, 85, 238, 0.2)",
-                      }}
-                      color="primary"
-                      label={
-                        <Typography
-                          textTransform={"uppercase"}
-                          color="rgba(101, 85, 238, 1)"
-                          variant={"caption"}
-                          fontWeight={500}
-                          letterSpacing={1.5}
-                        >
-                          admin post
-                        </Typography>
-                      }
-                    />
+                    <Box mb={4}>
+                      <Chip
+                        sx={{
+                          background: "rgba(101, 85, 238, 0.2)",
+                        }}
+                        color="primary"
+                        label={
+                          <Typography
+                            textTransform={"uppercase"}
+                            color="rgba(101, 85, 238, 1)"
+                            variant={"caption"}
+                            fontWeight={500}
+                            letterSpacing={1.5}
+                          >
+                            Recently
+                          </Typography>
+                        }
+                      />
+                    </Box>
+                    <Typography variant="h2" mb={3}>
+                      {he.decode(highlightPost?.title?.rendered)}
+                    </Typography>
+                    <Typography>
+                      {he.decode(
+                        truncateStr(highlightPost?.yoast_head_json?.og_description?.replace("[&hellip;]", ""), 0, 30),
+                      )}
+                    </Typography>
                   </Box>
-                  <Typography variant="caption" component={"p"} mt={3} mb={3}>
-                    {moment(new Date(highlightPost?.yoast_head_json?.article_published_time ?? null)).format(
-                      "Do, MMMM YYYY",
-                    )}
-                  </Typography>
-                  <Typography variant="h2" mb={3}>
-                    {he.decode(highlightPost?.title?.rendered)}
-                  </Typography>
-                  <Typography>
-                    {he.decode(
-                      truncateStr(highlightPost?.yoast_head_json?.og_description?.replace("[&hellip;]", ""), 0, 30),
-                    )}
-                  </Typography>
-                </Box>
-                <Box display={"flex"} mt={3}>
-                  <Avatar
-                    sx={{ mr: 3 }}
-                    alt="Admin"
-                    src="https://secure.gravatar.com/avatar/50e39012884b28809e59503c53349426?s=96&d=mm&r=g"
-                  >
-                    A
-                  </Avatar>
-                  <Box>
-                    <Typography variant="h4">Admin</Typography>
-                    <Typography variant="caption">admin</Typography>
+                  <Box display={"flex"} mt={3} alignItems="center">
+                    <Avatar
+                      sx={{ mr: 3 }}
+                      alt="Admin"
+                      src="https://secure.gravatar.com/avatar/50e39012884b28809e59503c53349426?s=96&d=mm&r=g"
+                    >
+                      A
+                    </Avatar>
+                    <Box>
+                      <Typography variant="h4">Admin</Typography>
+                      <Typography variant="caption" component={"p"}>
+                        {moment(new Date(highlightPost?.yoast_head_json?.article_published_time ?? null)).format(
+                          "h:mm a Do, MMM,  YYYY",
+                        )}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Link>
         <Box mt={8}>
           <Grid container spacing={6}>
             {listPosts.slice(1).map((item, index) => (

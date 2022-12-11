@@ -32,7 +32,7 @@ export const Card = (props: IProps) => {
           <CardContent sx={{ pl: 3, pr: 3, pt: 4, pb: 4, flex: 1 }}>
             <Box display={"flex"} flexDirection="column" justifyContent={"space-between"} height={"100%"}>
               <Box>
-                <Box>
+                <Box mb={4}>
                   <Chip
                     sx={{
                       background: "rgba(101, 85, 238, 0.2)",
@@ -46,14 +46,11 @@ export const Card = (props: IProps) => {
                         fontWeight={500}
                         letterSpacing={1.5}
                       >
-                        admin post
+                        Recently
                       </Typography>
                     }
                   />
                 </Box>
-                <Typography variant="caption" mt={3} mb={3}>
-                  {moment(new Date(props?.createdDate ?? "")).format("Do, MMMM YYYY")}
-                </Typography>
                 <Typography variant="h3" mb={3}>
                   {he.decode(props?.title ?? "")}
                 </Typography>
@@ -69,7 +66,9 @@ export const Card = (props: IProps) => {
                 </Avatar>
                 <Box>
                   <Typography variant="h4">Admin</Typography>
-                  <Typography variant="caption">admin</Typography>
+                  <Typography variant="caption" component={"p"}>
+                    {moment(new Date(props?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
+                  </Typography>
                 </Box>
               </Box>
             </Box>
