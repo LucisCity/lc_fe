@@ -7,8 +7,6 @@ import { Avatar, CardActionArea, CardActions, Chip } from "@mui/material";
 import { Box } from "@mui/system";
 import Link from "next/link";
 import moment from "moment";
-import { truncateStr } from "../../../utils/string.util";
-import he from "he";
 
 interface IProps {
   title?: string;
@@ -16,6 +14,7 @@ interface IProps {
   imageUrl?: string;
   createdDate?: string;
   link?: string;
+  categories?: Array<string>;
 }
 export const Card = (props: IProps) => {
   return (
@@ -32,29 +31,34 @@ export const Card = (props: IProps) => {
           <CardContent sx={{ pl: 3, pr: 3, pt: 4, pb: 4, flex: 1 }}>
             <Box display={"flex"} flexDirection="column" justifyContent={"space-between"} height={"100%"}>
               <Box>
-                <Box mb={4}>
-                  <Chip
-                    sx={{
-                      background: "rgba(101, 85, 238, 0.2)",
-                    }}
-                    color="primary"
-                    label={
-                      <Typography
-                        textTransform={"uppercase"}
-                        color="rgba(101, 85, 238, 1)"
-                        variant={"caption"}
-                        fontWeight={500}
-                        letterSpacing={1.5}
-                      >
-                        Recently
-                      </Typography>
-                    }
-                  />
+                <Box mb={3}>
+                  {props?.categories?.map((category, index) => (
+                    <Chip
+                      key={category + index}
+                      sx={{
+                        background: "rgba(101, 85, 238, 0.2)",
+                        mr: 1,
+                        mb: 1,
+                      }}
+                      color="primary"
+                      label={
+                        <Typography
+                          textTransform={"uppercase"}
+                          color="rgba(101, 85, 238, 1)"
+                          variant={"caption"}
+                          fontWeight={500}
+                          letterSpacing={1.5}
+                        >
+                          {category}
+                        </Typography>
+                      }
+                    />
+                  ))}
                 </Box>
                 <Typography variant="h3" mb={3}>
-                  {he.decode(props?.title ?? "")}
+                  {props?.title}
                 </Typography>
-                <Typography>{he.decode(truncateStr(props?.description?.replace("[&hellip;]", ""), 0, 24))}</Typography>
+                <Typography>{props?.description}</Typography>
               </Box>
               <Box display={"flex"} mt={3}>
                 <Avatar
@@ -65,7 +69,7 @@ export const Card = (props: IProps) => {
                   A
                 </Avatar>
                 <Box>
-                  <Typography variant="h4">Admin</Typography>
+                  <Typography variant="h4">Marketing Coordinator</Typography>
                   <Typography variant="caption" component={"p"}>
                     {moment(new Date(props?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
                   </Typography>

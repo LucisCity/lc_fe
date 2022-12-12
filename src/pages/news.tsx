@@ -1,51 +1,91 @@
 import axios from "axios";
-import type { GetStaticProps } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import DocHead from "../components/layout/doc_head";
 import PageLayout from "../components/layout/PageLayout";
 import { NewsPage } from "../components/news";
 import he from "he";
+import { truncateStr } from "../utils/string.util";
 
-export const getStaticProps: GetStaticProps<{ posts: any }> = async (context) => {
+export interface IPost {
+  id: string;
+  title: string;
+  description: string;
+  createdDate: string;
+  image: string;
+  link: string;
+  categories: Array<string>;
+}
+const newsEndpoint = "https://news.luciscity.io";
+const newsApiEndpoint = "https://news-api.luciscity.io";
+
+/**
+ * get posts api from wp json
+ * @param offset
+ * @param perPage
+ */
+export const getPostApiUrl = (offset: number, perPage: number) => {
   const _fields = `${[
     "id",
-    "excerpt",
     "title",
     "slug",
-    "date",
-    "_embedded.author[0].name",
-    "_links.author",
-    "_embedded.author[0].avatar_urls.96",
-    "yoast_head_json.og_image[0].url",
+    "date_gmt",
+    "_links.wp:term.0",
+    "_links.yoast_head_json",
+    "yoast_head_json.og_image",
+    "yoast_head_json.og_description",
   ].join(",")}`;
   const queryObject = {
     _embed: "true",
     lang: "vi",
-    page: "1",
-    // per_page: "7",
+    offset: `${offset}`,
+    // eslint-disable-next-line camelcase
+    per_page: `${perPage}`,
   };
   const query = new URLSearchParams(queryObject).toString();
-  const res = await axios.get(`https://news-api.luciscity.io/wp-json/wp/v2/posts?${query + `&_fields=` + _fields}`, {
+
+  return `${newsApiEndpoint}/wp-json/wp/v2/posts?${query + `&_fields=` + _fields}`;
+};
+
+/**
+ * normalize data from wp json
+ * @param data
+ */
+export const normalizeDatePosts = (data: any) => {
+  const posts: IPost[] =
+    data?.map((item: any) => ({
+      id: item?.id,
+      title: he.decode(item?.title?.rendered ?? ""),
+      description: he.decode(truncateStr(item?.yoast_head_json?.og_description?.replace("[&hellip;]", ""), 0, 30)),
+      createdDate: item?.date_gmt,
+      image: item?.yoast_head_json?.og_image?.[0]?.url,
+      link: `${newsEndpoint}/${item?.slug}`,
+      categories: item._embedded["wp:term"]?.[0]?.map((category: any) => category.name),
+    })) ?? [];
+
+  return posts;
+};
+
+export const getStaticProps: GetStaticProps<{ posts: IPost[] }> = async (context) => {
+  const url = getPostApiUrl(0, 7);
+
+  const res = await axios.get(url, {
     headers: { "Accept-Encoding": "gzip,deflate,compress" },
   });
-  console.log();
 
+  const posts: IPost[] = normalizeDatePosts(res.data);
   return {
     props: {
-      posts: res.data,
+      posts,
     },
-    revalidate: 86400, // 1 days
+    revalidate: 1800, // 30 minutes
   };
 };
-const Invest = ({ posts }: any) => {
-  console.log(posts);
-
+const Invest = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <DocHead />
       <PageLayout>
-        {/* begin page component */}
         <NewsPage posts={posts} />
-        {/* end page component */}
       </PageLayout>
     </>
   );
