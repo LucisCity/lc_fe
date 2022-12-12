@@ -15,8 +15,8 @@ export interface IPost {
   link: string;
   categories: Array<string>;
 }
-const newsEndpoint = "https://news.luciscity.io";
-const newsApiEndpoint = "https://news-api.luciscity.io";
+const newsEndpoint = process.env.NEWS_ENDPOINT ?? "https://news.luciscity.io";
+const newsApiEndpoint = process.env.NEWS_API_ENDPOINT ?? "https://news-api.luciscity.io";
 
 /**
  * get posts api from wp json
