@@ -55,6 +55,9 @@ export const Card = (props: IProps) => {
                     />
                   ))}
                 </Box>
+                <Typography variant="caption" component={"p"} mt={2} mb={3}>
+                  {moment(new Date(props?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
+                </Typography>
                 <Typography variant="h3" mb={3}>
                   {props?.title}
                 </Typography>
@@ -69,9 +72,9 @@ export const Card = (props: IProps) => {
                   A
                 </Avatar>
                 <Box>
-                  <Typography variant="h4">Marketing Coordinator</Typography>
+                  <Typography variant="h4">Admin</Typography>
                   <Typography variant="caption" component={"p"}>
-                    {moment(new Date(props?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
+                    Marketing Coordinator
                   </Typography>
                 </Box>
               </Box>

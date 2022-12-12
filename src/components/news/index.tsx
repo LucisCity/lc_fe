@@ -115,6 +115,9 @@ export const NewsPage = ({ posts }: { posts: IPost[] }) => {
                         />
                       ))}
                     </Box>
+                    <Typography variant="caption" component={"p"} mt={2} mb={3}>
+                      {moment(new Date(highlightPost?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
+                    </Typography>
                     <Typography variant="h2" mb={3}>
                       {highlightPost?.title}
                     </Typography>
@@ -129,9 +132,9 @@ export const NewsPage = ({ posts }: { posts: IPost[] }) => {
                       A
                     </Avatar>
                     <Box>
-                      <Typography variant="h4">Marketing Coordinator</Typography>
+                      <Typography variant="h4">Admin</Typography>
                       <Typography variant="caption" component={"p"}>
-                        {moment(new Date(highlightPost?.createdDate ?? null)).format("h:mm a Do, MMM,  YYYY")}
+                        Marketing Coordinator
                       </Typography>
                     </Box>
                   </Box>
