@@ -114,7 +114,7 @@ export const COMPONENT_THEME: Components<Omit<Theme, "components">> = {
       root: ({ theme }) => ({
         borderRadius: 8,
         fontSize: theme.typography.caption.fontSize,
-        padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
+        // padding: `${theme.spacing(4)} ${theme.spacing(5)}`,
         background: "rgba(255, 255, 255)",
         border: `1px solid transparent`,
         "&.Mui-focused": {
@@ -137,7 +137,7 @@ export const COMPONENT_THEME: Components<Omit<Theme, "components">> = {
       },
       input: ({ theme }) => ({
         // padding: 0,
-        padding: `${theme.spacing(3)} 0`,
+        padding: `${theme.spacing(3)} ${theme.spacing(4)}`,
       }),
       inputMultiline: {
         padding: 0,
