@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { isClient } from "../utils";
 
+/**
+ * To avoid hydration mismatch, we need to set the initial size to the server
+ */
+const initialSize = [0, 0];
+
 function getWindowSize() {
-  return isClient ? [window.innerWidth, window.innerHeight] : [0, 0];
+  return isClient ? [window.innerWidth, window.innerHeight] : initialSize;
 }
 
 export function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
+  const [size, setSize] = useState(initialSize);
   useEffect(() => {
     setSize(getWindowSize());
 

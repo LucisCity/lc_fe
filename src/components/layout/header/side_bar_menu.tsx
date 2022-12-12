@@ -37,12 +37,12 @@ const Ul = styled("ul")(({ theme }) => ({
   color: "#504C67",
 }));
 
-const MenuList = ({ activePage }: { activePage: IPage }) => (
+const MenuList = ({ activePage, onClose }: { activePage: IPage; onClose: () => void }) => (
   <MenuListStyled>
     <nav>
       <Ul>
         {pages.map((link) => (
-          <li key={link.name}>
+          <li key={link.name} onClick={() => onClose()}>
             <HeaderNextLink href={link.href} isSidebar activeCss={activePage.href === link.href}>
               {link.name}
             </HeaderNextLink>
@@ -105,7 +105,7 @@ export const SideBarMenu = (props: IProps) => {
             </Grid>
           </Container>
         </DrawerHeader>
-        <MenuList activePage={props.activePage} />
+        <MenuList activePage={props.activePage} onClose={props.onClose} />
       </Drawer>
     </>
   );

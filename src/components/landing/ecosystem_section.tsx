@@ -14,8 +14,9 @@ const Item = styled(Box)(({ theme }) => ({
   display: "flex",
   img: {
     marginRight: theme.spacing(3),
+    marginBottom: theme.spacing(-1),
     alignSelf: "flex-start",
-    display: "flex",
+    display: "inline-flex",
     paddingTop: theme.spacing(1),
   },
   [theme.breakpoints.down("md")]: {
@@ -82,34 +83,35 @@ export function EcosystemSection(props: Props) {
               variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? 300 : 0 } }}
               index={props.index}
             >
-              <Typography
-                whiteSpace="pre-line"
-                sx={{
-                  maxWidth: "426px",
-                  mt: 8,
-                  mb: 26,
-                }}
-              >
-                <Stack spacing={3}>
-                  <Item>
+              <Stack spacing={3} sx={{
+                maxWidth: "426px",
+                mt: 8,
+                mb: 26,
+              }}>
+                <Item>
+                  <Typography whiteSpace="pre-line">
                     <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                     Lucis City là hệ sinh thái số hóa Bất Động sản và các tài sản giá trị khác bao gồm: Động sản và Tài
                     sản vô hình...
-                  </Item>
+                  </Typography>
+                </Item>
 
-                  <Item>
+                <Item>
+                  <Typography whiteSpace="pre-line">
                     <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                     Tại Lucis City, các Nhà Đầu tư có cơ hội đầu tư trực tiếp các sản phẩm - dịch vụ thực của Hệ sinh
                     thái từ nhiều nền tảng khác nhau cũng như được trải nghiệm tất cả các tiện ích của hệ sinh thái.
-                  </Item>
+                  </Typography>
+                </Item>
 
-                  <Item>
+                <Item>
+                  <Typography whiteSpace="pre-line">
                     <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />
                     Lucis City xây dựng một mạng lưới nhà đầu tư có tiềm lực và cùng đam mê để tăng giá trị kết nối và
                     xúc tiến thương mại hiệu quả.
-                  </Item>
-                </Stack>
-              </Typography>
+                  </Typography>
+                </Item>
+              </Stack>
             </AnimWhenVisible>
           </Box>
         </Box>

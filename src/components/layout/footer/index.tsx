@@ -1,10 +1,9 @@
-import {Box, Button, Container, Grid, Typography} from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";
-import {isMobile} from "react-device-detect";
-import {InstallMobileOutlined, InstallDesktopOutlined} from "@mui/icons-material";
+import { isMobile } from "react-device-detect";
+import { InstallMobileOutlined, InstallDesktopOutlined } from "@mui/icons-material";
 import useA2HS from "../../../hooks/use_a2hs";
-
 
 const FooterStyled = styled("footer", { shouldForwardProp: (propName) => propName !== "disabledBackground" })<{
   disabledBackground: boolean;
@@ -97,7 +96,14 @@ interface IProps {
   hasBottomNav?: boolean;
 }
 export default function Footer({ style, disabledBackground, hasBottomNav }: IProps) {
-  const {promptInstallApp} = useA2HS();
+  const lang = 'vi'; // TODO: Dynamically get this
+  const userGuideSlugs = {
+    en: '/TODO',
+    vi: '/huong-dan-cai-ung-dung-lucis-city-tren-mobile-va-pc/'
+  };
+  const userGuideSlug = userGuideSlugs[lang];
+  const newsBaseUrl = 'https://news.luciscity.io'; // TODO: from .env
+  const { promptInstallApp } = useA2HS(newsBaseUrl + userGuideSlug);
 
   return (
     <FooterStyled
@@ -106,7 +112,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
       className={hasBottomNav ? "fullscreenPage" : undefined}
     >
       <Container>
-        <Logo src="/assets/imgs/logo/logo-color.svg" alt="logo" />
+        <Logo src="/assets/imgs/logo/logo.svg" alt="logo" />
         <Grid container spacing={{ sm: 0, xs: 4 }}>
           <Grid item xs={12} sm={6}>
             <Typography
@@ -154,7 +160,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
           </Grid>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={3}>
-              <Grid item xs={6} sm={4} >
+              <Grid item xs={6} sm={4}>
                 <Box mt={20}>
                   <UlComponent>
                     <li>
@@ -172,7 +178,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                   </UlComponent>
                 </Box>
               </Grid>
-              <Grid item xs={6} sm={4} >
+              <Grid item xs={6} sm={4}>
                 <Box mt={20}>
                   <UlComponent>
                     <li>
@@ -184,20 +190,28 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                   </UlComponent>
                 </Box>
               </Grid>
-              <Grid container item xs={12} sm={4} direction={{xs: 'row', sm: 'column'}}
-                    justifyContent={"space-between"}>
-                <Box alignItems={"center"} m={0} mb={{md: 5, sm: 4, xs: 6}} mt={20} display={'inline-flex'}>
-                  <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon"/>
-                  <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon"/>
-                  <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon"/>
+              <Grid
+                container
+                item
+                xs={12}
+                sm={4}
+                direction={{ xs: "row", sm: "column" }}
+                justifyContent={"space-between"}
+              >
+                <Box alignItems={"center"} m={0} mb={{ md: 5, sm: 4, xs: 6 }} mt={20} display={"inline-flex"}>
+                  <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
+                  <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
+                  <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
                 </Box>
-                <Box mb={{md: 10, xs: 6}} ml={{sm: -1, xs: 10}} display={'inline-flex'}>
+                <Box mb={{ md: 10, xs: 6 }} ml={{ sm: -1, xs: 10 }} display={"inline-flex"}>
                   <Button
-                    sx={{textTransform: "none"}}
-                    startIcon={isMobile ? <InstallMobileOutlined/> : <InstallDesktopOutlined/>}
+                    sx={{ textTransform: "none" }}
+                    startIcon={isMobile ? <InstallMobileOutlined /> : <InstallDesktopOutlined />}
                     onClick={promptInstallApp}
-                    size={'small'}
-                  >Tải ứng dụng</Button>
+                    size={"small"}
+                  >
+                    Tải ứng dụng
+                  </Button>
                 </Box>
               </Grid>
             </Grid>

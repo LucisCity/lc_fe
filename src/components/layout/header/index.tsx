@@ -205,6 +205,10 @@ export interface IPage {
   name: string;
   href: string;
 }
+const defaultPage: IPage = {
+  name: "404",
+  href: "/404",
+};
 export const pages: Array<IPage> = [
   {
     name: "Trang chủ",
@@ -243,7 +247,7 @@ const Header = observer((props: IProps) => {
   const slideActive = props?.slideActive;
   const router = useRouter();
   const activePage = React.useMemo(() => {
-    return pages.find((item) => item.href === router.pathname) ?? pages[0];
+    return pages.find((item) => item.href === router.pathname) ?? defaultPage;
   }, [router.pathname]);
 
   return (
@@ -261,7 +265,24 @@ const Header = observer((props: IProps) => {
                 alignItems={"center"}
               >
                 <Link href={"/"}>
-                  <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
+                  <LogoImage
+                    sx={(theme) => ({
+                      [theme.breakpoints.down("sm")]: {
+                        display: "none",
+                      },
+                    })}
+                    src="/assets/imgs/logo/logo.svg"
+                    alt="logo-lucis"
+                  />
+                  <LogoImage
+                    sx={(theme) => ({
+                      [theme.breakpoints.up("sm")]: {
+                        display: "none",
+                      },
+                    })}
+                    src="/assets/imgs/logo/logo-L.svg"
+                    alt="logo-lucis"
+                  />
                 </Link>
               </Box>
             </Grid>

@@ -18,6 +18,9 @@ const TitleImage = styled("img")(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     height: 160,
   },
+  [theme.breakpoints.down("sm")]: {
+    height: 140,
+  },
 }));
 
 // export const BecomeInvestButton = styled(Button)(({ theme }) => ({
@@ -70,7 +73,7 @@ export const CompanySection = (props: Props) => {
                   height="100%"
                 >
                   <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
-                    <TitleImage src="/assets/imgs/logo/logo-color.svg" alt="lucis - title" />
+                    <TitleImage src="/assets/imgs/logo/logo-3d.svg" alt="lucis - title" />
                   </AnimWhenVisible>
                   <Typography sx={{ mb: 22 }} variant={"h5"}>
                     Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng. Mở ra cơ hội đầu tư vào thị
