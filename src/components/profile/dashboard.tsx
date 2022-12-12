@@ -43,7 +43,7 @@ const DashBoardItem = () => {
                 {item.title}
               </Typography>
               <Typography
-                fontSize={{md: '2.1vw', xs: 20}}
+                fontSize={{md: 30, xs: 20}}
                 fontWeight={600}
                 my={{lg: 4, sm: 2, xs: 0}}
               >

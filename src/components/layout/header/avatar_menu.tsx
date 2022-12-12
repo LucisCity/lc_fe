@@ -46,13 +46,13 @@ export default function AvatarMenu(props: Props) {
         onClose={menu.onClose}
       >
         <MenuItem onClick={menu.onClose}>
-          <Link href="/profile">
+          <Link href="/profile/Index">
             <EditIcon />
             &nbsp; Profile
           </Link>
         </MenuItem>
         <MenuItem onClick={menu.onClose}>
-          <Link href="/profile">
+          <Link href="/profile/Index">
             <SettingsIcon />
             &nbsp; Setting
           </Link>
