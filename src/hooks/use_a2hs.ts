@@ -6,7 +6,11 @@ let deferredPrompt: any;
 /**
  * https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Add_to_home_screen#what_does_a2hs_not_give_you
  */
-export default function useA2HS() {
+/**
+ *
+ * @param userGuideUrl User will be redirect to this url if they're failed to install the app
+ */
+export default function useA2HS(userGuideUrl: string) {
   const promptInstallApp = useCallback(() => {
     if (!deferredPrompt) {
       //  const msg = `Cannot request app installation:
@@ -15,7 +19,8 @@ export default function useA2HS() {
       //   • Visit our help center to get support.
       // `;
       //  enqueueSnackbar(msg, { variant: "warning" })
-      console.log('{} TODO: : redirect them to a FAQs page');
+      // console.log('{} TODO: : redirect them to a FAQs page');
+      isClient && window.open(userGuideUrl, '_blank');
       return;
     }
 

@@ -96,7 +96,14 @@ interface IProps {
   hasBottomNav?: boolean;
 }
 export default function Footer({ style, disabledBackground, hasBottomNav }: IProps) {
-  const { promptInstallApp } = useA2HS();
+  const lang = 'vi'; // TODO: Dynamically get this
+  const userGuideSlugs = {
+    en: '/TODO',
+    vi: '/huong-dan-cai-ung-dung-lucis-city-tren-mobile-va-pc/'
+  };
+  const userGuideSlug = userGuideSlugs[lang];
+  const newsBaseUrl = 'https://news.luciscity.io'; // TODO: from .env
+  const { promptInstallApp } = useA2HS(newsBaseUrl + userGuideSlug);
 
   return (
     <FooterStyled
