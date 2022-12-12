@@ -231,6 +231,25 @@ export const NavigationBar = () => {
                   Thông báo
                 </Typography>
               </Tab>
+              <Tab
+                href="/notification"
+              >
+                <Box sx={{
+                  display: {md: "flex", sm: "none", xs: "flex"},
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  mx: {lg: 7, md: 4, sm: 2, xs: 1}
+                }}>
+                  <SvgIcon src={"/assets/imgs/icon/notification.svg"}/>
+                </Box>
+                <Typography
+                  display={{sm: "inline", xs: "none"}}
+                  fontSize={16} fontWeight={500}
+                >
+                  Ứng dụng
+                {/* Cài đặt ứng dụng và cập nhật phần mềm ở đây */}
+                </Typography>
+              </Tab>
             </Stack>
           </Grid>
           <Grid
