@@ -4,10 +4,13 @@ import { useState } from "react";
 import { Center } from "../common/center";
 import { Card } from "./components/card";
 import InvestImageBox from "./components/image_box";
+import InvestorTab from "./components/investor_tab";
 import InvestDetailHeader from "./components/invest_detail_header";
 import InvestDetailNftCard from "./components/invest_detail_nft_card";
 import InvestDetailSteper from "./components/invest_detail_steper";
+import PitchTab from "./components/pitch_tab";
 import PlaceOfferSection from "./components/place_offers";
+import UpdatesTab from "./components/updates_tab";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
@@ -24,6 +27,7 @@ export function InvestDetailPage() {
         sx={{
           px: [6, 12, 12, 24, 36],
           pt: 22.5,
+          pb: 6,
           overflow: "hidden",
         }}
       >
@@ -89,34 +93,7 @@ export function InvestDetailPage() {
               </Button>
             </Box>
             <Divider sx={{ mt: 4 }} />
-            <Box>
-              <Typography variant="h3" mt={4}>
-                Hightlight
-              </Typography>
-              <Typography variant="h5" mt={6}>
-                Tầm view đẹp nhất: đối diện công viên ánh sáng 36 hecta, khu biệt thự thấp tầng Mannhattan, bến du
-                thuyền, sông Tắc và cả sông Đồng Nai. Không gian tựa resort nghỉ dưỡng 5 sao, xanh mát, rộng rãi, kiến
-                trúc sang trọng – độc đáo – khác biệt. Các tiện ích đặc quyền C-class dành riêng: phòng lounge cigar,
-                khu chơi golf 3D, kid club, business lounge, phòng ballroom. Hồ bơi vô cực giật cấp 3 tầng, hồ bơi thác
-                tràn, khu tập gym dưới nước, đảo dưỡng sinh,…
-              </Typography>
-              <PlaceOfferSection />
-            </Box>
-            <Box>
-              <Typography variant="h3" mt={8}>
-                Why Invest?
-              </Typography>
-              <Typography variant="h5" mt={6}>
-                The Tropicana Garden Eco Village gives you valuable experiences when owning a unique position with Pure
-                Green Echoes. Right here, the whole poetic sound of life is experienced by all the senses; creating a
-                civilized, prosperous and peaceful population of The Tropicana Garden Eco Village.
-              </Typography>
-              <Typography variant="h5" mt={6}>
-                The project is located in a convenient traffic area, with complete infrastructure, easy connection to
-                key administrative, commercial and tourist areas of Bao Loc City. Convenient to move to Da Lat, Bien
-                Hoa, Ho Chi Minh City via National Highway 20 as well as easy links to neighboring provinces.
-              </Typography>
-            </Box>
+            {tabIdx === 0 ? <PitchTab /> : tabIdx === 1 ? <UpdatesTab /> : <InvestorTab />}
           </Box>
           <Box>
             <InvestDetailNftCard />
