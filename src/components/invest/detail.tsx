@@ -1,16 +1,15 @@
-import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import Container from "@mui/material/Container";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import { useState } from "react";
-import { Center } from "../common/center";
 import { Card } from "./components/card";
-import InvestImageBox from "./components/image_box";
-import InvestorTab from "./components/investor_tab";
-import InvestDetailHeader from "./components/invest_detail_header";
-import InvestDetailNftCard from "./components/invest_detail_nft_card";
-import InvestDetailSteper from "./components/invest_detail_steper";
-import PitchTab from "./components/pitch_tab";
-import PlaceOfferSection from "./components/place_offers";
-import UpdatesTab from "./components/updates_tab";
+import ClaimProfitCard from "./components/detail/claim_profit";
+import InvestImageBox from "./components/detail/image_box";
+import InvestorTab from "./components/detail/investor_tab";
+import InvestDetailHeader from "./components/detail/invest_detail_header";
+import InvestDetailNftCard from "./components/detail/invest_detail_nft_card";
+import InvestDetailSteper from "./components/detail/invest_detail_steper";
+import PitchTab from "./components/detail/pitch_tab";
+import SellVoteCard from "./components/detail/sell_vote_card";
+import UpdatesTab from "./components/detail/updates_tab";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
@@ -97,6 +96,8 @@ export function InvestDetailPage() {
           </Box>
           <Box>
             <InvestDetailNftCard />
+            <ClaimProfitCard enable={false} />
+            <SellVoteCard />
             <Typography variant="h3" mt="24px">
               Giấy tờ pháp lý
             </Typography>

@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { Center } from "../../common/center";
-import { NftInfoCard } from "../../landing/nft_section";
+import Link from "next/link";
+import { Center } from "../../../common/center";
+import { NftInfoCard } from "../../../landing/nft_section";
 
 export default function InvestDetailNftCard() {
   return (
@@ -59,16 +60,18 @@ export default function InvestDetailNftCard() {
                 1 USDT minimum investment
               </Typography>
             </Center>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                height: "50px",
-              }}
-              endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
-            >
-              Mua NFT
-            </Button>
+            <Link href="/nft/1">
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  height: "50px",
+                }}
+                endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
+              >
+                Mua NFT
+              </Button>
+            </Link>
           </Box>
         </Grid>
       </Grid>

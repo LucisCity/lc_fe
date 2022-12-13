@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import ShareDialog from "./share_dialog";
 
 export default function InvestDetailHeader() {
   return (
@@ -69,12 +70,13 @@ export default function InvestDetailHeader() {
           >
             235
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_share.svg" alt="" />}
           >
             Chia sẻ
-          </Button>
+          </Button> */}
+          <ShareDialog />
         </Box>
       </Box>
     </>

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Center } from "../../common/center";
+import { Center } from "../../../common/center";
 
 interface IStepProps {
   activeIndex: number;

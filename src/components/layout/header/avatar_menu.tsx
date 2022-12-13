@@ -8,6 +8,7 @@ import Link from "next/link";
 
 interface Props {
   avatar: string | undefined;
+  username: string | undefined;
   onLogout: () => void;
 }
 
@@ -75,7 +76,7 @@ export default function AvatarMenu(props: Props) {
       >
         <Link href="/profile">
           <MenuItem>
-            <Avatar /> My account
+            <Avatar /> {props.username ?? "My account"}
             {/* <ListItemIcon>
               <EditIcon fontSize="small" />
             </ListItemIcon>
