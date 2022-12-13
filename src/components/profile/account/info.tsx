@@ -23,7 +23,7 @@ const Input = styled(InputUnstyled, {
   shouldForwardProp: (prop) => prop !== 'email',
 })<{ email?: boolean }>(({email, theme}) => `
   .${inputUnstyledClasses.input} {
-    width: ${useMediaQuery(theme.breakpoints.up('md')) ? '90%' : '100%'};
+    width: ${useMediaQuery(theme.breakpoints.up('sm')) ? '90%' : '100%'};
     font-size: 16px;
     font-weight: 500;
     line-height: 1.5;
@@ -107,7 +107,7 @@ export default function InfoForm() {
       <Grid container spacing={2}>
         {labels.map((label) => {
           return (
-            <Grid item key={label.idx} md={label.value === 'Email' ? 7 : 6} xs={12}>
+            <Grid item key={label.idx} sm={label.value === 'Email' ? 7 : 6} xs={12}>
               <FormControlUnstyled defaultValue={data[label.idx]} disabled={label.value == 'Email'}>
                 <Label>{label.value}</Label>
                 {label.value === 'Email' ?
