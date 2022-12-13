@@ -180,29 +180,32 @@ const PasswordField = (props: PassFieldProps) => {
 export default function ChangePasswordForm() {
 
   return (
-    <Box pl={{lg: 2}} pt={{lg: 3}} px={{md: 0, sm: 30}}>
-      <form>
-        <Grid container spacing={{md: 0, xs: 2}} direction={{md: "row-reverse", xs: "column"}}>
-          <Grid item md={6} xs={12}>
-            <PasswordField label={"Nhập mật khẩu hiện tại"} defaultValue={passwords[0]}/>
-          </Grid>
-          <Grid item md={6} xs={12}>
+    <form>
+      <Grid container spacing={{md: 0, xs: 2}} direction={{md: "row", xs: "column"}}>
+        <Grid item sm={6} xs={12}>
+          <PasswordField label={"Nhập mật khẩu hiện tại"} defaultValue={passwords[0]}/>
+        </Grid>
+        <Grid item xs={12} container>
+          <Grid item sm={6} xs={12}>
             <PasswordField label={"Nhập mật khẩu mới"} defaultValue={passwords[1]}/>
+          </Grid>
+          <Grid item sm={6} xs={12}>
             <PasswordField label={"Xác nhận mật khẩu mới"} defaultValue={passwords[2]}/>
           </Grid>
         </Grid>
-        <Box my={11} display={"flex"} justifyContent={"center"}>
-          <Button
-            variant="contained"
-            sx={{fontSize: 16, fontWeight: 500}}
-          >
+      </Grid>
+      <Box my={11} display={"flex"} justifyContent={"center"}>
+        <Button
+          variant="contained"
+        >
+          <Typography variant={"h5"}>
             Cập nhật thông tin
-          </Button>
-        </Box>
-        <Typography variant={"h3"} pt={2}>Xác minh hai bước</Typography>
-        <AuthMethod label={"Xác thực 2FA"} desc={"Yêu cầu xác nhận 2FA khi đăng nhập tài khoản"}/>
-        <AuthMethod label={"Xác minh tài khoản bằng SMS"} desc={"Yêu cầu xác nhận 2FA cho các giao dịch"}/>
-      </form>
-    </Box>
+          </Typography>
+        </Button>
+      </Box>
+      <Typography variant={"h3"} pt={2}>Xác minh hai bước</Typography>
+      <AuthMethod label={"Xác thực 2FA"} desc={"Yêu cầu xác nhận 2FA khi đăng nhập tài khoản"}/>
+      <AuthMethod label={"Xác minh tài khoản bằng SMS"} desc={"Yêu cầu xác nhận 2FA cho các giao dịch"}/>
+    </form>
   );
 }
