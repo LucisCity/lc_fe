@@ -109,11 +109,6 @@ interface ProfileNavBarProps {
 }
 
 export const ProfileNavBar = (props: ProfileNavBarProps) => {
-  const theme = useTheme();
-  // TODO: hạn chế dùng useMediaQuery tìm cách thay thê
-  // @ts-ignore
-  const smallScreen = useMediaQuery(theme.breakpoints.only('xs'));
-  // console.log('navbar rerender');
 
   return (
     <React.Fragment>
@@ -124,6 +119,7 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
         height: "100%",
       }}>
         <Box
+          className={s.cardBg}
           sx={{
             position: "absolute",
             width: "193px",
@@ -137,6 +133,7 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
         >
         </Box>
         <Box
+          className={s.cardBg}
           sx={{
             position: "absolute",
             width: "193px",
@@ -171,16 +168,13 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
               </Box>
             </Grid>
             <Grid item sm={12} xs={6} px={{sm: 0, xs: 3}}>
-              {smallScreen ?
-                <Tab
-                  href={"/login"}
-                  name={"Đăng xuất"}
-                  svgSrc={"/assets/imgs/icon/log_out.svg"}
-                  logoutButton={true}
-                  topLogoutButton={true}
-                /> :
-                null
-              }
+              <Tab
+                href={"/login"}
+                name={"Đăng xuất"}
+                svgSrc={"/assets/imgs/icon/log_out.svg"}
+                logoutButton={true}
+                topLogoutButton={true}
+              />
               <Button
                 variant="outlined"
                 sx={{
