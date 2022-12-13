@@ -6,6 +6,7 @@ import { Background } from "../common/background/background";
 import ScrollPage from "../layout/scroll_page";
 import { Container } from "@mui/system";
 import { useRouter } from "next/router";
+import s from "./index.module.sass"
 
 type Props = {
   children: any;
@@ -18,7 +19,7 @@ export const ProfileLayout = (props: Props) => {
   return (
     <ScrollPage>
       <Background/>
-      <Container>
+      <Container component="div" className={s.profileC}>
         <Card
           sx={{
             minHeight: 900,

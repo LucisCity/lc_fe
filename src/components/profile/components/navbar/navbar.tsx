@@ -33,9 +33,9 @@ const Tab = (props: TabProps) => {
       LinkComponent={Link}
       sx={{
         ":hover": {
-          background: "rgba(255, 255, 255, 0.2)",
-          backdropFilter: "blur(4px)",
-          color: '#504C67',
+          background: props.active ? "#8272ff" : "rgba(255, 255, 255, 0.35)",
+          // backdropFilter: "blur(4px)",
+          // color: '#504C67',
         },
         textTransform: "none",
         // height: {md: "56px", sm: 50, xs: 38},
