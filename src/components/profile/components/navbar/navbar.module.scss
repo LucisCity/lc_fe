@@ -1,7 +1,10 @@
-.logoutButton {
+.bottomLogoutButton {
   color: #000000;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.2);
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .topLogoutButton {

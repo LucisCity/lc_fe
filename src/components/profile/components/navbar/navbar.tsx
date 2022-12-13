@@ -25,7 +25,9 @@ const Tab = (props: TabProps) => {
   return (
     <Button
       className={`
-        ${props.logoutButton ? props.topLogoutButton ? s.topLogoutButton : s.logoutButton : props.active ? s.active : s.default}
+        ${props.logoutButton ?
+        (props.topLogoutButton ? s.topLogoutButton : s.bottomLogoutButton) :
+        (props.active ? s.active : s.default)}
       `}
       href={props.href}
       LinkComponent={Link}
@@ -148,7 +150,6 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
         >
         </Box>
         <Box
-          container
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -259,7 +260,6 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
                   logoutButton={true}
                 />
               </Stack>
-
             </Grid>
           </Grid>
         </Box>
