@@ -1,8 +1,10 @@
 import React from "react";
-import s from "./background.module.css";
+import s from "./background.module.scss";
 
-export const Background = ({style}: { style?: React.CSSProperties }) => {
-
+// type Props = {
+//   position?: "fixed" | "absolute" | "relative"
+// }
+export const Background = () => {
   return (
     <div className={s.background}>
       <div className={s.d1}></div>

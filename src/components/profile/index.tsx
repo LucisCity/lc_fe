@@ -16,22 +16,13 @@ export const ProfileLayout = (props: Props) => {
   const router = useRouter();
 
   return (
-    <ScrollPage pt={0}>
-      <Background
-        style={{
-          position: "fixed",
-          top: 0,
-          width: "100%",
-          zIndex: -1,
-        }}
-      />
-      <Container
-      >
+    <ScrollPage>
+      <Background/>
+      <Container>
         <Card
           sx={{
             minHeight: 900,
             width: "inherit",
-            mt: 4,
             mb: 15,
             display: "flex",
             background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
@@ -45,7 +36,12 @@ export const ProfileLayout = (props: Props) => {
           elevation={0}
         >
           <Grid container>
-            <Grid item sm={3} xs={12}>
+            <Grid item sm={3} xs={12} sx={{
+              WebkitBackfaceVisibility: "hidden",
+              MozBackfaceVisibility: "hidden",
+              WebkitTransform: "translate3d(0, 0, 0)",
+              MozTransform: "translate3d(0, 0, 0)",
+            }}>
               <ProfileNavBar activeTab={router.pathname === "/profile" ? "/profile/dashboard" : router.pathname}/>
             </Grid>
             <Grid
@@ -56,6 +52,11 @@ export const ProfileLayout = (props: Props) => {
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: "#f9f9f9",
+
+                WebkitBackfaceVisibility: "hidden",
+                MozBackfaceVisibility: "hidden",
+                WebkitTransform: "translate3d(0, 0, 0)",
+                MozTransform: "translate3d(0, 0, 0)",
               }}
             >
               {props.children}

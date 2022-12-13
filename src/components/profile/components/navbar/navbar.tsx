@@ -111,7 +111,6 @@ interface ProfileNavBarProps {
 export const ProfileNavBar = (props: ProfileNavBarProps) => {
 
   return (
-    <React.Fragment>
       <Box sx={{
         py: {sm: 4, xs: 5},
         px: {sm: 2},
@@ -130,22 +129,20 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
             filter: "blur(40px)",
             zIndex: -2,
           }}
-        >
-        </Box>
+        />
         <Box
           className={s.cardBg}
           sx={{
             position: "absolute",
-            width: "193px",
-            height: "193px",
-            left: "17%",
-            top: "464px",
+            width: "173px",
+            height: "173px",
+            left: "65%",
+            top: "564px",
             background: "linear-gradient(180deg, #778AED 0%, #8274F9 0.01%, #6555EE 53.65%, #4A3CC1 98.44%)",
             filter: "blur(60px)",
             zIndex: -2,
           }}
-        >
-        </Box>
+        />
         <Box
           sx={{
             display: "flex",
@@ -180,7 +177,7 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
                 sx={{
                   color: "#6555EE",
                   textTransform: "none",
-                  background: "transparent",
+                  background: "rgba(255, 255, 255, 0.3)",
                   my: 5,
                   textAlign: "center",
                   width: "100%",
@@ -258,6 +255,5 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
           </Grid>
         </Box>
       </Box>
-    </React.Fragment>
   )
 }
