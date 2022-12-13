@@ -481,7 +481,7 @@ export default function CustomPaginationActionsTable() {
         rowsPerPageOptions={[10, 20, 30, {label: 'All', value: -1}]}
         colSpan={3}
         count={rows.length}
-        rowsPerPage={10}
+        rowsPerPage={rowsPerPage}
         page={page}
         SelectProps={{
           inputProps: {

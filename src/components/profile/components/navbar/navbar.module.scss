@@ -1,0 +1,27 @@
+.logoutButton {
+  color: #000000;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+
+  //.topLogoutButton {
+  //  display: none;
+  //}
+  //@media (max-width: 768px) {
+  //  .topLogoutButton {
+  //    display: flex,
+  //  }
+  //
+  //}
+}
+
+.active {
+  background: #6555EE;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.default {
+  color: #504C67;
+  border-radius: 8px;
+  background: transparent;
+}
