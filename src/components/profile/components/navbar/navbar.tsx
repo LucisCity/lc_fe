@@ -17,13 +17,16 @@ interface TabProps {
   // setActiveTab?: any;
   logoutButton?: boolean;
   active?: boolean;
+  topLogoutButton?: boolean;
 }
 
 const Tab = (props: TabProps) => {
 
   return (
     <Button
-      className={`${props.logoutButton ? s.logoutButton : `${props.active ? s.active : s.default}`}`}
+      className={`
+        ${props.logoutButton ? props.topLogoutButton ? s.topLogoutButton : s.logoutButton : props.active ? s.active : s.default}
+      `}
       href={props.href}
       LinkComponent={Link}
       sx={{
@@ -46,7 +49,8 @@ const Tab = (props: TabProps) => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        mx: {lg: 7, md: 4, sm: 2, xs: 1}
+        ml: {md: 4, sm: 2, xs: 5},
+        mr: {md: 7, sm: 4, xs: 10}
       }}>
         <SvgIcon src={props.svgSrc}/>
       </Box>
@@ -73,7 +77,7 @@ const tabs = [
   },
   {
     name: "Sản phẩm đầu tư",
-    href: "/profile/investments",
+    href: "/profile/investment",
     svgSrc: iconSrc + 'investment.svg',
   },
   {
@@ -91,6 +95,11 @@ const tabs = [
     href: "/profile/notification",
     svgSrc: iconSrc + 'notification.svg',
   },
+  {
+    name: "Ứng dụng",
+    href: "/profile/notification",
+    svgSrc: iconSrc + 'notification.svg',
+  },
 ]
 
 interface ProfileNavBarProps {
@@ -102,10 +111,11 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
   // TODO: hạn chế dùng useMediaQuery tìm cách thay thê
   // @ts-ignore
   const smallScreen = useMediaQuery(theme.breakpoints.only('xs'));
+  // console.log('navbar rerender');
 
   return (
     <Box sx={{
-      py: {sm: 4},
+      py: {sm: 4, xs: 5},
       px: {sm: 2},
       pt: {xs: 2},
     }}>
@@ -159,6 +169,7 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
                 name={"Đăng xuất"}
                 svgSrc={"/assets/imgs/icon/log_out.svg"}
                 logoutButton={true}
+                topLogoutButton={true}
               /> :
               null
             }
@@ -183,19 +194,23 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
                 Xác thực tài khoản
               </Typography>
             </Button>
-            {smallScreen ?
-              null :
-              <Divider
-                variant="middle"
-                sx={{mx: 3, mb: 9, mt: 4, borderBottomWidth: 1, borderBottomColor: "#fff"}}
-              />
-              // <Divider
-              //   orientation="vertical"
-              //   variant="middle"
-              //   flexItem
-              //   sx={{borderRightWidth: 1, borderRightColor: "#fff"}}
-              // />
-            }
+            <Divider
+              variant="middle"
+              sx={{
+                mx: 3,
+                mb: 9,
+                mt: 4,
+                borderBottomWidth: 1,
+                borderBottomColor: "#fff",
+                display: {sm: "block", xs: "none"},
+              }}
+            />
+            {/*// <Divider*/}
+            {/*//   orientation="vertical"*/}
+            {/*//   variant="middle"*/}
+            {/*//   flexItem*/}
+            {/*//   sx={{borderRightWidth: 1, borderRightColor: "#fff"}}*/}
+            {/*// />*/}
           </Grid>
         </Grid>
         <Grid
@@ -209,6 +224,7 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
               direction="column"
               spacing={{sm: 2, xs: 3}}
               mx={{sm: 2, xs: "5%"}}
+              mt={{sm: 0, xs: 5}}
               height={{xs: "100%"}}
               // display={{md: "block", xs: "flex"}}
               // alignItems={{xs: "flex-end"}}
@@ -221,8 +237,6 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
             </Stack>
           </Grid>
         </Grid>
-        {smallScreen ?
-          null :
           <Grid
             item
             xs={12}
@@ -230,7 +244,7 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
             position={{sm: "absolute"}}
             bottom={{sm: 20}}
             width={{sm: "22%"}}
-            display={{sm: "inline", xs: "flex"}}
+            display={{sm: "inline", xs: "none"}}
           >
             <Box
               width={{sm: "100%", xs: "100%"}}
@@ -246,7 +260,6 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
               />
             </Box>
           </Grid>
-        }
       </Grid>
     </Box>
   )

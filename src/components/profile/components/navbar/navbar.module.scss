@@ -2,17 +2,24 @@
   color: #000000;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.2);
-
-  //.topLogoutButton {
-  //  display: none;
-  //}
-  //@media (max-width: 768px) {
-  //  .topLogoutButton {
-  //    display: flex,
-  //  }
-  //
-  //}
 }
+
+.topLogoutButton {
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    color: #000000;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    justify-content: center;
+    padding-right: 10%;
+
+    div {
+      margin-right: 10px;
+    }
+  }
+}
+
 
 .active {
   background: #6555EE;

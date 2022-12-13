@@ -59,15 +59,15 @@ const DashBoardItem = () => {
 
 export const ProfileDashboard = () => {
   return (
-    <Box mx={{md: 10, xs: 3}} my={{md: 7, xs: 3}}>
+    <Box mx={{sm: 10, xs: 3}} my={7}>
       <Typography
         fontWeight={700}
-        fontSize={{md: 32, xs: 25}}
-        textAlign={{md: "left", xs: "center"}}
+        fontSize={{sm: 32, xs: 25}}
+        textAlign={{sm: "left", xs: "center"}}
       >
         Dashboard
       </Typography>
-      <Box mt={{md: 5, xs: 2}} mb={3} mx={{sm: 0, xs: 10}}>
+      <Box mt={5} mb={3} mx={{sm: 0, xs: 6}}>
         <Grid container direction={{sm: "row", xs: "column"}} spacing={3} height={"auto"}>
           <DashBoardItem/>
         </Grid>

@@ -7,38 +7,6 @@ import ScrollPage from "../layout/scroll_page";
 import { Container } from "@mui/system";
 import { useRouter } from "next/router";
 
-export interface ProfileSubPage {
-  name: string;
-  href: string;
-}
-
-export const pages: Array<ProfileSubPage> = [
-  {
-    name: "Dashboard",
-    href: "/profile/dashboard",
-  },
-  {
-    name: "Tài khoản",
-    href: "/profile/account",
-  },
-  {
-    name: "Sản phẩm đầu tư",
-    href: "/profile/investment",
-  },
-  {
-    name: "Membership",
-    href: "/profile/membership",
-  },
-  {
-    name: "Referral",
-    href: "/profile/news",
-  },
-  {
-    name: "Thông báo",
-    href: "/profile/notification",
-  },
-];
-
 type Props = {
   children: any;
 };
@@ -61,7 +29,7 @@ export const ProfileLayout = (props: Props) => {
         />
         <Card
           sx={{
-            minHeight: 800,
+            minHeight: 900,
             width: "inherit",
             mt: 4,
             mb: 15,
