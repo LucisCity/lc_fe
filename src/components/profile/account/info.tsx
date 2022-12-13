@@ -103,31 +103,30 @@ const data = [
 export default function InfoForm() {
 
   return (
-    <Box pl={{lg: 2}} pt={{lg: 3}} px={{md: 0, sm: 30}}>
-      <form>
-        <Grid container spacing={2}>
-          {labels.map((label) => {
-            return (
-              <Grid item key={label.idx} md={label.value === 'Email' ? 7 : 6} xs={12}>
-                <FormControlUnstyled defaultValue={data[label.idx]} disabled={label.value == 'Email'}>
-                  <Label>{label.value}</Label>
-                  {label.value === 'Email' ?
-                    <Input disabled={true} email={true}/> :
-                    <Input/>}
-                </FormControlUnstyled>
-              </Grid>
-            )
-          })}
-        </Grid>
-        <Box mt={15} display={"flex"} justifyContent={"center"}>
-          <Button
-            variant="contained"
-            sx={{fontSize: 16, fontWeight: 500}}
-          >
+    <form>
+      <Grid container spacing={2}>
+        {labels.map((label) => {
+          return (
+            <Grid item key={label.idx} md={label.value === 'Email' ? 7 : 6} xs={12}>
+              <FormControlUnstyled defaultValue={data[label.idx]} disabled={label.value == 'Email'}>
+                <Label>{label.value}</Label>
+                {label.value === 'Email' ?
+                  <Input disabled={true} email={true}/> :
+                  <Input/>}
+              </FormControlUnstyled>
+            </Grid>
+          )
+        })}
+      </Grid>
+      <Box mt={15} display={"flex"} justifyContent={"center"}>
+        <Button
+          variant="contained"
+        >
+          <Typography variant={"h5"}>
             Cập nhật thông tin
-          </Button>
-        </Box>
-      </form>
-    </Box>
+          </Typography>
+        </Button>
+      </Box>
+    </form>
   );
 }
