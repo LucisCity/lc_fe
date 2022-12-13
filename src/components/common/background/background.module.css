@@ -7,6 +7,10 @@
     top: 0px;
 
     background: #FFFFFF;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 }
 
 .d1 {
@@ -18,6 +22,11 @@
 
     background: #7B6EE8;
     filter: blur(400px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+
 }
 
 .d2 {
@@ -29,6 +38,10 @@
 
     background: #7B6EE8;
     filter: blur(400px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 
 }
 
@@ -41,6 +54,10 @@
 
     background: #6CCAFF;
     filter: blur(400px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 
 }
 
@@ -53,6 +70,10 @@
 
     background: #6CCAFF;
     filter: blur(400px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 
 }
 
@@ -65,6 +86,10 @@
 
     background: #6CCAFF;
     filter: blur(400px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
 
 }
 

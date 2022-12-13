@@ -17,16 +17,16 @@ export const ProfileLayout = (props: Props) => {
 
   return (
     <ScrollPage pt={0}>
+      <Background
+        style={{
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          zIndex: -1,
+        }}
+      />
       <Container
       >
-        <Background
-          style={{
-            position: "fixed",
-            top: 0,
-            width: "100%",
-            zIndex: -1,
-          }}
-        />
         <Card
           sx={{
             minHeight: 900,
