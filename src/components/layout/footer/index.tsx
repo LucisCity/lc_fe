@@ -154,7 +154,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
           <Grid item xs={12} sm={6}>
             <Grid container spacing={3}>
               <Grid item xs={6} sm={4}>
-                <Box mt={20}>
+                <Box mt={{ sm: 20, xs: 0 }}>
                   <UlComponent>
                     <li>
                       <FooterNextLink href={"/"}>Về Lucis City</FooterNextLink>
@@ -172,7 +172,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                 </Box>
               </Grid>
               <Grid item xs={6} sm={4}>
-                <Box mt={20}>
+                <Box mt={{ sm: 20, xs: 0 }}>
                   <UlComponent>
                     <li>
                       <FooterNextLink href={"/"}>Cam kết của NDT</FooterNextLink>
@@ -183,28 +183,25 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                   </UlComponent>
                 </Box>
               </Grid>
-              <Grid
-                container
-                item
-                xs={12}
-                sm={4}
-                direction={{ xs: "row", sm: "column" }}
-                justifyContent={"space-between"}
-              >
-                <Box alignItems={"center"} m={0} mb={{ md: 5, sm: 4, xs: 6 }} mt={20} display={"inline-flex"}>
-                  <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
-                  <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
-                  <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
-                </Box>
-                <Box mb={{ md: 10, xs: 6 }} ml={{ sm: -1, xs: 10 }} display={"inline-flex"}>
-                  <Button
-                    sx={{ textTransform: "none" }}
-                    startIcon={isMobile ? <InstallMobileOutlined /> : <InstallDesktopOutlined />}
-                    onClick={promptInstallApp}
-                    size={"small"}
-                  >
-                    Tải ứng dụng
-                  </Button>
+              <Grid item xs={12} sm={4}>
+                <Box mt={{ sm: 20, xs: 0 }}>
+                  <UlComponent>
+                    <li>
+                      <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
+                      <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
+                      <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
+                    </li>
+                    <li>
+                      <Button
+                        sx={{ textTransform: "none" }}
+                        startIcon={isMobile ? <InstallMobileOutlined /> : <InstallDesktopOutlined />}
+                        onClick={promptInstallApp}
+                        size={"small"}
+                      >
+                        Tải ứng dụng
+                      </Button>
+                    </li>
+                  </UlComponent>
                 </Box>
               </Grid>
             </Grid>
