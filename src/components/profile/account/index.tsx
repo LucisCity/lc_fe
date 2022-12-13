@@ -1,6 +1,5 @@
 import { Box } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
-import CustomPaginationActionsTable from "../components/table";
+import { Typography } from "@mui/material";
 import React from "react";
 import CustomizedTabs from "../components/tabs";
 

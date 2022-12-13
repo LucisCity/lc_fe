@@ -4,7 +4,7 @@ import PageLayout from "../../components/layout/PageLayout";
 import { ProfileLayout } from "../../components/profile";
 import { ProfileAccount } from "../../components/profile/account";
 
-const Dashboard: NextPage = () => {
+const Account: NextPage = () => {
   return (
     <>
       <DocHead/>
@@ -17,4 +17,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default Account;

@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Typography } from "@mui/material";
 import InfoForm from "../account/info";
 import ChangePasswordForm from "../account/security";
 
@@ -106,7 +105,7 @@ export default function CustomizedTabs() {
           color: '#9A9A9A',
           borderBottom: 1,
           borderBottomColor: '#D9D9D9'
-      }}>
+        }}>
         <StyledTabs
           value={value}
           onChange={handleChange}

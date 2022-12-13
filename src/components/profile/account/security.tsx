@@ -3,18 +3,7 @@ import FormControlUnstyled from '@mui/base/FormControlUnstyled';
 import InputUnstyled, { inputUnstyledClasses } from '@mui/base/InputUnstyled';
 import { styled } from '@mui/system';
 import Grid from "@mui/material/Grid";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Paper,
-  Switch,
-  SwitchProps,
-  Typography,
-  useMediaQuery
-} from "@mui/material";
-import { values } from "mobx";
+import { Box, Button, IconButton, Paper, Switch, SwitchProps, Typography, useMediaQuery } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const passwords = [
