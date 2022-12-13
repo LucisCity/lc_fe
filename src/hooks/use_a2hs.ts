@@ -8,7 +8,7 @@ let deferredPrompt: any;
  */
 /**
  *
- * @param userGuideUrl User will be redirect to this url if they're failed to install the app
+ * @param userGuideUrl User will be redirected to this url if they're failed to install the app
  */
 export default function useA2HS(userGuideUrl: string) {
   const promptInstallApp = useCallback(() => {
@@ -19,7 +19,6 @@ export default function useA2HS(userGuideUrl: string) {
       //   • Visit our help center to get support.
       // `;
       //  enqueueSnackbar(msg, { variant: "warning" })
-      // console.log('{} TODO: : redirect them to a FAQs page');
       isClient && window.open(userGuideUrl, '_blank');
       return;
     }
