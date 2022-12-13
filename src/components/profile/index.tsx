@@ -78,7 +78,7 @@ export const ProfileLayout = (props: Props) => {
         >
           <Grid container>
             <Grid item sm={3} xs={12}>
-              <ProfileNavBar activeTab={router.pathname}/>
+              <ProfileNavBar activeTab={router.pathname === "/profile" ? "/profile/dashboard" : router.pathname}/>
             </Grid>
             <Grid
               item
