@@ -19,7 +19,7 @@ const TitleImage = styled("img")(({ theme }) => ({
     height: 160,
   },
   [theme.breakpoints.down("sm")]: {
-    height: 140,
+    height: 130,
   },
 }));
 

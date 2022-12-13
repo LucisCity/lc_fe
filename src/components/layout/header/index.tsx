@@ -190,7 +190,7 @@ export const LogoImage = styled("img")(({ theme }) => ({
   alignSelf: "left",
 
   [theme.breakpoints.down("md")]: {
-    height: 36,
+    height: 32,
     alignSelf: "left",
   },
 }));
@@ -256,7 +256,7 @@ const Header = observer((props: IProps) => {
       <HeaderStyled open={slideActive === 0}>
         <Container>
           <Grid container>
-            <Grid item sm={3} xs={6}>
+            <Grid item sm={2} md={3} xs={6}>
               <Box
                 display={"flex"}
                 justifyContent={{ xs: "flex-start" }}
@@ -286,7 +286,7 @@ const Header = observer((props: IProps) => {
                 </Link>
               </Box>
             </Grid>
-            <Grid item id="menu" sm={6} xs={0} style={{ position: "relative" }}>
+            <Grid item id="menu" sm={7} md={6} xs={0} style={{ position: "relative" }}>
               <MenuBar>
                 <nav>
                   <Ul>
@@ -320,7 +320,15 @@ const Header = observer((props: IProps) => {
                     </Button>
                   ) : null}
 
-                  <IconButton sx={(theme) => ({ ml: theme.spacing(3) })}>
+                  <IconButton
+                    sx={(theme) => ({
+                      ml: theme.spacing(3),
+                      // [theme.breakpoints.down("md")]: {
+                      //   ml: theme.spacing(2),
+                      //   p: 1,
+                      // },
+                    })}
+                  >
                     <img src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>
                   {userStore.isLogedIn ? (

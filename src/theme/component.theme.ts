@@ -28,6 +28,11 @@ export const COMPONENT_THEME: Components<Omit<Theme, "components">> = {
           fontSize: 14,
           padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
         },
+        [theme.breakpoints.down("lg")]: {
+          height: 40,
+          fontSize: 14,
+          padding: `${theme.spacing(2)} ${theme.spacing(7)}`,
+        },
       }),
 
       containedSecondary: ({ theme }) => ({

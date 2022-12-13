@@ -12,7 +12,7 @@ const ImageAnimation = styled(motion.img)(({ theme }) => ({
   bottom: 0,
 
   [theme.breakpoints.down("md")]: {
-    height: 250,
+    height: 240,
   },
 }));
 

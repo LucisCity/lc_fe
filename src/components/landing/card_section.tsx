@@ -67,6 +67,9 @@ const Title = styled("img")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     height: 18,
   },
+  [theme.breakpoints.down("md")]: {
+    height: 20,
+  },
 }));
 
 const CardSupportTitle = styled("div")(({ theme }) => ({
@@ -239,6 +242,7 @@ export const CardSection = (props: IProps) => {
                       fontWeight: 700,
                     })}
                     mt={2}
+                    fontSize={{ md: 18, xs: 16 }}
                   >
                     đẳng cấp công nghệ
                   </Typography>

@@ -96,13 +96,13 @@ interface IProps {
   hasBottomNav?: boolean;
 }
 export default function Footer({ style, disabledBackground, hasBottomNav }: IProps) {
-  const lang = 'vi'; // TODO: Dynamically get this
+  const lang = "vi"; // TODO: Dynamically get this
   const userGuideSlugs = {
-    en: '/TODO',
-    vi: '/huong-dan-cai-ung-dung-lucis-city-tren-mobile-va-pc/'
+    en: "/TODO",
+    vi: "/huong-dan-cai-ung-dung-lucis-city-tren-mobile-va-pc/",
   };
   const userGuideSlug = userGuideSlugs[lang];
-  const newsBaseUrl = 'https://news.luciscity.io'; // TODO: from .env
+  const newsBaseUrl = "https://news.luciscity.io"; // TODO: from .env
   const { promptInstallApp } = useA2HS(newsBaseUrl + userGuideSlug);
 
   return (
@@ -194,9 +194,11 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                 <Box mt={{ sm: 20, xs: 0 }}>
                   <UlComponent>
                     <li>
-                      <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
-                      <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
-                      <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
+                      <Box display={"flex"} alignItems={"center"} pl={1}>
+                        <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
+                        <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
+                        <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
+                      </Box>
                     </li>
                     <li>
                       <Button
