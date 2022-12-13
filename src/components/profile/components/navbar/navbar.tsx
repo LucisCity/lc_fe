@@ -148,7 +148,6 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
         >
         </Box>
         <Box
-          container
           sx={{
             display: "flex",
             flexDirection: "column",
