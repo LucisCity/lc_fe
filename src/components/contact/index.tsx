@@ -36,7 +36,7 @@ const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !=
 const ImageDecor = styled("img")(({ theme }) => ({
   position: "absolute",
   bottom: 41,
-  right: -50,
+  right: -16,
   zIndex: -1,
 }));
 export const ContactPage = () => {
@@ -110,45 +110,53 @@ export const ContactPage = () => {
                 enable={true}
                 style={{ height: "100%" }}
               >
-              <Box
-                component={Paper}
-                elevation={0}
-                p={{ lg: 7, xs: 5 }}
-                borderRadius={2}
-                bgcolor={"rgba(255, 255, 255, 0.5)"}
-                sx={{ backdropFilter: "blur(8px)" }}
-                zIndex={1}
-              >
-                <Box mb={2}>
-                  <Typography mb={1}>Tên</Typography>
-                  <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"Nguyễn Đức Tân"} />
+                <Box
+                  component={Paper}
+                  elevation={0}
+                  p={{ lg: 7, xs: 5 }}
+                  borderRadius={2}
+                  bgcolor={"rgba(255, 255, 255, 0.5)"}
+                  sx={{ backdropFilter: "blur(8px)" }}
+                  zIndex={1}
+                >
+                  <Box mb={2}>
+                    <Typography mb={1}>Tên</Typography>
+                    <FilledInput
+                      sx={{ background: "rgba(255,255,255,0.5)" }}
+                      fullWidth
+                      placeholder={"Nguyễn Đức Tân"}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <Typography mb={1}>Email</Typography>
+                    <FilledInput
+                      sx={{ background: "rgba(255,255,255,0.5)" }}
+                      fullWidth
+                      placeholder={"lucis@luciscity.io"}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <Typography mb={1}>Số điện thoại</Typography>
+                    <FilledInput
+                      sx={{ background: "rgba(255,255,255,0.5)" }}
+                      fullWidth
+                      placeholder={"(+84) 123456789"}
+                    />
+                  </Box>
+                  <Box mb={2}>
+                    <Typography mb={1}>Câu hỏi của bạn là gì ?</Typography>
+                    <FilledInput
+                      sx={{ background: "rgba(255,255,255,0.5)" }}
+                      fullWidth
+                      multiline
+                      rows={6}
+                      placeholder={"Câu hỏi của bạn là gì ...."}
+                    />
+                  </Box>
+                  <Button variant={"contained"} fullWidth sx={{ mt: 10 }}>
+                    Gửi
+                  </Button>
                 </Box>
-                <Box mb={2}>
-                  <Typography mb={1}>Email</Typography>
-                  <FilledInput
-                    sx={{ background: "rgba(255,255,255,0.5)" }}
-                    fullWidth
-                    placeholder={"lucis@luciscity.io"}
-                  />
-                </Box>
-                <Box mb={2}>
-                  <Typography mb={1}>Số điện thoại</Typography>
-                  <FilledInput sx={{ background: "rgba(255,255,255,0.5)" }} fullWidth placeholder={"(+84) 123456789"} />
-                </Box>
-                <Box mb={2}>
-                  <Typography mb={1}>Câu hỏi của bạn là gì ?</Typography>
-                  <FilledInput
-                    sx={{ background: "rgba(255,255,255,0.5)" }}
-                    fullWidth
-                    multiline
-                    rows={6}
-                    placeholder={"Câu hỏi của bạn là gì ...."}
-                  />
-                </Box>
-                <Button variant={"contained"} fullWidth sx={{ mt: 10 }}>
-                  Gửi
-                </Button>
-              </Box>
               </AnimComponent>
               <ImageDecor src={"/assets/imgs/contact/circle.png"} alt={"img-decor"} />
             </Box>

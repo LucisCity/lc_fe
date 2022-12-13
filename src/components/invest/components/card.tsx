@@ -37,9 +37,9 @@ export const Card = (props: IProps) => {
   const [state, setState] = React.useState(props?.isCollapseContent ?? true);
 
   return (
-    <MuiCard sx={{ borderRadius: 4, position: "relative" }} elevation={3}>
+    <MuiCard sx={{ borderRadius: 4, position: "relative" }} elevation={1}>
       <Link href={`/invest/${props.name}`}>
-        <CardActionArea>
+        <CardActionArea component={"div"}>
           <CardMedia sx={{ borderRadius: 4 }} component="img" height="130" image={props.image} alt="green iguana" />
           <CardContent sx={{ p: 5, pb: 0 }}>
             <Typography variant="h3" mb={1}>

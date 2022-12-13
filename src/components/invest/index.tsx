@@ -2,16 +2,21 @@ import React from "react";
 import { Background } from "../landing/components/background";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { Container, MenuItem, Select } from "@mui/material";
+import { Container, Divider, MenuItem, Popper, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
 import { Card } from "./components/card";
-import { CardInMap } from "./components/card_in_map";
-import { Masonry } from "@mui/lab";
+import { SearchOption } from "./components/search_option";
+import { LoadingButton, Masonry } from "@mui/lab";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import StackAnim from "../anim/stack_anim";
+import Typography from "@mui/material/Typography";
+import { HighlightCard } from "./components/highlight_card";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import { getPostApiUrl, IPost, normalizeDatePosts } from "../../pages/news";
+import axios from "axios";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -81,8 +86,66 @@ const fakeData = [
     image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
   },
 ];
-const ContentView = styled(Box)(({ theme }) => ({}));
+
+const fakeData2 = [
+  {
+    label: "Grandland 1",
+    name: "Grandland",
+    address: "3891 Ranchview Dr. Richardson, California 62639",
+    price: "223032",
+    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
+  },
+  {
+    label: "Aqualand 1",
+    name: "Aqualand",
+    address: "3891 Ranchview Dr. Richardson, California 62639",
+    price: "127532",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
+  },
+  {
+    label: "Thanh Bình Park 1",
+    name: "Thanh Bình Park",
+    address: "3891 Ranchview Dr. Richardson, California 62639",
+    price: "53032",
+    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
+  },
+  {
+    label: "Thanh Bình Park",
+    name: "Thanh Bình Park",
+    address: "3891 Ranchview Dr. Richardson, California 62639",
+    price: "53032",
+    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
+  },
+];
+
+const Search = styled(Autocomplete, { shouldForwardProp: (propName) => propName !== "isSearch" })<{
+  isSearch?: boolean;
+}>(({ theme, isSearch }) => ({
+  width: 270,
+  // transition: (theme.transitions as any).create(["width"]),
+  // ...(isSearch && {
+  //   transition: (theme.transitions as any).create(["width"]),
+  //   width: 350,
+  // }),
+}));
 export const InvestPage = () => {
+  const [loading, setLoading] = React.useState(false);
+  const [isLoadAll, setIsLoadAll] = React.useState(false);
+  const [listInvests, setListInvests] = React.useState<any[]>(fakeData);
+  const handleGetInvest = async () => {
+    setLoading(true);
+    try {
+      setTimeout(() => {
+        setListInvests([...listInvests, ...fakeData2]);
+        setLoading(false);
+        setIsLoadAll(true);
+      }, 500);
+    } catch (error) {
+      setIsLoadAll(true);
+      throw error;
+    }
+  };
   // @ts-ignore
   return (
     <ScrollPage>
@@ -98,11 +161,32 @@ export const InvestPage = () => {
         }}
       />
       <Container>
+        <Box mb={7}>
+          <Typography variant={"h2"} mb={5}>
+            Dự án đáng chú ý
+          </Typography>
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={6}>
+              <HighlightCard {...fakeData[0]} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <HighlightCard {...fakeData[1]} />
+            </Grid>
+          </Grid>
+        </Box>
+        <Typography variant={"h2"} mb={5}>
+          Tất cả dự án
+        </Typography>
         <FilterView mb={5}>
           <Box>
             <Box mr={5}>
-              <Autocomplete
+              <Search
+                autoComplete={false}
                 // disablePortal
+                freeSolo
+                PopperComponent={(prop) => (
+                  <Popper {...prop} sx={{ width: "500px !important" }} placement={"bottom-start"} />
+                )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -116,15 +200,14 @@ export const InvestPage = () => {
                         height: 40,
                       },
                     }}
-                    sx={{ width: 270 }}
                     placeholder={"Tìm kiếm dự án bạn quan tâm"}
                   />
                 )}
-                options={fakeData}
+                options={listInvests}
                 renderOption={(props, option) => (
-                  // @ts-ignore
-                  <Box p={1} {...props} width={400}>
-                    <CardInMap {...option} />
+                  <Box p={1} {...props}>
+                    {/* @ts-ignore */}
+                    <SearchOption {...option} />
                   </Box>
                 )}
               />
@@ -188,72 +271,54 @@ export const InvestPage = () => {
             </Box>
           </Box>
         </FilterView>
-        <ContentView>
-          {/*<Grid container spacing={6}>*/}
-          {/*  <Grid item xs={6}>*/}
-          {/*    <Grid container spacing={6}>*/}
-          {/*      <Grid item xs={6}>*/}
-          {/*        <Card />*/}
-          {/*      </Grid>*/}
-          {/*      <Grid item xs={6}>*/}
-          {/*        <Card />*/}
-          {/*      </Grid>*/}
-          {/*      <Grid item xs={6}>*/}
-          {/*        <Card />*/}
-          {/*      </Grid>*/}
-          {/*      <Grid item xs={6}>*/}
-          {/*        <Card />*/}
-          {/*      </Grid>*/}
-          {/*    </Grid>*/}
-          {/*  </Grid>*/}
-          {/*  <Grid item xs={6}>*/}
-          {/*    <Box height={700}>*/}
-          {/*      <GoogleMapReact*/}
-          {/*        bootstrapURLKeys={{ key: "" }}*/}
-          {/*        defaultCenter={defaultProps.center}*/}
-          {/*        defaultZoom={defaultProps.zoom}*/}
-          {/*      >*/}
-          {/*        <div*/}
-          {/*          //@ts-ignore*/}
-          {/*          lat={defaultProps.center.lat}*/}
-          {/*          //@ts-ignore*/}
-          {/*          lng={defaultProps.center.lng}*/}
-          {/*          style={{*/}
-          {/*            width: 400,*/}
-          {/*            height: 400,*/}
-          {/*          }}*/}
-          {/*        >*/}
-          {/*          <CardInMap />*/}
-          {/*        </div>*/}
-          {/*      </GoogleMapReact>*/}
-          {/*    </Box>*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
-          <Masonry defaultColumns={4} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={6} sx={{ m: 0 }}>
-            {fakeData.map((item, index) => {
-              const isCollapseContent = (index + 1) % 2 === 1;
-              const visibleOrder = Math.floor(index / 3);
-              // TODO: Never use index as key for real data
-              return (
-                <StackAnim order={visibleOrder} step={0.1} key={"invest" + index}>
-                  <Card isCollapseContent={isCollapseContent} {...item} />
+        <Grid container spacing={6}>
+          {listInvests.map((item, index) => {
+            const visibleOrder = Math.floor(index / 3);
+            // TODO: Never use index as key for real data
+            return (
+              <Grid item lg={3} md={4} sm={6} xs={12} key={"invest" + index}>
+                <StackAnim order={visibleOrder} step={0.1}>
+                  <Card isCollapseContent={false} {...item} />
                 </StackAnim>
-              );
-            })}
-          </Masonry>
-        </ContentView>
+              </Grid>
+            );
+          })}
+        </Grid>
         <Box mt={8}>
           <Grid container>
             <Grid item xs={12} sx={{ textAlign: "center" }}>
-              <Button
-                variant={"contained"}
-                endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
-              >
-                Xem thêm
-              </Button>
+              {!isLoadAll ? (
+                <LoadingButton
+                  variant={"contained"}
+                  endIcon={<KeyboardArrowDownRoundedIcon />}
+                  loading={loading}
+                  onClick={handleGetInvest}
+                >
+                  Xem thêm
+                </LoadingButton>
+              ) : (
+                <Typography>Đã tải hết bài viết!</Typography>
+              )}
             </Grid>
           </Grid>
         </Box>
+        <Divider sx={{ mt: 8, mb: 8 }} />
+        <Typography variant={"h2"} mb={5}>
+          Dự án bạn quan tâm
+        </Typography>
+        <Grid container spacing={6}>
+          {fakeData.map((item, index) => {
+            const visibleOrder = Math.floor(index / 3);
+            // TODO: Never use index as key for real data
+            return (
+              <Grid item lg={3} md={4} sm={6} xs={12} key={"invest" + index}>
+                <StackAnim order={visibleOrder} step={0.1}>
+                  <Card isCollapseContent={false} {...item} />
+                </StackAnim>
+              </Grid>
+            );
+          })}
+        </Grid>
       </Container>
     </ScrollPage>
   );
