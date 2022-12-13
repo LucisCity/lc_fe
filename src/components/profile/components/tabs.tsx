@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import InfoForm from "../account/info";
 import ChangePasswordForm from "../account/security";
+import ConnectBank from "../account/connect_banks";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -76,7 +77,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box>
+        <Box pl={{lg: 2}} pt={5} px={0}>
           {children}
         </Box>
       )}
@@ -125,7 +126,7 @@ export default function CustomizedTabs() {
         <ChangePasswordForm/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <ConnectBank/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Three

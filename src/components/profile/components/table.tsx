@@ -478,7 +478,7 @@ export default function CustomPaginationActionsTable() {
       </TableContainer>
       <TablePagination
         component={'div'}
-        rowsPerPageOptions={[10, 20, 30, {label: 'All', value: -1}]}
+        rowsPerPageOptions={[10]}
         colSpan={3}
         count={rows.length}
         rowsPerPage={rowsPerPage}

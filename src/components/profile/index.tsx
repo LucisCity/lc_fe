@@ -6,38 +6,7 @@ import { Background } from "../common/background/background";
 import ScrollPage from "../layout/scroll_page";
 import { Container } from "@mui/system";
 import { useRouter } from "next/router";
-
-export interface ProfileSubPage {
-  name: string;
-  href: string;
-}
-
-export const pages: Array<ProfileSubPage> = [
-  {
-    name: "Dashboard",
-    href: "/profile/dashboard",
-  },
-  {
-    name: "Tài khoản",
-    href: "/profile/account",
-  },
-  {
-    name: "Sản phẩm đầu tư",
-    href: "/profile/investment",
-  },
-  {
-    name: "Membership",
-    href: "/profile/membership",
-  },
-  {
-    name: "Referral",
-    href: "/profile/news",
-  },
-  {
-    name: "Thông báo",
-    href: "/profile/notification",
-  },
-];
+import s from "./index.module.sass"
 
 type Props = {
   children: any;
@@ -48,22 +17,13 @@ export const ProfileLayout = (props: Props) => {
   const router = useRouter();
 
   return (
-    <ScrollPage pt={0}>
-      <Container
-      >
-        <Background
-          style={{
-            position: "fixed",
-            top: 0,
-            width: "100%",
-            zIndex: -1,
-          }}
-        />
+    <ScrollPage>
+      <Background/>
+      <Container component="div" className={s.profileC}>
         <Card
           sx={{
-            minHeight: 800,
+            minHeight: 900,
             width: "inherit",
-            mt: 4,
             mb: 15,
             display: "flex",
             background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
@@ -77,7 +37,12 @@ export const ProfileLayout = (props: Props) => {
           elevation={0}
         >
           <Grid container>
-            <Grid item sm={3} xs={12}>
+            <Grid item sm={3} xs={12} sx={{
+              WebkitBackfaceVisibility: "hidden",
+              MozBackfaceVisibility: "hidden",
+              WebkitTransform: "translate3d(0, 0, 0)",
+              MozTransform: "translate3d(0, 0, 0)",
+            }}>
               <ProfileNavBar activeTab={router.pathname === "/profile" ? "/profile/dashboard" : router.pathname}/>
             </Grid>
             <Grid
@@ -88,6 +53,11 @@ export const ProfileLayout = (props: Props) => {
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: "#f9f9f9",
+
+                WebkitBackfaceVisibility: "hidden",
+                MozBackfaceVisibility: "hidden",
+                WebkitTransform: "translate3d(0, 0, 0)",
+                MozTransform: "translate3d(0, 0, 0)",
               }}
             >
               {props.children}

@@ -1,39 +1,16 @@
 import * as React from 'react';
 import FormControlUnstyled from '@mui/base/FormControlUnstyled';
-import InputUnstyled, { inputUnstyledClasses } from '@mui/base/InputUnstyled';
 import { styled } from '@mui/system';
 import Grid from "@mui/material/Grid";
 import { Box, Button, IconButton, Paper, Switch, SwitchProps, Typography, useMediaQuery } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { CustomInput } from "../components/navbar/custom_input";
 
 const passwords = [
   'Richards_998',
   'Richards',
   'Richards',
 ]
-
-const Input = styled(InputUnstyled, {
-  shouldForwardProp: (prop) => prop !== 'email',
-})(({theme}) => `
-  .${inputUnstyledClasses.input} {
-    width: ${useMediaQuery(theme.breakpoints.up('md')) ? '90%' : '100%'};
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #504C67;
-    background: '#FFFFFF';
-    border: none;
-    border-radius: 8px;
-    height: 50px;
-    padding-left: 17px;
-    
-    // '&:hover': {
-    //   background: "white";
-    //   border-color: "white";
-    // }
-  }
-`
-);
 
 const CustomSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -152,9 +129,11 @@ const PasswordField = (props: PassFieldProps) => {
           justifyContent: "flex-end",
           alignContent: "center",
           alignItems: "center",
+          fontSize: 16,
+          fontWeight: 500,
         }}
       >
-        <Input
+        <CustomInput
           type={showPass ? "text" : "password"}
           sx={{width: "100%", zIndex: 2}}
           // style={{"-webkit-text-security": "square"}}
@@ -180,29 +159,32 @@ const PasswordField = (props: PassFieldProps) => {
 export default function ChangePasswordForm() {
 
   return (
-    <Box pl={{lg: 2}} pt={{lg: 3}} px={{md: 0, sm: 30}}>
-      <form>
-        <Grid container spacing={{md: 0, xs: 2}} direction={{md: "row-reverse", xs: "column"}}>
-          <Grid item md={6} xs={12}>
-            <PasswordField label={"Nhập mật khẩu hiện tại"} defaultValue={passwords[0]}/>
-          </Grid>
-          <Grid item md={6} xs={12}>
+    <form>
+      <Grid container spacing={{sm: 0, xs: 2}} direction={{sm: "row", xs: "column"}}>
+        <Grid item sm={6} xs={12}>
+          <PasswordField label={"Nhập mật khẩu hiện tại"} defaultValue={passwords[0]}/>
+        </Grid>
+        <Grid item xs={12} container>
+          <Grid item sm={6} xs={12}>
             <PasswordField label={"Nhập mật khẩu mới"} defaultValue={passwords[1]}/>
+          </Grid>
+          <Grid item sm={6} xs={12}>
             <PasswordField label={"Xác nhận mật khẩu mới"} defaultValue={passwords[2]}/>
           </Grid>
         </Grid>
-        <Box my={11} display={"flex"} justifyContent={"center"}>
-          <Button
-            variant="contained"
-            sx={{fontSize: 16, fontWeight: 500}}
-          >
+      </Grid>
+      <Box my={11} display={"flex"} justifyContent={"center"}>
+        <Button
+          variant="contained"
+        >
+          <Typography variant={"h5"}>
             Cập nhật thông tin
-          </Button>
-        </Box>
-        <Typography variant={"h3"} pt={2}>Xác minh hai bước</Typography>
-        <AuthMethod label={"Xác thực 2FA"} desc={"Yêu cầu xác nhận 2FA khi đăng nhập tài khoản"}/>
-        <AuthMethod label={"Xác minh tài khoản bằng SMS"} desc={"Yêu cầu xác nhận 2FA cho các giao dịch"}/>
-      </form>
-    </Box>
+          </Typography>
+        </Button>
+      </Box>
+      <Typography variant={"h3"} pt={2}>Xác minh hai bước</Typography>
+      <AuthMethod label={"Xác thực 2FA"} desc={"Yêu cầu xác nhận 2FA khi đăng nhập tài khoản"}/>
+      <AuthMethod label={"Xác minh tài khoản bằng SMS"} desc={"Yêu cầu xác nhận 2FA cho các giao dịch"}/>
+    </form>
   );
 }

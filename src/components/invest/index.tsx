@@ -205,6 +205,7 @@ export const InvestPage = () => {
                 )}
                 options={listInvests}
                 renderOption={(props, option) => (
+                  // @ts-ignore
                   <Box p={1} {...props}>
                     {/* @ts-ignore */}
                     <SearchOption {...option} />
