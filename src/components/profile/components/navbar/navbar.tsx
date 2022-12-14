@@ -99,7 +99,7 @@ const tabs = [
   },
   {
     name: "Ứng dụng",
-    href: "/profile/notification",
+    href: "/profile/app",
     svgSrc: iconSrc + 'notification.svg',
   },
 ]

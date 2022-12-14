@@ -194,4 +194,11 @@ export const COMPONENT_THEME: Components<Omit<Theme, "components">> = {
       },
     },
   },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        borderRadius: 10,
+      }
+    }
+  }
 };
