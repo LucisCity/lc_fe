@@ -85,7 +85,7 @@ export default function AvatarMenu(props: Props) {
         </Link>
 
         <Divider />
-        <Link href="/profile">
+        <Link href="/profile/account">
           <MenuItem>
             <ListItemIcon>
               <SettingsIcon fontSize="small" />
