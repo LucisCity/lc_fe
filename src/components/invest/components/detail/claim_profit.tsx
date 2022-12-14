@@ -30,7 +30,7 @@ export default function ClaimProfitCard(props: Props) {
         <Typography variant="h3" color={props.enable === false ? "#DCDCDC" : "primary"}>
           $ 250.21
         </Typography>
-        <Button variant="contained" sx={{ background: props.enable === false ? "#DCDCDC" : "primary" }}>
+        <Button variant="contained" disabled sx={{ background: props.enable === false ? "#DCDCDC" : "primary" }}>
           Claim
         </Button>
       </Box>

@@ -50,7 +50,7 @@ function SignInSide() {
   const { loading, onRegister, form, confirmModal, onClose } = useRegister();
 
   async function onSubmit(values: any) {
-    onRegister(values.email, values.password, values.confirm_pass);
+    onRegister(values.email, values.password, values.confirm_pass, values.ref_code);
   }
 
   return (
@@ -176,6 +176,18 @@ function SignInSide() {
               {...form.register("confirm_pass", {
                 required: "This is required",
                 minLength: { value: 8, message: "Minimum length should be 8" },
+              })}
+            />
+            <TextField
+              label="Ref code"
+              margin="normal"
+              // required
+              fullWidth
+              error={!!form.formState.errors["ref_code"]}
+              helperText={form.formState.errors["ref_code"]?.message as string}
+              {...form.register("ref_code", {
+                // required: "This is required",
+                // minLength: { value: 8, message: "Minimum length should be 8" },
               })}
             />
             {/* <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" /> */}

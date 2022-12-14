@@ -7,10 +7,14 @@ import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { isStrongPass } from "../../../utils/password.util";
 
 const REGISTER_MUT = gql`
-  mutation register($email: String!, $password: String!) {
-    register(email: $email, password: $password)
+  mutation register($email: String!, $password: String!, $ref_code: String) {
+    register(email: $email, password: $password, ref_code: $ref_code)
   }
 `;
+
+const ERROR_MESSAGES: { [key: string]: string } = {
+  ACCOUNT_EXIST: "Account exist",
+};
 
 export default function useRegister() {
   const form = useForm();
@@ -23,11 +27,11 @@ export default function useRegister() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => enqueueSnackbar(ERROR_MESSAGES[err.code] ?? err.message, { variant: "error" }));
     },
   });
 
-  async function onRegister(email: string, password: string, confirmPass: string) {
+  async function onRegister(email: string, password: string, confirmPass: string, refCode?: string) {
     if (!isStrongPass(password)) {
       form.setError(
         "password",
@@ -45,6 +49,8 @@ export default function useRegister() {
       variables: {
         email: email,
         password: password,
+        // eslint-disable-next-line camelcase
+        ref_code: refCode,
       },
     });
   }

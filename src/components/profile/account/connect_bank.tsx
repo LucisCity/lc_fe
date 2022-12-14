@@ -7,6 +7,7 @@ import { styled } from "@mui/system";
 import FormControlUnstyled from "@mui/base/FormControlUnstyled";
 import { CustomInput } from "../components/navbar/custom_input";
 import SvgIcon from "../../common/svg_icon";
+import s from "./connect_bank.module.scss";
 
 interface BankConnectedProps {
   info: {
@@ -19,7 +20,11 @@ interface BankConnectedProps {
 
 const BankConnected = (props: BankConnectedProps) => {
   return (
-    <Card elevation={0} sx={{display: 'flex', width: 770, height: 120, mb: 4}}>
+    <Card
+      className={s.addBankCard}
+      elevation={0}
+      sx={{display: 'flex', width: "100%", minWidth: 450, height: 120, mb: 4}}
+    >
       <Box p={2} sx={{display: 'flex', width: "100%"}}>
         <CardMedia
           component="img"
@@ -41,12 +46,19 @@ const BankConnected = (props: BankConnectedProps) => {
             </Typography>
           </Box>
           <Box
+            className={s.closeButton}
             border="1.5px solid #504C67"
             width={22}
             height={22}
             mr={5}
             borderRadius={10}
-            sx={{display: "flex", alignItems: "center"}}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              "&:hover": {
+                background: "#F1F1F1",
+              }
+            }}
           >
             <CloseOutlinedIcon
               sx={{
@@ -73,7 +85,8 @@ const AddBank = (props: AddBankProps) => {
       sx={{
         display: 'flex',
         flexDirection: "row",
-        width: 770,
+        width: "100%",
+        minWidth: 450,
         height: 120,
         alignItems: "center",
         marginBottom: 6,

@@ -1,0 +1,15 @@
+.addBankCard .closeButton {
+  visibility: hidden;
+
+  @media (max-width: 768px) {
+    visibility: visible;
+  }
+}
+
+.addBankCard:hover .closeButton {
+  visibility: visible;
+}
+
+.addBankCard:hover {
+  cursor: pointer;
+}

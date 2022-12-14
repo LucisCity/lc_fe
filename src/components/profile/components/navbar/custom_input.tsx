@@ -11,7 +11,7 @@ export const CustomInput = styled(InputUnstyled, {
     font-weight: 400;
     line-height: 1.5;
     color: #504C67;
-    background: '#FFFFFF';
+    background: #fff;
     border: none;
     border-radius: 8px;
     height: 50px;
