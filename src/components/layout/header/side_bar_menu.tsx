@@ -1,7 +1,7 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import { Box, styled } from "@mui/system";
-import { headerHeight, HeaderNextLink, IPage, LogoImage, pages, ToggleDrawer } from ".";
+import {headerHeight, HeaderNextLink, IPage, LogoImage, mobileHeaderHeight, pages, ToggleDrawer} from ".";
 import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
@@ -10,7 +10,7 @@ const widthSidebar = 360;
 const MenuListStyled = styled("div")(({ theme }) => ({
   width: widthSidebar,
   height: "100%",
-  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 119.12%)",
   backdropFilter: "blur(9px)",
   paddingTop: theme.spacing(10),
   paddingBottom: theme.spacing(10),
@@ -20,6 +20,9 @@ const MenuListStyled = styled("div")(({ theme }) => ({
 const DrawerHeader = styled("div")(({ theme }) => ({
   width: widthSidebar,
   height: headerHeight,
+  [theme.breakpoints.down("sm")]: {
+    height: mobileHeaderHeight + 5, // I don't know why 5
+  },
   background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
   backdropFilter: "blur(9px)",
 }));
@@ -91,9 +94,9 @@ export const SideBarMenu = (props: IProps) => {
           <Container sx={{ height: "100%" }}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={6}>
-                <Box display={"flex"} width={"100%"} height={"100%"} alignItems={"center"}>
-                  <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />
-                </Box>
+                {/*<Box display={"flex"} width={"100%"} height={"100%"} alignItems={"center"}>*/}
+                {/*  <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />*/}
+                {/*</Box>*/}
               </Grid>
               <Grid item xs={6}>
                 <Right>
