@@ -119,6 +119,11 @@ const fakeData2 = [
   },
 ];
 
+const fadeVariant = {
+  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 20 },
+};
+
 const Search = styled(Autocomplete)(({ theme }) => ({
   width: 290,
   [theme.breakpoints.down("sm")]: {
@@ -163,10 +168,14 @@ export const InvestPage = () => {
           </Typography>
           <Grid container spacing={6}>
             <Grid item xs={12} md={6}>
-              <HighlightCard {...fakeData[0]} />
+              <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
+                <HighlightCard {...fakeData[0]} />
+              </StackAnim>
             </Grid>
             <Grid item xs={12} md={6}>
-              <HighlightCard {...fakeData[1]} />
+              <StackAnim order={1} step={0.1} variants={fadeVariant} duration={0.6}>
+                <HighlightCard {...fakeData[1]} />
+              </StackAnim>
             </Grid>
           </Grid>
         </Box>
