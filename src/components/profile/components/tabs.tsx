@@ -7,6 +7,7 @@ import InfoForm from "../account/info";
 import ChangePasswordForm from "../account/security";
 import ConnectBank from "../account/connect_bank";
 import ConnectWallet from "../account/connect_wallet";
+import Verification from "../account/verification";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -133,7 +134,7 @@ export default function CustomizedTabs() {
         <ConnectWallet/>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Item Three
+        <Verification/>
       </TabPanel>
     </Box>
   );
