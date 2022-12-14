@@ -69,7 +69,7 @@ const iconSrc = "/assets/imgs/icon/";
 const tabs = [
   {
     name: "Dashboard",
-    href: "/profile/dashboard",
+    href: "/profile",
     svgSrc: iconSrc + 'dashboard.svg',
   },
   {
@@ -83,14 +83,9 @@ const tabs = [
     svgSrc: iconSrc + 'investment.svg',
   },
   {
-    name: "Membership",
-    href: "/profile/membership",
-    svgSrc: iconSrc + 'investment.svg',
-  },
-  {
     name: "Referral",
     href: "/profile/referral",
-    svgSrc: iconSrc + 'investment.svg',
+    svgSrc: iconSrc + 'referral.svg',
   },
   {
     name: "Thông báo",

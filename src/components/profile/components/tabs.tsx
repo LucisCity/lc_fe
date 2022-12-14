@@ -5,7 +5,8 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import InfoForm from "../account/info";
 import ChangePasswordForm from "../account/security";
-import ConnectBank from "../account/connect_banks";
+import ConnectBank from "../account/connect_bank";
+import ConnectWallet from "../account/connect_wallet";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -129,7 +130,7 @@ export default function CustomizedTabs() {
         <ConnectBank/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Three
+        <ConnectWallet/>
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Three
