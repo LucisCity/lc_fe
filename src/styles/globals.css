@@ -55,3 +55,8 @@ a {
     padding-top: var(--page-padding-top-mobile);
   }
 }
+
+/* .pswp img {
+  max-width: none;
+  object-fit: contain;
+} */

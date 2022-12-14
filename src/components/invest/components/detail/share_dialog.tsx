@@ -142,7 +142,7 @@ export default function ShareDialog() {
                   onCopy();
                 }}
               >
-                Coppy
+                Copy
               </Button>
             </>
           )}

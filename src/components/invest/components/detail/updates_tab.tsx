@@ -52,8 +52,8 @@ export default function UpdatesTab() {
           content="Tầm view đẹp nhất: đối diện công viên ánh sáng 36 hecta, 
           khu biệt thự thấp tầng Mannhattan, bến du thuyền, sông Tắc và cả sông Đồng Nai.
           Không gian tựa resort nghỉ dưỡng 5 sao, xanh mát, rộng rãi, kiến trúc sang trọng – độc đáo – khác biệt."
-          isEnd
         />
+        <Pharse time={``} title="" content="" isEnd />
       </Timeline>
     </Box>
   );
