@@ -2,7 +2,7 @@ import * as React from 'react';
 import FormControlUnstyled from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
 import Grid from "@mui/material/Grid";
-import { Box, Button, IconButton, Paper, Switch, SwitchProps, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, IconButton, Paper, Switch, SwitchProps, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { CustomInput } from "../components/navbar/custom_input";
 
