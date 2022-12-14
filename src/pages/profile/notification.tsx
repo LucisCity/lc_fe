@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import DocHead from "../../components/layout/doc_head";
 import PageLayout from "../../components/layout/PageLayout";
 import { ProfileLayout } from "../../components/profile";
-import { ProfileDashboard } from "../../components/profile/dashboard";
+import { ProfileNotification } from "../../components/profile/notification";
 
 const Notification: NextPage = () => {
   return (
@@ -10,7 +10,7 @@ const Notification: NextPage = () => {
       <DocHead/>
       <PageLayout isShowFooter={false}>
         <ProfileLayout>
-          <ProfileDashboard/>
+          <ProfileNotification/>
         </ProfileLayout>
       </PageLayout>
     </>
