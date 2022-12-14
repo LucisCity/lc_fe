@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/system";
-import FormControlUnstyled from "@mui/base/FormControlUnstyled";
-import { CustomInput } from "../components/navbar/custom_input";
-import SvgIcon from "../../common/svg_icon";
 import s from "./connect_bank.module.scss";
 
 const imgSrc = "/assets/imgs/account/wallet/";

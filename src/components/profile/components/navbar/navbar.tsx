@@ -1,11 +1,10 @@
 /* eslint-disable */
 import { Box } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
-import { Button, Divider, Typography, useMediaQuery } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import React from "react";
-import { useTheme } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import SvgIcon from "../../../common/svg_icon";
 import s from "./navbar.module.scss";
