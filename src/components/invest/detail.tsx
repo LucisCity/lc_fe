@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
@@ -131,14 +131,17 @@ export function InvestDetailPage() {
           }}
         >
           {fakeData.map((item, index) => {
-            return <Card key={"invest" + index} {...item} isCollapseContent={false} />;
+            return (
+              <Box key={"invest" + index}>
+                <Card key={"invest" + index} {...item} isCollapseContent={false} />
+              </Box>
+            );
           })}
         </Box>
         <Divider sx={{ my: 8 }} />
         <Typography variant="h3" mb={6}>
           Dự án bạn đã xem
         </Typography>
-
         <Box
           sx={{
             width: "100%",
@@ -148,7 +151,11 @@ export function InvestDetailPage() {
           }}
         >
           {fakeData.map((item, index) => {
-            return <Card key={"invest" + index} {...item} isCollapseContent={false} />;
+            return (
+              <Box key={"invest" + index}>
+                <Card key={"invest" + index} {...item} isCollapseContent={false} />
+              </Box>
+            );
           })}
         </Box>
       </Box>
