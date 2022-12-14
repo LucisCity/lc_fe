@@ -18,6 +18,8 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Divider, Stack } from "@mui/material";
+import ConfirmDialog from "../common/confirm_dialog";
+import { useModal } from "../../hooks/use_modal";
 
 function Copyright(props: any) {
   return (
@@ -45,7 +47,7 @@ function SignInSide() {
     // ux_mode: "popup",
     // flow: "auth-code",
   });
-  const { loading, onRegister, form } = useRegister();
+  const { loading, onRegister, form, confirmModal, onClose } = useRegister();
 
   async function onSubmit(values: any) {
     onRegister(values.email, values.password, values.confirm_pass);
@@ -95,7 +97,7 @@ function SignInSide() {
               }}
               startIcon={<Box component="img" src="/assets/imgs/auth/ic_google.svg" alt="" />}
             >
-              Signup with Google
+              Sign up with Google
             </Button>
             <FacebookLogin
               appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
@@ -112,7 +114,7 @@ function SignInSide() {
                   startIcon={<Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />}
                   onClick={renderProps.onClick}
                 >
-                  Signup with Facebook
+                  Sign up with Facebook
                 </Button>
               )}
             />
@@ -185,6 +187,12 @@ function SignInSide() {
           </Box>
         </Box>
       </Grid>
+      <ConfirmDialog
+        isOpen={confirmModal.isOpen}
+        onClose={onClose}
+        action={["Ok"]}
+        content="Register successfully, please check your email to verify your account"
+      />
     </Grid>
   );
 }

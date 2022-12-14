@@ -2,6 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
+import { useModal } from "../../../hooks/use_modal";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { isStrongPass } from "../../../utils/password.util";
 
@@ -14,10 +15,11 @@ const REGISTER_MUT = gql`
 export default function useRegister() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const confirmModal = useModal();
 
   const [register, { loading }] = useMutation(REGISTER_MUT, {
     onCompleted: () => {
-      Router.push("/login");
+      confirmModal.onOpen();
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
@@ -47,9 +49,15 @@ export default function useRegister() {
     });
   }
 
+  const onClose = () => {
+    confirmModal.onClose();
+    Router.push("/login");
+  };
   return {
     onRegister,
     form,
     loading,
+    confirmModal,
+    onClose,
   };
 }

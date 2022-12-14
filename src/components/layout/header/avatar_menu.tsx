@@ -76,7 +76,8 @@ export default function AvatarMenu(props: Props) {
       >
         <Link href="/profile">
           <MenuItem>
-            <Avatar /> {props.username ?? "My account"}
+            <Avatar src={props.avatar ?? ""} />
+            {props.username ?? "My account"}
             {/* <ListItemIcon>
               <EditIcon fontSize="small" />
             </ListItemIcon>
