@@ -14,7 +14,6 @@ interface TabProps {
   href: string;
   name: string;
   svgSrc: string;
-  // setActiveTab?: any;
   logoutButton?: boolean;
   active?: boolean;
   topLogoutButton?: boolean;
@@ -94,7 +93,7 @@ const tabs = [
   },
   {
     name: "Ứng dụng",
-    href: "/profile/notification",
+    href: "/profile/application",
     svgSrc: iconSrc + 'notification.svg',
   },
 ]

@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 import moment from "moment";
+import Link from "next/link";
 
 interface NotiCardProps {
   title: string;
@@ -13,31 +14,32 @@ interface NotiCardProps {
 }
 
 const NotiCard = (props: NotiCardProps) => {
-  console.log(props.seen);
 
   return (
-    <Card
-      elevation={0}
-      sx={{
-        mb: 4,
-        borderRadius: 4,
-        background: props.seen ? '#EEE' : '#fff'
-      }}
-    >
-      <CardContent sx={{py: 5, px: 6}}>
-        <Box sx={{display: "flex", justifyContent: "space-between"}}>
-          <Typography variant={"h3"}>
-            {props.title}
+    <Link href={props.link}>
+      <Card
+        elevation={0}
+        sx={{
+          mb: 4,
+          borderRadius: 4,
+          background: props.seen ? '#EEE' : '#fff',
+        }}
+      >
+        <CardContent sx={{py: 5, px: 6}}>
+          <Box sx={{display: "flex", justifyContent: "space-between"}}>
+            <Typography variant={"h3"}>
+              {props.title}
+            </Typography>
+            <Typography color={"#7A7A7A"}>
+              {moment(props.date).format("MMM D, YYYY HH:mm")}
+            </Typography>
+          </Box>
+          <Typography mt={3} color={"#A19EB7"}>
+            {props.content}
           </Typography>
-          <Typography color={"#7A7A7A"}>
-            {moment(props.date).format("MMM D, YYYY HH:mm")}
-          </Typography>
-        </Box>
-        <Typography mt={3} color={"#A19EB7"}>
-          {props.content}
-        </Typography>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   )
 }
 
