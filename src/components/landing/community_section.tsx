@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import AnimWhenVisible from "../anim";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { headerHeight } from "../layout/header";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 
 type Props = {
   index?: number;
@@ -10,7 +11,6 @@ type Props = {
 
 export default function ComunitySection(props: Props) {
   const theme = useTheme();
-
   return (
     <Box
       className={props.fullscreen ? "fullscreenPage" : undefined}
@@ -107,7 +107,7 @@ export default function ComunitySection(props: Props) {
             >
               <Button
                 variant="outlined"
-                endIcon={<Box component="img" src="/assets/imgs/landing/ic_discord_blue.svg" alt="" />}
+                endIcon={<FacebookOutlinedIcon htmlColor={"#6555ee"} />}
                 sx={
                   {
                     //height: ["40px", "50px"],
@@ -119,7 +119,7 @@ export default function ComunitySection(props: Props) {
               </Button>
               <Button
                 variant="outlined"
-                endIcon={<Box component="img" src="/assets/imgs/landing/ic_discord_blue.svg" alt="" />}
+                endIcon={<Box component="img" src="/assets/imgs/landing/zalo.svg" height={20} width={20} alt="" />}
                 sx={
                   {
                     //height: ["40px", "50px"],

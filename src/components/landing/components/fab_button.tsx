@@ -8,23 +8,23 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import zIndex from "@mui/material/styles/zIndex";
 import { useSwiper } from "swiper/react";
-import {useReleaseOver} from "../../../hooks/use_long_press";
-import {useCallback} from "react";
-import {useRouter} from "next/router";
+import { useReleaseOver } from "../../../hooks/use_long_press";
+import { useCallback } from "react";
+import { useRouter } from "next/router";
 
 const actions = [
   { icon: <TelegramIcon />, name: "Telegram" },
-  { icon: <img src="/assets/imgs/landing/ic_zalo.svg" alt="zalo icon" />, name: "Zalo" },
+  { icon: <img src="/assets/imgs/landing/zalo.svg" alt="zalo icon" width={20} />, name: "Zalo" },
   { icon: <LiveHelpIcon />, name: "FAQs" },
   { icon: <KeyboardArrowUpIcon />, name: "Jump to top" },
 ];
 type Props = {
   bOffset?: number;
-}
+};
 export const FabButton = (props: Props) => {
   const swiper = useSwiper();
   const router = useRouter();
-  const onReleaseAfterEnoughTime = useCallback(() => router.push('/debug'), [router]);
+  const onReleaseAfterEnoughTime = useCallback(() => router.push("/debug"), [router]);
   const [onPressStart, onPressRelease] = useReleaseOver(6000, onReleaseAfterEnoughTime);
 
   const fabAction = (name: string) => {
@@ -32,20 +32,19 @@ export const FabButton = (props: Props) => {
       case "Jump to top":
         if (swiper) {
           swiper.slideTo(0);
-        }
-        else {
+        } else {
           // try swiper on landing
           try {
             // @ts-ignore
-            const swiper = document.querySelector('#landing-page-c').swiper;
+            const swiper = document.querySelector("#landing-page-c").swiper;
             swiper.slideTo(0);
           } catch (e) {
             // No swiper or on mobile UI
             window.scroll({
               top: 0,
               left: 0,
-              behavior: 'smooth'
-            })
+              behavior: "smooth",
+            });
           }
         }
         break;
@@ -55,12 +54,7 @@ export const FabButton = (props: Props) => {
     }
   };
   return (
-    <div
-      onMouseDown={onPressStart}
-      onMouseUp={onPressRelease}
-      onTouchStart={onPressStart}
-      onTouchEnd={onPressRelease}
-    >
+    <div onMouseDown={onPressStart} onMouseUp={onPressRelease} onTouchStart={onPressStart} onTouchEnd={onPressRelease}>
       <SpeedDial
         ariaLabel="Live Support"
         sx={{
