@@ -1,9 +1,9 @@
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import Footer from "./footer";
 import Header from "./header";
 import BottomNavigation from "./bottom_navigation";
 import LayoutStore from "./layout.store";
-import {FabButton} from "../landing/components/fab_button";
+import { FabButton } from "../landing/components/fab_button";
 
 type Props = {
   children: any;
@@ -29,10 +29,10 @@ export default observer(function Layout(props: Props) {
         style={pageRelativeStyle}
       >
         {children}
-        {isShowFooter && <Footer disabledBackground hasBottomNav={bottomNavVisible}/>}
+        {isShowFooter && <Footer disabledBackground hasBottomNav={bottomNavVisible} />}
       </main>
       {bottomNavVisible && <BottomNavigation />}
-      <FabButton bOffset={bottomNavVisible ? bottomNavHeight : 0}/>
+      <FabButton bOffset={bottomNavVisible ? bottomNavHeight : 0} />
     </>
   );
 });

@@ -26,6 +26,7 @@ export default class UserStore {
     if (typeof window == "undefined") {
       return;
     }
+    console.log("loadFromLocal: ", this._isLoadedFromLocal);
     if (this._isLoadedFromLocal) {
       return;
     }
@@ -33,10 +34,10 @@ export default class UserStore {
     if (this._token) {
       return;
     }
-    // const userLocal = StorageHelper.getUser();
-    // if (userLocal) {
-    //   this._user = userLocal;
-    // }
+    const userLocal = StorageHelper.getUser();
+    if (userLocal) {
+      this._user = userLocal;
+    }
     const tokenLocal = StorageHelper.getToken();
     if (tokenLocal && tokenLocal !== "") {
       this._token = tokenLocal;

@@ -15,7 +15,7 @@ import useLogin from "./hooks/use_login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 
 function Copyright(props: any) {
   return (
@@ -119,14 +119,21 @@ function SignInSide() {
                 )}
               />
             </Stack>
-            {/* <Divider
+            <Box
               sx={{
-                margin: "0px auto",
-                mt: "16px",
-                mb: "12",
-                width: "200px",
+                display: "flex",
+                alignItems: "center",
+                gap: 3,
               }}
-            /> */}
+            >
+              <Divider sx={{ flex: "1" }} />
+              <Box>
+                <Typography textAlign="center" variant="body1">
+                  Or
+                </Typography>
+              </Box>
+              <Divider sx={{ flex: "1" }} />
+            </Box>
             <TextField
               margin="normal"
               //   required

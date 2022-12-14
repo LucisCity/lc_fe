@@ -329,13 +329,12 @@ const Header = observer((props: IProps) => {
                       // },
                     })}
                   >
-                    <img src="/assets/imgs/landing/global.svg" alt="i18n" />
+                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" mr="8px" />
                   </IconButton>
-                  {JSON.stringify(userStore.user)}
                   {userStore.isLogedIn ? (
                     <AvatarMenu
                       avatar={userStore.user?.profile?.avatar?.toString()}
-                      username={userStore.user?.email?.toString()}
+                      username={userStore.user?.profile?.display_name?.toString() ?? userStore.user?.email?.toString()}
                       onLogout={() => {
                         userStore.logout();
                       }}

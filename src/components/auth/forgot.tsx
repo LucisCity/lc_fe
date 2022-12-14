@@ -12,16 +12,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import useForgot from "./hooks/use_forgot";
 import { LoadingButton } from "@mui/lab";
+
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {"Copyright © "}
-      <Link color="inherit" href="https://bc68.fun/">
-        LucisCity
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+    <Box sx={{ display: "flex", justifyContent: "center", gap: "12px", mt: "24px" }}>
+      <Link color="primary" href="/login">
+        Sign In
+      </Link>
+      <Link color="primary" href="/register">
+        Sign Up
+      </Link>
+    </Box>
   );
 }
 
