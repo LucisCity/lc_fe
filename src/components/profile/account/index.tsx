@@ -6,11 +6,11 @@ import CustomizedTabs from "../components/tabs";
 export const ProfileAccount = () => {
 
   return (
-    <Box mx={{md: 10, xs: 3}} my={{md: 7, xs: 3}}>
+    <Box mx={{sm: 10, xs: 3}} my={7}>
       <Typography
         fontWeight={700}
-        fontSize={{md: 32, xs: 25}}
-        textAlign={{md: "left", xs: "center"}}
+        fontSize={{sm: 32, xs: 25}}
+        textAlign={{sm: "left", xs: "center"}}
       >
         Tài khoản
       </Typography>

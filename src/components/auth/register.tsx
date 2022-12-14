@@ -17,17 +17,15 @@ import useLogin from "./hooks/use_login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {"Copyright © "}
-      <Link color="inherit" href="https://bc68.fun/">
-        LucisCity
+      {"Already have an account? "}
+      <Link color="primary" href="/login">
+        Sign In
       </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -59,7 +57,7 @@ function SignInSide() {
         item
         xs={false}
         sm={4}
-        md={7}
+        md={6.5}
         sx={{
           backgroundImage: "url(assets/imgs/landing/background-intro.jpg)",
           backgroundRepeat: "no-repeat",
@@ -68,7 +66,7 @@ function SignInSide() {
           backgroundPosition: "center",
         }}
       />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5.5} component={Paper} elevation={6} square>
         <Box
           sx={{
             my: 8,
@@ -84,18 +82,21 @@ function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Stack direction="row" width="100%" spacing="8px" my="12px">
+          <Stack direction={["column", "column", "row"]} gap={2} my="12px" sx={{ width: "100%" }}>
             <Button
               onClick={() => {
                 loginGG();
               }}
               variant="outlined"
               sx={{
-                height: "39px",
-                flex: "1",
+                // height: ["20px", "39px"],
+                flex: ["auto", "1"],
+                fontSize: ["14px", "12px", "12px", "14px"],
               }}
               startIcon={<Box component="img" src="/assets/imgs/auth/ic_google.svg" alt="" />}
-            ></Button>
+            >
+              Signup with Google
+            </Button>
             <FacebookLogin
               appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
               // autoLoad
@@ -104,16 +105,34 @@ function SignInSide() {
                 <Button
                   variant="outlined"
                   sx={{
-                    height: "39px",
-                    flex: "1",
+                    // height: "39px",
+                    flex: ["auto", "1"],
+                    fontSize: ["14px", "12px", "12px", "14px"],
                   }}
+                  startIcon={<Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />}
                   onClick={renderProps.onClick}
                 >
-                  <Box component="img" src="/assets/imgs/auth/ic_facebook.svg" alt="" />
+                  Signup with Facebook
                 </Button>
               )}
             />
           </Stack>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 3,
+              width: "100%",
+            }}
+          >
+            <Divider sx={{ flex: "1" }} />
+            <Box>
+              <Typography textAlign="center" variant="body1">
+                Or
+              </Typography>
+            </Box>
+            <Divider sx={{ flex: "1" }} />
+          </Box>
           <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
             <TextField
               label="Email Address"
