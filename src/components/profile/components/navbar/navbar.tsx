@@ -1,11 +1,10 @@
 /* eslint-disable */
 import { Box } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
-import { Button, Divider, Typography, useMediaQuery } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import React from "react";
-import { useTheme } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import SvgIcon from "../../../common/svg_icon";
 import s from "./navbar.module.scss";
@@ -14,7 +13,6 @@ interface TabProps {
   href: string;
   name: string;
   svgSrc: string;
-  // setActiveTab?: any;
   logoutButton?: boolean;
   active?: boolean;
   topLogoutButton?: boolean;
@@ -69,7 +67,7 @@ const iconSrc = "/assets/imgs/icon/";
 const tabs = [
   {
     name: "Dashboard",
-    href: "/profile/dashboard",
+    href: "/profile",
     svgSrc: iconSrc + 'dashboard.svg',
   },
   {
@@ -83,14 +81,9 @@ const tabs = [
     svgSrc: iconSrc + 'investment.svg',
   },
   {
-    name: "Membership",
-    href: "/profile/membership",
-    svgSrc: iconSrc + 'investment.svg',
-  },
-  {
     name: "Referral",
     href: "/profile/referral",
-    svgSrc: iconSrc + 'investment.svg',
+    svgSrc: iconSrc + 'referral.svg',
   },
   {
     name: "Thông báo",

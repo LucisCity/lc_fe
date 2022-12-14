@@ -1,4 +1,4 @@
-import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
+import { AppBar, Button, Container, Grid, IconButton, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import Link from "next/link";
 import { Right } from "../../common/right";
@@ -12,12 +12,13 @@ import { observer } from "mobx-react-lite";
 
 export const headerHeight = 90;
 export const mobileHeaderHeight = 60;
-const HeaderStyled = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{
+const HeaderStyled = styled(AppBar, { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
   isFixed?: boolean;
 }>(({ theme, open, isFixed }) => ({
   width: "100%",
   height: extendHeaderHeight,
+  color: theme.palette.text.primary,
   background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
   backdropFilter: "blur(12px)",
   position: isFixed ? "absolute" : "fixed",
@@ -54,14 +55,16 @@ const MenuBar = styled("div")(({ theme }) => ({
   },
 }));
 
-const ExtendBox = styled("div")(({ theme }) => ({
+const ExtendBox = styled("div", { shouldForwardProp: (prop) => prop !== "open" })<{
+  open?: boolean;
+}>(({ theme, open }) => ({
   width: "100%",
-  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+  backgroundColor: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
   backdropFilter: "blur(4px)",
   height: extendHeaderHeight,
-  paddingLeft: theme.spacing(3),
-  paddingRight: theme.spacing(3),
-  paddingTop: theme.spacing(40),
+  paddingLeft: theme.spacing(6),
+  paddingRight: theme.spacing(6),
+  paddingTop: theme.spacing(38),
   borderLeft: "1px solid",
   borderImageSlice: 1,
   borderImageSource: "linear-gradient(102.67deg, #C5CEE8 -18.34%, #DFE7FD -18.33%, rgba(207, 216, 241, 0.12) 92.76%)",
@@ -73,7 +76,15 @@ const ExtendBox = styled("div")(({ theme }) => ({
     paddingRight: 0,
     // height: "100vh",
   },
-
+  //@ts-ignore
+  transition: theme.transitions.create(["background-color"], { duration: 800 }),
+  ...(!open && {
+    //@ts-ignore
+    backgroundColor: "none",
+    backdropFilter: "none",
+    //@ts-ignore
+    transition: theme.transitions.create(["background-color"], { duration: 800 }),
+  }),
   // display: "flex",
   // flexDirection: "column",
 }));
@@ -82,28 +93,31 @@ const SupportPage = styled("div", { shouldForwardProp: (prop) => prop !== "open"
   ({ theme, open }) => ({
     width: "100%",
     position: "absolute",
-    top: 0,
+    bottom: 0,
     zIndex: -1,
     height: extendHeaderHeight,
-    //@ts-ignore
-    transition: theme.transitions.create(["height", "transform"], { duration: 800 }),
-    ...(!open && {
-      transform: "translateY(-500px)",
-      //@ts-ignore
-      transition: theme.transitions.create(["transform", "height"], { duration: 800 }),
-    }),
   }),
 );
 
-const GridDot = styled("img")(({ theme }) => ({
-  position: "absolute",
-  top: 0,
-  zIndex: -1,
-  right: 0,
-  [theme.breakpoints.down("sm")]: {
-    display: "none",
-  },
-}));
+const GridDot = styled("img", { shouldForwardProp: (prop) => prop !== "open" })<{ open?: boolean }>(
+  ({ theme, open }) => ({
+    position: "absolute",
+    top: 0,
+    zIndex: -1,
+    right: 0,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+    opacity: 1,
+    //@ts-ignore
+    transition: theme.transitions.create(["opacity"], { duration: 800 }),
+    ...(!open && {
+      opacity: 0,
+      //@ts-ignore
+      transition: theme.transitions.create(["opacity"], { duration: 800 }),
+    }),
+  }),
+);
 
 const CoinImage = styled("img")(({ theme }) => ({
   position: "absolute",
@@ -314,23 +328,15 @@ const Header = observer((props: IProps) => {
                 })}
               >
                 <Right>
+                  <IconButton>
+                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" mr="8px" />
+                  </IconButton>
                   {!userStore.isLogedIn ? (
                     <Button LinkComponent={Link} href={"/login"} variant="contained">
                       Đăng nhập
                     </Button>
                   ) : null}
 
-                  <IconButton
-                    sx={(theme) => ({
-                      ml: theme.spacing(3),
-                      // [theme.breakpoints.down("md")]: {
-                      //   ml: theme.spacing(2),
-                      //   p: 1,
-                      // },
-                    })}
-                  >
-                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" mr="8px" />
-                  </IconButton>
                   {userStore.isLogedIn ? (
                     <AvatarMenu
                       avatar={userStore.user?.profile?.avatar?.toString()}
@@ -363,17 +369,24 @@ const Header = observer((props: IProps) => {
         <SupportPage open={slideActive === 0}>
           <Container>
             <Grid container>
-              <Grid item sm={3} xs={0} />
-              <Grid item xs={12} sm={6} sx={{ position: "relative" }}>
-                <ExtendBox>
+              <Grid item sm={2} md={3} xs={0} />
+              <Grid item xs={12} sm={7} md={6} sx={{ position: "relative" }}>
+                <ExtendBox open={slideActive === 0}>
                   <Typography
                     variant="h2"
                     fontSize={28}
                     sx={(theme) => ({
                       // pt: "40px",
-                      // [theme.breakpoints.down("md")]: {
-                      //   fontSize: 36,
-                      // },
+
+                      [theme.breakpoints.down("lg")]: {
+                        fontSize: 22,
+                      },
+                      [theme.breakpoints.down("md")]: {
+                        fontSize: 20,
+                      },
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: 28,
+                      },
                     })}
                   >
                     TRỞ THÀNH NHÀ ĐẦU TƯ TẠI LUCIS CITY
@@ -381,7 +394,7 @@ const Header = observer((props: IProps) => {
                   <Typography
                     sx={(theme) => ({
                       pt: "28px",
-                      [theme.breakpoints.down("md")]: {
+                      [theme.breakpoints.down("lg")]: {
                         fontSize: 14,
                       },
                     })}
@@ -408,8 +421,8 @@ const Header = observer((props: IProps) => {
                 </ExtendBox>
                 <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />
               </Grid>
-              <Grid item sm={3} xs={0} sx={{ position: "relative" }}>
-                <GridDot src={"/assets/imgs/landing/header-decor.png"} />
+              <Grid item md={3} xs={0} sx={{ position: "relative" }}>
+                <GridDot open={slideActive === 0} src={"/assets/imgs/landing/header-decor.png"} />
               </Grid>
             </Grid>
           </Container>

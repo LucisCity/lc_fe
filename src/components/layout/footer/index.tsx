@@ -194,7 +194,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                 <Box mt={{ sm: 20, xs: 0 }}>
                   <UlComponent>
                     <li>
-                      <Box display={"flex"} alignItems={"center"} pl={1}>
+                      <Box display={"flex"} alignItems={"center"}>
                         <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
                         <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
                         <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
@@ -202,7 +202,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                     </li>
                     <li>
                       <Button
-                        sx={{ textTransform: "none" }}
+                        sx={{ textTransform: "none", padding: 0 }}
                         startIcon={isMobile ? <InstallMobileOutlined /> : <InstallDesktopOutlined />}
                         onClick={promptInstallApp}
                         size={"small"}
