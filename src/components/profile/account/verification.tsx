@@ -96,18 +96,18 @@ const VerifyBox = (props: VerifyBoxProps) => {
 const verifyBoxes: VerifyBoxProps[] = [
   {
     title: "Mặt trước thẻ CCCD/CMTND",
-    imgDesc: "Ảnh mặt trước\nthẻ CCCD/CMTND",
+    imgDesc: "Ảnh mặt trước thẻ CCCD/CMTND",
     instruction: "Chụp ảnh mặt trước thẻ CCCD/CMT rõ ràng không bị chay, quăn mép, mờ chữ & hình ảnh",
   },
   {
     title: "Mặt sau thẻ CCCD/CMTND",
-    imgDesc: "Ảnh mặt sau\nthẻ CCCD/CMTND",
+    imgDesc: "Ảnh mặt sau thẻ CCCD/CMTND",
     instruction: "Chụp ảnh mặt sau thẻ CCCD/CMT rõ ràng không bị chay, quăn mép, mờ chữ & hình ảnh",
   },
   {
-    title: "Mặt chân dung cầm thẻ CCCD/CMTND",
-    imgDesc: "Ảnh chân dung cầm\nthẻ CCCD/CMTND",
-    instruction: "Chụp ảnh chân dung cầm thẻ CCCD/CMT nhằm mục đích bảo mật, " +
+    title: "Ảnh chân dung cầm thẻ CCCD/CMTND mặt trước",
+    imgDesc: "Ảnh người cầm thẻ CCCD/CMTND",
+    instruction: "Chụp ảnh chân dung cầm thẻ CCCD/CMT mặt trước nhằm mục đích bảo mật, " +
       "ảnh sẽ được dùng để xác minh danh tính khi có xảy ra sự cố hoặc tranh chấp",
   },
 ]
