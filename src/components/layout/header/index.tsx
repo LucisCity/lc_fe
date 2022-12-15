@@ -270,7 +270,12 @@ const Header = observer((props: IProps) => {
 
   return (
     <Box position={"relative"}>
-      <SideBarMenu open={showSidebar} onClose={() => setShowSidebar(false)} activePage={activePage} />
+      <SideBarMenu
+        open={showSidebar}
+        isLogin={userStore.isLogedIn}
+        onClose={() => setShowSidebar(false)}
+        activePage={activePage}
+      />
       <HeaderStyled open={slideActive === 0}>
         <Container>
           <Grid container>
@@ -332,14 +337,18 @@ const Header = observer((props: IProps) => {
                 })}
               >
                 <Right>
-                  <IconButton>
-                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" mr="8px" />
+                  <IconButton sx={{ mr: 2 }}>
+                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>
-                  {/*{!userStore.isLogedIn ? (*/}
-                  {/*  <Button LinkComponent={Link} href={"/login"} variant="contained">*/}
-                  {/*    Đăng nhập*/}
-                  {/*  </Button>*/}
-                  {/*) : null}*/}
+
+                  <Button
+                    LinkComponent={Link}
+                    href={"/login"}
+                    variant="contained"
+                    sx={userStore.isLogedIn ? { display: "none" } : {}}
+                  >
+                    Đăng nhập
+                  </Button>
 
                   {userStore.isLogedIn ? (
                     <AvatarMenu

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import { Box, styled } from "@mui/system";
-import {headerHeight, HeaderNextLink, IPage, LogoImage, mobileHeaderHeight, pages, ToggleDrawer} from ".";
+import { headerHeight, HeaderNextLink, IPage, LogoImage, mobileHeaderHeight, pages, ToggleDrawer } from ".";
 import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
@@ -40,7 +40,7 @@ const Ul = styled("ul")(({ theme }) => ({
   color: "#504C67",
 }));
 
-const MenuList = ({ activePage, onClose }: { activePage: IPage; onClose: () => void }) => (
+const MenuList = ({ activePage, onClose, isLogin }: { activePage: IPage; onClose: () => void; isLogin: boolean }) => (
   <MenuListStyled>
     <nav>
       <Ul>
@@ -51,11 +51,13 @@ const MenuList = ({ activePage, onClose }: { activePage: IPage; onClose: () => v
             </HeaderNextLink>
           </li>
         ))}
-        <li>
-          <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
-            Login
-          </Button>
-        </li>
+        {!isLogin && (
+          <li>
+            <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
+              Login
+            </Button>
+          </li>
+        )}
         <li>
           <IconButton>
             <img src="/assets/imgs/landing/global.svg" alt="i18n" />
@@ -70,6 +72,7 @@ interface IProps {
   open: boolean;
   onClose: () => void;
   activePage: IPage;
+  isLogin: boolean;
 }
 
 export const SideBarMenu = (props: IProps) => {
@@ -108,7 +111,7 @@ export const SideBarMenu = (props: IProps) => {
             </Grid>
           </Container>
         </DrawerHeader>
-        <MenuList activePage={props.activePage} onClose={props.onClose} />
+        <MenuList activePage={props.activePage} onClose={props.onClose} isLogin={props.isLogin} />
       </Drawer>
     </>
   );

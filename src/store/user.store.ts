@@ -42,6 +42,8 @@ export default class UserStore {
     if (tokenLocal && tokenLocal !== "") {
       this._token = tokenLocal;
     }
+
+    console.log("token", tokenLocal);
   }
 
   saveLoginInfo(token: string, user: UserGql) {
