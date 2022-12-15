@@ -119,15 +119,16 @@ const fakeData2 = [
   },
 ];
 
-const Search = styled(Autocomplete, { shouldForwardProp: (propName) => propName !== "isSearch" })<{
-  isSearch?: boolean;
-}>(({ theme, isSearch }) => ({
-  width: 270,
-  // transition: (theme.transitions as any).create(["width"]),
-  // ...(isSearch && {
-  //   transition: (theme.transitions as any).create(["width"]),
-  //   width: 350,
-  // }),
+const fadeVariant = {
+  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 20 },
+};
+
+const Search = styled(Autocomplete)(({ theme }) => ({
+  width: 290,
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
 }));
 export const InvestPage = () => {
   const [loading, setLoading] = React.useState(false);
@@ -167,10 +168,14 @@ export const InvestPage = () => {
           </Typography>
           <Grid container spacing={6}>
             <Grid item xs={12} md={6}>
-              <HighlightCard {...fakeData[0]} />
+              <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
+                <HighlightCard {...fakeData[0]} />
+              </StackAnim>
             </Grid>
             <Grid item xs={12} md={6}>
-              <HighlightCard {...fakeData[1]} />
+              <StackAnim order={1} step={0.1} variants={fadeVariant} duration={0.6}>
+                <HighlightCard {...fakeData[1]} />
+              </StackAnim>
             </Grid>
           </Grid>
         </Box>
@@ -178,41 +183,40 @@ export const InvestPage = () => {
           Tất cả dự án
         </Typography>
         <FilterView mb={5}>
-          <Box>
-            <Box mr={5}>
-              <Search
-                autoComplete={false}
-                // disablePortal
-                freeSolo
-                PopperComponent={(prop) => (
-                  <Popper {...prop} sx={{ width: "500px !important" }} placement={"bottom-start"} />
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant={"filled"}
-                    InputProps={{
-                      ...params.InputProps,
-                      startAdornment: <img src={"/assets/imgs/invest/icons/search.svg"} style={{ marginRight: 12 }} />,
-                      style: {
-                        padding: 0,
-                        paddingLeft: 12,
-                        height: 40,
-                      },
-                    }}
-                    placeholder={"Tìm kiếm dự án bạn quan tâm"}
-                  />
-                )}
-                options={listInvests}
-                renderOption={(props, option) => (
-                  // @ts-ignore
-                  <Box p={1} {...props}>
-                    {/* @ts-ignore */}
-                    <SearchOption {...option} />
-                  </Box>
-                )}
-              />
-            </Box>
+          <Box mr={5} flex={1}>
+            <Search
+              fullWidth
+              autoComplete={false}
+              // disablePortal
+              freeSolo
+              PopperComponent={(prop) => (
+                <Popper {...prop} sx={{ width: { xs: "auto", sm: "500px !important" } }} placement={"bottom-start"} />
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant={"filled"}
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: <img src={"/assets/imgs/invest/icons/search.svg"} style={{ marginRight: 12 }} />,
+                    style: {
+                      padding: 0,
+                      paddingLeft: 12,
+                      height: 40,
+                    },
+                  }}
+                  placeholder={"Tìm kiếm dự án bạn quan tâm"}
+                />
+              )}
+              options={listInvests}
+              renderOption={(props, option) => (
+                // @ts-ignore
+                <Box p={1} {...props}>
+                  {/* @ts-ignore */}
+                  <SearchOption {...option} />
+                </Box>
+              )}
+            />
           </Box>
           <Box display={"flex"}>
             <Box

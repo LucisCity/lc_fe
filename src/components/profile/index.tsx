@@ -43,7 +43,7 @@ export const ProfileLayout = (props: Props) => {
               WebkitTransform: "translate3d(0, 0, 0)",
               MozTransform: "translate3d(0, 0, 0)",
             }}>
-              <ProfileNavBar activeTab={router.pathname === "/profile" ? "/profile/dashboard" : router.pathname}/>
+              <ProfileNavBar activeTab={router.pathname}/>
             </Grid>
             <Grid
               item
