@@ -28,6 +28,7 @@ export function InvestDetailPage() {
           pt: 22.5,
           pb: 6,
           overflow: "hidden",
+          margin: "0px auto",
         }}
       >
         <InvestDetailHeader />
