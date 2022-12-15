@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Box, styled } from "@mui/system";
-import { Button, Card, CardContent, Typography, useMediaQuery } from "@mui/material";
+import { Button, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import Divider from "@mui/material/Divider";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
