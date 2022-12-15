@@ -4,10 +4,23 @@ import React from "react";
 import { Section } from ".";
 import { useAnimation } from "../../hooks/use_animation";
 import AnimWhenVisible from "../anim";
+import Link from "next/link";
+import { headerHeight } from "../layout/header";
 
 const MainItemComponent = styled(Box)(({ theme }) => ({
   height: `100vh`,
   width: "100%",
+}));
+
+const TitleImage = styled("img")(({ theme }) => ({
+  height: 180,
+  paddingBottom: theme.spacing(12),
+  [theme.breakpoints.down("md")]: {
+    height: 160,
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: 130,
+  },
 }));
 
 // export const BecomeInvestButton = styled(Button)(({ theme }) => ({
@@ -31,11 +44,14 @@ const MainItemComponent = styled(Box)(({ theme }) => ({
 
 type Props = {
   index?: number;
+  fullscreen?: boolean;
 };
 export const CompanySection = (props: Props) => {
   return (
     <MainItemComponent
+      className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
+        "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -57,22 +73,24 @@ export const CompanySection = (props: Props) => {
                   height="100%"
                 >
                   <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
-                    <Typography variant="h1" sx={{ color: "#504C67", fontWeight: 700, fontSize: 64, mb: 12 }}>
-                      Lucis <span style={{ color: "#fff" }}>City</span>
-                    </Typography>
+                    <TitleImage src="/assets/imgs/logo/logo-3d.svg" alt="lucis - title" />
                   </AnimWhenVisible>
-                  <Typography sx={{ mb: 22 }}>
-                    Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng Mở ra cơ hội đầu tư vào thị
+                  <Typography sx={{ mb: 22 }} variant={"h5"}>
+                    Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng. Mở ra cơ hội đầu tư vào thị
                     trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
                   </Typography>
                   <AnimWhenVisible
                     variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}
                     index={props.index}
                   >
-                    <Button variant="contained">
-                      Become an invest
-                      <img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />
-                    </Button>
+                    {/*<Button*/}
+                    {/*  variant="contained"*/}
+                    {/*  endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}*/}
+                    {/*  LinkComponent={Link}*/}
+                    {/*  href={"/invest"}*/}
+                    {/*>*/}
+                    {/*  Become an investor*/}
+                    {/*</Button>*/}
                   </AnimWhenVisible>
                 </Box>
               </Grid>

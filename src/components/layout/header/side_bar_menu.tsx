@@ -1,28 +1,28 @@
 import * as React from "react";
 import Drawer from "@mui/material/Drawer";
-import { styled } from "@mui/system";
-import { ButtonLogin, headerHeight, HeaderNextLink, ToggleDrawer } from "./landing_header";
-import { Container, Grid, IconButton } from "@mui/material";
+import { Box, styled } from "@mui/system";
+import { headerHeight, HeaderNextLink, IPage, LogoImage, mobileHeaderHeight, pages, ToggleDrawer } from ".";
+import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
-import { Left } from "../../common/left";
 
-const widthSidebar = 390;
+const widthSidebar = 360;
 const MenuListStyled = styled("div")(({ theme }) => ({
   width: widthSidebar,
   height: "100%",
-  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 119.12%)",
   backdropFilter: "blur(9px)",
   paddingTop: theme.spacing(10),
   paddingBottom: theme.spacing(10),
-  borderTop: "1px solid",
-  borderImageSlice: 1,
-  borderImageSource: "linear-gradient(90deg, #FFFFFF 0.56%, rgba(255, 255, 255, 0) 100%)",
+  borderTop: "1px solid #ffffff3b",
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   width: widthSidebar,
   height: headerHeight,
+  [theme.breakpoints.down("sm")]: {
+    height: mobileHeaderHeight + 5, // I don't know why 5
+  },
   background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
   backdropFilter: "blur(9px)",
 }));
@@ -40,51 +40,24 @@ const Ul = styled("ul")(({ theme }) => ({
   color: "#504C67",
 }));
 
-const MenuList = () => (
+const MenuList = ({ activePage, onClose, isLogin }: { activePage: IPage; onClose: () => void; isLogin: boolean }) => (
   <MenuListStyled>
     <nav>
       <Ul>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Home{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Member{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Invest{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Marketplace{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Blog{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <HeaderNextLink href="/" isSidebar>
-            {" "}
-            Contact{" "}
-          </HeaderNextLink>
-        </li>
-        <li>
-          <ButtonLogin LinkComponent={Link} href={"/login"}>
-            Login
-          </ButtonLogin>
-        </li>
+        {pages.map((link) => (
+          <li key={link.name} onClick={() => onClose()}>
+            <HeaderNextLink href={link.href} isSidebar activeCss={activePage.href === link.href}>
+              {link.name}
+            </HeaderNextLink>
+          </li>
+        ))}
+        {!isLogin && (
+          <li>
+            <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
+              Login
+            </Button>
+          </li>
+        )}
         <li>
           <IconButton>
             <img src="/assets/imgs/landing/global.svg" alt="i18n" />
@@ -98,6 +71,8 @@ const MenuList = () => (
 interface IProps {
   open: boolean;
   onClose: () => void;
+  activePage: IPage;
+  isLogin: boolean;
 }
 
 export const SideBarMenu = (props: IProps) => {
@@ -122,7 +97,9 @@ export const SideBarMenu = (props: IProps) => {
           <Container sx={{ height: "100%" }}>
             <Grid container sx={{ height: "100%" }}>
               <Grid item xs={6}>
-                <Left>Logo</Left>
+                {/*<Box display={"flex"} width={"100%"} height={"100%"} alignItems={"center"}>*/}
+                {/*  <LogoImage src="/assets/imgs/logo/logo-L.svg" alt="logo-lucis" />*/}
+                {/*</Box>*/}
               </Grid>
               <Grid item xs={6}>
                 <Right>
@@ -134,7 +111,7 @@ export const SideBarMenu = (props: IProps) => {
             </Grid>
           </Container>
         </DrawerHeader>
-        <MenuList />
+        <MenuList activePage={props.activePage} onClose={props.onClose} isLogin={props.isLogin} />
       </Drawer>
     </>
   );

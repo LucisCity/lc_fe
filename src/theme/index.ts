@@ -1,40 +1,39 @@
 import { PaletteMode } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import { TYPO_THEME } from "./typo.theme";
+import { COMPONENT_THEME } from "./component.theme";
 
 // Create a theme instance.
 const theme = (mode: PaletteMode) =>
   createTheme({
+    palette: {
+      primary: {
+        main: "#5946FF",
+      },
+      text: {
+        primary: "#504C67",
+        secondary: "#737373",
+      },
+      success: {
+        main: "#00DA57",
+        contrastText: "white",
+      },
+      background: {
+        default: "#F3F8FF",
+        // paper: "#F3F8FF", //F8F8F8
+      },
+    },
     breakpoints: {
       values: {
         xs: 0,
-        sm: 768,
+        sm: 769,
         md: 1024,
         lg: 1200,
         xl: 1440,
       },
     },
-    components: {
-      MuiButton: {
-        defaultProps: {
-          disableElevation: true,
-        },
-        styleOverrides: {
-          containedPrimary: ({ theme }) => ({
-            background: "#6555EE",
-            borderRadius: 8,
-            gap: 8,
-            padding: `${theme.spacing(4)} ${theme.spacing(10)}`,
-            fontWeight: 500,
-            fontSize: 16,
-            lineHeight: "100%",
-            textTransform: "none",
-            ":hover": {
-              background: "#5946FF",
-            },
-          }),
-        },
-      },
-    },
+    components: COMPONENT_THEME,
+    typography: TYPO_THEME,
     spacing: 4,
   });
 

@@ -159,7 +159,7 @@ export function handleGraphqlErrors(e: ApolloError): ErrorType[] {
       return [{ code: CommonError.Network, message: e.message }];
     }
     // @ts-ignore
-    return networkError.result.errors.map((e) => onSingleError(e, onError));
+    return networkError.result.errors.map((e) => handleSingleError(e));
   }
 
   if (graphQLErrors) {

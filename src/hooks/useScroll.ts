@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export let yScrollPosition = 0;
 export let isScrollDown = true;
@@ -8,6 +8,7 @@ export function useScrollDirection() {
 }
 
 export default function useScroll() {
+  const [position, setPosition] = useState(0);
   const handleNavigation = (e: any) => {
     const window = e.currentTarget;
     if (yScrollPosition > window.scrollY) {
@@ -15,8 +16,10 @@ export default function useScroll() {
     } else if (yScrollPosition < window.scrollY) {
       isScrollDown = true;
     }
-    // console.log("isScrollDown: ", isScrollDown);
+
     yScrollPosition = window.scrollY;
+    // console.log("yScrollPosition: ", yScrollPosition);
+    setPosition(yScrollPosition);
   };
 
   useEffect(() => {
@@ -25,4 +28,6 @@ export default function useScroll() {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
+
+  return { position };
 }

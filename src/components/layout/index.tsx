@@ -1,23 +1,38 @@
-import DocHead from "./doc_head";
+import { observer } from "mobx-react-lite";
 import Footer from "./footer";
 import Header from "./header";
+import BottomNavigation from "./bottom_navigation";
+import LayoutStore from "./layout.store";
+import { FabButton } from "../landing/components/fab_button";
 
 type Props = {
   children: any;
-  isShowHeader?: boolean;
 };
-function AppLayout(props: Props) {
-  const { children, isShowHeader } = props;
+export default observer(function Layout(props: Props) {
+  const { children } = props;
+  const { isShowHeader, isShowFooter, bottomNavVisible, bottomNavHeight } = LayoutStore;
+
+  const pageRelativeStyle = {
+    // paddingBottom: hasBottomNav ? 60 : 0,
+    // paddingTop: isShowHeader ? 90 : 0,
+    "--page-padding-bottom": bottomNavVisible ? bottomNavHeight + "px" : 0,
+    "--page-padding-top": isShowHeader ? "90px" : 0,
+    "--page-padding-top-mobile": isShowHeader ? "60px" : 0,
+  };
 
   return (
     <>
-      {/* DocHead should in each page */}
-      <DocHead />
-      {isShowHeader === false ? null : <Header />}
-      {children}
-      <Footer />
+      {isShowHeader && <Header />}
+      <main
+        className="page-relative-c"
+        // @ts-ignore
+        style={pageRelativeStyle}
+      >
+        {children}
+        {isShowFooter && <Footer disabledBackground hasBottomNav={bottomNavVisible} />}
+      </main>
+      {bottomNavVisible && <BottomNavigation />}
+      <FabButton bOffset={bottomNavVisible ? bottomNavHeight : 0} />
     </>
   );
-}
-
-export default AppLayout;
+});

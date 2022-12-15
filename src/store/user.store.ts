@@ -18,7 +18,6 @@ export default class UserStore {
     return this._token;
   }
   get isLogedIn() {
-    this.loadFromLocal();
     return this._token != null && this._token != "";
   }
 
@@ -26,6 +25,7 @@ export default class UserStore {
     if (typeof window == "undefined") {
       return;
     }
+    console.log("loadFromLocal: ", this._isLoadedFromLocal);
     if (this._isLoadedFromLocal) {
       return;
     }
@@ -33,14 +33,16 @@ export default class UserStore {
     if (this._token) {
       return;
     }
-    // const userLocal = StorageHelper.getUser();
-    // if (userLocal) {
-    //   this._user = userLocal;
-    // }
+    const userLocal = StorageHelper.getUser();
+    if (userLocal) {
+      this._user = userLocal;
+    }
     const tokenLocal = StorageHelper.getToken();
     if (tokenLocal && tokenLocal !== "") {
       this._token = tokenLocal;
     }
+
+    console.log("token", tokenLocal);
   }
 
   saveLoginInfo(token: string, user: UserGql) {
@@ -50,7 +52,9 @@ export default class UserStore {
     StorageHelper.setUser(this._user);
   }
 
-  async logout(): Promise<void> {
+  logout() {
+    this._user = null;
+    this._token = null;
     StorageHelper.clearSession();
   }
 }

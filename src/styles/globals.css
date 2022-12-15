@@ -6,7 +6,7 @@ body {
   margin: 0;
 }
 * {
-  font-family: "Roboto", sans-serif;
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
   box-sizing: border-box;
@@ -21,12 +21,7 @@ body {
   box-shadow: none;
 } */
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
@@ -34,4 +29,34 @@ a {
     color: white;
     background: black;
   }
+} */
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
+
+/**
+ * Full screen page need this class in case of bottom nav show/hide
+ * To avoid cover the page content by bottom nav
+ * But maintain the page background underneath the bottom nav
+ */
+.fullscreenPage {
+  padding-bottom: var(--page-padding-bottom);
+  padding-top: var(--page-padding-top);
+}
+.scrollPage {
+  padding-bottom: var(--page-padding-bottom);
+  padding-top: var(--page-padding-top);
+}
+/* This must be synced with mui theme.breakpoint.sm */
+@media (max-width: 768px) {
+  .scrollPage {
+    padding-top: var(--page-padding-top-mobile);
+  }
+}
+
+/* .pswp img {
+  max-width: none;
+  object-fit: contain;
+} */

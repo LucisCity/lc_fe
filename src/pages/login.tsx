@@ -1,13 +1,15 @@
 import type { NextPage } from "next";
 import LoginPage from "../components/auth/login";
-import AppLayout from "../components/layout";
+import PageLayout from "../components/layout/PageLayout";
+import DocHead from "../components/layout/doc_head";
 
-const Home: NextPage = () => {
+const Login: NextPage = () => {
   return (
-    <AppLayout isShowHeader={false}>
+    <PageLayout isShowHeader={false} isShowFooter={false} hasBottomNav={false}>
+      <DocHead />
       <LoginPage />
-    </AppLayout>
+    </PageLayout>
   );
 };
 
-export default Home;
+export default Login;

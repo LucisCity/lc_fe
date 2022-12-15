@@ -21,6 +21,8 @@ export type AuthGql = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Forgot password */
+  forgotPassword: Scalars['Boolean'];
   /** Login */
   login: AuthGql;
   /** Facebook login */
@@ -29,6 +31,15 @@ export type Mutation = {
   loginGoogle: AuthGql;
   /** Register */
   register: Scalars['String'];
+  /** Forgot password */
+  resetPassword: Scalars['Boolean'];
+  /** Verify email */
+  verifyEmail: Scalars['String'];
+};
+
+
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -52,6 +63,28 @@ export type MutationRegisterArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   ref_code?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationResetPasswordArgs = {
+  password: Scalars['String'];
+  token: Scalars['String'];
+};
+
+
+export type MutationVerifyEmailArgs = {
+  token: Scalars['String'];
+};
+
+export type ProfileGql = {
+  __typename?: 'ProfileGql';
+  avatar?: Maybe<Scalars['String']>;
+  cover?: Maybe<Scalars['String']>;
+  display_name?: Maybe<Scalars['String']>;
+  family_name?: Maybe<Scalars['String']>;
+  given_name?: Maybe<Scalars['String']>;
+  user_id: Scalars['ID'];
+  user_name?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -80,8 +113,8 @@ export type UserGql = {
   __typename?: 'UserGql';
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  profile: ProfileGql;
   ref_code: Scalars['String'];
-  updated_at: Scalars['DateTime'];
 };
 
 export type UserProfile = {
@@ -107,5 +140,6 @@ export enum UserRole {
 
 export enum UserStatus {
   Active = 'ACTIVE',
-  Banned = 'BANNED'
+  Banned = 'BANNED',
+  Pending = 'PENDING'
 }

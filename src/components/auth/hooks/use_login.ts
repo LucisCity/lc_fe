@@ -1,6 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useStores } from "../../../store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
@@ -12,6 +13,11 @@ const LOGIN_MUT = gql`
       user {
         id
         email
+        profile {
+          user_id
+          avatar
+          display_name
+        }
       }
     }
   }
@@ -24,6 +30,11 @@ const LOGIN_GG_MUT = gql`
       user {
         id
         email
+        profile {
+          user_id
+          avatar
+          display_name
+        }
       }
     }
   }
@@ -36,6 +47,11 @@ const LOGIN_FB_MUT = gql`
       user {
         id
         email
+        profile {
+          user_id
+          avatar
+          display_name
+        }
       }
     }
   }
@@ -78,6 +94,13 @@ export default function useLogin() {
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
   });
+
+  useEffect(() => {
+    if (userStore.isLogedIn) {
+      Router.back();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function onLogin(email: string, password: string) {
     login({
