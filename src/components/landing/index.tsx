@@ -57,7 +57,7 @@ export default function LandingPage({ projects }: { projects: { name: string; de
           overflowX: "hidden",
         }}
       >
-        <Header slideActive={position > 100 ? 1 : 0} />
+        <Header slideActive={position > 100 ? 1 : 0} isSupportPage={true} />
         <TopSection />
         <CompanySection />
         <CardSection />
@@ -100,7 +100,7 @@ export default function LandingPage({ projects }: { projects: { name: string; de
           }}
         >
           <Box slot="container-start">
-            <Header slideActive={slideActive} />
+            <Header slideActive={slideActive} isSupportPage={true} />
           </Box>
 
           <Box

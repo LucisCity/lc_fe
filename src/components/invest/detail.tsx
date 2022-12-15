@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
 import InvestImageBox from "./components/detail/image_box";
@@ -28,6 +28,7 @@ export function InvestDetailPage() {
           pt: 22.5,
           pb: 6,
           overflow: "hidden",
+          margin: "0px auto",
         }}
       >
         <InvestDetailHeader />

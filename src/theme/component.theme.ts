@@ -198,7 +198,15 @@ export const COMPONENT_THEME: Components<Omit<Theme, "components">> = {
     styleOverrides: {
       root: {
         borderRadius: 10,
-      }
-    }
-  }
+      },
+    },
+  },
+
+  MuiPaper: {
+    styleOverrides: {
+      elevation1: {
+        boxShadow: "0px 4px 16px rgb(0 0 0 / 20%)",
+      },
+    },
+  },
 };
