@@ -25,7 +25,7 @@ export const SearchOption = (props: IProps) => {
   return (
     <MuiCard sx={{ background: "transparent", width: "100%" }} elevation={0}>
       <Link href={`/invest/${props.name}`}>
-        <CardContent sx={{ px: 4, py: 0, ":last-child": { pb: 0 } }}>
+        <CardContent sx={{ px: { sm: 4, xs: 1 }, py: 0, ":last-child": { pb: 0 } }}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"}>
               <img

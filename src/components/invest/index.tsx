@@ -176,11 +176,35 @@ export const InvestPage = () => {
             </Grid>
           </Grid>
         </Box>
-        <Typography variant={"h2"} mb={5}>
-          Tất cả dự án
-        </Typography>
+
+        <Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
+          <Typography variant={"h2"} mb={5}>
+            Tất cả dự án
+          </Typography>
+          <Box display={{ xs: "block", sm: "none" }}>
+            <Button
+              sx={(theme) => ({
+                height: 40,
+                pt: 4,
+                pb: 4,
+                pl: 5,
+                pr: 5,
+                fontSize: theme.typography.caption.fontSize,
+                fontWeight: theme.typography.caption.fontWeight,
+                [theme.breakpoints.down("md")]: {
+                  padding: theme.spacing(5),
+                },
+              })}
+              variant={"contained"}
+              color={"secondary"}
+              startIcon={<img src={"/assets/imgs/invest/icons/more.svg"} />}
+            >
+              More
+            </Button>
+          </Box>
+        </Box>
         <FilterView mb={5}>
-          <Box mr={5} flex={1}>
+          <Box mr={{ sm: 5, xs: 0 }} flex={1}>
             <Search
               fullWidth
               autoComplete={false}
@@ -263,6 +287,9 @@ export const InvestPage = () => {
                   [theme.breakpoints.down("md")]: {
                     padding: theme.spacing(5),
                   },
+                  [theme.breakpoints.down("sm")]: {
+                    display: "none",
+                  },
                 })}
                 variant={"contained"}
                 color={"secondary"}
@@ -273,6 +300,7 @@ export const InvestPage = () => {
             </Box>
           </Box>
         </FilterView>
+
         <Grid container spacing={6}>
           {listInvests.map((item, index) => {
             const visibleOrder = Math.floor(index / 3);

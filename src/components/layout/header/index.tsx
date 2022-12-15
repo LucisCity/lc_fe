@@ -7,8 +7,11 @@ import React from "react";
 import { useRouter } from "next/router";
 import zIndex from "@mui/material/styles/zIndex";
 import { useStores } from "../../../store";
-import AvatarMenu from "./avatar_menu";
+// import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
+import dynamic from "next/dynamic";
+
+const AvatarMenu = dynamic(() => import("./avatar_menu"), { ssr: false });
 
 export const headerHeight = 90;
 export const mobileHeaderHeight = 60;
@@ -332,11 +335,11 @@ const Header = observer((props: IProps) => {
                   <IconButton>
                     <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" mr="8px" />
                   </IconButton>
-                  {!userStore.isLogedIn ? (
-                    <Button LinkComponent={Link} href={"/login"} variant="contained">
-                      Đăng nhập
-                    </Button>
-                  ) : null}
+                  {/*{!userStore.isLogedIn ? (*/}
+                  {/*  <Button LinkComponent={Link} href={"/login"} variant="contained">*/}
+                  {/*    Đăng nhập*/}
+                  {/*  </Button>*/}
+                  {/*) : null}*/}
 
                   {userStore.isLogedIn ? (
                     <AvatarMenu
