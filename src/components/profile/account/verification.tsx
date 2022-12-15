@@ -112,7 +112,10 @@ const verifyBoxes: VerifyBoxProps[] = [
   },
 ]
 
-export default function Verification() {
+interface VerificationProps {
+}
+
+export default function Verification(props: VerificationProps) {
 
   return (
     <Box color={"#9A9A9A"} fontWeight={400} fontSize={16}>

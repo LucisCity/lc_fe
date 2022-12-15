@@ -100,7 +100,10 @@ const data = [
   'estherrichards_998@example.com',
 ]
 
-export default function InfoForm() {
+interface InfoFormProps {
+}
+
+export default function InfoForm(props: InfoFormProps) {
 
   return (
     <form>
