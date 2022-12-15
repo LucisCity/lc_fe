@@ -1,8 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import MuiCard from "@mui/material/Card";
 import Link from "next/link";
-import { Button, Card, CardActionArea, CardContent, LinearProgress, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, LinearProgress, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import React from "react";

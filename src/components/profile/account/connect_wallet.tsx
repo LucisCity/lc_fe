@@ -70,7 +70,7 @@ const WalletCard = (props: WalletCardProps) => {
 }
 
 
-export default function ConnectWallet(props: ConnectWalletProps) {
+export default function ConnectWallet() {
 
 
   return (

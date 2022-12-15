@@ -117,12 +117,12 @@ export default function ProfileSubTabs(props: ProfileSubTabsProps) {
           aria-label="styled tabs example"
         >
           {labels.map((label) => (
-            <StyledTab label={label} {...a11yProps(labels.indexOf(label))}/>
+            <StyledTab key={label} label={label} {...a11yProps(labels.indexOf(label))}/>
           ))}
         </StyledTabs>
       </Box>
       {React.Children.map(children, (child: any, index: number) => (
-        <TabPanel index={index} value={value}>
+        <TabPanel key={index} index={index} value={value}>
           {child}
         </TabPanel>
       ))}

@@ -1,8 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import MuiCard from "@mui/material/Card";
 import Link from "next/link";
-import { Button, Card, CardActionArea, CardContent, LinearProgress, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, LinearProgress, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import React from "react";
@@ -123,24 +122,24 @@ const HighlightCard = (props: IProps) => {
                     height: 40,
                     marginRight: 3,
                     padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-                    })}
-                  >
-                    <Typography whiteSpace={"nowrap"}>Sắp bán</Typography>
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color={"secondary"}
-                    sx={(theme) => ({
-                      color: "#FF6C6C",
-                      background: "#F9F9F9",
-                      width: 80,
-                      height: 40,
-                      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-                    })}
-                    endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt=""/>}
-                  >
-                    235
-                  </Button>
+                  })}
+                >
+                  <Typography whiteSpace={"nowrap"}>Sắp bán</Typography>
+                </Button>
+                <Button
+                  variant="contained"
+                  color={"secondary"}
+                  sx={(theme) => ({
+                    color: "#FF6C6C",
+                    background: "#F9F9F9",
+                    width: 80,
+                    height: 40,
+                    padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+                  })}
+                  endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt=""/>}
+                >
+                  235
+                </Button>
               </Grid>
               <Grid item xs={12}>
                 <LinearProgress variant="determinate" value={30}/>
