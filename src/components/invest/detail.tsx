@@ -7,6 +7,7 @@ import InvestorTab from "./components/detail/investor_tab";
 import InvestDetailHeader from "./components/detail/invest_detail_header";
 import InvestDetailNftCard from "./components/detail/invest_detail_nft_card";
 import InvestDetailSteper from "./components/detail/invest_detail_steper";
+import MapDialog from "./components/detail/map_dialog";
 import PitchTab from "./components/detail/pitch_tab";
 import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
@@ -33,6 +34,7 @@ export function InvestDetailPage() {
       >
         <InvestDetailHeader />
         <InvestImageBox />
+        {/* <MapDialog /> */}
         <InvestDetailSteper />
         <Box
           sx={{

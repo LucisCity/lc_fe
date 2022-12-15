@@ -18,7 +18,6 @@ export default class UserStore {
     return this._token;
   }
   get isLogedIn() {
-    this.loadFromLocal();
     return this._token != null && this._token != "";
   }
 
