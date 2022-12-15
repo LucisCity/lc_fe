@@ -37,11 +37,16 @@ export default function MapDialog() {
         }}
       >
         <Map
-          // googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap`}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js`}
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `90vh`, margin: `auto`, border: "2px solid black" }} />}
-          mapElement={<div style={{ height: `100%` }} />}
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=HNwCJxgGX2dkbgr7N6STR8d2Uns="
+          loadingElement={<div className="h-full" />}
+          containerElement={<div className="relative w-full rounded h-600-px" />}
+          mapElement={<div className="rounded h-full" />}
+
+          // googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYeeiPjDPhhuF7FmTEiIwzgdrcZ9kPnf0`}
+          // // googleMapURL={`https://maps.googleapis.com/maps/api/js&callback=initMap`}
+          // loadingElement={<div style={{ height: `100%` }} />}
+          // containerElement={<div style={{ height: `90vh`, margin: `auto`, border: "2px solid black" }} />}
+          // mapElement={<div style={{ height: `100%` }} />}
         />
       </Box>
     </Modal>

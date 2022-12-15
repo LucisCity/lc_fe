@@ -101,7 +101,6 @@ export const ProfileNotification = () => {
         <Typography
           fontWeight={700}
           fontSize={{sm: 32, xs: 25}}
-          textAlign={{sm: "left", xs: "center"}}
         >
           Thông báo
         </Typography>

@@ -1,8 +1,8 @@
-import {Box, Button, Card, CardContent, Switch, Typography} from "@mui/material";
-import {CloudDownloadOutlined, ReportGmailerrorredOutlined} from "@mui/icons-material";
-import {appVersionCommitId} from "../../utils/env";
+import { Box, Button, Card, CardContent, Switch, Typography } from "@mui/material";
+import { CloudDownloadOutlined, ReportGmailerrorredOutlined } from "@mui/icons-material";
+import { appVersionCommitId } from "../../utils/env";
 import PwaVersionHelper from "../../utils/pwa_version_helper";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DayNightSwitch from "../common/day_night_switch";
 
 export default function AppSetting() {
@@ -84,7 +84,7 @@ function SettingUpdate() {
 
       <Box mt={4} sx={{textAlign: "center"}}>
         {hasNewVersion && <Button
-          variant="contained" size="small" startIcon={<CloudDownloadOutlined />}
+          variant="contained" size="small" startIcon={<CloudDownloadOutlined/>}
           onClick={() => PwaVersionHelper.getInstance().ensureNewestVersion((from, to) => {
             alert(`New version Updated: ${from} => ${to}`);
           }, (e) => {
@@ -114,7 +114,7 @@ function SettingTheme() {
           transform: "scale(0.5)",
           transformOrigin: "center center",
         }}>
-          <DayNightSwitch dark={!isLight} onClick={() => setIsLight(!isLight)} />
+          <DayNightSwitch dark={!isLight} onClick={() => setIsLight(!isLight)}/>
         </Box>
         <Typography>Dark</Typography>
       </Box>

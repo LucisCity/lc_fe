@@ -2,8 +2,8 @@
   "short_name": "Lucis City",
   "name": "Lucis City Invest",
   "description": "Lucis City investment platform",
-  "id": "/?source=pwa",
-  "start_url": "/?source=pwa",
+  "id": "lc-fe-v1",
+  "start_url": "/invest?utm_source=pwa&utm_medium=app",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -27,6 +27,29 @@
       "type": "image/png",
       "sizes": "1422x644",
       "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "My Profile",
+      "short_name": "My Profile",
+      "description": "View my profile, for logged in user",
+      "url": "/profile?utm_source=pwa&utm_medium=shortcut",
+      "icons": [{ "src": "/assets/imgs/bottom_navbar/user-square.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Invest",
+      "short_name": "Invest",
+      "description": "View the list of podcasts you listen to",
+      "url": "/invest?utm_source=pwa&utm_medium=shortcut",
+      "icons": [{ "src": "/assets/imgs/bottom_navbar/status-up.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "News",
+      "short_name": "News",
+      "description": "Up to date news about Lucis City",
+      "url": "/news?utm_source=pwa&utm_medium=shortcut",
+      "icons": [{ "src": "/assets/imgs/bottom_navbar/book.svg", "sizes": "192x192" }]
     }
   ]
 }
