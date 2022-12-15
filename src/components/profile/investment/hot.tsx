@@ -201,7 +201,7 @@ export default function InvestmentHot() {
   return (
     <React.Fragment>
       {fakeData.map((i) => (
-        <Box px={{md: 4}} pt={{xs: 4}}>
+        <Box key={i.name} px={{md: 4}} pt={{xs: 4}}>
           <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
             <HighlightCard {...i} />
           </StackAnim>
