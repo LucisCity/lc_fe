@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
 import { Card } from "./components/card";
 import { SearchOption } from "./components/search_option";
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton, Masonry } from "@mui/lab";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import StackAnim from "../anim/stack_anim";

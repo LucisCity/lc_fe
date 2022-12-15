@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
 import InvestImageBox from "./components/detail/image_box";
