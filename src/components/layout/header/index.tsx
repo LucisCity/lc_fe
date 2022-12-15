@@ -258,15 +258,18 @@ interface IProps {
   isSupportPage?: boolean;
 }
 const Header = observer((props: IProps) => {
-  // console.log('{Header} render: ');
   const { userStore } = useStores();
-
+  const [isLogin, setIsLogin] = React.useState(userStore.isLogedIn);
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();
   const activePage = React.useMemo(() => {
     return pages.find((item) => item.href === router.pathname) ?? defaultPage;
   }, [router.pathname]);
+
+  React.useEffect(() => {
+    setIsLogin(userStore.isLogedIn);
+  }, [userStore.isLogedIn]);
 
   return (
     <Box position={"relative"}>
@@ -345,7 +348,7 @@ const Header = observer((props: IProps) => {
                     LinkComponent={Link}
                     href={"/login"}
                     variant="contained"
-                    sx={userStore.isLogedIn ? { display: "none" } : {}}
+                    style={isLogin ? { display: "none" } : {}}
                   >
                     Đăng nhập
                   </Button>
