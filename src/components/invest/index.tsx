@@ -1,5 +1,4 @@
 import React from "react";
-import { Background } from "../landing/components/background";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { Container, Divider, MenuItem, Popper, Select } from "@mui/material";
@@ -8,15 +7,13 @@ import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
 import { Card } from "./components/card";
 import { SearchOption } from "./components/search_option";
-import { LoadingButton, Masonry } from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import StackAnim from "../anim/stack_anim";
 import Typography from "@mui/material/Typography";
 import { HighlightCard } from "./components/highlight_card";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
-import { getPostApiUrl, IPost, normalizeDatePosts } from "../../pages/news";
-import axios from "axios";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
