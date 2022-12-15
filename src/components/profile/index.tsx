@@ -15,6 +15,8 @@ type Props = {
 export const ProfileLayout = (props: Props) => {
 
   const router = useRouter();
+  const activeTab = router.query.tab ? `/profile/${router.query.tab}` : '/profile';
+  // console.log('active tab href', activeTab);
 
   return (
     <ScrollPage>
@@ -43,7 +45,7 @@ export const ProfileLayout = (props: Props) => {
               WebkitTransform: "translate3d(0, 0, 0)",
               MozTransform: "translate3d(0, 0, 0)",
             }}>
-              <ProfileNavBar activeTab={router.pathname}/>
+              <ProfileNavBar activeTab={activeTab}/>
             </Grid>
             <Grid
               item

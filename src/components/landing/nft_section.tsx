@@ -48,7 +48,7 @@ export default function NftSection(props: Props) {
           </AnimWhenVisible>
           <Box display={"flex"}>
             <Grid container spacing={4}>
-              <Grid item xs={12} md={5}>
+              <Grid item xs={12} sm={5}>
                 <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
                   <Box
                     sx={{
@@ -68,7 +68,7 @@ export default function NftSection(props: Props) {
                   </Box>
                 </AnimWhenVisible>
               </Grid>
-              <Grid item xs={12} md={5}>
+              <Grid item xs={12} sm={5}>
                 <Box
                   height={"100%"}
                   sx={{
@@ -155,7 +155,7 @@ export default function NftSection(props: Props) {
                   </AnimWhenVisible>
                 </Box>
               </Grid>
-              <Grid item xs={12} md={2}>
+              <Grid item xs={12} sm={2}>
                 <Box
                   height={"100%"}
                   display={"flex"}

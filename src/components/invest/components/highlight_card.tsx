@@ -36,7 +36,7 @@ interface IProps {
 }
 export const HighlightCard = (props: IProps) => {
   return (
-    <MuiCard sx={{ borderRadius: 4 }} elevation={3}>
+    <MuiCard sx={{ borderRadius: 4 }} elevation={0}>
       <Link href={`/invest/${props.name}`}>
         <CardActionArea component={"div"}>
           <Grid container sx={{ p: 6 }} spacing={6}>

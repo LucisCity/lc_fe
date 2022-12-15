@@ -4,7 +4,7 @@ import { styled } from '@mui/system';
 import Grid from "@mui/material/Grid";
 import { Box, Button, IconButton, Paper, Switch, SwitchProps, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { CustomInput } from "../components/navbar/custom_input";
+import { CustomInput } from "../components/custom_input";
 
 const passwords = [
   'Richards_998',
@@ -156,7 +156,10 @@ const PasswordField = (props: PassFieldProps) => {
   )
 }
 
-export default function ChangePasswordForm() {
+interface SecurityProps {
+}
+
+export default function Security(props: SecurityProps) {
 
   return (
     <form>

@@ -3,11 +3,6 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import InfoForm from "../account/info";
-import ChangePasswordForm from "../account/security";
-import ConnectBank from "../account/connect_bank";
-import ConnectWallet from "../account/connect_wallet";
-import Verification from "../account/verification";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -94,7 +89,14 @@ function a11yProps(index: number) {
   };
 }
 
-export default function CustomizedTabs() {
+interface ProfileSubTabsProps {
+  children: any;
+  labels: string[];
+}
+
+export default function ProfileSubTabs(props: ProfileSubTabsProps) {
+  const {children, labels} = props;
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -114,28 +116,16 @@ export default function CustomizedTabs() {
           onChange={handleChange}
           aria-label="styled tabs example"
         >
-          <StyledTab label="Hồ sơ" {...a11yProps(0)}/>
-          <StyledTab label="Bảo mật" {...a11yProps(1)}/>
-          <StyledTab label="Liên kết ngân hàng" {...a11yProps(2)}/>
-          <StyledTab label="Liên kết ví điện tử" {...a11yProps(3)}/>
-          <StyledTab label="Xác minh danh tính" {...a11yProps(4)}/>
+          {labels.map((label) => (
+            <StyledTab label={label} {...a11yProps(labels.indexOf(label))}/>
+          ))}
         </StyledTabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <InfoForm/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ChangePasswordForm/>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <ConnectBank/>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <ConnectWallet/>
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <Verification/>
-      </TabPanel>
+      {React.Children.map(children, (child: any, index: number) => (
+        <TabPanel index={index} value={value}>
+          {child}
+        </TabPanel>
+      ))}
     </Box>
   );
 }

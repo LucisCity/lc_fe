@@ -5,7 +5,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import FormControlUnstyled from "@mui/base/FormControlUnstyled";
-import { CustomInput } from "../components/navbar/custom_input";
+import { CustomInput } from "../components/custom_input";
 import SvgIcon from "../../common/svg_icon";
 import s from "./connect_bank.module.scss";
 
@@ -220,7 +220,10 @@ const banksConnected: BankConnectedProps[] = [
   }
 ]
 
-export default function ConnectBank() {
+interface ConnectBankProps {
+}
+
+export default function ConnectBank(props: ConnectBankProps) {
 
   const [showForm, setShowForm] = React.useState(false);
   const handleAddBank = () => {
