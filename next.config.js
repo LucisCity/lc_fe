@@ -1,12 +1,23 @@
 /* eslint-disable */
-const Os = require("os");
-const fs = require("fs");
+const {
+  isDevMode,
+  fetchRemoteEnv,
+  inject_git_commit_id_to_page,
+  inject_app_env,
+} = require('./next.config.helper');
+
+
+const fetchRemoteEnv2 = () => {
+  throw new Error("stop");
+}
+
+
 
 const defaultRuntimeCaching = require("next-pwa/cache");
 const withPWA = require('next-pwa')({
   dest: 'public',
   // Disable PWA in dev mode, if you need to debug PWA in dev mode, plz turn it on
-  disable: process.env.NODE_ENV === 'development',
+  disable: isDevMode,
   /*
     Force next-pwa to generate worker box production build by specify the option mode: 'production' in your pwa section of next.config.js. Though next-pwa automatically generate the worker box development build during development (by running next) and worker box production build during production (by running next build and next start). You may still want to force it to production build even during development of your web app for following reason:
     Reduce logging noise due to production build doesn't include logging.
@@ -72,103 +83,8 @@ const nextConfig = {
 
     return config;
   },
+
+  env: isDevMode ? undefined : fetchRemoteEnv2(),
 };
 
 module.exports = withPWA(nextConfig);
-
-/**
- * Determine whether the Node.js process runs on Windows.
- *
- * @returns {Boolean}
- */
-function isWindows() {
-  return Os.platform() === "win32";
-}
-
-function inject_git_commit_id_to_page(rules) {
-  if (isWindows()) {
-    throw new Error("NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows");
-  }
-
-  /**
-   * Inject git commit id into debug page
-   */
-  let git_commit_id = "";
-  try {
-    git_commit_id = require("child_process").execSync("git rev-parse --short HEAD").toString().trim();
-  } catch (e) {
-    throw new Error("Please install git first");
-  }
-
-  // Insert into Env.ts
-  const stringReplaceLoaderRule = {
-    test: /src\/utils\/env\.ts$/,
-    loader: "string-replace-loader",
-    options: {
-      search: "LUCIS_VERSION_COMMIT_ID",
-      replace: git_commit_id,
-    },
-  };
-  rules.push(stringReplaceLoaderRule);
-
-  // Insert into version.json
-  const versionJsonContent = { "version": git_commit_id, "created": Date.now() };
-  fs.writeFileSync('public/version.json', JSON.stringify(versionJsonContent));
-}
-
-function inject_app_env(rules) {
-  if (isWindows()) {
-    throw new Error("NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows");
-  }
-
-  const git_branch = require("child_process")
-    /**
-     * NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows
-     */
-    .execSync("cat .git/HEAD")
-    // .execSync('git branch --show-current')
-    .toString()
-    .trim();
-
-  let app_env = "";
-  if (git_branch === "ref: refs/heads/main") {
-    app_env = "prod";
-  } else if (git_branch === "ref: refs/heads/beta") {
-    app_env = "beta";
-  } else if (git_branch === "ref: refs/heads/test") {
-    app_env = "stg";
-  } else {
-    app_env = "dev";
-  }
-
-  rules.push({
-    test: /src\/utils\/env\.ts$/,
-    loader: "string-replace-loader",
-    options: {
-      search: '"APP_ENV"',
-      replace: `"${app_env}"`,
-    },
-  });
-}
-
-function show_testnet_text_on_header(rules) {
-  /**
-   * Show testnet text on the header
-   */
-  const git_branch = require("child_process")
-    /**
-     * NOTE: You need to run in on Mac, Linux, or WSL, We prohibit Windows
-     */
-    .execSync("cat .git/HEAD")
-    // .execSync('git branch --show-current')
-    .toString()
-    .trim();
-  rules.push({
-    test: /components\/ui\/header\/Header\.tsx$/,
-    loader: "string-replace-loader",
-    options: {
-      search: '"IS_TESTNET"',
-      replace: (git_branch === "ref: refs/heads/trial").toString(),
-    },
-  });
-}
