@@ -220,7 +220,7 @@ const banksConnected: BankConnectedProps[] = [
   }
 ]
 
-export default function ConnectBank(props: ConnectBankProps) {
+export default function ConnectBank() {
 
   const [showForm, setShowForm] = React.useState(false);
   const handleAddBank = () => {

@@ -157,7 +157,7 @@ const PasswordField = (props: PassFieldProps) => {
 }
 
 
-export default function Security(props: SecurityProps) {
+export default function Security() {
 
   return (
     <form>
