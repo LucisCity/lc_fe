@@ -8,12 +8,12 @@ import { ProfileDashboard } from "../../components/profile/dashboard";
 import { ProfileAccount } from "../../components/profile/account";
 import { ProfileNotification } from "../../components/profile/notification";
 import { useRouter } from "next/router";
+import { ProfileInvestment } from "../../components/profile/investment";
 
 enum Tab {
   APP = "app",
   ACCOUNT = "account",
   INVESTMENT = "investment",
-  MEMBERSHIP = "membership",
   NOTIFICATION = "notification",
   REFERRAL = "referral",
 }
@@ -28,8 +28,9 @@ const ProfileTab = () => {
       <PageLayout isShowFooter={false}>
         <ProfileLayout>
           {tab === Tab.ACCOUNT && <ProfileAccount />}
-          {tab === Tab.APP && <AppSetting />}
-          {tab === Tab.INVESTMENT && <ProfileDashboard />}
+          {tab === Tab.APP && <AppSetting/>}
+          {tab === Tab.INVESTMENT && <ProfileInvestment/>}
+          {tab === Tab.INVESTMENT && <ProfileDashboard/>}
           {tab === Tab.NOTIFICATION && <ProfileNotification />}
         </ProfileLayout>
       </PageLayout>
