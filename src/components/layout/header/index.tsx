@@ -344,14 +344,11 @@ const Header = observer((props: IProps) => {
                     <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>
 
-                  <Button
-                    LinkComponent={Link}
-                    href={"/login"}
-                    variant="contained"
-                    style={isLogin ? { display: "none" } : {}}
-                  >
-                    Đăng nhập
-                  </Button>
+                  {!userStore.isLogedIn ? (
+                    <Button LinkComponent={Link} href={"/login"} variant="contained">
+                      Đăng nhập
+                    </Button>
+                  ) : null}
 
                   {userStore.isLogedIn ? (
                     <AvatarMenu
