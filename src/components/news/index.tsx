@@ -116,7 +116,7 @@ export const NewsPage = ({ posts }: { posts: IPost[] }) => {
                       ))}
                     </Box>
                     <Typography variant="caption" component={"p"} mt={2} mb={3}>
-                      {moment(new Date(highlightPost?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
+                      {moment(new Date(highlightPost?.createdDate ?? "")).format("h:mma Do, MMM,  YYYY")}
                     </Typography>
                     <Typography variant="h2" mb={3}>
                       {highlightPost?.title}

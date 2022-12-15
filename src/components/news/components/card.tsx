@@ -56,7 +56,7 @@ export const Card = (props: IProps) => {
                   ))}
                 </Box>
                 <Typography variant="caption" component={"p"} mt={2} mb={3}>
-                  {moment(new Date(props?.createdDate ?? "")).format("h:mm a Do, MMM,  YYYY")}
+                  {moment(new Date(props?.createdDate ?? "")).format("h:mma Do, MMM,  YYYY")}
                 </Typography>
                 <Typography variant="h3" mb={3}>
                   {props?.title}
