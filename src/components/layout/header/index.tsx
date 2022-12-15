@@ -252,6 +252,7 @@ export const pages: Array<IPage> = [
 interface IProps {
   slideActive?: number;
   isFixed?: boolean;
+  isSupportPage?: boolean;
 }
 const Header = observer((props: IProps) => {
   // console.log('{Header} render: ');
@@ -366,67 +367,67 @@ const Header = observer((props: IProps) => {
             </Grid>
           </Grid>
         </Container>
-        <SupportPage open={slideActive === 0}>
-          <Container>
-            <Grid container>
-              <Grid item sm={2} md={3} xs={0} />
-              <Grid item xs={12} sm={7} md={6} sx={{ position: "relative" }}>
-                <ExtendBox open={slideActive === 0}>
-                  <Typography
-                    variant="h2"
-                    fontSize={28}
-                    sx={(theme) => ({
-                      // pt: "40px",
+        {props.isSupportPage && (
+          <SupportPage open={slideActive === 0}>
+            <Container>
+              <Grid container>
+                <Grid item sm={2} md={3} xs={0} />
+                <Grid item xs={12} sm={7} md={6} sx={{ position: "relative" }}>
+                  <ExtendBox open={slideActive === 0}>
+                    <Typography
+                      variant="h2"
+                      fontSize={28}
+                      sx={(theme) => ({
+                        // pt: "40px",
 
-                      [theme.breakpoints.down("lg")]: {
-                        fontSize: 22,
-                      },
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: 20,
-                      },
-                      [theme.breakpoints.down("sm")]: {
-                        fontSize: 28,
-                      },
-                    })}
-                  >
-                    TRỞ THÀNH NHÀ ĐẦU TƯ TẠI LUCIS CITY
-                  </Typography>
-                  <Typography
-                    sx={(theme) => ({
-                      pt: "28px",
-                      [theme.breakpoints.down("lg")]: {
-                        fontSize: 14,
-                      },
-                    })}
-                  >
-                    Dân chủ - Minh bạch - Tin cậy - Linh hoạt
-                    <br /> Lucis City cho phép Nhà đầu tư tham gia Cộng đồng - trải nghiệm và hưởng các đặc quyền tiện
-                    ích tối ưu nhất.
-                  </Typography>
-                  <Button
-                    sx={(theme) => ({
-                      mt: 16,
-                      [theme.breakpoints.down("md")]: {
-                        fontSize: 14,
-                      },
-                    })}
-                    // endIcon={<img style={{ marginLeft: 8 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />}
-                    variant={"contained"}
-                    endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
-                    LinkComponent={Link}
-                    href={"/contact"}
-                  >
-                    Xem thêm
-                  </Button>
-                </ExtendBox>
-                <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />
+                        [theme.breakpoints.down("lg")]: {
+                          fontSize: 22,
+                        },
+                        [theme.breakpoints.down("md")]: {
+                          fontSize: 20,
+                        },
+                        [theme.breakpoints.down("sm")]: {
+                          fontSize: 28,
+                        },
+                      })}
+                    >
+                      TRỞ THÀNH NHÀ ĐẦU TƯ TẠI LUCIS CITY
+                    </Typography>
+                    <Typography
+                      sx={(theme) => ({
+                        pt: "28px",
+                        [theme.breakpoints.down("lg")]: {
+                          fontSize: 14,
+                        },
+                      })}
+                    >
+                      Dân chủ - Minh bạch - Tin cậy - Linh hoạt
+                      <br /> Lucis City cho phép Nhà đầu tư tham gia Cộng đồng - trải nghiệm và hưởng các đặc quyền tiện
+                      ích tối ưu nhất.
+                    </Typography>
+                    <Button
+                      sx={{
+                        bottom: headerHeight + 4,
+                        position: "absolute",
+                      }}
+                      // endIcon={<img style={{ marginLeft: 8 }} src="/assets/imgs/landing/arrow.svg" alt="arrow" />}
+                      variant={"contained"}
+                      endIcon={<img src="/assets/imgs/landing/arrow-circle-right.svg" alt="arrow" />}
+                      LinkComponent={Link}
+                      href={"/contact"}
+                    >
+                      Xem thêm
+                    </Button>
+                  </ExtendBox>
+                  <CoinImage src="/assets/imgs/landing/coin1.png" alt="coin" />
+                </Grid>
+                <Grid item md={3} xs={0} sx={{ position: "relative" }}>
+                  <GridDot open={slideActive === 0} src={"/assets/imgs/landing/header-decor.png"} />
+                </Grid>
               </Grid>
-              <Grid item md={3} xs={0} sx={{ position: "relative" }}>
-                <GridDot open={slideActive === 0} src={"/assets/imgs/landing/header-decor.png"} />
-              </Grid>
-            </Grid>
-          </Container>
-        </SupportPage>
+            </Container>
+          </SupportPage>
+        )}
       </HeaderStyled>
     </Box>
   );
