@@ -2,11 +2,11 @@ import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import React from "react";
 import ProfileSubTabs from "../components/tabs";
-import InfoForm from "../account/info";
-import Security from "../account/security";
-import ConnectBank from "../account/connect_bank";
-import ConnectWallet from "../account/connect_wallet";
-import Verification from "../account/verification";
+import InfoForm from "./info";
+import Security from "./security";
+import ConnectBank from "./connect_bank";
+import ConnectWallet from "./connect_wallet";
+import Verification from "./verification";
 
 
 const labels = ["Hồ sơ", "Bảo mật", "Liên kết ngân hàng", "Liên kết ví điện tử", "Xác minh danh tính"];
