@@ -156,8 +156,6 @@ const PasswordField = (props: PassFieldProps) => {
   )
 }
 
-interface SecurityProps {
-}
 
 export default function Security(props: SecurityProps) {
 
