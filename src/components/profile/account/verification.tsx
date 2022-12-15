@@ -112,9 +112,6 @@ const verifyBoxes: VerifyBoxProps[] = [
   },
 ]
 
-interface VerificationProps {
-}
-
 export default function Verification(props: VerificationProps) {
 
   return (
