@@ -259,17 +259,12 @@ interface IProps {
 }
 const Header = observer((props: IProps) => {
   const { userStore } = useStores();
-  const [isLogin, setIsLogin] = React.useState(userStore.isLogedIn);
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();
   const activePage = React.useMemo(() => {
     return pages.find((item) => item.href === router.pathname) ?? defaultPage;
   }, [router.pathname]);
-
-  React.useEffect(() => {
-    setIsLogin(userStore.isLogedIn);
-  }, [userStore.isLogedIn]);
 
   return (
     <Box position={"relative"}>
