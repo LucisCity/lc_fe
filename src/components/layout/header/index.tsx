@@ -6,7 +6,7 @@ import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
 import { useRouter } from "next/router";
 import zIndex from "@mui/material/styles/zIndex";
-import { useStores } from "../../../store";
+import UserStore from "../../../store/user.store";
 // import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
 import dynamic from "next/dynamic";
@@ -258,7 +258,7 @@ interface IProps {
   isSupportPage?: boolean;
 }
 const Header = observer((props: IProps) => {
-  const { userStore } = useStores();
+  // const { userStore } = useStores();
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();
@@ -270,7 +270,7 @@ const Header = observer((props: IProps) => {
     <Box position={"relative"}>
       <SideBarMenu
         open={showSidebar}
-        isLogin={userStore.isLogedIn}
+        isLogin={UserStore.isLoggedIn}
         onClose={() => setShowSidebar(false)}
         activePage={activePage}
       />
@@ -339,18 +339,18 @@ const Header = observer((props: IProps) => {
                     <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" />
                   </IconButton>
 
-                  {!userStore.isLogedIn ? (
+                  {!UserStore.isLoggedIn ? (
                     <Button LinkComponent={Link} href={"/login"} variant="contained">
                       Đăng nhập
                     </Button>
                   ) : null}
 
-                  {userStore.isLogedIn ? (
+                  {UserStore.isLoggedIn ? (
                     <AvatarMenu
-                      avatar={userStore.user?.profile?.avatar?.toString()}
-                      username={userStore.user?.profile?.display_name?.toString() ?? userStore.user?.email?.toString()}
+                      avatar={UserStore.user?.profile?.avatar?.toString()}
+                      username={UserStore.user?.profile?.display_name?.toString() ?? UserStore.user?.email?.toString()}
                       onLogout={() => {
-                        userStore.logout();
+                        UserStore.logout();
                       }}
                     />
                   ) : null}

@@ -3,7 +3,7 @@ import Router from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useStores } from "../../../store";
+import UserStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 
 const LOGIN_MUT = gql`
@@ -60,11 +60,11 @@ const LOGIN_FB_MUT = gql`
 export default function useLogin() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
-  const { userStore } = useStores();
+  // const { userStore } = useStores();
 
   const [login, { loading }] = useMutation(LOGIN_MUT, {
     onCompleted: (res) => {
-      userStore.saveLoginInfo(res.login.token, res.login.user);
+      UserStore.saveLoginInfo(res.login.token, res.login.user);
       Router.push("/");
     },
     onError: (e) => {
@@ -75,7 +75,7 @@ export default function useLogin() {
 
   const [loginGgMut, { loading: loadingGg }] = useMutation(LOGIN_GG_MUT, {
     onCompleted: (res) => {
-      userStore.saveLoginInfo(res.loginGoogle.token, res.loginGoogle.user);
+      UserStore.saveLoginInfo(res.loginGoogle.token, res.loginGoogle.user);
       Router.push("/");
     },
     onError: (e) => {
@@ -86,7 +86,7 @@ export default function useLogin() {
 
   const [loginFbMut, { loading: loadingFb }] = useMutation(LOGIN_FB_MUT, {
     onCompleted: (res) => {
-      userStore.saveLoginInfo(res.loginFacebook.token, res.loginFacebook.user);
+      UserStore.saveLoginInfo(res.loginFacebook.token, res.loginFacebook.user);
       Router.push("/");
     },
     onError: (e) => {
@@ -96,7 +96,7 @@ export default function useLogin() {
   });
 
   useEffect(() => {
-    if (userStore.isLogedIn) {
+    if (UserStore.isLoggedIn) {
       Router.back();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

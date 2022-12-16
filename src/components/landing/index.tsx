@@ -106,20 +106,17 @@ export default function LandingPage({ projects }: { projects: { name: string; de
           <Box
             slot="container-start"
             sx={{
-              // background: `url(${"/assets/imgs/member/background.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
+              background: `url(${"/assets/imgs/background/6.jpg"})`, ///assets/imgs/landing/img_bg_section_mid.png
               position: "absolute",
               left: "0",
               top: "0",
               width: "130%",
               height: "150%",
-              // backgroundSize: "cover",
-              // backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
-            // data-swiper-parallax="-23%"
-          >
-            <Background />
-          </Box>
-
+            data-swiper-parallax="-23%"
+          />
           <SwiperSlide>
             <TopSection />
           </SwiperSlide>
