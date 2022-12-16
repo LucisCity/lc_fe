@@ -54,7 +54,7 @@ const notis: NotiCardProps[] = [
   },
   {
     title: "President of Sales",
-    date: new Date(),
+    date: new Date(Date.now() + 1000),
     link: "/invest",
     seen: Math.random() > 0.5,
     content: "Physiological respiration involves the mechanisms that ensure that the composition of the functional " +
@@ -62,7 +62,7 @@ const notis: NotiCardProps[] = [
   },
   {
     title: "President of Sales",
-    date: new Date(),
+    date: new Date(Date.now() + 2000),
     link: "/invest",
     seen: Math.random() > 0.5,
     content: "Physiological respiration involves the mechanisms that ensure that the composition of the functional " +
@@ -70,7 +70,7 @@ const notis: NotiCardProps[] = [
   },
   {
     title: "President of Sales",
-    date: new Date(),
+    date: new Date(Date.now() + 3000),
     link: "/invest",
     seen: Math.random() > 0.5,
     content: "Physiological respiration involves the mechanisms that ensure that the composition of the functional " +
@@ -78,7 +78,7 @@ const notis: NotiCardProps[] = [
   },
   {
     title: "President of Sales",
-    date: new Date(),
+    date: new Date(Date.now() + 4000),
     link: "/invest",
     seen: Math.random() > 0.5,
     content: "Physiological respiration involves the mechanisms that ensure that the composition of the functional " +
@@ -86,7 +86,7 @@ const notis: NotiCardProps[] = [
   },
   {
     title: "President of Sales",
-    date: new Date(),
+    date: new Date(Date.now() + 5000),
     link: "/invest",
     seen: Math.random() > 0.5,
     content: "Physiological respiration involves the mechanisms that ensure that the composition of the functional " +
@@ -111,7 +111,8 @@ export const ProfileNotification = () => {
       </Box>
       <Box mt={1}>
         {notis.map((i) => (
-          <NotiCard title={i.title} date={i.date} content={i.content} seen={i.seen} link={i.link}/>
+          <NotiCard key={i.date.getTime()} title={i.title} date={i.date} content={i.content} seen={i.seen}
+                    link={i.link}/>
         ))}
       </Box>
     </Box>

@@ -1,11 +1,9 @@
 /* eslint-disable */
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, Grid } from "@mui/material";
 import { ProfileNavBar } from "./components/navbar/navbar";
-import { Background } from "../common/background/background";
 import ScrollPage from "../layout/scroll_page";
 import { Box, Container } from "@mui/system";
-import { useRouter } from "next/router";
 import s from "./index.module.sass";
 import UserStore from "../../store/user.store";
 import { observer } from "mobx-react-lite";
@@ -47,11 +45,21 @@ export const ProfileLayout = observer((props: Props) => {
             borderLeft: "1px solid #fff",
             borderTop: "1px solid #fff",
             borderBottom: "1px solid #fff",
-            borderRight: { md: "none", xs: "1px solid #fff" },
+            borderRight: {md: "none", xs: "1px solid #fff"},
           }}
           elevation={0}
         >
-          <Grid container>
+          {/*<CollapseMenu activeTab={activeTab}>*/}
+          {/*  {props.children}*/}
+          {/*</CollapseMenu>*/}
+          <Grid
+            container
+            // sx={(theme) => ({
+            //   [theme.breakpoints.down("sm")]: {
+            //     display: "none",
+            //   },
+            // })}
+          >
             <Grid
               item
               sm={3}

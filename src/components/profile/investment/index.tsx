@@ -19,7 +19,7 @@ export const ProfileInvestment = () => {
         fontSize={{sm: 32, xs: 25}}
         textAlign={{sm: "left", xs: "center"}}
       >
-        Tài khoản
+        Sản phẩm đầu tư
       </Typography>
       <ProfileSubTabs labels={labels}>
         <InvestmentInvested/>

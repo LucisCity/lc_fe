@@ -107,16 +107,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-function createData(date: string, estate: string, count: string, price: string, status: string) {
-  return {date, estate, count, price, status};
-}
-
-// const rows = [
-//   createData('27 Jun 2021, 00:00', 'VincomBaTrieu', '234/10.000', '$202.87', 'Done'),
-//   createData('01 May 2021, 00:00', 'Novaland', '454/10.000', '$576.28', 'Pending'),
-//   createData('19 Apr 2021, 00:00', 'Phú Nhuận', '648/10.000', '$450.54', 'Fail'),
-// ]//.sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
 const rows =
   [
     {
@@ -400,6 +390,41 @@ const rows =
       "status": "Done"
     }
   ];
+
+function createStyle(width = "20%", textColor: any, bgColor = "#000", fontSize = 16, fontWeight = 500, align = "center") {
+  return {textColor, bgColor, fontSize, fontWeight, align};
+}
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "Done":
+      return "#43F0C7";
+    case "Pending":
+      return "#F8BC63";
+
+    case "Fail":
+      return "#FF6CC4";
+    default:
+      return "black";
+  }
+}
+
+// const colStyles = [
+//   createStyle("30%", "#6CCAFF", undefined, undefined, 400, "left"),
+//   createStyle(undefined, undefined, undefined, undefined, undefined, "center"),
+//   createStyle(undefined, "#504C67", undefined, undefined, 400, "right"),
+//   createStyle("15%", "#504C67", undefined, undefined, undefined, "right"),
+//   createStyle("15%", getStatusColor, undefined, undefined, 400, "right"),
+// ];
+//
+// const colStyle = {
+//   "date": colStyles[0],
+//   "estate": colStyles[1],
+//   "count": colStyles[2],
+//   "price": colStyles[3],
+//   "status": colStyles[4],
+// }
+
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -422,20 +447,6 @@ export default function CustomPaginationActionsTable() {
     setPage(0);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Done":
-        return "#43F0C7";
-      case "Pending":
-        return "#F8BC63";
-
-      case "Fail":
-        return "#FF6CC4";
-      default:
-        return "black";
-    }
-  }
-
   return (
     <>
       <TableContainer component={Box}>
@@ -445,27 +456,34 @@ export default function CustomPaginationActionsTable() {
               {(rowsPerPage > 0
                   ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : rows
-              ).map((row) => (
-                // <Paper sx={{my: 0.15, borderRadius: 2,}} elevation={0}>
-                <TableRow key={row.date}>
-                  <TableCell style={{width: 200, textAlign: "left", color: "#6CCAFF"}} scope="row">
+              ).map((row, index) => (
+                <TableRow key={index}>
+                  {/*{Object.keys(row).map((i) => (*/}
+                  {/*  <TableCell*/}
+                  {/*    style={{width: colStyle[i].width, textAlign: colStyle[i].align, color: colStyle[i].textColor}}*/}
+                  {/*    scope="row"*/}
+                  {/*  >*/}
+                  {/*    <Typography fontWeight={colStyle[i].fontWeight}*/}
+                  {/*                fontSize={colStyle[i].fontSize}>row[i]</Typography>*/}
+                  {/*  </TableCell>*/}
+                  {/*))}*/}
+                  <TableCell style={{width: "30%", textAlign: "left", color: "#6CCAFF"}} scope="row">
                     <Typography fontWeight={400} fontSize={16}>{row.date}</Typography>
                   </TableCell>
-                  <TableCell style={{width: 100, textAlign: "center", color: "#000000"}} scope="row">
+                  <TableCell style={{width: "20%", textAlign: "center", color: "#000"}} scope="row">
                     <Typography fontWeight={500} fontSize={16}>{row.estate}</Typography>
                   </TableCell>
-                  <TableCell style={{width: 100, textAlign: "right", color: "#504C67"}} scope="row">
+                  <TableCell style={{width: "20%", textAlign: "right", color: "#504C67"}} scope="row">
                     <Typography fontWeight={400} fontSize={16}>{row.count}</Typography>
                   </TableCell>
-                  <TableCell style={{width: 100, textAlign: "right", color: "#504C67"}} scope="row">
+                  <TableCell style={{width: "15%", textAlign: "right", color: "#504C67"}} scope="row">
                     <Typography fontWeight={500} fontSize={16}>{row.price}</Typography>
                   </TableCell>
-                  <TableCell style={{width: 100, textAlign: "right"}} scope="row">
+                  <TableCell style={{width: "15%", textAlign: "right"}} scope="row">
                     <Typography fontWeight={400} fontSize={16}
                                 color={getStatusColor(row.status)}>{row.status}</Typography>
                   </TableCell>
                 </TableRow>
-                // </Paper>
               ))}
               {emptyRows > 0 && (
                 <TableRow style={{height: 53 * emptyRows}}>
