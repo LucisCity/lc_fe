@@ -1,35 +1,37 @@
 /* eslint-disable */
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, Grid } from "@mui/material";
 import { ProfileNavBar } from "./components/navbar/navbar";
-import { Background } from "../common/background/background";
 import ScrollPage from "../layout/scroll_page";
-import { Container } from "@mui/system";
-import { useRouter } from "next/router";
+import { Box, Container } from "@mui/system";
 import s from "./index.module.sass";
-import { useStores } from "../../store";
+import UserStore from "../../store/user.store";
+import { observer } from "mobx-react-lite";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 type Props = {
   children: any;
 };
 
-export const ProfileLayout = (props: Props) => {
-  const { userStore } = useStores();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!userStore.isLogedIn) {
-      router.push("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const activeTab = router.query.tab ? `/profile/${router.query.tab}` : "/profile";
-  // console.log('active tab href', activeTab);
+export const ProfileLayout = observer((props: Props) => {
+  const loading = !UserStore.isLoadedFromLocal;
 
   return (
     <ScrollPage>
-      <Background />
+      {/*<Background />*/}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          zIndex: -1,
+          background: `url("/assets/imgs/background/6.jpg")`,
+          backgroundSize: "cover",
+          height: "100vh",
+        }}
+      />
       <Container component="div" className={s.profileC}>
         <Card
           sx={{
@@ -43,11 +45,21 @@ export const ProfileLayout = (props: Props) => {
             borderLeft: "1px solid #fff",
             borderTop: "1px solid #fff",
             borderBottom: "1px solid #fff",
-            borderRight: { md: "none", xs: "1px solid #fff" },
+            borderRight: {md: "none", xs: "1px solid #fff"},
           }}
           elevation={0}
         >
-          <Grid container>
+          {/*<CollapseMenu activeTab={activeTab}>*/}
+          {/*  {props.children}*/}
+          {/*</CollapseMenu>*/}
+          <Grid
+            container
+            // sx={(theme) => ({
+            //   [theme.breakpoints.down("sm")]: {
+            //     display: "none",
+            //   },
+            // })}
+          >
             <Grid
               item
               sm={3}
@@ -59,7 +71,7 @@ export const ProfileLayout = (props: Props) => {
                 MozTransform: "translate3d(0, 0, 0)",
               }}
             >
-              <ProfileNavBar activeTab={activeTab} />
+              <ProfileNavBar />
             </Grid>
             <Grid
               item
@@ -76,11 +88,28 @@ export const ProfileLayout = (props: Props) => {
                 MozTransform: "translate3d(0, 0, 0)",
               }}
             >
-              {props.children}
+              {loading ? null : UserStore.isLoggedIn ? (
+                props.children
+              ) : (
+                <Box
+                  height={"100%"}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography variant={"h3"} mb={4}>
+                    Bạn phải đăng nhập mới có thể xem thông tin.
+                  </Typography>
+                  <Button LinkComponent={Link} href={"/login"} variant={"contained"}>
+                    Đăng nhập
+                  </Button>
+                </Box>
+              )}
             </Grid>
           </Grid>
         </Card>
       </Container>
     </ScrollPage>
   );
-};
+});

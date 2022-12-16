@@ -1,5 +1,7 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 import LayoutStore from "./layout.store";
+import UserStore from "../../store/user.store";
+import { useRouter } from "next/router";
 
 type Props = {
   isShowHeader?: boolean; // force show/hide header, default true
@@ -13,14 +15,15 @@ type Props = {
 };
 export default function PageLayout(props: Props) {
   const { children, isShowHeader, isShowFooter, hasBottomNav } = props;
-
+  const router = useRouter();
   useEffect(() => {
     LayoutStore.setStateOrDefault({
       isShowHeader,
       isShowFooter,
       bottomNavVisible: hasBottomNav,
-    })
-  }, [])
+    });
+    UserStore.loadFromLocal();
+  }, []);
 
   return children;
 }

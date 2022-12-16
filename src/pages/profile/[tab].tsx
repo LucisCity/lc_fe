@@ -12,6 +12,7 @@ import { ProfileInvestment } from "../../components/profile/investment";
 import { ProfileReferral } from "../../components/profile/referral";
 
 enum Tab {
+  DASHBOARD = "dashboard",
   APP = "app",
   ACCOUNT = "account",
   INVESTMENT = "investment",
@@ -29,10 +30,11 @@ const ProfileTab = () => {
       <PageLayout isShowFooter={false}>
         <ProfileLayout>
           {tab === Tab.ACCOUNT && <ProfileAccount />}
-          {tab === Tab.APP && <AppSetting/>}
-          {tab === Tab.INVESTMENT && <ProfileInvestment/>}
-          {tab === Tab.REFERRAL && <ProfileReferral/>}
-          {tab === Tab.NOTIFICATION && <ProfileNotification/>}
+          {tab === Tab.DASHBOARD && <ProfileDashboard />}
+          {tab === Tab.APP && <AppSetting />}
+          {tab === Tab.INVESTMENT && <ProfileInvestment />}
+          {tab === Tab.REFERRAL && <ProfileReferral />}
+          {tab === Tab.NOTIFICATION && <ProfileNotification />}
         </ProfileLayout>
       </PageLayout>
     </>

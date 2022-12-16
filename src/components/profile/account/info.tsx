@@ -111,7 +111,7 @@ export default function InfoForm() {
               <FormControlUnstyled defaultValue={data[label.idx]} disabled={label.value == 'Email'}>
                 <Label>{label.value}</Label>
                 {label.value === 'Email' ?
-                  <Input disabled={true} email={true}/> :
+                  <Input email={true}/> :
                   <Input/>}
               </FormControlUnstyled>
             </Grid>

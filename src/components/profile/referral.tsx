@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Box, styled } from "@mui/system";
-import { Button, Typography, useMediaQuery } from "@mui/material";
+import { Button, Paper, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import Divider from "@mui/material/Divider";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
@@ -17,6 +17,7 @@ import TableCell from "@mui/material/TableCell";
 import TablePagination from "@mui/material/TablePagination";
 import { InputUnstyled } from "@mui/base";
 import { inputUnstyledClasses } from "@mui/base/InputUnstyled";
+import { useCopyToClipboard } from "react-use";
 
 const table = createTheme({
   components: {
@@ -119,24 +120,24 @@ const data = [
   createData("01 May 2021, 00:02", "Guy Hawkins", "Đăng ký", "$6.48"),
   createData("10 Feb 2020, 00:05", "Cameron Williamson", "Đăng ký", "$6.48"),
   createData("01 May 2021, 00:13", "Wade Warren", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:02", "Cameron Williamson", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:03", "Cameron Williamson", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:03", "Leslie Alexander", "Đăng ký", "$6.48"),
+  createData("27 Jun 2001, 00:02", "Cameron Williamson", "Đăng ký", "$6.48"),
+  createData("27 Jun 2002, 00:03", "Cameron Williamson", "Đăng ký", "$6.48"),
+  createData("01 May 2003, 00:03", "Leslie Alexander", "Đăng ký", "$6.48"),
   createData("10 Feb 2020, 00:01", "Leslie Alexander", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:04", "Leslie Alexander", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:05", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("01 May 2004, 00:04", "Leslie Alexander", "Đăng ký", "$6.48"),
+  createData("27 Jun 2005, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("27 Jun 2006, 00:05", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("01 May 2007, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
   createData("10 Feb 2020, 00:03", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:06", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:07", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:05", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("01 May 2008, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("27 Jun 2009, 00:06", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("27 Jun 2002, 00:07", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("01 May 2010, 00:05", "Jane Cooper", "Đăng ký", "$6.48"),
   createData("10 Feb 2020, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:02", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:07", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2021, 00:09", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("01 May 2010, 00:02", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("27 Jun 2011, 00:07", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("27 Jun 2012, 00:09", "Jane Cooper", "Đăng ký", "$6.48"),
+  createData("01 May 2013, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
 ]
 const CustomTable = () => {
   const [page, setPage] = React.useState(0);
@@ -262,9 +263,17 @@ const CustomInput = styled(InputUnstyled, {
 `
 );
 
-
 const ReferralLinkBox = (props: ReferralLinkBoxProps) => {
+  const [showCopiedNotion, setShowCopiedNotion] = React.useState(false);
+  const [value, copy] = useCopyToClipboard();
 
+  const handleCopyLink = () => {
+    copy(props.value);
+    setShowCopiedNotion(true);
+    setTimeout(() => {
+      setShowCopiedNotion(false);
+    }, 500);
+  }
   return (
     <>
       <Label>{props.label}</Label>
@@ -282,8 +291,25 @@ const ReferralLinkBox = (props: ReferralLinkBoxProps) => {
           disabled={true}
           value={props.value}
         />
-        <Button variant="contained" sx={{p: 0, width: {sm: 150, xs: 60}, ml: 2, height: {sm: 50, xs: 60}}}>
+        <Button
+          variant="contained"
+          sx={{p: 0, width: {sm: 150, xs: 60}, ml: 2, height: {sm: 50, xs: 60}, position: "relative"}}
+          onClick={handleCopyLink}
+        >
           Copy link
+          <Paper
+            elevation={0}
+            sx={{
+              background: "rgba(223, 219, 221, 0.3)",
+              position: "absolute",
+              top: 52,
+              display: showCopiedNotion ? "inline" : "none",
+              fontSize: 12,
+              px: 3,
+            }}
+          >
+            Copied!
+          </Paper>
         </Button>
       </Box>
     </>

@@ -34,7 +34,7 @@ function Actions404() {
         Page Not Found
       </Typography>
       <Typography fontFamily="monospace" align="center" variant="body1" color="white">
-        This page is removed or not exist, please go back
+        This page was removed or missing, please go back
       </Typography>
       <Box justifyContent="center" display="flex" mt={10}>
         <Button variant="contained" onClick={() => router.back()} startIcon={<ArrowBackIosNewRounded/>}>

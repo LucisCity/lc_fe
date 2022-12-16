@@ -6,10 +6,11 @@ import { SideBarMenu } from "./side_bar_menu";
 import React from "react";
 import { useRouter } from "next/router";
 import zIndex from "@mui/material/styles/zIndex";
-import { useStores } from "../../../store";
+import UserStore from "../../../store/user.store";
 // import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
 import dynamic from "next/dynamic";
+import { AuthBox } from "./auth_box";
 
 const AvatarMenu = dynamic(() => import("./avatar_menu"), { ssr: false });
 
@@ -258,7 +259,6 @@ interface IProps {
   isSupportPage?: boolean;
 }
 const Header = observer((props: IProps) => {
-  const { userStore } = useStores();
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();
@@ -270,7 +270,7 @@ const Header = observer((props: IProps) => {
     <Box position={"relative"}>
       <SideBarMenu
         open={showSidebar}
-        isLogin={userStore.isLogedIn}
+        isLogin={UserStore.isLoggedIn}
         onClose={() => setShowSidebar(false)}
         activePage={activePage}
       />
@@ -334,27 +334,7 @@ const Header = observer((props: IProps) => {
                   },
                 })}
               >
-                <Right>
-                  <IconButton sx={{ mr: 2 }}>
-                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" />
-                  </IconButton>
-
-                  {!userStore.isLogedIn ? (
-                    <Button LinkComponent={Link} href={"/login"} variant="contained">
-                      Đăng nhập
-                    </Button>
-                  ) : null}
-
-                  {userStore.isLogedIn ? (
-                    <AvatarMenu
-                      avatar={userStore.user?.profile?.avatar?.toString()}
-                      username={userStore.user?.profile?.display_name?.toString() ?? userStore.user?.email?.toString()}
-                      onLogout={() => {
-                        userStore.logout();
-                      }}
-                    />
-                  ) : null}
-                </Right>
+                <AuthBox />
               </Box>
               <Box
                 height={{ xs: 60, sm: headerHeight }}
