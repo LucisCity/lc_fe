@@ -6,7 +6,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { Box, Typography } from "@mui/material";
 import { QRCodeCanvas } from "qrcode.react";
-import { useStores } from "../../../../store";
+import UseStore from "../../../../store/user.store";
 import { useDownload } from "../../../../hooks/use_download";
 import { useCopyToClipboard } from "react-use";
 import { useSnackbar } from "notistack";
@@ -22,7 +22,7 @@ const Transition = React.forwardRef(function Transition(
 const QR_ID = "invest_link_qr";
 
 export default function ShareDialog() {
-  const { userStore } = useStores();
+  // const { userStore } = useStores();
   const [open, setOpen] = React.useState(false);
   const { captureAndDownloadElement } = useDownload();
   const [_, copy] = useCopyToClipboard();
@@ -70,7 +70,7 @@ export default function ShareDialog() {
           </Typography>
           <Box sx={{ position: "relative", background: "red", width: "207px", height: "207px" }}>
             <QRCodeCanvas id={QR_ID} value={shareLink} size={207} />
-            {!userStore.isLogedIn ? (
+            {!UseStore.isLoggedIn ? (
               <>
                 <Box
                   sx={{
@@ -97,7 +97,7 @@ export default function ShareDialog() {
               </>
             ) : null}
           </Box>
-          {!userStore.isLogedIn ? (
+          {!UseStore.isLoggedIn ? (
             <>
               <Typography variant="h5" mt="32px">
                 hoặc liên kết dưới đây

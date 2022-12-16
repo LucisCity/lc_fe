@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { Grid, Paper, Typography } from "@mui/material";
 import CustomPaginationActionsTable from "./components/table";
 import React, { useEffect } from "react";
-import { useStores } from "../../store";
+// import { useStores } from "../../store";
 import Router from "next/router";
 
 const tutorialStepData = [
@@ -54,15 +54,6 @@ const DashBoardItem = () => {
 };
 
 export const ProfileDashboard = () => {
-  const { userStore } = useStores();
-
-  useEffect(() => {
-    if (!userStore.isLogedIn) {
-      Router.push("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <Box mx={{ sm: 10, xs: 3 }} my={7}>
       <Typography fontWeight={700} fontSize={{ sm: 32, xs: 25 }} textAlign={{ sm: "left", xs: "center" }}>

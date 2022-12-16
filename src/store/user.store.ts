@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { UserGql } from "../gql/graphql";
 import { StorageHelper } from "../utils";
 
-export default class UserStore {
+class UserStore {
   private _user: UserGql | null = null;
   _token: string | null = null;
   private _isLoadedFromLocal = false;
@@ -17,8 +17,12 @@ export default class UserStore {
   get token() {
     return this._token;
   }
-  get isLogedIn() {
+  get isLoggedIn() {
     return this._token != null && this._token != "";
+  }
+
+  get isLoadedFromLocal() {
+    return this._isLoadedFromLocal;
   }
 
   loadFromLocal() {
@@ -41,8 +45,11 @@ export default class UserStore {
     if (tokenLocal && tokenLocal !== "") {
       this._token = tokenLocal;
     }
-
-    console.log("token", tokenLocal);
+    return {
+      user: this.user,
+      token: this.token,
+      isLogged: this.isLoggedIn,
+    };
   }
 
   saveLoginInfo(token: string, user: UserGql) {
@@ -58,3 +65,5 @@ export default class UserStore {
     StorageHelper.clearSession();
   }
 }
+
+export default new UserStore();

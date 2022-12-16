@@ -8,6 +8,9 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import SvgIcon from "../../../common/svg_icon";
 import s from "./navbar.module.scss";
+import { useRouter } from "next/router";
+import { observer } from "mobx-react-lite";
+import UserStore from "../../../../store/user.store";
 
 interface TabProps {
   href: string;
@@ -16,17 +19,24 @@ interface TabProps {
   logoutButton?: boolean;
   active?: boolean;
   topLogoutButton?: boolean;
+  onClick?: () => void;
 }
 
 const Tab = (props: TabProps) => {
-
   return (
     <Button
       className={`
-        ${props.logoutButton ?
-        (props.topLogoutButton ? s.topLogoutButton : s.bottomLogoutButton) :
-        (props.active ? s.active : s.default)}
+        ${
+          props.logoutButton
+            ? props.topLogoutButton
+              ? s.topLogoutButton
+              : s.bottomLogoutButton
+            : props.active
+            ? s.active
+            : s.default
+        }
       `}
+      onClick={props.onClick}
       href={props.href}
       LinkComponent={Link}
       sx={{
@@ -41,75 +51,84 @@ const Tab = (props: TabProps) => {
         display: "flex",
         // justifyContent: {md: "left", sm: "center", xs: "center"},
         justifyContent: "left",
-        width: {sm: "auto"},
+        width: { sm: "auto" },
       }}
       // onClick={handleButtonClick}
     >
-      <Box sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        ml: {md: 4, sm: 2, xs: 5},
-        mr: {md: 7, sm: 4, xs: 10}
-      }}>
-        <SvgIcon src={props.svgSrc}/>
-      </Box>
-      <Typography
-        fontSize={16} fontWeight={500}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          ml: { md: 4, sm: 2, xs: 5 },
+          mr: { md: 7, sm: 4, xs: 10 },
+        }}
       >
+        <SvgIcon src={props.svgSrc} />
+      </Box>
+      <Typography fontSize={16} fontWeight={500}>
         {props.name}
       </Typography>
     </Button>
-  )
+  );
 };
 
 const iconSrc = "/assets/imgs/icon/";
 const tabs = [
   {
     name: "Dashboard",
-    href: "/profile",
-    svgSrc: iconSrc + 'dashboard.svg',
+    href: "/profile/dashboard",
+    svgSrc: iconSrc + "dashboard.svg",
   },
   {
     name: "Tài khoản",
     href: "/profile/account",
-    svgSrc: iconSrc + 'user_account.svg',
+    svgSrc: iconSrc + "user_account.svg",
   },
   {
     name: "Sản phẩm đầu tư",
     href: "/profile/investment",
-    svgSrc: iconSrc + 'investment.svg',
+    svgSrc: iconSrc + "investment.svg",
   },
   {
     name: "Referral",
     href: "/profile/referral",
-    svgSrc: iconSrc + 'referral.svg',
+    svgSrc: iconSrc + "referral.svg",
   },
   {
     name: "Thông báo",
     href: "/profile/notification",
-    svgSrc: iconSrc + 'notification.svg',
+    svgSrc: iconSrc + "notification.svg",
   },
   {
     name: "Ứng dụng",
     href: "/profile/app",
-    svgSrc: iconSrc + 'notification.svg',
+    svgSrc: iconSrc + "notification.svg",
   },
-]
+];
 
 interface ProfileNavBarProps {
-  activeTab: string;
+  // activeTab: string;
+  // isLogin: boolean;
 }
 
-export const ProfileNavBar = (props: ProfileNavBarProps) => {
-
+export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = React.useState<null | string>(null);
+  React.useEffect(() => {
+    if (router.query.tab) {
+      setActiveTab(`/profile/${router.query.tab}`);
+    }
+  }, [router.query.tab]);
   return (
-    <Box sx={{
-      py: {sm: 4, xs: 5},
-      px: {sm: 2},
-      pt: {xs: 2},
-      height: "100%",
-    }}>
+    <Box
+      sx={{
+        py: { sm: 4, xs: 5 },
+        px: { sm: 2 },
+        pt: { xs: 2 },
+        height: "100%",
+      }}
+    >
       <Box
         className={s.cardBg}
         sx={{
@@ -143,21 +162,17 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
           height: "100%",
         }}
       >
-        <Grid px={{sm: 2, xs: 0}} py={{sm: 0, xs: 4}} container direction="row">
+        <Grid px={{ sm: 2, xs: 0 }} py={{ sm: 0, xs: 4 }} container direction="row">
           <Grid item sm={12} xs={6}>
             <Avatar
               src="https://images.pexels.com/photos/236599/pexels-photo-236599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              sx={{height: "120px", width: "120px", m: "auto", mt: {md: 7, sm: 3}}}
+              sx={{ height: "120px", width: "120px", m: "auto", mt: { md: 7, sm: 3 } }}
             />
-            <Box
-              mt={{sm: 6, xs: 2}}
-              sx={{display: "flex", justifyContent: "center"}}
-            >
-              <img width={"80%"}
-                   src="/assets/imgs/landing/card_title.png" alt="galaxy card"/>
+            <Box mt={{ sm: 6, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
+              <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
             </Box>
           </Grid>
-          <Grid item sm={12} xs={6} px={{sm: 0, xs: 3}}>
+          <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
             <Tab
               href={"/login"}
               name={"Đăng xuất"}
@@ -165,36 +180,39 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
               logoutButton={true}
               topLogoutButton={true}
             />
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#6555EE",
-                textTransform: "none",
-                background: "rgba(255, 255, 255, 0.3)",
-                my: 5,
-                textAlign: "center",
-                width: "100%",
-                // height: {sm: "50px", xs: "fit-content"},
-                py: {xs: 6},
-                px: {xs: 0},
-                border: "1px solid",
-              }}
-              LinkComponent={Link}
-              href="/verification"
-            >
-              <Typography fontSize={{xs: 16}} fontWeight={500}>
-                Xác thực tài khoản
-              </Typography>
-            </Button>
+            {UserStore.isLoggedIn ? (
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#6555EE",
+                  textTransform: "none",
+                  background: "rgba(255, 255, 255, 0.3)",
+                  mt: 5,
+                  textAlign: "center",
+                  width: "100%",
+                  // height: {sm: "50px", xs: "fit-content"},
+                  py: { xs: 6 },
+                  px: { xs: 0 },
+                  border: "1px solid",
+                }}
+                LinkComponent={Link}
+                href="/verification"
+              >
+                <Typography fontSize={{ xs: 16 }} fontWeight={500}>
+                  Xác thực tài khoản
+                </Typography>
+              </Button>
+            ) : null}
+
             <Divider
               variant="middle"
               sx={{
                 mx: 3,
-                mt: 4,
+                mt: 9,
                 mb: 9,
                 borderBottomWidth: 1,
                 borderBottomColor: "#fff",
-                display: {sm: "block", xs: "none"},
+                display: { sm: "block", xs: "none" },
               }}
             />
             {/*// <Divider*/}
@@ -208,18 +226,15 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
         <Grid
           // px={2}
           container
-          sx={{flex: 1}}
+          sx={{ flex: 1 }}
         >
-          <Grid
-            item xs={12}
-            sx={{height: "100%"}}
-          >
+          <Grid item xs={12} sx={{ height: "100%" }}>
             <Stack
               direction="column"
-              spacing={{sm: 2, xs: 3}}
-              mx={{sm: 2, xs: "5%"}}
-              mt={{sm: 0, xs: 3}}
-              sx={{height: "100%"}}
+              spacing={{ sm: 2, xs: 3 }}
+              mx={{ sm: 2, xs: "5%" }}
+              mt={{ sm: 0, xs: 3 }}
+              sx={{ height: "100%" }}
               justifyContent={"space-between"}
               // display={{md: "block", xs: "flex"}}
               // alignItems={{xs: "flex-end"}}
@@ -227,26 +242,34 @@ export const ProfileNavBar = (props: ProfileNavBarProps) => {
             >
               <Stack
                 direction="column"
-                spacing={{sm: 2, xs: 3}}
+                spacing={{ sm: 2, xs: 3 }}
                 // display={{md: "block", xs: "flex"}}
                 // alignItems={{xs: "flex-end"}}
                 // pb={{md: 0, xs: 2}}
               >
                 {tabs.map((tab) => (
-                  <Tab key={tab.name} href={tab.href} name={tab.name} svgSrc={tab.svgSrc}
-                       active={tab.href === props.activeTab}/>
+                  <Tab
+                    key={tab.name}
+                    href={tab.href}
+                    name={tab.name}
+                    svgSrc={tab.svgSrc}
+                    active={tab.href === activeTab}
+                  />
                 ))}
               </Stack>
-              <Tab
-                href={"/login"}
-                name={"Đăng xuất"}
-                svgSrc={"/assets/imgs/icon/log_out.svg"}
-                logoutButton={true}
-              />
+              {UserStore.isLoggedIn ? (
+                <Tab
+                  href={"/login"}
+                  name={"Đăng xuất"}
+                  svgSrc={"/assets/imgs/icon/log_out.svg"}
+                  logoutButton={true}
+                  onClick={() => UserStore.logout()}
+                />
+              ) : null}
             </Stack>
           </Grid>
         </Grid>
       </Box>
     </Box>
-  )
-}
+  );
+});
