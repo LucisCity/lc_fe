@@ -10,6 +10,7 @@ import UserStore from "../../../store/user.store";
 // import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
 import dynamic from "next/dynamic";
+import { AuthBox } from "./auth_box";
 
 const AvatarMenu = dynamic(() => import("./avatar_menu"), { ssr: false });
 
@@ -258,7 +259,6 @@ interface IProps {
   isSupportPage?: boolean;
 }
 const Header = observer((props: IProps) => {
-  // const { userStore } = useStores();
   const [showSidebar, setShowSidebar] = React.useState(false);
   const slideActive = props?.slideActive;
   const router = useRouter();
@@ -334,27 +334,7 @@ const Header = observer((props: IProps) => {
                   },
                 })}
               >
-                <Right>
-                  <IconButton sx={{ mr: 2 }}>
-                    <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" />
-                  </IconButton>
-
-                  {!UserStore.isLoggedIn ? (
-                    <Button LinkComponent={Link} href={"/login"} variant="contained">
-                      Đăng nhập
-                    </Button>
-                  ) : null}
-
-                  {UserStore.isLoggedIn ? (
-                    <AvatarMenu
-                      avatar={UserStore.user?.profile?.avatar?.toString()}
-                      username={UserStore.user?.profile?.display_name?.toString() ?? UserStore.user?.email?.toString()}
-                      onLogout={() => {
-                        UserStore.logout();
-                      }}
-                    />
-                  ) : null}
-                </Right>
+                <AuthBox />
               </Box>
               <Box
                 height={{ xs: 60, sm: headerHeight }}

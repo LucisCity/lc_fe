@@ -77,7 +77,7 @@ const iconSrc = "/assets/imgs/icon/";
 const tabs = [
   {
     name: "Dashboard",
-    href: "/profile",
+    href: "/profile/dashboard",
     svgSrc: iconSrc + "dashboard.svg",
   },
   {
@@ -114,8 +114,12 @@ interface ProfileNavBarProps {
 
 export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
   const router = useRouter();
-  const activeTab = router.query.tab ? `/profile/${router.query.tab}` : "/profile";
-
+  const [activeTab, setActiveTab] = React.useState<null | string>(null);
+  React.useEffect(() => {
+    if (router.query.tab) {
+      setActiveTab(`/profile/${router.query.tab}`);
+    }
+  }, [router.query.tab]);
   return (
     <Box
       sx={{
