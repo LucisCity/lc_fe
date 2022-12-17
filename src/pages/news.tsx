@@ -51,8 +51,9 @@ export const getPostApiUrl = (offset: number, perPage: number) => {
  * @param data
  */
 export const normalizeDatePosts = (data: any) => {
-  const posts: IPost[] =
-    data?.map((item: any) => ({
+  let posts: IPost[];
+  try {
+    posts = data?.map((item: any) => ({
       id: item?.id,
       title: he.decode(item?.title?.rendered ?? ""),
       description: he.decode(truncateStr(item?.yoast_head_json?.og_description?.replace("[&hellip;]", ""), 0, 30)),
@@ -61,6 +62,10 @@ export const normalizeDatePosts = (data: any) => {
       link: `${newsEndpoint}/${item?.slug}`,
       categories: item._embedded["wp:term"]?.[0]?.map((category: any) => category.name),
     })) ?? [];
+  } catch (e) {
+    console.error('{normalizeDatePosts} e: ', e);
+    posts = []
+  }
 
   return posts;
 };
