@@ -26,13 +26,12 @@ const newsApiEndpoint = process.env.NEWS_API_ENDPOINT ?? "https://news-api.lucis
 export const getPostApiUrl = (offset: number, perPage: number) => {
   const _fields = `${[
     "id",
-    "title",
+    "title.rendered",
     "slug",
+    "excerpt.rendered",
     "date",
     "_links.wp:term.0",
-    "_links.yoast_head_json",
-    "yoast_head_json.og_image",
-    "yoast_head_json.og_description",
+    "_links.wp:featuredmedia.0",
   ].join(",")}`;
   const queryObject = {
     _embed: "true",
@@ -53,18 +52,19 @@ export const getPostApiUrl = (offset: number, perPage: number) => {
 export const normalizeDatePosts = (data: any) => {
   let posts: IPost[];
   try {
-    posts = data?.map((item: any) => ({
-      id: item?.id,
-      title: he.decode(item?.title?.rendered ?? ""),
-      description: he.decode(truncateStr(item?.yoast_head_json?.og_description?.replace("[&hellip;]", ""), 0, 30)),
-      createdDate: item?.date,
-      image: item?.yoast_head_json?.og_image?.[0]?.url ?? null,
-      link: `${newsEndpoint}/${item?.slug}`,
-      categories: item._embedded["wp:term"]?.[0]?.map((category: any) => category.name),
-    })) ?? [];
+    posts =
+      data?.map((item: any) => ({
+        id: item?.id,
+        title: he.decode(item?.title?.rendered ?? ""),
+        description: he.decode(truncateStr(item?.excerpt?.rendered?.replace("<p>", "")?.replace("</p>", ""), 0, 30)),
+        createdDate: item?.date,
+        image: item._embedded["wp:featuredmedia"]?.[0]?.source_url ?? null,
+        link: `${newsEndpoint}/${item?.slug}`,
+        categories: item._embedded["wp:term"]?.[0]?.map((category: any) => category.name),
+      })) ?? [];
   } catch (e) {
-    console.error('{normalizeDatePosts} e: ', e);
-    posts = []
+    console.error("{normalizeDatePosts} e: ", e);
+    posts = [];
   }
 
   return posts;
