@@ -58,7 +58,7 @@ export const normalizeDatePosts = (data: any) => {
       title: he.decode(item?.title?.rendered ?? ""),
       description: he.decode(truncateStr(item?.yoast_head_json?.og_description?.replace("[&hellip;]", ""), 0, 30)),
       createdDate: item?.date,
-      image: item?.yoast_head_json?.og_image?.[0]?.url,
+      image: item?.yoast_head_json?.og_image?.[0]?.url ?? null,
       link: `${newsEndpoint}/${item?.slug}`,
       categories: item._embedded["wp:term"]?.[0]?.map((category: any) => category.name),
     })) ?? [];

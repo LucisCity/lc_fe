@@ -6,6 +6,7 @@ import { Box, LinearProgress, Typography } from "@mui/material";
 
 interface CustomMarkerProps {
   data: MapDataType;
+  // @ts-ignore
   map?: google.maps.Map;
   onClick: (payload: MapDataType) => void;
   highlight?: boolean;
