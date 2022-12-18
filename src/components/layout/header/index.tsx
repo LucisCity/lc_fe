@@ -7,12 +7,10 @@ import React from "react";
 import { useRouter } from "next/router";
 import zIndex from "@mui/material/styles/zIndex";
 import UserStore from "../../../store/user.store";
-// import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
-import dynamic from "next/dynamic";
 import { AuthBox } from "./auth_box";
-
-const AvatarMenu = dynamic(() => import("./avatar_menu"), { ssr: false });
+import { useSwipeable, UP as SwiperUp } from "react-swipeable";
+import LayoutStore from "../layout.store";
 
 export const headerHeight = 90;
 export const mobileHeaderHeight = 60;
@@ -266,6 +264,14 @@ const Header = observer((props: IProps) => {
     return pages.find((item) => item.href === router.pathname) ?? defaultPage;
   }, [router.pathname]);
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => {
+      if (LayoutStore.swiperInstance && eventData.dir === SwiperUp && LayoutStore.slideActiveHeader === 0) {
+        LayoutStore.swiperInstance?.slideTo(1);
+      }
+    },
+  });
+
   return (
     <Box position={"relative"}>
       <SideBarMenu
@@ -274,7 +280,7 @@ const Header = observer((props: IProps) => {
         onClose={() => setShowSidebar(false)}
         activePage={activePage}
       />
-      <HeaderStyled open={slideActive === 0}>
+      <HeaderStyled open={slideActive === 0} {...handlers}>
         <Container>
           <Grid container>
             <Grid item sm={2} md={3} xs={6}>

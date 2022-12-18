@@ -4,7 +4,7 @@ import { isClient } from "../utils";
 /**
  * To avoid hydration mismatch, we need to set the initial size to the server
  */
-const initialSize = [0, 0];
+const initialSize = [1400, 800]; // initial size is pc
 
 function getWindowSize() {
   return isClient ? [window.innerWidth, window.innerHeight] : initialSize;

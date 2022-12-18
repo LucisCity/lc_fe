@@ -7,7 +7,7 @@ import { EcosystemSection } from "./ecosystem_section";
 import { ReasonChooseSection } from "./reason_choose_section";
 import { OperationSection } from "./operation_section";
 import { CompanySection } from "./company_section";
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Header from "../layout/header";
 import useScroll from "../../hooks/useScroll";
 import { PagingContextType, PagingCtx } from "../anim/swip_visible_anim";
@@ -21,7 +21,6 @@ import RoadmapSection from "./roadmap_section";
 import PartnerSection from "./partner_section";
 import Footer from "../layout/footer";
 import ComunitySection from "./community_section";
-import { Background } from "./components/background";
 import LayoutStore from "../layout/layout.store";
 
 export enum Section {
@@ -39,6 +38,7 @@ export enum Section {
 
 export default function LandingPage({ projects }: { projects: { name: string; description: string }[] }) {
   const [slideActive, setSlideActive] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState<any | null>(null);
   const theme = useTheme();
   const [paging, setPaging] = useState<PagingContextType>({
     activeIndex: 0,
@@ -48,6 +48,43 @@ export default function LandingPage({ projects }: { projects: { name: string; de
 
   const size = useWindowSize();
   const bottomNavVisible = LayoutStore.bottomNavVisible;
+
+  useEffect(() => {
+    LayoutStore.setSupportPage(true);
+    LayoutStore.setActiveSlide(slideActive);
+
+    return () => {
+      LayoutStore.setActiveSlide(-1);
+      LayoutStore.setSwiperInstance(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY > 0 && slideActive === 0) {
+        swiperInstance.slideTo(1);
+      }
+    };
+    if (swiperInstance?.slideTo && slideActive === 0) {
+      window.addEventListener("wheel", handleWheel);
+    } else {
+      window.removeEventListener("wheel", handleWheel);
+    }
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [swiperInstance, slideActive]);
+
+  useEffect(() => {
+    if (slideActive === 0) {
+      LayoutStore.setActiveSlide(0);
+      return;
+    }
+    if (LayoutStore.slideActiveHeader === 0) {
+      LayoutStore.setActiveSlide(-1);
+    }
+  }, [slideActive]);
 
   if (size.width < theme.breakpoints.values.sm) {
     return (
@@ -77,6 +114,10 @@ export default function LandingPage({ projects }: { projects: { name: string; de
     <Box className={s.container}>
       <PagingCtx.Provider value={paging}>
         <Swiper
+          onSwiper={(swiper) => {
+            setSwiperInstance(swiper);
+            LayoutStore.setSwiperInstance(swiper);
+          }}
           id="landing-page-c"
           direction={"vertical"}
           slidesPerView={1}
@@ -96,12 +137,12 @@ export default function LandingPage({ projects }: { projects: { name: string; de
           style={{
             overflow: "hidden",
             width: "100%",
-            height: "100%",
+            height: "100vh",
           }}
         >
-          <Box slot="container-start">
+          {/* <Box slot="container-start">
             <Header slideActive={slideActive} isSupportPage={true} />
-          </Box>
+          </Box> */}
 
           <Box
             slot="container-start"

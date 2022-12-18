@@ -10,7 +10,8 @@ type Props = {
 };
 export default observer(function Layout(props: Props) {
   const { children } = props;
-  const { isShowHeader, isShowFooter, bottomNavVisible, bottomNavHeight } = LayoutStore;
+  const { isShowHeader, isShowFooter, bottomNavVisible, bottomNavHeight, isSupportPageHeader, slideActiveHeader } =
+    LayoutStore;
 
   const pageRelativeStyle = {
     // paddingBottom: hasBottomNav ? 60 : 0,
@@ -22,7 +23,7 @@ export default observer(function Layout(props: Props) {
 
   return (
     <>
-      {isShowHeader && <Header />}
+      {isShowHeader && <Header isSupportPage={isSupportPageHeader} slideActive={slideActiveHeader} />}
       <main
         className="page-relative-c"
         // @ts-ignore

@@ -28,7 +28,7 @@ const Home = ({ projects }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <DocHead />
-      <PageLayout isShowHeader={false} isShowFooter={false}>
+      <PageLayout isShowHeader={true} isShowFooter={false}>
         <LandingPage projects={projects} />
       </PageLayout>
     </>

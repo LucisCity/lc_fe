@@ -1,18 +1,27 @@
 import { makeAutoObservable } from "mobx";
-import {isClientDevMode} from "../../utils/env";
-import {deviceSupport, getHeight} from "./bottom_navigation";
+import { isClientDevMode } from "../../utils/env";
+import { deviceSupport, getHeight } from "./bottom_navigation";
 
 export type LayoutState = {
   isShowHeader?: boolean;
   isShowFooter?: boolean;
   bottomNavVisible?: boolean;
   bottomNavHeight?: number;
-}
+
+  // only landing page
+  isSupportPageHeader?: boolean;
+  slideActiveHeader?: number;
+  swiperInstance?: any;
+};
 class LayoutStore implements LayoutState {
   public isShowHeader!: boolean;
   public isShowFooter!: boolean;
   public bottomNavVisible!: boolean;
   public bottomNavHeight!: number;
+
+  public isSupportPageHeader = false;
+  public slideActiveHeader = -1;
+  public swiperInstance: any = null;
 
   constructor() {
     this.resetState();
@@ -39,6 +48,19 @@ class LayoutStore implements LayoutState {
     this.bottomNavVisible = s.bottomNavVisible ?? getDefaultHasBottomNav();
     this.bottomNavHeight = s.bottomNavHeight ?? getHeight();
   }
+
+  ////////////////// only landing page ////////////////////////
+  setSupportPage(has: boolean) {
+    this.isSupportPageHeader = has;
+  }
+  setActiveSlide(slideActive: number) {
+    this.slideActiveHeader = slideActive;
+  }
+
+  setSwiperInstance(swiper: any) {
+    this.swiperInstance = swiper;
+  }
+  //////////////////////////////////////////////////////////////
 }
 
 function getDefaultHasBottomNav(): boolean {
