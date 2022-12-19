@@ -88,7 +88,7 @@ export const ProfileDashboard = () => {
       <Typography variant={"h3"} textAlign={{sm: "left", xs: "center"}} my={5}>
         Lịch sử giao dịch
       </Typography>
-      <DashboardTable/>
+      <DashboardTable rowsPerPage={10}/>
     </Box>
   );
 };

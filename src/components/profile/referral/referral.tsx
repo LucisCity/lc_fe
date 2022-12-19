@@ -142,7 +142,7 @@ export const ProfileReferral = () => {
         </Typography>
         <Typography fontWeight={400} color="#7A7A7A">21/2340 Referral</Typography>
       </Box>
-      <ReferralTable/>
+      <ReferralTable rowsPerPage={10}/>
     </Box>
   )
 }
