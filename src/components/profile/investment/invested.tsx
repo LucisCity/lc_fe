@@ -154,7 +154,7 @@ const HighlightCard = (props: IProps) => {
               </Grid>
               <Grid item xs={6}>
                 <Box width={{md: "80%", xs: "100%"}}>
-                  <Box display={"flex"} justifyContent={"space-between"} mb={1}>
+                  <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/dollar.svg"/>
                       Tổng giá trị
@@ -172,7 +172,7 @@ const HighlightCard = (props: IProps) => {
               </Grid>
               <Grid item xs={6}>
                 <Box width={{md: "80%", xs: "100%"}}>
-                  <Box display={"flex"} justifyContent={"space-between"} mb={1}>
+                  <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/home.svg"/>
                       Giá mua vào

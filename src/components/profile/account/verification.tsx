@@ -121,19 +121,12 @@ export default function Verification() {
         chúng tôi thực hiện KYC và cần các thông tin sau:
       </Typography>
       <Grid container spacing={5}>
-        <Grid item md={6} xs={12}>
-          <VerifyBox title={verifyBoxes[0].title} instruction={verifyBoxes[0].instruction}
-                     imgDesc={verifyBoxes[0].imgDesc}/>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <VerifyBox title={verifyBoxes[1].title} instruction={verifyBoxes[1].instruction}
-                     imgDesc={verifyBoxes[1].imgDesc}/>
-        </Grid>
-        <Grid item sm={3} sx={{display: {sm: "inline", xs: "none"}}}></Grid>
-        <Grid item md={6} xs={12}>
-          <VerifyBox title={verifyBoxes[2].title} instruction={verifyBoxes[2].instruction}
-                     imgDesc={verifyBoxes[2].imgDesc}/>
-        </Grid>
+        {verifyBoxes.map((i, idx) => (
+          <Grid key={idx} item md={6} xs={12}>
+            <VerifyBox title={i.title} instruction={i.instruction}
+                       imgDesc={i.imgDesc}/>
+          </Grid>
+        ))}
       </Grid>
       <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}} pt={11}>
         <Typography pb={5}>
