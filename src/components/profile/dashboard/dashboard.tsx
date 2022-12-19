@@ -1,11 +1,10 @@
 /* eslint-disable */
 import { Box } from "@mui/system";
 import { Grid, Paper, Typography } from "@mui/material";
-import CustomPaginationActionsTable from "./components/table";
-import React, { useEffect } from "react";
+import DashboardTable from "./dashboard_table";
+import React from "react";
 // import { useStores } from "../../store";
-import Router from "next/router";
-import SvgIcon from "../common/svg_icon";
+import SvgIcon from "../../common/svg_icon";
 
 const iconSrc = "/assets/imgs/icon/";
 
@@ -89,7 +88,7 @@ export const ProfileDashboard = () => {
       <Typography variant={"h3"} textAlign={{sm: "left", xs: "center"}} my={5}>
         Lịch sử giao dịch
       </Typography>
-      <CustomPaginationActionsTable/>
+      <DashboardTable/>
     </Box>
   );
 };
