@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
+import MapDialog from "./map_dialog";
 
 export default function InvestImageBox() {
   return (
@@ -12,6 +13,7 @@ export default function InvestImageBox() {
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: 1,
           mt: 4,
+          position: "relative",
         }}
       >
         <Item
@@ -116,6 +118,7 @@ export default function InvestImageBox() {
             />
           )}
         </Item>
+        <MapDialog />
       </Box>
     </Gallery>
   );
