@@ -87,7 +87,7 @@ const AuthMethod = (props: AuthMethodProps) => {
         <Typography variant={"h5"} color={"#504C67"}>{props.label}</Typography>
         <Typography variant={"h5"} fontWeight={400} color={"#D9D9D9"}>{props.desc}</Typography>
       </Box>
-      <CustomSwitch defaultChecked/>
+      <CustomSwitch disabled={true}/>
     </Paper>
   )
 }
@@ -179,7 +179,7 @@ export default function Security() {
           variant="contained"
         >
           <Typography variant={"h5"}>
-            Cập nhật thông tin
+            Đổi mật khẩu
           </Typography>
         </Button>
       </Box>

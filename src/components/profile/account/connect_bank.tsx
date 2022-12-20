@@ -224,7 +224,7 @@ export default function ConnectBank() {
 
   const [showForm, setShowForm] = React.useState(false);
   const handleAddBank = () => {
-    setShowForm(!showForm);
+    // setShowForm(!showForm);
   }
 
   return (
