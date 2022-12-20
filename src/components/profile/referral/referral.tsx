@@ -113,35 +113,36 @@ const linkBoxData: ReferralLinkBoxProps[] = [
 export const ProfileReferral = () => {
   return (
     <Box mx={{sm: 10, xs: 3, fontWeight: 400}} my={8}>
-      <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}} mb={2}>
-        <Typography
-          fontWeight={700}
-          fontSize={{sm: 32, xs: 25}}
-          textAlign={{sm: "left", xs: "center"}}
-        >
-          Referral
-        </Typography>
-      </Box>
+      <Typography
+        fontWeight={700}
+        fontSize={{sm: 32, xs: 25}}
+        textAlign={{sm: "left", xs: "center"}}
+        mb={2}
+      >
+        Referral
+      </Typography>
       {linkBoxData.map((i) => (
         <ReferralLinkBox label={i.label} value={i.value} key={i.label}/>
       ))}
       <Divider
         variant="middle"
         sx={{
-          my: 8,
+          mt: 8,
+          mb: 6,
           borderBottomWidth: 1,
           borderBottomColor: "#D9D9D9",
         }}
       />
-      <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}} mb={5}>
-        <Typography
-          variant={"h3"}
-          textAlign={{sm: "left", xs: "center"}}
-        >
-          Danh sách Referral
-        </Typography>
-        <Typography fontWeight={400} color="#7A7A7A">21/2340 Referral</Typography>
-      </Box>
+      {/*<Box sx={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}} mb={5}>*/}
+      <Typography
+        variant={"h3"}
+        textAlign={{sm: "left", xs: "center"}}
+        mb={5}
+      >
+        Danh sách Referral
+      </Typography>
+      {/*  <Typography fontWeight={400} color="#7A7A7A">21/2340 Referral</Typography>*/}
+      {/*</Box>*/}
       <ReferralTable rowsPerPage={10}/>
     </Box>
   )

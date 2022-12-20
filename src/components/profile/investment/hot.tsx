@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import React from "react";
 import StackAnim from "../../anim/stack_anim";
+import PaginatedList from "../components/paginated_list";
 
 const fakeData = [
   {
@@ -199,13 +200,15 @@ export default function InvestmentHot() {
 
   return (
     <React.Fragment>
-      {fakeData.map((i) => (
-        <Box key={i.name} px={{md: 4}} pt={{xs: 4}}>
-          <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
-            <HighlightCard {...i} />
-          </StackAnim>
-        </Box>
-      ))}
+      <PaginatedList rowsPerPage={5}>
+        {fakeData.map((i, idx) => (
+          <Box key={idx} px={{md: 4}} pt={{xs: 4}}>
+            <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
+              <HighlightCard {...i} />
+            </StackAnim>
+          </Box>
+        ))}
+      </PaginatedList>
     </React.Fragment>
   )
 }

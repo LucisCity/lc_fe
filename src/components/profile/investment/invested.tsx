@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import React from "react";
 import StackAnim from "../../anim/stack_anim";
+import PaginatedList from "../components/paginated_list";
 
 const fakeData = [
   {
@@ -105,10 +106,10 @@ const HighlightCard = (props: IProps) => {
             <Grid item xs={12} sm={8} container spacing={3}>
               <Grid item sm={6} xs={12}>
                 <Box mb={1} display={"flex"} justifyContent={"space-between"} alignItems={"baseline"}>
-                  <Typography variant="h3">
+                  <Typography fontSize={{lg: 20, md: 18, sm: 16, xs: 20}} fontWeight={600}>
                     {props.name}
                   </Typography>
-                  <Typography variant="h4" color={"#33E179"}>
+                  <Typography fontWeight={500} fontSize={{lg: 18, md: 16, sm: 14, sx: 18}} color={"#33E179"}>
                     ($230.02)
                   </Typography>
                 </Box>
@@ -219,13 +220,15 @@ export default function InvestmentInvested() {
 
   return (
     <React.Fragment>
-      {fakeData.map((i) => (
-        <Box key={i.name} px={{lg: 4}} pt={{xs: 4}}>
-          <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
-            <HighlightCard {...i} />
-          </StackAnim>
-        </Box>
-      ))}
+      <PaginatedList rowsPerPage={5}>
+        {fakeData.map((i, idx) => (
+          <Box key={idx} px={{md: 4}} pt={{xs: 4}}>
+            <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
+              <HighlightCard {...i} />
+            </StackAnim>
+          </Box>
+        ))}
+      </PaginatedList>
     </React.Fragment>
   )
 }

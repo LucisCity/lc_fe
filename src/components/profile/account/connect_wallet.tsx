@@ -73,7 +73,7 @@ export default function ConnectWallet() {
 
   return (
     <React.Fragment>
-      <Typography variant={"h3"}>
+      <Typography variant={"h3"} mt={5}>
         Lựa chọn loại ví điện tử cho bạn
       </Typography>
       <Typography fontSize={16} fontWeight={400} my={5}>

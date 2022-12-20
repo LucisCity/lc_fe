@@ -135,7 +135,7 @@ export default function Verification() {
         <Button
           variant="contained"
         >
-          Xác nhận danh tính
+          Xác minh danh tính
         </Button>
       </Box>
     </Box>

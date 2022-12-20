@@ -240,7 +240,7 @@ export default function ConnectBank() {
 
   return (
     <React.Fragment>
-      <Box sx={{overflowX: "auto"}}>
+      <Box mt={5}>
         {banksConnected.map((bank) => (
           <BankConnected key={bank.info.cardId} info={bank.info} cardImg={bank.cardImg}/>
         ))}
