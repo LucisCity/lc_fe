@@ -118,7 +118,7 @@ export default function InfoForm() {
           )
         })}
       </Grid>
-      <Box mt={15} display={"flex"} justifyContent={"center"}>
+      <Box mt={{sm: 15, xs: 10}} display={"flex"} justifyContent={"center"}>
         <Button
           variant="contained"
         >

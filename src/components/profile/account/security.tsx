@@ -124,6 +124,7 @@ const PasswordField = (props: PassFieldProps) => {
     >
       <Label>{props.label}</Label>
       <Box
+        position={"relative"}
         sx={{
           display: "flex",
           justifyContent: "flex-end",
@@ -135,14 +136,13 @@ const PasswordField = (props: PassFieldProps) => {
       >
         <CustomInput
           type={showPass ? "text" : "password"}
-          sx={{width: "100%", zIndex: 2}}
+          sx={{flex: 1}}
           // style={{"-webkit-text-security": "square"}}
         />
         <IconButton
           sx={{
-            // position: "absolute",
-            zIndex: 3,
-            right: {xl: "100px", md: "80px", xs: "55px"},
+            position: "absolute",
+            right: {sm: "17%", xs: 20},
           }}
           aria-label="toggle password visibility"
           onClick={handleClickShowPassword}

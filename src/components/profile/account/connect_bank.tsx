@@ -21,53 +21,63 @@ interface BankConnectedProps {
 const BankConnected = (props: BankConnectedProps) => {
   return (
     <Card
-      className={s.addBankCard}
+      className={s.bankCard}
       elevation={0}
-      sx={{display: 'flex', width: "100%", minWidth: 450, height: 120, mb: 4}}
+      sx={{display: 'flex', width: "100%", height: 120, mb: 4, p: 2}}
     >
-      <Box p={2} sx={{display: 'flex', width: "100%"}}>
-        <CardMedia
-          component="img"
-          sx={{width: 167, height: 105}}
-          image={props.cardImg}
-          alt="bank card"
-        />
+      <CardMedia
+        className={s.bankCardMedia}
+        component="img"
+        sx={{width: 167, aspectRatio: "1.6"}}
+        image={props.cardImg}
+        alt="bank card"
+      />
+      <Box
+        sx={{display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center"}}
+      >
         <Box
-          sx={{display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center"}}>
-          <Box pl={6} sx={{color: "#504C67"}} minWidth={200}>
-            <Typography fontSize={14} fontWeight={600} pb={5}>
-              {props.info.bankName}
-            </Typography>
-            <Typography fontSize={16} fontWeight={400} color="text.secondary" pb={2}>
-              {props.info.cardId}
-            </Typography>
-            <Typography fontSize={16} fontWeight={400} color="text.secondary" sx={{textTransform: "uppercase"}}>
-              {props.info.owner}
-            </Typography>
-          </Box>
-          <Box
-            className={s.closeButton}
-            border="1.5px solid #504C67"
-            width={22}
-            height={22}
-            mr={5}
-            borderRadius={10}
+          className={s.bankCardContent}
+          pl={6}
+          sx={{color: "#504C67"}}
+          minWidth={200}
+        >
+          <Typography className={s.bankCardTextTitle} fontSize={14} fontWeight={600} pb={5}>
+            {props.info.bankName}
+          </Typography>
+          <Typography className={s.bankCardTextSubtitle} fontSize={16} fontWeight={400} color="text.secondary" pb={2}>
+            {props.info.cardId}
+          </Typography>
+          <Typography
+            className={s.bankCardTextSubtitle}
+            fontSize={16}
+            fontWeight={400}
+            color="text.secondary"
+            sx={{textTransform: "uppercase"}}>
+            {props.info.owner}
+          </Typography>
+        </Box>
+        <Box
+          className={s.closeButton}
+          border="1.5px solid #504C67"
+          width={22}
+          height={22}
+          mr={5}
+          borderRadius={10}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            "&:hover": {
+              background: "#F1F1F1",
+            }
+          }}
+        >
+          <CloseOutlinedIcon
             sx={{
-              display: "flex",
-              alignItems: "center",
-              "&:hover": {
-                background: "#F1F1F1",
-              }
+              width: 15,
+              ml: 0.5,
             }}
-          >
-            <CloseOutlinedIcon
-              sx={{
-                width: 15,
-                ml: 0.5,
-              }}
-              color={"disabled"}
-            />
-          </Box>
+            color={"disabled"}
+          />
         </Box>
       </Box>
     </Card>
@@ -81,12 +91,12 @@ interface AddBankProps {
 const AddBank = (props: AddBankProps) => {
   return (
     <Card
+      className={s.bankCard}
       elevation={0}
       sx={{
         display: 'flex',
         flexDirection: "row",
         width: "100%",
-        minWidth: 450,
         height: 120,
         alignItems: "center",
         marginBottom: 6,
@@ -98,11 +108,12 @@ const AddBank = (props: AddBankProps) => {
       onClick={() => props.handleAddBank()}
     >
       <Box
+        className={s.bankCardMedia}
         m={2}
         sx={{
           display: 'flex',
           width: 167,
-          height: 105,
+          aspectRatio: "1.6",
           background: '#F1F1F1',
           border: '1px dashed #D9D9D9',
           borderRadius: 2,
@@ -114,10 +125,10 @@ const AddBank = (props: AddBankProps) => {
         </Box>
       </Box>
       <Typography
+        className={s.bankCardContent}
         fontSize={14}
         fontWeight={600}
         pl={7}
-        // onClick={}
       >
         Thêm ngân hàng
       </Typography>

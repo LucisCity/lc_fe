@@ -1,4 +1,4 @@
-.addBankCard .closeButton {
+.bankCard .closeButton {
   visibility: hidden;
 
   @media (max-width: 768px) {
@@ -6,10 +6,44 @@
   }
 }
 
-.addBankCard:hover .closeButton {
+.bankCard:hover .closeButton {
   visibility: visible;
 }
 
-.addBankCard:hover {
+.bankCard:hover {
   cursor: pointer;
+}
+
+.bankCard {
+  @media (max-width: 460px) {
+    flex-direction: column;
+    height: auto;
+    padding: 30px;
+  }
+}
+
+.bankCardMedia {
+  @media (max-width: 460px) {
+    width: 100%;
+  }
+}
+
+.bankCardContent {
+  @media (max-width: 460px) {
+    padding-top: 10px;
+    padding-left: 0;
+    font-size: large;
+  }
+}
+
+.bankCardTextTitle {
+  @media (max-width: 460px) {
+    font-size: medium;
+  }
+}
+
+.bankCardTextSubtitle {
+  @media (max-width: 460px) {
+    font-size: large;
+  }
 }

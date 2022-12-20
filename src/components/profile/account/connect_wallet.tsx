@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import s from "./connect_bank.module.scss";
 
 const imgSrc = "/assets/imgs/account/wallet/";
 
@@ -49,7 +48,6 @@ const WalletCard = (props: WalletCardProps) => {
 
   return (
     <Card
-      className={s.addBankCard}
       elevation={0}
     >
       <Box p={1} sx={{display: 'flex', width: "100%"}}>
