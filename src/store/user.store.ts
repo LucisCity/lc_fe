@@ -18,8 +18,8 @@ class UserStore {
     return this._token;
   }
   get isLoggedIn() {
-    // return this._token != null && this._token != "";
-    return true;
+    return this._token != null && this._token != "";
+    // return true;
   }
 
   get isLoadedFromLocal() {
