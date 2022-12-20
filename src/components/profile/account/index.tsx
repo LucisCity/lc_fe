@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import React from "react";
-import ProfileSubTabs from "../components/tabs";
+import ProfileTabs from "../components/tabs";
 import InfoForm from "./info";
 import Security from "./security";
 import ConnectBank from "./connect_bank";
@@ -9,7 +9,28 @@ import ConnectWallet from "./connect_wallet";
 import Verification from "./verification";
 
 
-const labels = ["Hồ sơ", "Bảo mật", "Liên kết ngân hàng", "Liên kết ví điện tử", "Xác minh danh tính"];
+const tabs = [
+  {
+    label: "Hồ sơ",
+    value: "info",
+  },
+  {
+    label: "Bảo mật",
+    value: "security",
+  },
+  {
+    label: "Liên kết ngân hàng",
+    value: "connect_bank",
+  },
+  {
+    label: "Liên kết ví điện tử",
+    value: "connect_wallet",
+  },
+  {
+    label: "Xác minh danh tính",
+    value: "verification",
+  },
+];
 
 export const ProfileAccount = () => {
 
@@ -22,13 +43,13 @@ export const ProfileAccount = () => {
       >
         Tài khoản
       </Typography>
-      <ProfileSubTabs labels={labels}>
+      <ProfileTabs sectionHref={"/profile/account"} tabs={tabs}>
         <InfoForm/>
         <Security/>
         <ConnectBank/>
         <ConnectWallet/>
         <Verification/>
-      </ProfileSubTabs>
+      </ProfileTabs>
     </Box>
   )
 }

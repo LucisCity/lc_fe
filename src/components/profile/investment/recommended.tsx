@@ -195,7 +195,7 @@ const HighlightCard = (props: IProps) => {
   );
 };
 
-export default function InvestmentRecommendation() {
+export default function InvestmentRecommended() {
 
   return (
     <React.Fragment>

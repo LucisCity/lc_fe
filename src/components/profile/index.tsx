@@ -49,16 +49,8 @@ export const ProfileLayout = observer((props: Props) => {
           }}
           elevation={0}
         >
-          {/*<CollapseMenu activeTab={activeTab}>*/}
-          {/*  {props.children}*/}
-          {/*</CollapseMenu>*/}
           <Grid
             container
-            // sx={(theme) => ({
-            //   [theme.breakpoints.down("sm")]: {
-            //     display: "none",
-            //   },
-            // })}
           >
             <Grid
               item

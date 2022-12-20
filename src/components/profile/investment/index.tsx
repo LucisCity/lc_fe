@@ -2,14 +2,31 @@
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import React from "react";
-import ProfileSubTabs from "../components/tabs";
+import ProfileTabs from "../components/tabs";
 import InvestmentInvested from "./invested";
 import InvestmentFavorite from "./favorite";
-import InvestmentRecommendation from "./recommendation";
+import InvestmentRecommended from "./recommended";
 import InvestmentHot from "./hot";
 
-const labels = ["Đã đầu tư", "Yêu thích", "Gợi ý", "Sản phẩm hot"];
 
+const subTabs = [
+  {
+    label: "Đã đầu tư",
+    value: "invested",
+  },
+  {
+    label: "Yêu thích",
+    value: "favorite",
+  },
+  {
+    label: "Gợi ý",
+    value: "recommended",
+  },
+  {
+    label: "Sản phẩm hot",
+    value: "hot",
+  },
+];
 
 export const ProfileInvestment = () => {
   return (
@@ -21,12 +38,12 @@ export const ProfileInvestment = () => {
       >
         Sản phẩm đầu tư
       </Typography>
-      <ProfileSubTabs labels={labels}>
+      <ProfileTabs sectionHref={"/profile/investment"} tabs={subTabs}>
         <InvestmentInvested/>
         <InvestmentFavorite/>
-        <InvestmentRecommendation/>
+        <InvestmentRecommended/>
         <InvestmentHot/>
-      </ProfileSubTabs>
+      </ProfileTabs>
     </Box>
   )
 }

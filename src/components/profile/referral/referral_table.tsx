@@ -82,13 +82,13 @@ export const ReferralTable = (props: ReferralTableProps) => {
                   <TableCell style={{width: "30%", textAlign: "left", color: "#6CCAFF"}} scope="row">
                     <Typography fontWeight={400} fontSize={16}>{row.date}</Typography>
                   </TableCell>
-                  <TableCell style={{width: "25%", textAlign: "center", color: "#000000"}} scope="row">
+                  <TableCell style={{width: "30%", textAlign: "center", color: "#000000"}} scope="row">
                     <Typography fontWeight={500} fontSize={16}>{row.name}</Typography>
                   </TableCell>
                   <TableCell style={{width: "15%", textAlign: "left", color: "#504C67"}} scope="row">
                     <Typography fontWeight={400} fontSize={16}>{row.type}</Typography>
                   </TableCell>
-                  <TableCell style={{width: "15%", textAlign: "right", color: "#504C67"}} scope="row">
+                  <TableCell style={{width: "10%", textAlign: "right", color: "#504C67"}} scope="row">
                     <Typography fontWeight={500} fontSize={16}>{row.reward}</Typography>
                   </TableCell>
                   <TableCell style={{width: "15%", textAlign: "right"}} scope="row">

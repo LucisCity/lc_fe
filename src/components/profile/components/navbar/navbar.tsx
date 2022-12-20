@@ -108,18 +108,18 @@ const tabs = [
 ];
 
 interface ProfileNavBarProps {
-  // activeTab: string;
+  // activeSection: string;
   // isLogin: boolean;
 }
 
 export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = React.useState<null | string>(null);
+  const [activeSection, setActiveSection] = React.useState<null | string>(null);
   React.useEffect(() => {
-    if (router.query.tab) {
-      setActiveTab(`/profile/${router.query.tab}`);
+    if (router.query.section) {
+      setActiveSection(`/profile/${router.query.section}`);
     }
-  }, [router.query.tab]);
+  }, [router.query.section]);
   return (
     <Box
       sx={{
@@ -215,12 +215,6 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
                 display: { sm: "block", xs: "none" },
               }}
             />
-            {/*// <Divider*/}
-            {/*//   orientation="vertical"*/}
-            {/*//   variant="middle"*/}
-            {/*//   flexItem*/}
-            {/*//   sx={{borderRightWidth: 1, borderRightColor: "#fff"}}*/}
-            {/*// />*/}
           </Grid>
         </Grid>
         <Grid
@@ -236,9 +230,6 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
               mt={{ sm: 0, xs: 3 }}
               sx={{ height: "100%" }}
               justifyContent={"space-between"}
-              // display={{md: "block", xs: "flex"}}
-              // alignItems={{xs: "flex-end"}}
-              // pb={{md: 0, xs: 2}}
             >
               <Stack
                 direction="column"
@@ -253,7 +244,7 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
                     href={tab.href}
                     name={tab.name}
                     svgSrc={tab.svgSrc}
-                    active={tab.href === activeTab}
+                    active={tab.href === activeSection}
                   />
                 ))}
               </Stack>

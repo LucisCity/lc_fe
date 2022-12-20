@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -31,10 +33,15 @@ const StyledTabs = styled((props: StyledTabsProps) => (
 
 interface StyledTabProps {
   label: string;
+  href: string;
 }
 
 const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
+  <Tab
+    LinkComponent={Link}
+    disableRipple
+    {...props}
+  />
 ))(({theme}) => ({
   textTransform: 'none',
   fontWeight: 400,
@@ -89,18 +96,25 @@ function a11yProps(index: number) {
   };
 }
 
-interface ProfileSubTabsProps {
+interface ProfileTabsProps {
   children: any;
-  labels: string[];
+  sectionHref: string;
+  tabs: {
+    label: string,
+    value: string,
+  }[];
 }
 
-export default function ProfileSubTabs(props: ProfileSubTabsProps) {
-  const {children, labels} = props;
+export default function ProfileTabs(props: ProfileTabsProps) {
+  const {children, tabs, sectionHref} = props;
 
-  const [value, setValue] = React.useState(0);
+  const router = useRouter();
+  const currentTabIdx = tabs.map((i) => i.value).indexOf(String(router.query.tab));
+  // open tab
+  const [openTab, setOpenTab] = React.useState(currentTabIdx >= 0 ? currentTabIdx : 0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setOpenTab(newValue);
   };
 
   return (
@@ -112,17 +126,17 @@ export default function ProfileSubTabs(props: ProfileSubTabsProps) {
           borderBottomColor: '#D9D9D9'
         }}>
         <StyledTabs
-          value={value}
+          value={openTab}
           onChange={handleChange}
           aria-label="styled tabs example"
         >
-          {labels.map((label) => (
-            <StyledTab key={label} label={label} {...a11yProps(labels.indexOf(label))}/>
+          {tabs.map((i, idx) => (
+            <StyledTab key={idx} label={i.label} href={sectionHref + "?tab=" + i.value} {...a11yProps(idx)}/>
           ))}
         </StyledTabs>
       </Box>
       {React.Children.map(children, (child: any, index: number) => (
-        <TabPanel key={index} index={index} value={value}>
+        <TabPanel key={index} index={index} value={openTab}>
           {child}
         </TabPanel>
       ))}
