@@ -6,7 +6,7 @@ export default function InvestDetailSteper() {
     <Box
       sx={{
         width: "100%",
-        overflowX: "scroll",
+        overflowX: "auto",
         overflowY: "hidden",
         // display: ["none", "inherit"],
       }}

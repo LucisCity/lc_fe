@@ -37,7 +37,7 @@ export function EcosystemSection(props: Props) {
         overflow: "hidden",
         "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
         [theme.breakpoints.down("sm")]: {
-          background: `url(/assets/imgs/member/background.jpg)`,
+          background: `url(/assets/imgs/background/5.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",
@@ -83,11 +83,14 @@ export function EcosystemSection(props: Props) {
               variants={{ hidden: { opacity: 0, x: size.width > 768 ? -300 : 0, y: size.width > 768 ? 300 : 0 } }}
               index={props.index}
             >
-              <Stack spacing={3} sx={{
-                maxWidth: "426px",
-                mt: 8,
-                mb: 26,
-              }}>
+              <Stack
+                spacing={3}
+                sx={{
+                  maxWidth: "426px",
+                  mt: 8,
+                  mb: 26,
+                }}
+              >
                 <Item>
                   <Typography whiteSpace="pre-line">
                     <img src="/assets/imgs/landing/check-icon.svg" alt="check-icon" />

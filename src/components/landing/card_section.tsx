@@ -170,7 +170,7 @@ export const CardSection = (props: IProps) => {
       className={props.fullscreen ? "fullscreenPage" : undefined}
       sx={{
         "--page-padding-top": props.fullscreen ? `${headerHeight}px` : 0, // landing always on PC always has header 90px
-        background: !disabledBackground ? `url(${"assets/imgs/member/background.jpg"})` : "none",
+        background: !disabledBackground ? `url(${"assets/imgs/background/6.jpg"})` : "none",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "top",

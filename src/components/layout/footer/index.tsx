@@ -9,7 +9,7 @@ const FooterStyled = styled("footer", { shouldForwardProp: (propName) => propNam
   disabledBackground: boolean;
 }>(({ theme, disabledBackground }) => ({
   width: "100%",
-  background: disabledBackground ? "none" : `url("/assets/imgs/footer/background.jpg")`,
+  background: disabledBackground ? "none" : `url(/assets/imgs/background/5.jpg)`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backdropFilter: "blur(12px)",
