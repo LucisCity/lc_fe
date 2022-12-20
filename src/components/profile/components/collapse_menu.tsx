@@ -170,14 +170,13 @@ const UserItem = () => {
                   borderRadius: 4,
                   background: "#fff",
                   textTransform: "none",
-                  pl: "10%",
                   height: 56,
                   display: "flex",
-                  justifyContent: "left",
+                  justifyContent: "center",
                 }}
               >
                 <SvgIcon src={"/assets/imgs/icon/log_out.svg"}/>
-                <Typography fontSize={16} fontWeight={500} ml={"10%"}>
+                <Typography fontSize={16} fontWeight={500} ml={3}>
                   Đăng xuất
                 </Typography>
               </Button>
@@ -192,7 +191,6 @@ const UserItem = () => {
                     textAlign: "center",
                     width: "100%",
                     py: {xs: 6},
-                    px: {xs: 0},
                     border: "1px solid",
                   }}
                   LinkComponent={Link}
@@ -220,6 +218,8 @@ export default function CollapseMenu(props: CollapseMenuProps) {
   const {children} = props;
   const router = useRouter();
   const activeSection = router.query.section ? `/profile/${router.query.section}` : "/profile";
+  const loading = !UserStore.isLoadedFromLocal;
+
   // console.log(`active tab ${activeSection}`);
   return (
     <ScrollPage>
@@ -234,27 +234,44 @@ export default function CollapseMenu(props: CollapseMenuProps) {
           height: "100vh",
         }}
       />
-      <List
-        sx={(theme) => ({
-          background: "#F9F9F9",
-          padding: 0,
-          [theme.breakpoints.up("sm")]: {
-            display: "none",
-          },
-        })}
-      >
-        <UserItem/>
-        {tabs.map((i) => (
-          <CollapseItem
-            key={i.href}
-            name={i.name}
-            href={i.href}
-            svgSrc={i.svgSrc}
-          >
-            {activeSection === i.href ? children : null}
-          </CollapseItem>
-        ))}
-      </List>
+      {loading ? null : UserStore.isLoggedIn ? (
+        <List
+          sx={(theme) => ({
+            background: "#F9F9F9",
+            padding: 0,
+            [theme.breakpoints.up("sm")]: {
+              display: "none",
+            },
+          })}
+        >
+          <UserItem/>
+          {tabs.map((i) => (
+            <CollapseItem
+              key={i.href}
+              name={i.name}
+              href={i.href}
+              svgSrc={i.svgSrc}
+            >
+              {activeSection === i.href ? children : null}
+            </CollapseItem>
+          ))}
+        </List>
+      ) : (
+        <Box
+          height={"100%"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Typography variant={"h3"} mb={4} textAlign={"center"}>
+            Bạn phải đăng nhập mới có thể xem thông tin.
+          </Typography>
+          <Button LinkComponent={Link} href={"/login"} variant={"contained"}>
+            Đăng nhập
+          </Button>
+        </Box>
+      )}
     </ScrollPage>
   );
 }
