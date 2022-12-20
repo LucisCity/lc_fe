@@ -24,7 +24,7 @@ export default function RoadmapSection(props: Props) {
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
           height: "auto",
-          background: `url(/assets/imgs/member/background.jpg)`,
+          background: `url(/assets/imgs/background/5.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",

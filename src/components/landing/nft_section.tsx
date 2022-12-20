@@ -1,7 +1,21 @@
-import { Box, Button, Container, Grid, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Step,
+  StepConnector,
+  StepLabel,
+  Stepper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import AnimWhenVisible from "../anim";
 import { Center } from "../common/center";
 import { headerHeight } from "../layout/header";
+import CircleIcon from "@mui/icons-material/Circle";
+import NftStepper from "./components/stepper";
+import * as React from "react";
 
 type Props = {
   index?: number;
@@ -20,11 +34,11 @@ export default function NftSection(props: Props) {
         width: "100%",
         height: "100vh",
         overflow: "hidden",
-        background: `url(${"assets/imgs/landing/img_bg_nft_section.png"})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         [theme.breakpoints.down("sm")]: {
+          background: `url(/assets/imgs/background/5.jpg)`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "left",
           height: "auto",
           paddingTop: theme.spacing(5),
           paddingBottom: theme.spacing(5),
@@ -44,93 +58,109 @@ export default function NftSection(props: Props) {
           }}
         >
           <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
-            <Typography variant="h2" textTransform={"uppercase"} mb={5}>{`NFT hóa bất động sản`}</Typography>
+            <Typography variant="h2" textTransform={"uppercase"} mb={{ sm: 12, xs: 10 }}>
+              NFT hóa bất động sản
+            </Typography>
           </AnimWhenVisible>
           <Box display={"flex"}>
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={5}>
-                <AnimWhenVisible variants={{ hidden: { opacity: 0, x: -100 } }} index={props.index}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      borderRadius: "16px",
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src="/assets/imgs/landing/img_bg_estate.png"
-                      alt=""
-                      width="100%"
-                      // sx={{ flex: "1" }}
-                      borderRadius={4}
-                    />
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Box
+                  sx={(theme) => ({
+                    background: `linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #FFFFFF 111.15%),
+                     url(\"https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg\")`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    height: "100%",
+                    position: "relative",
+                    p: 6,
+                    [theme.breakpoints.down("sm")]: {
+                      height: "300px",
+                    },
+                  })}
+                  borderRadius={4}
+                >
+                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Button
+                      variant="contained"
+                      color={"secondary"}
+                      sx={(theme) => ({
+                        background: "rgba(71, 204, 233, 0.8)",
+                        color: "#fff",
+                        width: 80,
+                        height: 40,
+                        padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+
+                        ":hover": {
+                          background: "rgba(71, 204, 233, 0.8)",
+                        },
+                      })}
+                    >
+                      <Typography whiteSpace={"nowrap"}>Sắp bán</Typography>
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color={"secondary"}
+                      sx={(theme) => ({
+                        color: "#FF6C6C",
+                        width: 80,
+                        height: 40,
+                        padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+                      })}
+                      endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
+                    >
+                      235
+                    </Button>
                   </Box>
-                </AnimWhenVisible>
+                  <Box position={"absolute"} bottom={"24px"}>
+                    <Typography variant={"h3"}>Navaland Phú Yên</Typography>
+                    <Typography variant={"caption"}>1901 Thornridge Cir. Shiloh, Hawaii 81063</Typography>
+                  </Box>
+                </Box>
               </Grid>
-              <Grid item xs={12} sm={5}>
+              <Grid item xs={12} sm={6} lg={4}>
                 <Box
                   height={"100%"}
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    // height: "444px",
                     overflow: "hidden",
-                    marginLeft: 10,
-                    [theme.breakpoints.down("sm")]: {
-                      marginLeft: "0px",
-                      marginTop: 4,
-                    },
                   }}
                 >
                   <AnimWhenVisible variants={{ hidden: { opacity: 0, y: 100 } }} index={props.index}>
-                    <Box
-                      sx={{
-                        padding: 5,
-                        background: "rgba(255, 255, 255, 0.5)",
-                        backdropFilter: "blur(3px)",
-                        borderRadius: 2,
-                      }}
-                    >
-                      <Typography
-                        variant="h3"
-                        //
-                      >
-                        {props.projects[0].name}
-                      </Typography>
-                      <Typography
-                        variant={"h5"}
-                        sx={{
-                          marginTop: 1,
-                          color: "#9FA4BC",
-                          fontSize: 14,
-                        }}
-                      >
-                        {props.projects[0].description}
-                      </Typography>
-                    </Box>
-                    <Grid container spacing={2} sx={{ mt: 9 }}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            flexDirection: { xs: "column", sm: "row" },
+                          }}
+                        >
+                          <Typography variant="h2">$126,214.01</Typography>
+                          <Typography variant="h5" color={"#fff"}>
+                            126,214 NFT đang bán
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box width={"100%"} my={8}>
+                          <NftStepper />
+                        </Box>
+                      </Grid>
+
                       <Grid item xs={6}>
-                        <NftInfoCard title="Total raise" content="$ 45,948.55" />
+                        <NftInfoCard title="Tổng số tokens" content="2M Tokens" />
                       </Grid>
                       <Grid item xs={6}>
-                        <NftInfoCard title="Total supply" content="2M Tokens" />
+                        <NftInfoCard title="Số nhà đầu tư" content="159" />
                       </Grid>
                       <Grid item xs={6}>
-                        <NftInfoCard
-                          title="Accepted currency"
-                          content="$45,948.55"
-                          icon="/assets/imgs/landing/ic_usdt.svg"
-                        />
+                        <NftInfoCard title="Giai đoan" content="Mở bán" />
                       </Grid>
                       <Grid item xs={6}>
-                        <NftInfoCard title="Price per token" content="$ 1" />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <NftInfoCard title="Network" content="BSC" icon="/assets/imgs/landing/ic_bsc.svg" />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <NftInfoCard title="Asset" content="1" />
+                        <NftInfoCard title="Lợi nhuận cam kết/năm" content="10%" />
                       </Grid>
                       <Grid item xs={12}>
                         <Box>
@@ -155,12 +185,12 @@ export default function NftSection(props: Props) {
                   </AnimWhenVisible>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={0} lg={2}>
                 <Box
                   height={"100%"}
                   display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={{ sm: "flex-end", xs: "center" }}
+                  alignItems={"flex-start"}
+                  justifyContent={{ lg: "flex-end", xs: "center" }}
                 >
                   <AnimWhenVisible variants={{ hidden: { opacity: 0, x: 100 } }} index={props.index}>
                     <Center
