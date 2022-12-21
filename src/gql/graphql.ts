@@ -89,9 +89,32 @@ export type ProfileGql = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get list referral user */
+  getListReferralUser: Array<User>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
+
+
+export type QueryGetListReferralUserArgs = {
+  userId: Scalars['String'];
+};
+
+export type ReferralLog = {
+  __typename?: 'ReferralLog';
+  created_at: Scalars['DateTime'];
+  invited_by: Scalars['String'];
+  isClaim: Scalars['Boolean'];
+  type?: Maybe<ReferralType>;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  user_id: Scalars['ID'];
+};
+
+export enum ReferralType {
+  BuyGalaxyCard = 'BUY_GALAXY_CARD',
+  Register = 'REGISTER'
+}
 
 export type User = {
   __typename?: 'User';
@@ -100,10 +123,11 @@ export type User = {
   facebook_id?: Maybe<Scalars['String']>;
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  invite_by?: Maybe<Scalars['String']>;
+  invited_by?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
   ref_code: Scalars['String'];
+  referral_log?: Maybe<ReferralLog>;
   role: UserRole;
   status: UserStatus;
   updated_at: Scalars['DateTime'];
@@ -115,6 +139,7 @@ export type UserGql = {
   id: Scalars['ID'];
   profile: ProfileGql;
   ref_code: Scalars['String'];
+  referral_log?: Maybe<ReferralLog>;
 };
 
 export type UserProfile = {

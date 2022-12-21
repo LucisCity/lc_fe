@@ -9,102 +9,111 @@ import TableCell from "@mui/material/TableCell";
 import { Button, Typography } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { table, TablePaginationActions } from "../components/table";
+import UserStore from "../../../store/user.store";
+import useReferral from "../../../hooks/profile/use_referral";
+import moment from "moment";
+import { ReferralType } from "../../../gql/graphql";
+import { ReferralTableSkeleton } from "../components/referral_table_skeleton";
 
-
-function createData(date: string, name: string, type: string, reward: string) {
-  return {date, name, type, reward};
+interface ITableData {
+  date: string;
+  name: string;
+  type: string;
+  reward: string;
+  isClaim: boolean;
 }
-
-const data = [
-  createData("27 Jun 2021, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:02", "Guy Hawkins", "Đăng ký", "$6.48"),
-  createData("10 Feb 2020, 00:05", "Cameron Williamson", "Đăng ký", "$6.48"),
-  createData("01 May 2021, 00:13", "Wade Warren", "Đăng ký", "$6.48"),
-  createData("27 Jun 2001, 00:02", "Cameron Williamson", "Đăng ký", "$6.48"),
-  createData("27 Jun 2002, 00:03", "Cameron Williamson", "Đăng ký", "$6.48"),
-  createData("01 May 2003, 00:03", "Leslie Alexander", "Đăng ký", "$6.48"),
-  createData("10 Feb 2020, 00:01", "Leslie Alexander", "Đăng ký", "$6.48"),
-  createData("01 May 2004, 00:04", "Leslie Alexander", "Đăng ký", "$6.48"),
-  createData("27 Jun 2005, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2006, 00:05", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2007, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("10 Feb 2020, 00:03", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2008, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2009, 00:06", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2002, 00:07", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2010, 00:05", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("10 Feb 2020, 00:04", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2010, 00:02", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2011, 00:07", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("27 Jun 2012, 00:09", "Jane Cooper", "Đăng ký", "$6.48"),
-  createData("01 May 2013, 00:01", "Jane Cooper", "Đăng ký", "$6.48"),
-]
 
 interface ReferralTableProps {
   rowsPerPage: number;
 }
 
 export const ReferralTable = (props: ReferralTableProps) => {
-  const {rowsPerPage} = props;
-
+  const { rowsPerPage } = props;
+  const { user } = UserStore;
   const [page, setPage] = React.useState(0);
+  const { listReferralUser, loading } = useReferral({ userId: user?.id });
+  const data = React.useMemo(() => {
+    return (
+      listReferralUser?.map((item) => {
+        return {
+          date: moment(item.referral_log?.created_at).format("DD MMM YYYY, h:mm"),
+          name: item.profile?.user_name ?? item.email,
+          type: item.referral_log?.type === ReferralType.Register ? "Đăng ký" : "Mua thẻ",
+          reward: "--",
+          isClaim: item.referral_log?.isClaim ?? true,
+        };
+      }) ?? []
+    );
+  }, [listReferralUser]);
+
   // const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+  const emptyRows = React.useMemo(
+    () => (page > 0 ? Math.max(0, (1 + page) * rowsPerPage - (data?.length ?? 0)) : 0),
+    [page, rowsPerPage, data.length],
+  );
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number,
-  ) => {
+  const dataEachPage = React.useMemo(
+    () => data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [page, rowsPerPage, data],
+  );
+
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
   };
-
-  // const handleChangeRowsPerPage = (
-  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  // ) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
 
   return (
     <>
       <TableContainer component={Box}>
         <ThemeProvider theme={table}>
-          <Table sx={{minWidth: 500,}} aria-label="custom pagination table">
+          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableBody>
-              {(rowsPerPage > 0
-                  ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : data
-              ).map((row) => (
-                <TableRow key={row.date}>
-                  <TableCell style={{width: "30%", textAlign: "left", color: "#6CCAFF"}} scope="row">
-                    <Typography fontWeight={400} fontSize={16}>{row.date}</Typography>
-                  </TableCell>
-                  <TableCell style={{width: "30%", textAlign: "center", color: "#000000"}} scope="row">
-                    <Typography fontWeight={500} fontSize={16}>{row.name}</Typography>
-                  </TableCell>
-                  <TableCell style={{width: "15%", textAlign: "left", color: "#504C67"}} scope="row">
-                    <Typography fontWeight={400} fontSize={16}>{row.type}</Typography>
-                  </TableCell>
-                  <TableCell style={{width: "10%", textAlign: "right", color: "#504C67"}} scope="row">
-                    <Typography fontWeight={500} fontSize={16}>{row.reward}</Typography>
-                  </TableCell>
-                  <TableCell style={{width: "15%", textAlign: "right"}} scope="row">
-                    <Button
-                      variant="contained"
-                      disabled={Math.random() > 0.5}
-                      sx={{textTransform: "none", background: "#6555EE"}}
-                    >
-                      Claim
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {loading ? (
+                <ReferralTableSkeleton />
+              ) : dataEachPage.length === 0 ? (
+                <Box display={"flex"} justifyContent={"center"}>
+                  <Typography>Không có dữ liệu!</Typography>
+                </Box>
+              ) : (
+                dataEachPage.map((row) => (
+                  <TableRow key={row.date}>
+                    <TableCell style={{ width: "30%", textAlign: "left", color: "#6CCAFF" }} scope="row">
+                      <Typography fontWeight={400} fontSize={16}>
+                        {row.date}
+                      </Typography>
+                    </TableCell>
+                    <TableCell style={{ width: "30%", textAlign: "center", color: "#000000" }} scope="row">
+                      <Typography fontWeight={500} fontSize={16}>
+                        {row.name}
+                      </Typography>
+                    </TableCell>
+                    <TableCell style={{ width: "15%", textAlign: "left", color: "#504C67" }} scope="row">
+                      <Typography fontWeight={400} fontSize={16}>
+                        {row.type}
+                      </Typography>
+                    </TableCell>
+                    <TableCell style={{ width: "10%", textAlign: "right", color: "#504C67" }} scope="row">
+                      <Typography fontWeight={500} fontSize={16}>
+                        {row.reward}
+                      </Typography>
+                    </TableCell>
+                    <TableCell style={{ width: "15%", textAlign: "right" }} scope="row">
+                      <Button
+                        variant="contained"
+                        disabled={row.isClaim}
+                        sx={{ textTransform: "none", background: "#6555EE" }}
+                      >
+                        Claim
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+
               {emptyRows > 0 && (
-                <TableRow style={{height: 53 * emptyRows}}>
-                  <TableCell colSpan={6}/>
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
                 </TableRow>
               )}
             </TableBody>
@@ -112,15 +121,15 @@ export const ReferralTable = (props: ReferralTableProps) => {
         </ThemeProvider>
       </TableContainer>
       <TablePagination
-        component={'div'}
+        component={"div"}
         rowsPerPageOptions={[rowsPerPage]}
         colSpan={3}
-        count={data.length}
+        count={data?.length ?? 0}
         rowsPerPage={rowsPerPage}
         page={page}
         SelectProps={{
           inputProps: {
-            'aria-label': 'rows per page',
+            "aria-label": "rows per page",
           },
           native: true,
         }}
@@ -130,4 +139,4 @@ export const ReferralTable = (props: ReferralTableProps) => {
       />
     </>
   );
-}
+};

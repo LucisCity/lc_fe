@@ -68,6 +68,9 @@ export default function useLogin() {
   const [login, { loading }] = useMutation(LOGIN_MUT, {
     onCompleted: (res) => {
       UserStore.saveLoginInfo(res.login.token, res.login.user);
+      if (typeof localStorage !== undefined) {
+        localStorage.removeItem("referralCode");
+      }
       Router.push("/");
     },
     onError: (e) => {
@@ -79,6 +82,9 @@ export default function useLogin() {
   const [loginGgMut, { loading: loadingGg }] = useMutation(LOGIN_GG_MUT, {
     onCompleted: (res) => {
       UserStore.saveLoginInfo(res.loginGoogle.token, res.loginGoogle.user);
+      if (typeof localStorage !== undefined) {
+        localStorage.removeItem("referralCode");
+      }
       Router.push("/");
     },
     onError: (e) => {
@@ -90,6 +96,9 @@ export default function useLogin() {
   const [loginFbMut, { loading: loadingFb }] = useMutation(LOGIN_FB_MUT, {
     onCompleted: (res) => {
       UserStore.saveLoginInfo(res.loginFacebook.token, res.loginFacebook.user);
+      if (typeof localStorage !== undefined) {
+        localStorage.removeItem("referralCode");
+      }
       Router.push("/");
     },
     onError: (e) => {
