@@ -5,6 +5,7 @@ import { onError } from "@apollo/client/link/error";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
+import { StorageHelper } from "./index";
 //   import { CachePersistor } from 'apollo-cache-persist';
 
 // Cache implementation
@@ -34,9 +35,9 @@ function _getAuthToken(): string {
 }
 
 function _fetchInitialAuthTokenFromLocal(): string {
-  // const u = getLocalAuthInfo();
-  // return u ? u.token ?? "" : "";
-  return "";
+  const token = StorageHelper.getToken();
+  return token ?? "";
+  // return "";
 }
 
 // const persistor = new CachePersistor({
