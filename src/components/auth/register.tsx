@@ -20,6 +20,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Divider, Stack } from "@mui/material";
 import ConfirmDialog from "../common/confirm_dialog";
 import { useModal } from "../../hooks/use_modal";
+import { useRouter } from "next/router";
 
 function Copyright(props: any) {
   return (
@@ -41,13 +42,31 @@ export default function LoginPage() {
 }
 
 function SignInSide() {
+  const { loading, onRegister, form, confirmModal, onClose } = useRegister();
+  const router = useRouter();
   const { fbLogin, ggLogin } = useLogin();
   const loginGG = useGoogleLogin({
-    onSuccess: ggLogin,
-    // ux_mode: "popup",
-    // flow: "auth-code",
+    onSuccess: (res) => ggLogin(res, form.getValues("ref_code")),
   });
-  const { loading, onRegister, form, confirmModal, onClose } = useRegister();
+
+  ///// SET REFERRAL CODE ///////
+  const [refCode, setRefCode] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    if (router.query?.referral_code && typeof localStorage !== undefined) {
+      localStorage.setItem("referralCode", router.query?.referral_code as string);
+      form.setValue("ref_code", router.query?.referral_code);
+    }
+  }, [router.query?.referral_code]);
+
+  React.useEffect(() => {
+    if (typeof localStorage !== undefined) {
+      const refCode = localStorage.getItem("referralCode");
+      if (refCode) {
+        form.setValue("ref_code", refCode);
+      }
+    }
+  }, []);
+  /////////////////////////////////
 
   async function onSubmit(values: any) {
     onRegister(values.email, values.password, values.confirm_pass, values.ref_code);
@@ -102,7 +121,7 @@ function SignInSide() {
             <FacebookLogin
               appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
               // autoLoad
-              callback={fbLogin}
+              callback={(res: any) => fbLogin(res, form.getValues("ref_code"))}
               render={(renderProps: any) => (
                 <Button
                   variant="outlined"

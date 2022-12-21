@@ -13,6 +13,7 @@ const LOGIN_MUT = gql`
       user {
         id
         email
+        ref_code
         profile {
           user_id
           avatar
@@ -24,12 +25,13 @@ const LOGIN_MUT = gql`
 `;
 
 const LOGIN_GG_MUT = gql`
-  mutation loginGoogle($token: String!) {
-    loginGoogle(token: $token) {
+  mutation loginGoogle($token: String!, $refCode: String) {
+    loginGoogle(token: $token, refCode: $refCode) {
       token
       user {
         id
         email
+        ref_code
         profile {
           user_id
           avatar
@@ -41,12 +43,13 @@ const LOGIN_GG_MUT = gql`
 `;
 
 const LOGIN_FB_MUT = gql`
-  mutation loginFacebook($token: String!) {
-    loginFacebook(token: $token) {
+  mutation loginFacebook($token: String!, $refCode: String) {
+    loginFacebook(token: $token, refCode: $refCode) {
       token
       user {
         id
         email
+        ref_code
         profile {
           user_id
           avatar
@@ -111,7 +114,7 @@ export default function useLogin() {
     });
   }
 
-  function fbLogin(res: any) {
+  function fbLogin(res: any, refCode?: string) {
     const token = res?.accessToken;
     if (!token) {
       return;
@@ -119,10 +122,11 @@ export default function useLogin() {
     loginFbMut({
       variables: {
         token,
+        refCode,
       },
     });
   }
-  function ggLogin(res: any) {
+  function ggLogin(res: any, refCode?: string) {
     const token = res?.access_token ?? res?.code ?? res?.id_token;
     if (!token) {
       return;
@@ -130,6 +134,7 @@ export default function useLogin() {
     loginGgMut({
       variables: {
         token,
+        refCode,
       },
     });
   }
