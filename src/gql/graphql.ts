@@ -13,6 +13,17 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type AccountInfo = {
+  __typename?: 'AccountInfo';
+  date_of_birth?: Maybe<Scalars['DateTime']>;
+  display_name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  family_name?: Maybe<Scalars['String']>;
+  given_name?: Maybe<Scalars['String']>;
+  user_id: Scalars['ID'];
+  user_name?: Maybe<Scalars['String']>;
+};
+
 export type AuthGql = {
   __typename?: 'AuthGql';
   token: Scalars['String'];
@@ -80,6 +91,7 @@ export type ProfileGql = {
   __typename?: 'ProfileGql';
   avatar?: Maybe<Scalars['String']>;
   cover?: Maybe<Scalars['String']>;
+  date_of_birth?: Maybe<Scalars['DateTime']>;
   display_name?: Maybe<Scalars['String']>;
   family_name?: Maybe<Scalars['String']>;
   given_name?: Maybe<Scalars['String']>;
@@ -91,6 +103,7 @@ export type Query = {
   __typename?: 'Query';
   /** Get list referral user */
   getListReferralUser: Array<User>;
+  getAccountInfo?: Maybe<AccountInfo>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -148,6 +161,7 @@ export type UserProfile = {
   country_code?: Maybe<Scalars['String']>;
   cover?: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
+  date_of_birth?: Maybe<Scalars['DateTime']>;
   display_name?: Maybe<Scalars['String']>;
   family_name?: Maybe<Scalars['String']>;
   given_name?: Maybe<Scalars['String']>;

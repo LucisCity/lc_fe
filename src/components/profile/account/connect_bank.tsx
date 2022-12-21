@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import FormControlUnstyled from "@mui/base/FormControlUnstyled";
@@ -14,33 +14,22 @@ interface BankConnectedProps {
     bankName: string;
     cardId: string;
     owner: string;
-  }
+  };
   cardImg: string;
 }
 
 const BankConnected = (props: BankConnectedProps) => {
   return (
-    <Card
-      className={s.bankCard}
-      elevation={0}
-      sx={{display: 'flex', width: "100%", height: 120, mb: 4, p: 2}}
-    >
+    <Card className={s.bankCard} elevation={0} sx={{ display: "flex", width: "100%", height: 120, mb: 4, p: 2 }}>
       <CardMedia
         className={s.bankCardMedia}
         component="img"
-        sx={{width: 167, aspectRatio: "1.6"}}
+        sx={{ width: 167, aspectRatio: "1.6" }}
         image={props.cardImg}
         alt="bank card"
       />
-      <Box
-        sx={{display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center"}}
-      >
-        <Box
-          className={s.bankCardContent}
-          pl={6}
-          sx={{color: "#504C67"}}
-          minWidth={200}
-        >
+      <Box sx={{ display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center" }}>
+        <Box className={s.bankCardContent} pl={6} sx={{ color: "#504C67" }} minWidth={200}>
           <Typography className={s.bankCardTextTitle} fontSize={14} fontWeight={600} pb={5}>
             {props.info.bankName}
           </Typography>
@@ -52,37 +41,50 @@ const BankConnected = (props: BankConnectedProps) => {
             fontSize={16}
             fontWeight={400}
             color="text.secondary"
-            sx={{textTransform: "uppercase"}}>
+            sx={{ textTransform: "uppercase" }}
+          >
             {props.info.owner}
           </Typography>
         </Box>
         <Box
-          className={s.closeButton}
-          border="1.5px solid #504C67"
-          width={22}
-          height={22}
           mr={5}
-          borderRadius={10}
           sx={{
+            borderRadius: 10,
+            width: 35,
+            height: 35,
             display: "flex",
             alignItems: "center",
-            "&:hover": {
-              background: "#F1F1F1",
-            }
+            justifyContent: "center",
+            ":hover": {
+              background: "rgba(197, 195, 195, 0.25)",
+              cursor: "pointer",
+            },
           }}
         >
-          <CloseOutlinedIcon
+          <Box
+            className={s.closeButton}
+            border="1.5px solid #504C67"
+            width={22}
+            height={22}
+            borderRadius={10}
             sx={{
-              width: 15,
-              ml: 0.5,
+              display: "flex",
+              alignItems: "center",
             }}
-            color={"disabled"}
-          />
+          >
+            <CloseOutlinedIcon
+              sx={{
+                width: 15,
+                ml: 0.5,
+              }}
+              // color={"disabled"}
+            />
+          </Box>
         </Box>
       </Box>
     </Card>
-  )
-}
+  );
+};
 
 interface AddBankProps {
   handleAddBank: any;
@@ -94,7 +96,7 @@ const AddBank = (props: AddBankProps) => {
       className={s.bankCard}
       elevation={0}
       sx={{
-        display: 'flex',
+        display: "flex",
         flexDirection: "row",
         width: "100%",
         height: 120,
@@ -103,7 +105,7 @@ const AddBank = (props: AddBankProps) => {
         "&:hover": {
           background: "#F3F3F3",
           cursor: "pointer",
-        }
+        },
       }}
       onClick={() => props.handleAddBank()}
     >
@@ -111,39 +113,32 @@ const AddBank = (props: AddBankProps) => {
         className={s.bankCardMedia}
         m={2}
         sx={{
-          display: 'flex',
+          display: "flex",
           width: 167,
           aspectRatio: "1.6",
-          background: '#F1F1F1',
-          border: '1px dashed #D9D9D9',
+          background: "#F1F1F1",
+          border: "1px dashed #D9D9D9",
           borderRadius: 2,
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Box m={"0 auto"}>
-          <SvgIcon src="/assets/imgs/icon/card_add.svg"/>
+          <SvgIcon src="/assets/imgs/icon/card_add.svg" />
         </Box>
       </Box>
-      <Typography
-        className={s.bankCardContent}
-        fontSize={14}
-        fontWeight={600}
-        pl={7}
-      >
+      <Typography className={s.bankCardContent} fontSize={14} fontWeight={600} pl={7}>
         Thêm ngân hàng
       </Typography>
     </Card>
-  )
-}
-const Label = styled(Typography)(
-  ({theme}) => ({
-    color: '#504C67',
-    fontWeight: 500,
-    fontSize: 16,
-    paddingTop: 10,
-    paddingBottom: 7,
-  })
-);
+  );
+};
+const Label = styled(Typography)(({ theme }) => ({
+  color: "#504C67",
+  fontWeight: 500,
+  fontSize: 16,
+  paddingTop: 10,
+  paddingBottom: 7,
+}));
 
 interface FieldProps {
   defaultValue: string;
@@ -152,9 +147,7 @@ interface FieldProps {
 
 const Field = (props: FieldProps) => {
   return (
-    <FormControlUnstyled
-      defaultValue={props.defaultValue}
-    >
+    <FormControlUnstyled defaultValue={props.defaultValue}>
       <Label>{props.label}</Label>
       <Box
         sx={{
@@ -164,14 +157,11 @@ const Field = (props: FieldProps) => {
           alignItems: "center",
         }}
       >
-        <CustomInput
-          type="text"
-          sx={{width: "100%", zIndex: 2}}
-        />
+        <CustomInput type="text" sx={{ width: "100%", zIndex: 2 }} />
       </Box>
     </FormControlUnstyled>
-  )
-}
+  );
+};
 
 const formData = [
   {
@@ -194,57 +184,51 @@ const formData = [
     label: "Tên chủ tài khoản",
     value: "Esther Richards",
   },
-]
+];
 
 const AddBankForm = () => {
   return (
     <form>
-      <Grid container spacing={{md: 0, xs: 2}} direction={{md: "row", xs: "column"}}>
+      <Grid container spacing={{ md: 0, xs: 2 }} direction={{ md: "row", xs: "column" }}>
         {formData.map((data) => (
           <Grid item sm={6} xs={12} key={data.label}>
-            <Field label={data.label} defaultValue={data.value}/>
+            <Field label={data.label} defaultValue={data.value} />
           </Grid>
         ))}
       </Grid>
       <Box my={11} display={"flex"} justifyContent={"center"}>
-        <Button
-          variant="contained"
-        >
-          <Typography variant={"h5"}>
-            Thêm ngân hàng
-          </Typography>
+        <Button variant="contained">
+          <Typography variant={"h5"}>Thêm ngân hàng</Typography>
         </Button>
       </Box>
     </form>
-  )
-}
+  );
+};
 
 const banksConnected: BankConnectedProps[] = [
   {
-    info:
-      {
-        bankName: "Techcombank",
-        cardId: "4567 8760 3291 4451",
-        owner: "Richards Esther",
-      },
+    info: {
+      bankName: "Techcombank",
+      cardId: "4567 8760 3291 4451",
+      owner: "Richards Esther",
+    },
     cardImg: "https://i.imgur.com/TJ8ZNqk.png",
-  }
-]
+  },
+];
 
 export default function ConnectBank() {
-
   const [showForm, setShowForm] = React.useState(false);
   const handleAddBank = () => {
     // setShowForm(!showForm);
-  }
+  };
 
   return (
     <React.Fragment>
       <Box mt={5}>
         {banksConnected.map((bank) => (
-          <BankConnected key={bank.info.cardId} info={bank.info} cardImg={bank.cardImg}/>
+          <BankConnected key={bank.info.cardId} info={bank.info} cardImg={bank.cardImg} />
         ))}
-        <AddBank handleAddBank={handleAddBank}/>
+        <AddBank handleAddBank={handleAddBank} />
       </Box>
       <Divider
         variant="middle"
@@ -254,7 +238,7 @@ export default function ConnectBank() {
           borderBottomColor: "#D9D9D9",
         }}
       />
-      {showForm ? <AddBankForm/> : null}
+      {showForm ? <AddBankForm /> : null}
     </React.Fragment>
   );
 }
