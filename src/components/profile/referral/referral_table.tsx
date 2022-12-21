@@ -29,9 +29,8 @@ interface ReferralTableProps {
 
 export const ReferralTable = (props: ReferralTableProps) => {
   const { rowsPerPage } = props;
-  const { user } = UserStore;
   const [page, setPage] = React.useState(0);
-  const { listReferralUser, loading } = useReferral({ userId: user?.id });
+  const { listReferralUser, loading } = useReferral();
   const data = React.useMemo(() => {
     return (
       listReferralUser?.map((item) => {
