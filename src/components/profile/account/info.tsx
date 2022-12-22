@@ -114,6 +114,7 @@ function DatePicker(props: DatePickerProps) {
               background: "#fff",
               zIndex: 5,
               position: "absolute",
+              right: { sm: "10%", xs: 0 },
             }}
           >
             <LocalizationProvider dateAdapter={AdapterMoment}>
