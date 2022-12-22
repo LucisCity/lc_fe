@@ -155,26 +155,27 @@ const fields: InfoField[] = [
 ];
 
 const placeHolderData: AccountInfo = {
-  email: "hiep@example.com",
-  date_of_birth: new Date(),
-  display_name: "Display Name",
-  family_name: "Family Name",
-  user_name: "username",
-  given_name: "Given Name",
-  user_id: "0",
+  email: "hiep@example.com", // eslint-disable-line
+  date_of_birth: new Date(), // eslint-disable-line
+  display_name: "Display Name", // eslint-disable-line
+  family_name: "Family Name", // eslint-disable-line
+  user_name: "username", // eslint-disable-line
+  given_name: "Given Name", // eslint-disable-line
+  user_id: "0", // eslint-disable-line
 };
 
 export default function InfoForm() {
-  const { dataAccountInfo } = useAccountInfo();
+  const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useAccountInfo();
   // console.log(`dataAccountInfo ${JSON.stringify(dataAccountInfo)}`);
-  const data = dataAccountInfo ?? placeHolderData;
+  const data: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
+  if (loadingAccountInfo) return "Loading...";
+  if (errorAccountInfo) return `Error! ${errorAccountInfo.message}`;
 
   return (
     <form>
       <Grid container spacing={2}>
         {fields.map((field) => {
-          // @ts-ignore
-          const fieldValue = data.hasOwnProperty(field.value) ? dataAccountInfo[field.value] : null;
+          const fieldValue = data.hasOwnProperty(field.value) ? data[field.value] : null;
           return (
             <Grid item key={field.value} sm={field.label === "Email" ? 7 : 6} xs={12}>
               <Label>{field.label}</Label>
