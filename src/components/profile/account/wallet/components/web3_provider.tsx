@@ -3,7 +3,7 @@ import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { bsc, bscTestnet } from "wagmi/chains";
 import { publicProvider } from "@wagmi/core/providers/public";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const chains = process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [bscTestnet] : [bsc];
 
@@ -13,7 +13,7 @@ const { provider } = configureChains(chains, [
   // walletConnectProvider({ projectId: "<YOUR_PROJECT_ID>" }),
 ]);
 const wagmiClient = createClient({
-  autoConnect: false,
+  autoConnect: true,
   connectors: modalConnectors({ appName: "web3Modal", chains }),
   provider,
 });
@@ -21,12 +21,22 @@ const wagmiClient = createClient({
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 export default function Web3Provider(props: React.PropsWithChildren) {
+  const [host, setHost] = useState("");
+  useEffect(() => {
+    setHost(window.location.host);
+  }, []);
+
   return (
     <>
       <WagmiConfig client={wagmiClient}>{props.children}</WagmiConfig>
       <Web3Modal
         ethereumClient={ethereumClient}
         mobileWallets={[
+          {
+            id: "metaMask",
+            name: "Metamask",
+            links: { native: "metaMask://", universal: `https://metamask.app.link/dapp/${host}` },
+          },
           {
             id: "trust",
             name: "Trust Wallet",
