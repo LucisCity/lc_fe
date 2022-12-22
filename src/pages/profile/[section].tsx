@@ -9,8 +9,6 @@ import { ProfileNotification } from "../../components/profile/notification";
 import { useRouter } from "next/router";
 import { ProfileInvestment } from "../../components/profile/investment";
 import { ProfileReferral } from "../../components/profile/referral/referral";
-import CollapseMenu from "../../components/profile/components/collapse_menu";
-import Box from "@mui/material/Box";
 
 enum Section {
   DASHBOARD = "dashboard",
@@ -23,44 +21,44 @@ enum Section {
 
 const ProfileSection = () => {
   const router = useRouter();
-  const {section} = router.query;
+  const { section } = router.query;
 
   return (
     <>
-      <DocHead/>
+      <DocHead />
       <PageLayout isShowFooter={false}>
-        <Box
-          sx={(theme) => ({
-            [theme.breakpoints.down("sm")]: {
-              display: "none",
-            },
-          })}
-        >
-          <ProfileLayout>
-            {section === Section.ACCOUNT && <ProfileAccount/>}
-            {section === Section.DASHBOARD && <ProfileDashboard/>}
-            {section === Section.APP && <AppSetting/>}
-            {section === Section.INVESTMENT && <ProfileInvestment/>}
-            {section === Section.REFERRAL && <ProfileReferral/>}
-            {section === Section.NOTIFICATION && <ProfileNotification/>}
-          </ProfileLayout>
-        </Box>
-        <Box
-          sx={(theme) => ({
-            [theme.breakpoints.up("sm")]: {
-              display: "none",
-            },
-          })}
-        >
-          <CollapseMenu>
-            {section === Section.ACCOUNT && <ProfileAccount/>}
-            {section === Section.DASHBOARD && <ProfileDashboard/>}
-            {section === Section.APP && <AppSetting/>}
-            {section === Section.INVESTMENT && <ProfileInvestment/>}
-            {section === Section.REFERRAL && <ProfileReferral/>}
-            {section === Section.NOTIFICATION && <ProfileNotification/>}
-          </CollapseMenu>
-        </Box>
+        {/*<Box*/}
+        {/*  sx={(theme) => ({*/}
+        {/*    [theme.breakpoints.down("sm")]: {*/}
+        {/*      display: "none",*/}
+        {/*    },*/}
+        {/*  })}*/}
+        {/*>*/}
+        <ProfileLayout>
+          {section === Section.ACCOUNT && <ProfileAccount />}
+          {section === Section.DASHBOARD && <ProfileDashboard />}
+          {section === Section.APP && <AppSetting />}
+          {section === Section.INVESTMENT && <ProfileInvestment />}
+          {section === Section.REFERRAL && <ProfileReferral />}
+          {section === Section.NOTIFICATION && <ProfileNotification />}
+        </ProfileLayout>
+        {/*</Box>*/}
+        {/*<Box*/}
+        {/*  sx={(theme) => ({*/}
+        {/*    [theme.breakpoints.up("sm")]: {*/}
+        {/*      display: "none",*/}
+        {/*    },*/}
+        {/*  })}*/}
+        {/*>*/}
+        {/*  <CollapseMenu>*/}
+        {/*    {section === Section.ACCOUNT && <ProfileAccount/>}*/}
+        {/*    {section === Section.DASHBOARD && <ProfileDashboard/>}*/}
+        {/*    {section === Section.APP && <AppSetting/>}*/}
+        {/*    {section === Section.INVESTMENT && <ProfileInvestment/>}*/}
+        {/*    {section === Section.REFERRAL && <ProfileReferral/>}*/}
+        {/*    {section === Section.NOTIFICATION && <ProfileNotification/>}*/}
+        {/*  </CollapseMenu>*/}
+        {/*</Box>*/}
       </PageLayout>
     </>
   );

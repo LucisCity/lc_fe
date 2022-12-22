@@ -11,6 +11,8 @@ import s from "./navbar.module.scss";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import UserStore from "../../../../store/user.store";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 interface TabProps {
   href: string;
@@ -48,12 +50,12 @@ const Tab = (props: TabProps) => {
         textTransform: "none",
         // height: {md: "56px", sm: 50, xs: 38},
         height: 56,
+        // display: { sm: "flex", xs: props.active ? "flex" : "none" },
         display: "flex",
         // justifyContent: {md: "left", sm: "center", xs: "center"},
         justifyContent: "left",
         width: { sm: "auto" },
       }}
-      // onClick={handleButtonClick}
     >
       <Box
         sx={{
@@ -73,8 +75,86 @@ const Tab = (props: TabProps) => {
   );
 };
 
+interface MobileDropDownProps {
+  activeSection: string | null;
+}
+
+const MobileDropDown = (props: MobileDropDownProps) => {
+  const defaultDropdownValue = React.useMemo(
+    () => tabs.find((i) => i.href === props.activeSection) ?? tabs[0],
+    [props.activeSection],
+  );
+  const [showMobileDropdown, setShowMobileDropdown] = React.useState<boolean>(false);
+  const handleShowMobileDropdown = () => {
+    setShowMobileDropdown(!showMobileDropdown);
+  };
+
+  return (
+    <Stack
+      direction="column"
+      spacing={{ sm: 2, xs: 3 }}
+      mx={{ sm: 2, xs: "5%" }}
+      mt={{ sm: 0, xs: 3 }}
+      sx={{ height: "100%" }}
+      justifyContent={"space-between"}
+    >
+      <Button
+        sx={{
+          textTransform: "none",
+          height: 56,
+          display: "flex",
+          justifyContent: "space-between",
+          width: { sm: "auto" },
+          background: "#6555EE",
+          color: "#ffffff",
+          borderRadius: 2,
+          ":hover": {
+            background: "#6555EE",
+          },
+        }}
+        onClick={handleShowMobileDropdown}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            ml: { md: 4, sm: 2, xs: 5 },
+          }}
+        >
+          <SvgIcon src={defaultDropdownValue.svgSrc} />
+          <Typography fontSize={16} fontWeight={500} ml={{ md: 7, sm: 4, xs: 10 }}>
+            {defaultDropdownValue.name}
+          </Typography>
+        </Box>
+        {showMobileDropdown ? <ExpandLess /> : <ExpandMore />}
+      </Button>
+      {showMobileDropdown ? (
+        <Stack direction="column" spacing={{ sm: 2, xs: 3 }}>
+          {tabs.map((tab) => (
+            <Tab
+              key={tab.name}
+              href={tab.href}
+              name={tab.name}
+              svgSrc={tab.svgSrc}
+              active={tab.href === props.activeSection}
+            />
+          ))}
+        </Stack>
+      ) : null}
+    </Stack>
+  );
+};
+
 const iconSrc = "/assets/imgs/icon/";
-const tabs = [
+
+interface Section {
+  name: string;
+  href: string;
+  svgSrc: string;
+}
+
+const tabs: Section[] = [
   {
     name: "Dashboard",
     href: "/profile/dashboard",
@@ -108,7 +188,7 @@ const tabs = [
 ];
 
 interface ProfileNavBarProps {
-  // activeSection: string;
+  activeSection?: string;
   // isLogin: boolean;
 }
 
@@ -120,6 +200,7 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
       setActiveSection(`/profile/${router.query.section}`);
     }
   }, [router.query.section]);
+
   return (
     <Box
       sx={{
@@ -173,93 +254,104 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
             </Box>
           </Grid>
           <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
-            <Tab
-              href={"/login"}
-              name={"Đăng xuất"}
-              svgSrc={"/assets/imgs/icon/log_out.svg"}
-              logoutButton={true}
-              topLogoutButton={true}
-            />
             {UserStore.isLoggedIn ? (
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#6555EE",
-                  textTransform: "none",
-                  background: "rgba(255, 255, 255, 0.3)",
-                  mt: 5,
-                  textAlign: "center",
-                  width: "100%",
-                  // height: {sm: "50px", xs: "fit-content"},
-                  py: { xs: 6 },
-                  px: { xs: 0 },
-                  border: "1px solid",
-                }}
-                LinkComponent={Link}
-                href="/verification"
-              >
-                <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                  Xác thực tài khoản
-                </Typography>
-              </Button>
-            ) : null}
-
-            <Divider
-              variant="middle"
-              sx={{
-                mx: 3,
-                mt: 9,
-                mb: 9,
-                borderBottomWidth: 1,
-                borderBottomColor: "#fff",
-                display: { sm: "block", xs: "none" },
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Grid
-          // px={2}
-          container
-          sx={{ flex: 1 }}
-        >
-          <Grid item xs={12} sx={{ height: "100%" }}>
-            <Stack
-              direction="column"
-              spacing={{ sm: 2, xs: 3 }}
-              mx={{ sm: 2, xs: "5%" }}
-              mt={{ sm: 0, xs: 3 }}
-              sx={{ height: "100%" }}
-              justifyContent={"space-between"}
-            >
-              <Stack
-                direction="column"
-                spacing={{ sm: 2, xs: 3 }}
-                // display={{md: "block", xs: "flex"}}
-                // alignItems={{xs: "flex-end"}}
-                // pb={{md: 0, xs: 2}}
-              >
-                {tabs.map((tab) => (
-                  <Tab
-                    key={tab.name}
-                    href={tab.href}
-                    name={tab.name}
-                    svgSrc={tab.svgSrc}
-                    active={tab.href === activeSection}
-                  />
-                ))}
-              </Stack>
-              {UserStore.isLoggedIn ? (
+              <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
                 <Tab
                   href={"/login"}
                   name={"Đăng xuất"}
                   svgSrc={"/assets/imgs/icon/log_out.svg"}
                   logoutButton={true}
+                  topLogoutButton={true}
                   onClick={() => UserStore.logout()}
                 />
-              ) : null}
-            </Stack>
+                <Button
+                  variant="outlined"
+                  className={s.verifyButton}
+                  sx={{
+                    color: "#6555EE",
+                    textTransform: "none",
+                    background: "rgba(255, 255, 255, 0.3)",
+                    mt: 5,
+                    textAlign: "center",
+                    width: { sm: "100%", xs: "auto" },
+                    py: { xs: 0 },
+                    px: 0,
+                    border: "1px solid",
+                  }}
+                  LinkComponent={Link}
+                  href="/verification"
+                >
+                  <Typography fontSize={{ xs: 16 }} fontWeight={500}>
+                    Xác thực tài khoản
+                  </Typography>
+                </Button>
+              </Box>
+            ) : null}
+            <Divider
+              component={"div"}
+              variant="middle"
+              sx={(theme) => ({
+                [theme.breakpoints.down("sm")]: {
+                  display: "none",
+                },
+                mx: 3,
+                mt: 9,
+                mb: 9,
+                borderBottomWidth: 1,
+                borderBottomColor: "#fff",
+              })}
+            />
           </Grid>
         </Grid>
+        <Box
+          sx={(theme) => ({
+            [theme.breakpoints.up("sm")]: {
+              display: "none",
+            },
+          })}
+        >
+          <MobileDropDown activeSection={activeSection} />
+        </Box>
+        <Stack
+          direction="column"
+          spacing={{ sm: 2, xs: 3 }}
+          mx={{ sm: 2, xs: "5%" }}
+          mt={{ sm: 0, xs: 3 }}
+          sx={(theme) => ({
+            [theme.breakpoints.down("sm")]: {
+              display: "none",
+            },
+            height: "100%",
+          })}
+          justifyContent={"space-between"}
+        >
+          <Stack
+            direction="column"
+            spacing={{ sm: 2, xs: 3 }}
+            // display={{md: "block", xs: "flex"}}
+            // alignItems={{xs: "flex-end"}}
+            // pb={{md: 0, xs: 2}}
+          >
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                href={tab.href}
+                name={tab.name}
+                svgSrc={tab.svgSrc}
+                active={tab.href === activeSection}
+              />
+            ))}
+          </Stack>
+          {UserStore.isLoggedIn ? (
+            <Tab
+              href={"/login"}
+              name={"Đăng xuất"}
+              svgSrc={"/assets/imgs/icon/log_out.svg"}
+              logoutButton={true}
+              onClick={() => UserStore.logout()}
+            />
+          ) : null}
+        </Stack>
       </Box>
     </Box>
   );

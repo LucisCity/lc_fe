@@ -35,7 +35,7 @@ export const ProfileLayout = observer((props: Props) => {
       <Container component="div" className={s.profileC}>
         <Card
           sx={{
-            minHeight: 900,
+            minHeight: { sm: 900 },
             width: "inherit",
             mb: 15,
             display: "flex",
@@ -45,13 +45,11 @@ export const ProfileLayout = observer((props: Props) => {
             borderLeft: "1px solid #fff",
             borderTop: "1px solid #fff",
             borderBottom: "1px solid #fff",
-            borderRight: {md: "none", xs: "1px solid #fff"},
+            borderRight: { md: "none", xs: "1px solid #fff" },
           }}
           elevation={0}
         >
-          <Grid
-            container
-          >
+          <Grid container>
             <Grid
               item
               sm={3}
@@ -73,7 +71,6 @@ export const ProfileLayout = observer((props: Props) => {
                 display: "flex",
                 flexDirection: "column",
                 backgroundColor: "#f9f9f9",
-
                 WebkitBackfaceVisibility: "hidden",
                 MozBackfaceVisibility: "hidden",
                 WebkitTransform: "translate3d(0, 0, 0)",

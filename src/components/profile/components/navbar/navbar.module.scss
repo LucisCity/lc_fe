@@ -15,14 +15,24 @@
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.2);
     justify-content: center;
-    padding-right: 10%;
-
+    width: fit-content;
+    height: auto;
+    padding: 10px;
     div {
       margin-right: 10px;
+      margin-left: 0;
     }
   }
 }
 
+.verifyButton {
+  height: 56px;
+
+  @media (max-width: 768px) {
+    height: auto;
+    padding: 10px 5px 10px 5px;
+  }
+}
 
 .active {
   background: #6555EE;
