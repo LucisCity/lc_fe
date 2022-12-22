@@ -20,9 +20,7 @@ export function useAccountInfo(): {
   errorAccountInfo: ApolloError | undefined;
   dataAccountInfo: AccountInfo;
 } {
-  const { loading, error, data } = useQuery(GET_ACCOUNT_INFO, {
-    pollInterval: 500,
-  });
+  const { loading, error, data } = useQuery(GET_ACCOUNT_INFO, {});
 
   return {
     loadingAccountInfo: loading,

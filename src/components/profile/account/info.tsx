@@ -73,7 +73,7 @@ interface DatePickerProps {
 }
 
 function DatePicker(props: DatePickerProps) {
-  const [date, setDate] = React.useState<Moment | null>(moment(props.defaultValue));
+  const [date, setDate] = React.useState<Moment | null>(moment(props.defaultValue ?? new Date(0)));
   const [showCalender, setShowCalender] = React.useState(false);
 
   const handleChange = (newValue: Moment | null) => {
