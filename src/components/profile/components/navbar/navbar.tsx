@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Box } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
-import { Button, Divider, Typography } from "@mui/material";
+import { Button, ClickAwayListener, Divider, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import React from "react";
@@ -98,37 +98,39 @@ const MobileDropDown = (props: MobileDropDownProps) => {
       sx={{ height: "100%" }}
       justifyContent={"space-between"}
     >
-      <Button
-        sx={{
-          textTransform: "none",
-          height: 56,
-          display: "flex",
-          justifyContent: "space-between",
-          width: { sm: "auto" },
-          background: "#6555EE",
-          color: "#ffffff",
-          borderRadius: 2,
-          ":hover": {
-            background: "#6555EE",
-          },
-        }}
-        onClick={handleShowMobileDropdown}
-      >
-        <Box
+      <ClickAwayListener onClickAway={() => setShowMobileDropdown(false)}>
+        <Button
           sx={{
+            textTransform: "none",
+            height: 56,
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            ml: { md: 4, sm: 2, xs: 5 },
+            justifyContent: "space-between",
+            width: { sm: "auto" },
+            background: "#6555EE",
+            color: "#ffffff",
+            borderRadius: 2,
+            ":hover": {
+              background: "#6555EE",
+            },
           }}
+          onClick={handleShowMobileDropdown}
         >
-          <SvgIcon src={defaultDropdownValue.svgSrc} />
-          <Typography fontSize={16} fontWeight={500} ml={{ md: 7, sm: 4, xs: 10 }}>
-            {defaultDropdownValue.name}
-          </Typography>
-        </Box>
-        {showMobileDropdown ? <ExpandLess /> : <ExpandMore />}
-      </Button>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              ml: { md: 4, sm: 2, xs: 5 },
+            }}
+          >
+            <SvgIcon src={defaultDropdownValue.svgSrc} />
+            <Typography fontSize={16} fontWeight={500} ml={{ md: 7, sm: 4, xs: 10 }}>
+              {defaultDropdownValue.name}
+            </Typography>
+          </Box>
+          {showMobileDropdown ? <ExpandLess /> : <ExpandMore />}
+        </Button>
+      </ClickAwayListener>
       {showMobileDropdown ? (
         <Stack direction="column" spacing={{ sm: 2, xs: 3 }}>
           {tabs.map((tab) => (

@@ -24,6 +24,14 @@ export type AccountInfo = {
   user_name?: Maybe<Scalars['String']>;
 };
 
+export type AccountInfoUpdateInput = {
+  date_of_birth?: InputMaybe<Scalars['DateTime']>;
+  display_name?: InputMaybe<Scalars['String']>;
+  family_name?: InputMaybe<Scalars['String']>;
+  given_name?: InputMaybe<Scalars['String']>;
+  user_name?: InputMaybe<Scalars['String']>;
+};
+
 export type AuthGql = {
   __typename?: 'AuthGql';
   token: Scalars['String'];
@@ -44,6 +52,8 @@ export type Mutation = {
   register: Scalars['String'];
   /** Forgot password */
   resetPassword: Scalars['Boolean'];
+  /** update account info */
+  updateAccountInfo?: Maybe<Scalars['Boolean']>;
   /** Verify email */
   verifyEmail: Scalars['String'];
 };
@@ -62,10 +72,12 @@ export type MutationLoginArgs = {
 
 export type MutationLoginFacebookArgs = {
   accessToken: Scalars['String'];
+  refCode?: InputMaybe<Scalars['String']>;
 };
 
 
 export type MutationLoginGoogleArgs = {
+  refCode?: InputMaybe<Scalars['String']>;
   token: Scalars['String'];
 };
 
@@ -80,6 +92,11 @@ export type MutationRegisterArgs = {
 export type MutationResetPasswordArgs = {
   password: Scalars['String'];
   token: Scalars['String'];
+};
+
+
+export type MutationUpdateAccountInfoArgs = {
+  input: AccountInfoUpdateInput;
 };
 
 
@@ -101,16 +118,12 @@ export type ProfileGql = {
 
 export type Query = {
   __typename?: 'Query';
+  /** get account info */
+  getAccountInfo?: Maybe<AccountInfo>;
   /** Get list referral user */
   getListReferralUser: Array<User>;
-  getAccountInfo?: Maybe<AccountInfo>;
   /** Auth resolver */
   temp: Scalars['String'];
-};
-
-
-export type QueryGetListReferralUserArgs = {
-  userId: Scalars['String'];
 };
 
 export type ReferralLog = {

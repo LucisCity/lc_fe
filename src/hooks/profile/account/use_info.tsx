@@ -15,7 +15,7 @@ export const GET_ACCOUNT_INFO = gql`
   }
 `;
 
-export function useAccountInfo(): {
+export function useGetAccountInfo(): {
   loadingAccountInfo: boolean;
   errorAccountInfo: ApolloError | undefined;
   dataAccountInfo: AccountInfo;

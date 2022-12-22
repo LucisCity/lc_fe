@@ -4,7 +4,7 @@ import InputUnstyled, { inputUnstyledClasses } from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { Box, Button, InputAdornment, Typography, useMediaQuery, Paper } from "@mui/material";
-import { useAccountInfo } from "../../../hooks/profile/account/use_info";
+import { useGetAccountInfo } from "../../../hooks/profile/account/use_info";
 import moment, { Moment } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import TextField from "@mui/material/TextField";
@@ -166,7 +166,7 @@ const placeHolderData: AccountInfo = {
 };
 
 export default function InfoForm() {
-  const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useAccountInfo();
+  const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useGetAccountInfo();
   // console.log(`dataAccountInfo ${JSON.stringify(dataAccountInfo)}`);
   const data: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
   if (loadingAccountInfo) return <Box>Loading...</Box>;
