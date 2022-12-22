@@ -5,9 +5,8 @@ import ProfileTabs from "../components/tabs";
 import InfoForm from "./info";
 import Security from "./security";
 import ConnectBank from "./connect_bank";
-import ConnectWallet from "./connect_wallet";
+import ConnectWallet from "./wallet/connect_wallet";
 import Verification from "./verification";
-
 
 const tabs = [
   {
@@ -33,23 +32,18 @@ const tabs = [
 ];
 
 export const ProfileAccount = () => {
-
   return (
-    <Box mx={{sm: 10, xs: 3}} my={7}>
-      <Typography
-        fontWeight={700}
-        fontSize={{sm: 32, xs: 25}}
-        textAlign={{sm: "left", xs: "center"}}
-      >
+    <Box mx={{ sm: 10, xs: 3 }} my={7}>
+      <Typography fontWeight={700} fontSize={{ sm: 32, xs: 25 }} textAlign={{ sm: "left", xs: "center" }}>
         Tài khoản
       </Typography>
       <ProfileTabs sectionHref={"/profile/account"} tabs={tabs}>
-        <InfoForm/>
-        <Security/>
-        <ConnectBank/>
-        <ConnectWallet/>
-        <Verification/>
+        <InfoForm />
+        <Security />
+        <ConnectBank />
+        <ConnectWallet />
+        <Verification />
       </ProfileTabs>
     </Box>
-  )
-}
+  );
+};
