@@ -142,7 +142,7 @@ const fields: InfoField[] = [
   },
   {
     value: "user_name",
-    label: "Nickname",
+    label: "Username",
   },
   {
     value: "date_of_birth",
@@ -168,8 +168,8 @@ export default function InfoForm() {
   const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useAccountInfo();
   // console.log(`dataAccountInfo ${JSON.stringify(dataAccountInfo)}`);
   const data: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
-  if (loadingAccountInfo) return "Loading...";
-  if (errorAccountInfo) return `Error! ${errorAccountInfo.message}`;
+  if (loadingAccountInfo) return <Box>Loading...</Box>;
+  if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
 
   return (
     <form>
