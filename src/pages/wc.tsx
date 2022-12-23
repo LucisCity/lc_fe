@@ -4,7 +4,7 @@ import ConnectWalletButton from "../components/profile/account/wallet/components
 
 const Member: NextPage = () => {
   return (
-    <Box minHeight="100vh">
+    <Box minHeight="100vh" pt="120px">
       <ConnectWalletButton />
     </Box>
   );
