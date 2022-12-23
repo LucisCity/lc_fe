@@ -171,16 +171,15 @@ const placeHolderData: AccountInfo = {
 
 export default function InfoForm() {
   const form = useForm();
+
   const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useGetAccountInfo();
-  // console.log(`dataAccountInfo ${JSON.stringify(dataAccountInfo)}`);
   const dataFetched: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
-  // const [updatedData, setUpdatedData] = React.useState<{ [index: string]: any }>(dataFetched);
+
   const { updateAccountInfo } = useUpdateAccountInfo();
   if (loadingAccountInfo) return <Box>Loading...</Box>;
   if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
 
   async function onSubmit(values: any) {
-    console.log(`form values ${JSON.stringify(values)}`);
     // e.preventDefault();
     updateAccountInfo({
       variables: { input: { ...values } },
