@@ -39,24 +39,20 @@ export const UPDATE_ACCOUNT_INFO = gql`
   }
 `;
 
-type UseUpdateAccountInfoProps = {
-  input: AccountInfoUpdateInput;
-  onCompleted?: (data: any) => void;
-};
-
-export function useUpdateAccountInfo({ input, onCompleted }: UseUpdateAccountInfoProps): {
-  updateAccountInfo: () => Promise<any>;
+// type UseUpdateAccountInfoProps = {
+//   onCompleted?: (data: any) => void;
+// };
+//
+export function useUpdateAccountInfo(): {
+  updateAccountInfo: any;
   accountInfoUpdating: boolean;
-  dataUpdateAccountInfo: any;
-  errorUpdateAccountInfo: ApolloError | undefined;
 } {
   const { enqueueSnackbar } = useSnackbar();
 
-  const [
-    updateAccountInfo,
-    { loading: accountInfoUpdating, data: dataUpdateAccountInfo, error: errorUpdateAccountInfo },
-  ] = useMutation(UPDATE_ACCOUNT_INFO, {
-    onCompleted: onCompleted,
+  const [updateAccountInfo, { loading: accountInfoUpdating }] = useMutation(UPDATE_ACCOUNT_INFO, {
+    onCompleted: (res) => {
+      enqueueSnackbar("Success", { variant: "success" });
+    },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
@@ -67,7 +63,5 @@ export function useUpdateAccountInfo({ input, onCompleted }: UseUpdateAccountInf
   return {
     updateAccountInfo,
     accountInfoUpdating,
-    dataUpdateAccountInfo,
-    errorUpdateAccountInfo,
   };
 }

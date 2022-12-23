@@ -14,6 +14,8 @@ import EventIcon from "@mui/icons-material/Event";
 import { ClickAwayListener } from "@mui/base";
 import { AccountInfo, AccountInfoUpdateInput } from "../../../gql/graphql";
 import { isEmpty } from "lodash";
+import UserStore from "../../../store/user.store";
+import { useForm } from "react-hook-form";
 
 const grey = {
   50: "#F3F6F9",
@@ -71,6 +73,7 @@ const Label = styled(Typography)(({ theme }) => ({
 
 interface DatePickerProps {
   defaultValue: Date;
+  form: any;
 }
 
 function DatePicker(props: DatePickerProps) {
@@ -87,7 +90,7 @@ function DatePicker(props: DatePickerProps) {
 
   return (
     <Box position={"relative"}>
-      <Input value={moment(date).format("DD MMM, YYYY")} />
+      <Input value={moment(date).format("DD MMM, YYYY")} {...props.form.register("date_of_birth")} />
       <Box
         sx={{
           position: "absolute",
@@ -167,51 +170,44 @@ const placeHolderData: AccountInfo = {
 };
 
 export default function InfoForm() {
+  const form = useForm();
+
   const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useGetAccountInfo();
-  // console.log(`dataAccountInfo ${JSON.stringify(dataAccountInfo)}`);
-  const data: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
-  // const [data, setData] = React.useState<{ [index: string]: any }>(dataAccountInfo ?? placeHolderData);
+  const dataFetched: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
+
+  const { updateAccountInfo } = useUpdateAccountInfo();
   if (loadingAccountInfo) return <Box>Loading...</Box>;
   if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
 
-  // const { updateAccountInfo, errorUpdateAccountInfo } = useUpdateAccountInfo({
-  //   onCompleted: (response) => {
-  //     console.log("update acc info success");
-  //     console.log(`response ${JSON.stringify(response)}`);
-  //   },
-  // });
-  // if (errorUpdateAccountInfo) return <Box>Error! ${errorUpdateAccountInfo.message}</Box>;
-
-  const handleFormSubmit = () => {
-    // updateAccountInfo({
-    //   variables: {
-    //     data: data,
-    //     skip: isEmpty(data),
-    //   },
-    // });
-  };
+  async function onSubmit(values: any) {
+    // e.preventDefault();
+    updateAccountInfo({
+      variables: { input: { ...values } },
+      skip: isEmpty(values),
+    });
+  }
 
   return (
-    <form>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         {fields.map((field) => {
-          const fieldValue = data.hasOwnProperty(field.value) ? data[field.value] : null;
+          const fieldValue = dataFetched.hasOwnProperty(field.value) ? dataFetched[field.value] : null;
           return (
             <Grid item key={field.value} sm={field.label === "Email" ? 7 : 6} xs={12}>
               <Label>{field.label}</Label>
               {field.value === "email" ? (
                 <Input email={true} disabled={true} defaultValue={fieldValue} />
               ) : field.value === "date_of_birth" ? (
-                <DatePicker defaultValue={fieldValue} />
+                <DatePicker defaultValue={fieldValue} form={form} />
               ) : (
-                <Input defaultValue={fieldValue} />
+                <Input defaultValue={fieldValue} {...form.register(field.value)} />
               )}
             </Grid>
           );
         })}
       </Grid>
       <Box mt={{ sm: 15, xs: 10 }} display={"flex"} justifyContent={"center"}>
-        <Button variant="contained" onClick={handleFormSubmit}>
+        <Button variant="contained" type={"submit"}>
           <Typography variant={"h5"}>Cập nhật thông tin</Typography>
         </Button>
       </Box>
