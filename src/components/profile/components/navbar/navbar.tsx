@@ -98,39 +98,39 @@ const MobileDropDown = (props: MobileDropDownProps) => {
       sx={{ height: "100%" }}
       justifyContent={"space-between"}
     >
-      <ClickAwayListener onClickAway={() => setShowMobileDropdown(false)}>
-        <Button
-          sx={{
-            textTransform: "none",
-            height: 56,
-            display: "flex",
-            justifyContent: "space-between",
-            width: { sm: "auto" },
+      {/*<ClickAwayListener onClickAway={() => setShowMobileDropdown(false)}>*/}
+      <Button
+        sx={{
+          textTransform: "none",
+          height: 56,
+          display: "flex",
+          justifyContent: "space-between",
+          width: { sm: "auto" },
+          background: "#6555EE",
+          color: "#ffffff",
+          borderRadius: 2,
+          ":hover": {
             background: "#6555EE",
-            color: "#ffffff",
-            borderRadius: 2,
-            ":hover": {
-              background: "#6555EE",
-            },
+          },
+        }}
+        onClick={handleShowMobileDropdown}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            ml: { md: 4, sm: 2, xs: 5 },
           }}
-          onClick={handleShowMobileDropdown}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              ml: { md: 4, sm: 2, xs: 5 },
-            }}
-          >
-            <SvgIcon src={defaultDropdownValue.svgSrc} />
-            <Typography fontSize={16} fontWeight={500} ml={{ md: 7, sm: 4, xs: 10 }}>
-              {defaultDropdownValue.name}
-            </Typography>
-          </Box>
-          {showMobileDropdown ? <ExpandLess /> : <ExpandMore />}
-        </Button>
-      </ClickAwayListener>
+          <SvgIcon src={defaultDropdownValue.svgSrc} />
+          <Typography fontSize={16} fontWeight={500} ml={{ md: 7, sm: 4, xs: 10 }}>
+            {defaultDropdownValue.name}
+          </Typography>
+        </Box>
+        {showMobileDropdown ? <ExpandLess /> : <ExpandMore />}
+      </Button>
+      {/*</ClickAwayListener>*/}
       {showMobileDropdown ? (
         <Stack direction="column" spacing={{ sm: 2, xs: 3 }}>
           {tabs.map((tab) => (
@@ -140,6 +140,7 @@ const MobileDropDown = (props: MobileDropDownProps) => {
               name={tab.name}
               svgSrc={tab.svgSrc}
               active={tab.href === props.activeSection}
+              onClick={() => setShowMobileDropdown(false)}
             />
           ))}
         </Stack>
