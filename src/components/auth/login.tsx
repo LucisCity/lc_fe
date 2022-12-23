@@ -16,7 +16,6 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Divider, Stack } from "@mui/material";
-import ConnectWalletButton from "../profile/account/wallet/components/connect_wallet_button";
 
 function Copyright(props: any) {
   return (
@@ -25,7 +24,6 @@ function Copyright(props: any) {
       <Link color="inherit" href="https://bc68.fun/">
         LucisCity
       </Link>{" "}
-      <ConnectWalletButton />
       {new Date().getFullYear()}
       {"."}
     </Typography>
