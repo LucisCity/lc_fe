@@ -86,8 +86,9 @@ export const ProfileLayout = observer((props: Props) => {
                   flexDirection={"column"}
                   justifyContent={"center"}
                   alignItems={"center"}
+                  padding={7}
                 >
-                  <Typography variant={"h3"} mb={4}>
+                  <Typography variant={"h3"} mb={4} textAlign={"center"}>
                     Bạn phải đăng nhập mới có thể xem thông tin.
                   </Typography>
                   <Button LinkComponent={Link} href={"/login"} variant={"contained"}>

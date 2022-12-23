@@ -4,7 +4,7 @@ import InputUnstyled, { inputUnstyledClasses } from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { Box, Button, InputAdornment, Typography, useMediaQuery, Paper } from "@mui/material";
-import { useGetAccountInfo } from "../../../hooks/profile/account/use_info";
+import { useGetAccountInfo, useUpdateAccountInfo } from "../../../hooks/profile/account/use_info";
 import moment, { Moment } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,8 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { CalendarPicker, DesktopDatePicker } from "@mui/x-date-pickers";
 import EventIcon from "@mui/icons-material/Event";
 import { ClickAwayListener } from "@mui/base";
-import { AccountInfo } from "../../../gql/graphql";
+import { AccountInfo, AccountInfoUpdateInput } from "../../../gql/graphql";
+import { isEmpty } from "lodash";
 
 const grey = {
   50: "#F3F6F9",
@@ -169,8 +170,26 @@ export default function InfoForm() {
   const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useGetAccountInfo();
   // console.log(`dataAccountInfo ${JSON.stringify(dataAccountInfo)}`);
   const data: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
+  // const [data, setData] = React.useState<{ [index: string]: any }>(dataAccountInfo ?? placeHolderData);
   if (loadingAccountInfo) return <Box>Loading...</Box>;
   if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
+
+  // const { updateAccountInfo, errorUpdateAccountInfo } = useUpdateAccountInfo({
+  //   onCompleted: (response) => {
+  //     console.log("update acc info success");
+  //     console.log(`response ${JSON.stringify(response)}`);
+  //   },
+  // });
+  // if (errorUpdateAccountInfo) return <Box>Error! ${errorUpdateAccountInfo.message}</Box>;
+
+  const handleFormSubmit = () => {
+    // updateAccountInfo({
+    //   variables: {
+    //     data: data,
+    //     skip: isEmpty(data),
+    //   },
+    // });
+  };
 
   return (
     <form>
@@ -192,7 +211,7 @@ export default function InfoForm() {
         })}
       </Grid>
       <Box mt={{ sm: 15, xs: 10 }} display={"flex"} justifyContent={"center"}>
-        <Button variant="contained">
+        <Button variant="contained" onClick={handleFormSubmit}>
           <Typography variant={"h5"}>Cập nhật thông tin</Typography>
         </Button>
       </Box>
