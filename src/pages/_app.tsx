@@ -260,11 +260,11 @@ export default function MyApp(props: MyAppProps) {
             <NotistackWrapper>
               {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
-              <Layout>
-                <Web3Provider>
+              <Web3Provider>
+                <Layout>
                   <Component {...pageProps} />
-                </Web3Provider>
-              </Layout>
+                </Layout>
+              </Web3Provider>
             </NotistackWrapper>
           </ThemeProvider>
         </CacheProvider>
