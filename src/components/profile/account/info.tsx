@@ -82,6 +82,7 @@ function DatePicker(props: DatePickerProps) {
 
   const handleChange = (newValue: Moment | null) => {
     setDate(newValue);
+    props.form.setValue("date_of_birth", newValue);
   };
 
   const handleShowCalenderPicker = () => {
@@ -90,7 +91,7 @@ function DatePicker(props: DatePickerProps) {
 
   return (
     <Box position={"relative"}>
-      <Input value={moment(date).format("DD MMM, YYYY")} {...props.form.register("date_of_birth")} />
+      <Input value={moment(date).format("DD MMM, YYYY")} />
       <Box
         sx={{
           position: "absolute",
@@ -182,13 +183,15 @@ export default function InfoForm() {
   async function onSubmit(values: any) {
     // e.preventDefault();
     updateAccountInfo({
-      variables: { input: { ...values } },
+      variables: {
+        input: values,
+      },
       skip: isEmpty(values),
     });
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={form.handleSubmit(onSubmit)} style={{ minHeight: 700 }}>
       <Grid container spacing={2}>
         {fields.map((field) => {
           const fieldValue = dataFetched.hasOwnProperty(field.value) ? dataFetched[field.value] : null;
