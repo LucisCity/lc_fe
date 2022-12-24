@@ -52,11 +52,11 @@ function SignInSide() {
   ///// SET REFERRAL CODE ///////
   const [refCode, setRefCode] = React.useState<string | null>(null);
   React.useEffect(() => {
-    if (router.query?.referral_code && typeof localStorage !== undefined) {
-      localStorage.setItem("referralCode", router.query?.referral_code as string);
-      form.setValue("ref_code", router.query?.referral_code);
+    if (router.query?.r && typeof localStorage !== undefined) {
+      localStorage.setItem("referralCode", router.query?.r as string);
+      form.setValue("ref_code", router.query?.r);
     }
-  }, [router.query?.referral_code]);
+  }, [router.query?.r]);
 
   React.useEffect(() => {
     if (typeof localStorage !== undefined) {

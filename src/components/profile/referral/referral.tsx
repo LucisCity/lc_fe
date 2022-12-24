@@ -51,7 +51,7 @@ const ReferralLinkBox = (props: ReferralLinkBoxProps) => {
   const [url, setUrl] = React.useState<string>("");
   const { user } = UserStore;
   const handleCopyLink = () => {
-    copy(`${url}/register?referral_code=${user?.ref_code}`);
+    copy(`${url}/register?r=${user?.ref_code}`);
     setIsCopy(true);
     setTimeout(() => {
       setIsCopy(false);
@@ -74,12 +74,7 @@ const ReferralLinkBox = (props: ReferralLinkBoxProps) => {
           alignItems: "center",
         }}
       >
-        <CustomInput
-          type="text"
-          sx={{ width: "100%" }}
-          disabled={true}
-          value={`${url}/register?referral_code=${user?.ref_code}`}
-        />
+        <CustomInput type="text" sx={{ width: "100%" }} disabled={true} value={`${url}/register?r=${user?.ref_code}`} />
         <Button
           variant="contained"
           sx={{ p: 0, width: { sm: 150, xs: 60 }, ml: 2, height: { sm: 50, xs: 60 }, position: "relative" }}
