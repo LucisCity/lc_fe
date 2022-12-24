@@ -45,6 +45,8 @@ export type Mutation = {
   changePassword?: Maybe<Scalars['Boolean']>;
   /** claim referral */
   claimReferral?: Maybe<Wallet>;
+  /** change password */
+  changePassword?: Maybe<Scalars['Boolean']>;
   /** Forgot password */
   forgotPassword: Scalars['Boolean'];
   /** Login */
@@ -76,6 +78,12 @@ export type MutationChangePasswordArgs = {
 
 export type MutationClaimReferralArgs = {
   inviteeId: Scalars['String'];
+};
+
+
+export type MutationChangePasswordArgs = {
+  newPass: Scalars['String'];
+  oldPass: Scalars['String'];
 };
 
 
@@ -136,6 +144,30 @@ export type MutationVerifyEmailArgs = {
   token: Scalars['String'];
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  content?: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['ID'];
+  is_seen: Scalars['Boolean'];
+  link?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  user_id: Scalars['String'];
+};
+
+export type NotificationGql = {
+  __typename?: 'NotificationGql';
+  content?: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['ID'];
+  is_seen: Scalars['Boolean'];
+  link?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id: Scalars['String'];
+};
+
 export type ProfileGql = {
   __typename?: 'ProfileGql';
   avatar?: Maybe<Scalars['String']>;
@@ -156,6 +188,9 @@ export type Query = {
   getBalance: Wallet;
   /** Get list referral user */
   getListReferralUser: Array<ReferralDataResponse>;
+  getListReferralUser: Array<User>;
+  /** get all notis */
+  getNotifications?: Maybe<Array<NotificationGql>>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -221,14 +256,26 @@ export type TransactionTypeCount = {
   transaction_log: Scalars['Int'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  pushNotification: NotificationGql;
+};
+
+
+export type SubscriptionPushNotificationArgs = {
+  userId: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
+  _count: UserCount;
   created_at: Scalars['DateTime'];
   email?: Maybe<Scalars['String']>;
   facebook_id?: Maybe<Scalars['String']>;
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   invited_by?: Maybe<Scalars['String']>;
+  notification?: Maybe<Array<Notification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
   ref_code: Scalars['String'];
@@ -239,10 +286,17 @@ export type User = {
   wallet?: Maybe<Wallet>;
 };
 
+export type UserCount = {
+  __typename?: 'UserCount';
+  notification: Scalars['Int'];
+};
+
 export type UserGql = {
   __typename?: 'UserGql';
+  _count: UserCount;
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  notification?: Maybe<Array<Notification>>;
   profile: ProfileGql;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
