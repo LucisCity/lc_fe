@@ -8,6 +8,7 @@ import FormControlUnstyled from "@mui/base/FormControlUnstyled";
 import { CustomInput } from "../components/custom_input";
 import SvgIcon from "../../common/svg_icon";
 import s from "./connect_bank.module.scss";
+import UserStore from "../../../store/user.store";
 
 interface BankConnectedProps {
   info: {
@@ -221,13 +222,15 @@ export default function ConnectBank() {
   const handleAddBank = () => {
     // setShowForm(!showForm);
   };
-
+  const showBankConnected = UserStore.user?.id === "clc0056g40000vxx1gf0rclyo";
   return (
     <React.Fragment>
       <Box mt={5}>
-        {banksConnected.map((bank) => (
-          <BankConnected key={bank.info.cardId} info={bank.info} cardImg={bank.cardImg} />
-        ))}
+        {showBankConnected
+          ? banksConnected.map((bank) => (
+              <BankConnected key={bank.info.cardId} info={bank.info} cardImg={bank.cardImg} />
+            ))
+          : null}
         <AddBank handleAddBank={handleAddBank} />
       </Box>
       <Divider
