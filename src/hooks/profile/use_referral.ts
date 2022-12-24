@@ -50,6 +50,7 @@ export default function useReferral() {
   const [claimReferral, { loading: claimReferralLoading }] = useMutation(CLAIM_REFERRAL, {
     onCompleted: (res) => {
       UserStore.updateWallet(res.claimReferral);
+      enqueueSnackbar("Claim thành công!", { variant: "success" });
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
