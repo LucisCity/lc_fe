@@ -40,6 +40,8 @@ export type AuthGql = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** change password */
+  changePassword?: Maybe<Scalars['Boolean']>;
   /** Forgot password */
   forgotPassword: Scalars['Boolean'];
   /** Login */
@@ -56,6 +58,12 @@ export type Mutation = {
   updateAccountInfo?: Maybe<Scalars['Boolean']>;
   /** Verify email */
   verifyEmail: Scalars['String'];
+};
+
+
+export type MutationChangePasswordArgs = {
+  newPass: Scalars['String'];
+  oldPass: Scalars['String'];
 };
 
 
@@ -104,6 +112,30 @@ export type MutationVerifyEmailArgs = {
   token: Scalars['String'];
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  content?: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['ID'];
+  is_seen: Scalars['Boolean'];
+  link?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  user_id: Scalars['String'];
+};
+
+export type NotificationGql = {
+  __typename?: 'NotificationGql';
+  content?: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['ID'];
+  is_seen: Scalars['Boolean'];
+  link?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id: Scalars['String'];
+};
+
 export type ProfileGql = {
   __typename?: 'ProfileGql';
   avatar?: Maybe<Scalars['String']>;
@@ -122,6 +154,8 @@ export type Query = {
   getAccountInfo?: Maybe<AccountInfo>;
   /** Get list referral user */
   getListReferralUser: Array<User>;
+  /** get all notis */
+  getNotifications?: Maybe<Array<NotificationGql>>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -142,14 +176,26 @@ export enum ReferralType {
   Register = 'REGISTER'
 }
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  pushNotification: NotificationGql;
+};
+
+
+export type SubscriptionPushNotificationArgs = {
+  userId: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
+  _count: UserCount;
   created_at: Scalars['DateTime'];
   email?: Maybe<Scalars['String']>;
   facebook_id?: Maybe<Scalars['String']>;
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   invited_by?: Maybe<Scalars['String']>;
+  notification?: Maybe<Array<Notification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
   ref_code: Scalars['String'];
@@ -159,10 +205,17 @@ export type User = {
   updated_at: Scalars['DateTime'];
 };
 
+export type UserCount = {
+  __typename?: 'UserCount';
+  notification: Scalars['Int'];
+};
+
 export type UserGql = {
   __typename?: 'UserGql';
+  _count: UserCount;
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  notification?: Maybe<Array<Notification>>;
   profile: ProfileGql;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
