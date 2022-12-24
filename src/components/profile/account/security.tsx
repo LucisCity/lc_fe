@@ -175,8 +175,8 @@ export default function Security() {
 
   async function onSubmit(values: any) {
     // e.preventDefault();
-    console.log(`values ${JSON.stringify(values)}`);
-    await onChangePass(values.oldPass, values.newPass, values.confirmPass);
+    // console.log(`values ${JSON.stringify(values)}`);
+    onChangePass(values.oldPass, values.newPass, values.confirmPass);
   }
 
   return (
@@ -187,10 +187,10 @@ export default function Security() {
         </Grid>
         <Grid item xs={12} container>
           <Grid item sm={6} xs={12}>
-            <PasswordField label={"Nhập mật khẩu hiện tại"} form={form} value="newPass" />
+            <PasswordField label={"Nhập mật khẩu mới"} form={form} value="newPass" />
           </Grid>
           <Grid item sm={6} xs={12}>
-            <PasswordField label={"Nhập mật khẩu hiện tại"} form={form} value="confirmPass" />
+            <PasswordField label={"Xác nhận mật khẩu mới"} form={form} value="confirmPass" />
           </Grid>
         </Grid>
       </Grid>

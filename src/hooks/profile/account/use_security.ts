@@ -25,13 +25,13 @@ export function useChangePassword() {
   });
 
   async function onChangePass(oldPass: string, newPass: string, confirmPass: string) {
-    console.log("on ChangePass reached");
+    // console.log(`oldPass ${oldPass} newPass ${newPass} confirmPass ${confirmPass}`);
     if (!isStrongPass(newPass)) {
-      form.setError("password", { message: "Password require length from 8 to 32 character, has letter and digits" });
+      form.setError("newPass", { message: "Password require length from 8 to 32 character, has letter and digits" });
       return;
     }
     if (newPass !== confirmPass) {
-      form.setError("confirm_pass", { message: "Confirm password does not match" }, { shouldFocus: true });
+      form.setError("confirmPass", { message: "Confirm password does not match" }, { shouldFocus: true });
       return;
     }
 
