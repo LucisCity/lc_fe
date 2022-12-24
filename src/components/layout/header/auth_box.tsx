@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 
 export const AuthBox = observer(() => {
   const loading = !UserStore.isLoadedFromLocal;
-
+  const balance = UserStore.user?.wallet?.balance;
   return (
     <Right>
       <IconButton sx={{ mr: 2 }}>
@@ -21,6 +21,7 @@ export const AuthBox = observer(() => {
         </Button>
       ) : (
         <AvatarMenu
+          balance={balance}
           avatar={UserStore.user?.profile?.avatar?.toString()}
           username={UserStore.user?.profile?.display_name?.toString() ?? UserStore.user?.email?.toString()}
           onLogout={() => {

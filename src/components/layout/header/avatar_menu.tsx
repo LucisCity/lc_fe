@@ -5,10 +5,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import useMenu from "../../../hooks/use_menu";
 import { Avatar, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
 import Link from "next/link";
+import { Box } from "@mui/system";
+import Typography from "@mui/material/Typography";
+import { formatCurrency } from "../../../utils/number.util";
 
 interface Props {
   avatar: string | undefined;
   username: string | undefined;
+  balance: string | undefined;
   onLogout: () => void;
 }
 
@@ -77,11 +81,10 @@ export default function AvatarMenu(props: Props) {
         <Link href="/profile">
           <MenuItem>
             <Avatar src={props.avatar ?? ""} />
-            {props.username ?? "My account"}
-            {/* <ListItemIcon>
-              <EditIcon fontSize="small" />
-            </ListItemIcon>
-            My account */}
+            <Box>
+              {props.username ?? "My account"}
+              <Typography component={"p"}>Số dư: {formatCurrency(props.balance ?? 0)}</Typography>
+            </Box>
           </MenuItem>
         </Link>
 

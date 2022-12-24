@@ -11,6 +11,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
+  Decimal: any;
 };
 
 export type AccountInfo = {
@@ -40,6 +41,10 @@ export type AuthGql = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** change password */
+  changePassword?: Maybe<Scalars['Boolean']>;
+  /** claim referral */
+  claimReferral?: Maybe<Wallet>;
   /** Forgot password */
   forgotPassword: Scalars['Boolean'];
   /** Login */
@@ -52,10 +57,25 @@ export type Mutation = {
   register: Scalars['String'];
   /** Forgot password */
   resetPassword: Scalars['Boolean'];
+  /** Send tx transaction */
+  sendTransaction: Scalars['Boolean'];
+  /** set pool wallet */
+  setPoolWallet: Scalars['Boolean'];
   /** update account info */
   updateAccountInfo?: Maybe<Scalars['Boolean']>;
   /** Verify email */
   verifyEmail: Scalars['String'];
+};
+
+
+export type MutationChangePasswordArgs = {
+  newPass: Scalars['String'];
+  oldPass: Scalars['String'];
+};
+
+
+export type MutationClaimReferralArgs = {
+  inviteeId: Scalars['String'];
 };
 
 
@@ -95,6 +115,18 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSendTransactionArgs = {
+  abi?: InputMaybe<Scalars['String']>;
+  txHash: Scalars['String'];
+};
+
+
+export type MutationSetPoolWalletArgs = {
+  address: Scalars['String'];
+  privateKey: Scalars['String'];
+};
+
+
 export type MutationUpdateAccountInfoArgs = {
   input: AccountInfoUpdateInput;
 };
@@ -120,10 +152,31 @@ export type Query = {
   __typename?: 'Query';
   /** get account info */
   getAccountInfo?: Maybe<AccountInfo>;
+  /** get balance */
+  getBalance: Wallet;
   /** Get list referral user */
-  getListReferralUser: Array<User>;
+  getListReferralUser: Array<ReferralDataResponse>;
   /** Auth resolver */
   temp: Scalars['String'];
+};
+
+export type ReferralDataResponse = {
+  __typename?: 'ReferralDataResponse';
+  created_at: Scalars['DateTime'];
+  email?: Maybe<Scalars['String']>;
+  facebook_id?: Maybe<Scalars['String']>;
+  google_id?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  invited_by?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  profile?: Maybe<UserProfile>;
+  ref_code: Scalars['String'];
+  referral_log?: Maybe<ReferralLog>;
+  reward?: Maybe<Scalars['String']>;
+  role: UserRole;
+  status: UserStatus;
+  updated_at: Scalars['DateTime'];
+  wallet?: Maybe<Wallet>;
 };
 
 export type ReferralLog = {
@@ -142,6 +195,32 @@ export enum ReferralType {
   Register = 'REGISTER'
 }
 
+export type TransactionLog = {
+  __typename?: 'TransactionLog';
+  amount: Scalars['Decimal'];
+  created_at: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  transaction_type: TransactionType;
+  type: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+  user_id: Scalars['String'];
+  wallet: Wallet;
+};
+
+export type TransactionType = {
+  __typename?: 'TransactionType';
+  _count: TransactionTypeCount;
+  code: Scalars['String'];
+  description: Scalars['String'];
+  transaction_log?: Maybe<Array<TransactionLog>>;
+};
+
+export type TransactionTypeCount = {
+  __typename?: 'TransactionTypeCount';
+  transaction_log: Scalars['Int'];
+};
+
 export type User = {
   __typename?: 'User';
   created_at: Scalars['DateTime'];
@@ -157,6 +236,7 @@ export type User = {
   role: UserRole;
   status: UserStatus;
   updated_at: Scalars['DateTime'];
+  wallet?: Maybe<Wallet>;
 };
 
 export type UserGql = {
@@ -166,6 +246,7 @@ export type UserGql = {
   profile: ProfileGql;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
+  wallet?: Maybe<Wallet>;
 };
 
 export type UserProfile = {
@@ -195,3 +276,19 @@ export enum UserStatus {
   Banned = 'BANNED',
   Pending = 'PENDING'
 }
+
+export type Wallet = {
+  __typename?: 'Wallet';
+  _count: WalletCount;
+  balance: Scalars['Decimal'];
+  created_at: Scalars['DateTime'];
+  transaction_log?: Maybe<Array<TransactionLog>>;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  user_id: Scalars['ID'];
+};
+
+export type WalletCount = {
+  __typename?: 'WalletCount';
+  transaction_log: Scalars['Int'];
+};

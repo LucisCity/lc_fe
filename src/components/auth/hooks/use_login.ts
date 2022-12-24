@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
-import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import { handleGraphqlErrors, setAuthToken } from "../../../utils/apolo.util";
 
 const LOGIN_MUT = gql`
   mutation login($email: String!, $password: String!) {
@@ -18,6 +18,9 @@ const LOGIN_MUT = gql`
           user_id
           avatar
           display_name
+        }
+        wallet {
+          balance
         }
       }
     }
@@ -37,6 +40,9 @@ const LOGIN_GG_MUT = gql`
           avatar
           display_name
         }
+        wallet {
+          balance
+        }
       }
     }
   }
@@ -55,6 +61,9 @@ const LOGIN_FB_MUT = gql`
           avatar
           display_name
         }
+        wallet {
+          balance
+        }
       }
     }
   }
@@ -71,6 +80,7 @@ export default function useLogin() {
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
       }
+      setAuthToken(res.login.token);
       Router.push("/");
     },
     onError: (e) => {

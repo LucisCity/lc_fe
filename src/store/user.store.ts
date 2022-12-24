@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { UserGql } from "../gql/graphql";
+import { UserGql, Wallet } from "../gql/graphql";
 import { StorageHelper } from "../utils";
 
 class UserStore {
@@ -24,6 +24,10 @@ class UserStore {
 
   get isLoadedFromLocal() {
     return this._isLoadedFromLocal;
+  }
+
+  updateWallet(wallet: Wallet) {
+    this._user!.wallet = wallet;
   }
 
   loadFromLocal() {

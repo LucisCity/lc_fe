@@ -6,16 +6,17 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { table, TablePaginationActions } from "../components/table";
-import UserStore from "../../../store/user.store";
 import useReferral from "../../../hooks/profile/use_referral";
 import moment from "moment";
 import { ReferralType } from "../../../gql/graphql";
 import { ReferralTableSkeleton } from "../components/referral_table_skeleton";
+import { LoadingButton } from "@mui/lab";
 
 interface ITableData {
+  id: string;
   date: string;
   name: string;
   type: string;
@@ -27,18 +28,73 @@ interface ReferralTableProps {
   rowsPerPage: number;
 }
 
+const Row = ({
+  row,
+  claimReferralHandle,
+}: {
+  row: ITableData;
+  claimReferralHandle: (inviteeId?: string) => Promise<void>;
+}) => {
+  const [loading, setLoading] = React.useState(false);
+
+  const handleClick = async (inviteeId?: string) => {
+    try {
+      setLoading(true);
+      await claimReferralHandle(inviteeId);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+  return (
+    <TableRow key={row.id}>
+      <TableCell style={{ width: "30%", textAlign: "left", color: "#6CCAFF" }} scope="row">
+        <Typography fontWeight={400} fontSize={16}>
+          {row.date}
+        </Typography>
+      </TableCell>
+      <TableCell style={{ width: "30%", textAlign: "center", color: "#000000" }} scope="row">
+        <Typography fontWeight={500} fontSize={16}>
+          {row.name}
+        </Typography>
+      </TableCell>
+      <TableCell style={{ width: "15%", textAlign: "left", color: "#504C67" }} scope="row">
+        <Typography fontWeight={400} fontSize={16}>
+          {row.type}
+        </Typography>
+      </TableCell>
+      <TableCell style={{ width: "10%", textAlign: "right", color: "#504C67" }} scope="row">
+        <Typography fontWeight={500} fontSize={16}>
+          {row.reward}
+        </Typography>
+      </TableCell>
+      <TableCell style={{ width: "15%", textAlign: "right" }} scope="row">
+        <LoadingButton
+          variant="contained"
+          disabled={row.isClaim}
+          sx={{ textTransform: "none", background: "#6555EE" }}
+          onClick={() => handleClick(row.id)}
+          loading={loading}
+        >
+          Claim
+        </LoadingButton>
+      </TableCell>
+    </TableRow>
+  );
+};
 export const ReferralTable = (props: ReferralTableProps) => {
   const { rowsPerPage } = props;
   const [page, setPage] = React.useState(0);
-  const { listReferralUser, loading } = useReferral();
+  const { listReferralUser, loading, claimReferral, setListReferralUser } = useReferral();
   const data = React.useMemo(() => {
     return (
-      listReferralUser?.map((item) => {
+      listReferralUser?.map((item, index) => {
         return {
-          date: moment(item.referral_log?.created_at).format("DD MMM YYYY, h:mm"),
-          name: item.profile?.user_name ?? item.email,
+          id: item.referral_log?.user_id ?? `id-${index}`,
+          date: moment(item.referral_log?.created_at).format("DD MMM YYYY, h:mm") ?? "--/--/--",
+          name: item.profile?.user_name ?? item.email ?? "no-email",
           type: item.referral_log?.type === ReferralType.Register ? "Đăng ký" : "Mua thẻ",
-          reward: "--",
+          reward: `${item.reward}$`,
           isClaim: item.referral_log?.isClaim ?? true,
         };
       }) ?? []
@@ -62,6 +118,31 @@ export const ReferralTable = (props: ReferralTableProps) => {
     setPage(newPage);
   };
 
+  const claimReferralHandle = async (inviteeId?: string) => {
+    try {
+      await claimReferral({
+        variables: {
+          inviteeId,
+        },
+      });
+      // update isClaim local
+      setListReferralUser(
+        listReferralUser.map((item) => {
+          if (item.referral_log && item.referral_log.user_id === inviteeId) {
+            return {
+              ...item,
+              // eslint-disable-next-line camelcase
+              referral_log: {
+                ...item.referral_log,
+                isClaim: true,
+              },
+            };
+          }
+          return item;
+        }),
+      );
+    } catch (e) {}
+  };
   return (
     <>
       <TableContainer component={Box}>
@@ -75,39 +156,7 @@ export const ReferralTable = (props: ReferralTableProps) => {
                   <Typography>Không có dữ liệu!</Typography>
                 </Box>
               ) : (
-                dataEachPage.map((row) => (
-                  <TableRow key={row.date}>
-                    <TableCell style={{ width: "30%", textAlign: "left", color: "#6CCAFF" }} scope="row">
-                      <Typography fontWeight={400} fontSize={16}>
-                        {row.date}
-                      </Typography>
-                    </TableCell>
-                    <TableCell style={{ width: "30%", textAlign: "center", color: "#000000" }} scope="row">
-                      <Typography fontWeight={500} fontSize={16}>
-                        {row.name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell style={{ width: "15%", textAlign: "left", color: "#504C67" }} scope="row">
-                      <Typography fontWeight={400} fontSize={16}>
-                        {row.type}
-                      </Typography>
-                    </TableCell>
-                    <TableCell style={{ width: "10%", textAlign: "right", color: "#504C67" }} scope="row">
-                      <Typography fontWeight={500} fontSize={16}>
-                        {row.reward}
-                      </Typography>
-                    </TableCell>
-                    <TableCell style={{ width: "15%", textAlign: "right" }} scope="row">
-                      <Button
-                        variant="contained"
-                        disabled={row.isClaim}
-                        sx={{ textTransform: "none", background: "#6555EE" }}
-                      >
-                        Claim
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
+                dataEachPage.map((row) => <Row key={row.id} row={row} claimReferralHandle={claimReferralHandle} />)
               )}
 
               {emptyRows > 0 && (

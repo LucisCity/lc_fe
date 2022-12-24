@@ -1,19 +1,23 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { User } from "../../gql/graphql";
+import { ReferralDataResponse } from "../../gql/graphql";
+import UserStore from "../../store/user.store";
+import { useState } from "react";
 
 const GET_LIST_REFERRAL_USER = gql`
   query getListReferralUser {
     getListReferralUser {
       id
       email
+      reward
       profile {
         user_id
         avatar
         display_name
       }
       referral_log {
+        user_id
         isClaim
         type
         created_at
@@ -22,9 +26,31 @@ const GET_LIST_REFERRAL_USER = gql`
   }
 `;
 
+const CLAIM_REFERRAL = gql`
+  mutation claimReferral($inviteeId: String!) {
+    claimReferral(inviteeId: $inviteeId) {
+      balance
+    }
+  }
+`;
+
 export default function useReferral() {
   const { enqueueSnackbar } = useSnackbar();
-  const { loading, data } = useQuery<{ getListReferralUser: User[] }>(GET_LIST_REFERRAL_USER, {
+  const [listReferralUser, setListReferralUser] = useState<ReferralDataResponse[]>([]);
+  const { loading } = useQuery<{ getListReferralUser: ReferralDataResponse[] }>(GET_LIST_REFERRAL_USER, {
+    onCompleted: (res) => {
+      setListReferralUser(res?.getListReferralUser);
+    },
+    onError: (e) => {
+      const errors = handleGraphqlErrors(e);
+      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+    },
+  });
+
+  const [claimReferral, { loading: claimReferralLoading }] = useMutation(CLAIM_REFERRAL, {
+    onCompleted: (res) => {
+      UserStore.updateWallet(res.claimReferral);
+    },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
@@ -33,6 +59,9 @@ export default function useReferral() {
 
   return {
     loading,
-    listReferralUser: data?.getListReferralUser,
+    listReferralUser,
+    setListReferralUser,
+    claimReferralLoading,
+    claimReferral,
   };
 }
