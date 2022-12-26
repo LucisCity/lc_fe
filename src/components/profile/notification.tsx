@@ -1,31 +1,51 @@
 import { Box } from "@mui/system";
 import { Button, Card, CardContent, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import Link from "next/link";
 import PaginatedList from "./components/paginated_list";
-import { useGetNotifications } from "../../hooks/profile/use_notification";
+import {
+  useGetNotifications,
+  useSeenAllNotis,
+  useSeenNotification,
+  useSubToNewNoti,
+} from "../../hooks/profile/use_notification";
 import { NotificationGql } from "../../gql/graphql";
+import { isEmpty } from "lodash";
 
 interface NotiCardProps {
   title: string;
   date: Date;
   content: string;
   seen: boolean;
+  onClick: (id: number) => Promise<void>;
+  id: string;
 }
 
 const NotiCard = (props: NotiCardProps) => {
+  const [seen, setSeen] = React.useState<boolean>(props.seen);
+  const handleClickNotiCard = async () => {
+    if (!seen) {
+      setSeen(true);
+      await props.onClick(Number(props.id));
+    }
+  };
+
+  useEffect(() => {
+    setSeen(props.seen);
+  }, [props.seen]);
   return (
     <Card
       elevation={0}
       sx={{
         mb: 4,
         borderRadius: 4,
-        background: props.seen ? "#EEE" : "#fff",
+        background: seen ? "#EEE" : "#fff",
         "&:hover": {
           background: "#E4E4E4",
         },
       }}
+      onClick={handleClickNotiCard}
     >
       <CardContent sx={{ py: 5, px: 6 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -180,27 +200,44 @@ const notis = [
 
 export const ProfileNotification = () => {
   // const [page, setPage] = React.useState(1);
-  const { getNotificationsData, refetchNotifications } = useGetNotifications(1, 99);
-  // const [notiList, setNotiList] = React.useState<[NotificationGql]>([]);
-  //
-  // React.useEffect(() => {
-  //   if (getNotificationsData) {
-  //     setNotiList([...notiList, ...getNotificationsData]);
-  //   }
-  // }, [getNotificationsData]);
-  //
-  // const loadMoreData = async () => {
-  //   setPage(page + 1);
-  //   try {
-  //     const res = await refetchNotification({
-  //       page: page + 1,
-  //       limit: 10,
-  //     });
-  //     // setNotiList([...notiList,...res.data.getNotification.notifications])
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const { getNotificationsData, refetchNotifications, getNotificationsLoading } = useGetNotifications(1, 99);
+  const [notiList, setNotiList] = React.useState<NotificationGql[]>([]);
+
+  const { newNoti } = useSubToNewNoti();
+  // console.log(`useSubToNewNoti data ${JSON.stringify(newNoti)}`);
+
+  React.useEffect(() => {
+    if (getNotificationsData) {
+      setNotiList(getNotificationsData);
+    }
+  }, [getNotificationsData]);
+
+  React.useEffect(() => {
+    // console.log("new noti useEffect reached");
+    // console.log(`noti list length before ${notiList.length}`);
+    if (newNoti) {
+      // console.log(`newNoti ${JSON.stringify(newNoti)}`);
+      setNotiList((notiList) => [newNoti, ...notiList]);
+    }
+  }, [newNoti]);
+
+  const { seenAllNotis, loadingSeenAllNotis } = useSeenAllNotis();
+
+  const handleSeenAllNotis = async () => {
+    seenAllNotis();
+    // eslint-disable-next-line
+    setNotiList((notiList) => notiList.map((i) => ({ ...i, is_seen: true })));
+  };
+
+  const { seenNotification, loadingSeenNotification } = useSeenNotification();
+  const handleClickNoti = async (id: number) => {
+    // console.log("handleClickNoti reached");
+    await seenNotification({
+      variables: {
+        id,
+      },
+    });
+  };
 
   return (
     <Box mx={{ sm: 10, xs: 3, fontWeight: 400 }} my={8}>
@@ -211,41 +248,48 @@ export const ProfileNotification = () => {
       {/*  <Typography fontWeight={400} color="#7A7A7A">21/2000 thông báo</Typography>*/}
       {/*</Box>*/}
       <Box mt={2} sx={{ textAlign: "right" }}>
-        <Button variant={"text"} sx={{ textTransform: "none", fontWeight: 400, pr: 0 }}>
+        <Button variant={"text"} sx={{ textTransform: "none", fontWeight: 400, pr: 0 }} onClick={handleSeenAllNotis}>
           Đánh dấu đã xem
         </Button>
       </Box>
-      <Box mt={1}>
-        {getNotificationsData?.length > 0 ? (
-          <PaginatedList rowsPerPage={5}>
-            {getNotificationsData.map((i, idx) =>
-              i?.link ? (
-                <Link href={i.link}>
+      {getNotificationsLoading ? (
+        <Box>Loading...</Box>
+      ) : (
+        <Box mt={1}>
+          {notiList?.length > 0 ? (
+            <PaginatedList rowsPerPage={5}>
+              {notiList.map((i, idx) => {
+                return i?.link ? (
+                  <Link key={idx} href={i.link}>
+                    <NotiCard
+                      id={i.id}
+                      title={i.title ?? "Place holder title"}
+                      date={i.created_at}
+                      content={i?.content ?? "Place holder content"}
+                      seen={i.is_seen}
+                      onClick={handleClickNoti}
+                    />
+                  </Link>
+                ) : (
                   <NotiCard
                     key={idx}
+                    id={i.id}
                     title={i.title ?? "Place holder title"}
                     date={i.created_at}
                     content={i?.content ?? "Place holder content"}
                     seen={i.is_seen}
+                    onClick={handleClickNoti}
                   />
-                </Link>
-              ) : (
-                <NotiCard
-                  key={idx}
-                  title={i.title ?? "Place holder title"}
-                  date={i.created_at}
-                  content={i?.content ?? "Place holder content"}
-                  seen={i.is_seen}
-                />
-              ),
-            )}
-          </PaginatedList>
-        ) : (
-          <Box>
-            <Typography>No notifications to display</Typography>
-          </Box>
-        )}
-      </Box>
+                );
+              })}
+            </PaginatedList>
+          ) : (
+            <Box>
+              <Typography>No notifications to display</Typography>
+            </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };

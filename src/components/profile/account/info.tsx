@@ -177,12 +177,10 @@ export default function InfoForm() {
   const dataFetched: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
 
   const { updateAccountInfo } = useUpdateAccountInfo();
-  if (loadingAccountInfo) return <Box>Loading...</Box>;
-  if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
 
   async function onSubmit(values: any) {
     // e.preventDefault();
-    updateAccountInfo({
+    await updateAccountInfo({
       variables: {
         input: values,
       },
@@ -190,6 +188,8 @@ export default function InfoForm() {
     });
   }
 
+  if (loadingAccountInfo) return <Box>Loading...</Box>;
+  if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} style={{ minHeight: 700 }}>
       <Grid container spacing={2}>
