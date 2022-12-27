@@ -1,7 +1,15 @@
 import { Box, Button, Typography } from "@mui/material";
 import ShareDialog from "./share_dialog";
 
-export default function InvestDetailHeader() {
+interface IProps {
+  title?: string;
+  rate?: number;
+  totalRate?: number;
+  address?: string;
+  favorites?: number;
+}
+
+export default function InvestDetailHeader(props: IProps) {
   return (
     <>
       <Box
@@ -12,7 +20,7 @@ export default function InvestDetailHeader() {
           mt: 6,
         }}
       >
-        <Typography variant="h2">Navaland Max</Typography>
+        <Typography variant="h2">{props.title}</Typography>
         <Button color="success" variant="contained" sx={{ ml: 6, textTransform: "none", fontWeight: 400, px: "12px" }}>
           Sinh lời
         </Button>
@@ -33,7 +41,7 @@ export default function InvestDetailHeader() {
         >
           <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" />
           <Typography variant="h5" ml="2px">
-            4
+            {props.rate}
           </Typography>
           <Box
             sx={{
@@ -46,10 +54,10 @@ export default function InvestDetailHeader() {
             }}
           />
           <Typography variant="h5" sx={{ display: ["none", "inherit"] }}>
-            120 Đánh giá
+            {props.totalRate} Đánh giá
           </Typography>
           <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"] }}>
-            2118 Thornridge Cir. Syracuse, Connecticut 35624
+            {props.address}
           </Typography>
         </Box>
         <Box
@@ -68,7 +76,7 @@ export default function InvestDetailHeader() {
             }}
             endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
           >
-            235
+            {props.favorites}
           </Button>
           {/* <Button
             variant="contained"
