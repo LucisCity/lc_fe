@@ -101,7 +101,13 @@ export function InvestDetailPage() {
               </Button>
             </Box>
             <Divider sx={{ mt: 4 }} />
-            {tabIdx === 0 ? <PitchTab /> : tabIdx === 1 ? <UpdatesTab /> : <InvestorTab />}
+            {tabIdx === 0 ? (
+              <PitchTab hightlight={detail?.hightlight} investReason={detail?.reason_invest} />
+            ) : tabIdx === 1 ? (
+              <UpdatesTab />
+            ) : (
+              <InvestorTab />
+            )}
           </Box>
           <Box>
             <InvestDetailNftCard />
