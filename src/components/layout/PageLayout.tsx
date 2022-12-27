@@ -15,7 +15,7 @@ type Props = {
 };
 export default function PageLayout(props: Props) {
   const { children, isShowHeader, isShowFooter, hasBottomNav } = props;
-  const router = useRouter();
+
   useEffect(() => {
     LayoutStore.setStateOrDefault({
       isShowHeader,
