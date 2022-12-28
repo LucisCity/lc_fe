@@ -94,8 +94,8 @@ export const ReferralTable = (props: ReferralTableProps) => {
           date: moment(item.referral_log?.created_at).format("DD MMM YYYY, h:mm") ?? "--/--/--",
           name: item.profile?.user_name ?? item.email ?? "no-email",
           type: item.referral_log?.type === ReferralType.Register ? "Đăng ký" : "Mua thẻ",
-          reward: `${item.reward}$`,
-          isClaim: item.referral_log?.isClaim ?? true,
+          reward: `$ ${item.reward}`,
+          isClaim: item.referral_log?.is_claim ?? true,
         };
       }) ?? []
     );

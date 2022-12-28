@@ -216,6 +216,8 @@ export type Query = {
   getNotifications?: Maybe<Array<NotificationGql>>;
   /** get OTP */
   getOneTimePassword: Scalars['String'];
+  /** get list transaction history */
+  getTransactionHistory?: Maybe<TransactionHistoryResponse>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -229,6 +231,12 @@ export type QueryGetNotificationsArgs = {
 
 export type QueryGetOneTimePasswordArgs = {
   address: Scalars['String'];
+};
+
+
+export type QueryGetTransactionHistoryArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
 };
 
 export type ReferralDataResponse = {
@@ -282,6 +290,12 @@ export type SubscriptionPushNotificationArgs = {
 
 export type SubscriptionUnseenNotificationsArgs = {
   userId: Scalars['String'];
+};
+
+export type TransactionHistoryResponse = {
+  __typename?: 'TransactionHistoryResponse';
+  count?: Maybe<Scalars['Int']>;
+  transactionHistory?: Maybe<Array<TransactionLog>>;
 };
 
 export type TransactionLog = {

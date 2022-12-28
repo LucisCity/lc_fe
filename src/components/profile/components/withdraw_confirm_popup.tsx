@@ -10,54 +10,51 @@ import { useWithdraw } from "../../../hooks/profile/use_withdraw";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
-import { useSnackbar } from "notistack";
-
-export default function WithdrawConfirmPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void }) {
   const { withdraw, isLoading } = useWithdraw();
-  const { enqueueSnackbar } = useSnackbar();
   const balance = UserStore.user?.wallet?.balance;
   const onWithdraw = async (data: any) => {
-    await withdraw(data.amount);
+    if (data.amount && data?.amount > Number(balance)) {
+      setError("amount", { type: "maxAmount", message: "Số lượng bạn nhập vượt quá số dư!" }, { shouldFocus: true });
+      return;
+    }
+    try {
+      await withdraw(data.amount);
+      onClose();
+    } catch (e) {
+      console.log(e);
+    }
   };
   const {
     register,
-    watch,
     handleSubmit,
     setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      amount: 0,
+      amount: balance,
     },
   });
 
-  React.useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === "amount" && value > Number(balance)) {
-        setError("amount", { type: "maxAmount", message: " Số lượng bạn nhập vượt quá số dư!" });
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
   return (
     <div>
-      <Dialog open={open} onClose={onClose} fullWidth>
+      <Dialog open={true} onClose={onClose} fullWidth maxWidth={"xs"} keepMounted={false}>
         <DialogTitle>Rút tiền về ví</DialogTitle>
         <form onSubmit={handleSubmit(onWithdraw)}>
           <DialogContent>
             <Typography mb={1}>Số lượng tiền:</Typography>
             <TextField
               {...register("amount", {
-                required: true,
+                required: "Số tiền không được bỏ trống!",
                 valueAsNumber: true,
               })}
               autoFocus
               fullWidth
               type={"number"}
               variant="outlined"
+              error={errors.amount?.type === "required" || errors.amount?.type === "maxAmount"}
+              helperText={(errors.amount?.message as string) ?? ""}
             />
-            {errors.amount && <span>This field is required</span>}
-            {errors.amount?.type === "maxAmount" && <span>{errors.amount.message}</span>}
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose}>Hủy</Button>

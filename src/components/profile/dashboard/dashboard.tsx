@@ -85,7 +85,8 @@ export const ProfileDashboard = () => {
   };
   return (
     <Box mx={{ sm: 10, xs: 3 }} my={7}>
-      <WithdrawConfirmPopup open={openPopup} onClose={() => setOpenPopup(false)} />
+      {openPopup && <WithdrawConfirmPopup onClose={() => setOpenPopup(false)} />}
+
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Typography fontWeight={700} fontSize={{ sm: 32, xs: 25 }} textAlign={{ sm: "left", xs: "center" }}>
           Dashboard

@@ -2,6 +2,7 @@ import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useAccount, useSignMessage } from "wagmi";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
+import { TransactionLog } from "../../gql/graphql";
 
 const GET_OTP = gql`
   query getOneTimePassword($address: String!) {
@@ -33,7 +34,7 @@ export const useWithdraw = () => {
 
   const [getOtp] = useLazyQuery<{ getOneTimePassword: string }>(GET_OTP);
 
-  const [withdrawMutation, { loading }] = useMutation(WITHDRAW_BALANCE, {
+  const [withdrawMutation, { loading }] = useMutation<{ withdrawBalance: TransactionLog }>(WITHDRAW_BALANCE, {
     onCompleted: (res) => {
       if (res?.withdrawBalance?.id) {
         enqueueSnackbar("Tiền của bạn đang được hệ thống xử lý. Đợi 1 - 2 phút để giao dịch được hoàn thành.", {
@@ -48,23 +49,30 @@ export const useWithdraw = () => {
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
   });
-  const { isLoading: isLoadingSignMessage, signMessageAsync: signMessageMetamask } = useSignMessage({
-    onError: () => {
-      enqueueSnackbar("Giao dịch cần chữ ký của bạn!", { variant: "error" });
-    },
-  });
+  const { isLoading: isLoadingSignMessage, signMessageAsync: signMessageMetamask } = useSignMessage();
 
   const withdraw = async (amount: number) => {
     const getOtpRes = await getOtp({ variables: { address: address } });
     if (getOtpRes.data?.getOneTimePassword) {
-      const signature = await signMessageMetamask({ message: getOtpRes.data?.getOneTimePassword });
-      await withdrawMutation({
+      let signature = "";
+      try {
+        signature = await signMessageMetamask({ message: getOtpRes.data?.getOneTimePassword });
+      } catch (e) {
+        enqueueSnackbar("Giao dịch cần chữ ký của bạn!", { variant: "error" });
+      }
+      if (!signature) {
+        throw new Error("sign message failed");
+      }
+      const withdrawRes = await withdrawMutation({
         variables: {
           address,
           amount: `${amount}`,
           signatureOTP: signature,
         },
       });
+      return {
+        transactionLog: withdrawRes.data?.withdrawBalance,
+      };
     }
   };
   return {
