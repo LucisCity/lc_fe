@@ -165,7 +165,6 @@ export type MutationWithdrawBalanceArgs = {
   address: Scalars['String'];
   amount: Scalars['String'];
   signatureOTP: Scalars['String'];
-  token: Scalars['String'];
 };
 
 export type Notification = {
@@ -211,7 +210,6 @@ export type Project = {
   enable: Scalars['Boolean'];
   ended?: Maybe<Scalars['Boolean']>;
   favorites?: Maybe<Scalars['Int']>;
-  hightlight: Scalars['String'];
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -220,7 +218,6 @@ export type Project = {
   profile?: Maybe<ProjectProfile>;
   profit_period: Scalars['Int'];
   rate?: Maybe<Scalars['Decimal']>;
-  reason_invest: Scalars['String'];
   take_profit_at: Scalars['DateTime'];
   title: Scalars['String'];
   total_rate?: Maybe<Scalars['Int']>;
@@ -243,7 +240,6 @@ export type ProjectGql = {
   address: Scalars['String'];
   ended?: Maybe<Scalars['Boolean']>;
   favorites?: Maybe<Scalars['Int']>;
-  hightlight: Scalars['String'];
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -252,7 +248,6 @@ export type ProjectGql = {
   profile: ProjectProfileGql;
   profit_period: Scalars['Int'];
   rate?: Maybe<Scalars['Decimal']>;
-  reason_invest: Scalars['String'];
   take_profit_at: Scalars['DateTime'];
   title: Scalars['String'];
   total_rate?: Maybe<Scalars['Int']>;
@@ -283,19 +278,23 @@ export type ProjectProfile = {
   __typename?: 'ProjectProfile';
   created_at: Scalars['DateTime'];
   events: Scalars['JSON'];
+  hightlight?: Maybe<Scalars['String']>;
   medias: Scalars['JSON'];
   offers: Scalars['JSON'];
   project: Project;
   project_id: Scalars['String'];
+  reason_invest?: Maybe<Scalars['String']>;
   updated_at: Scalars['DateTime'];
 };
 
 export type ProjectProfileGql = {
   __typename?: 'ProjectProfileGql';
   events?: Maybe<Array<ProjectEventGql>>;
+  hightlight?: Maybe<Scalars['String']>;
   medias?: Maybe<Array<ProjectMediaGql>>;
   offers?: Maybe<Array<ProjectOfferGql>>;
   project_id: Scalars['String'];
+  reason_invest?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -312,10 +311,10 @@ export type Query = {
   getNotifications?: Maybe<Array<NotificationGql>>;
   /** get OTP */
   getOneTimePassword: Scalars['String'];
-  /** get list transaction history */
-  getTransactionHistory?: Maybe<TransactionHistoryResponse>;
   /** Get list referral user */
   getProject: ProjectGql;
+  /** get list transaction history */
+  getTransactionHistory?: Maybe<TransactionHistoryResponse>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -329,6 +328,11 @@ export type QueryGetNotificationsArgs = {
 
 export type QueryGetOneTimePasswordArgs = {
   address: Scalars['String'];
+};
+
+
+export type QueryGetProjectArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -390,9 +394,16 @@ export type SubscriptionUnseenNotificationsArgs = {
   userId: Scalars['String'];
 };
 
+export type TransactionHistoryResponse = {
+  __typename?: 'TransactionHistoryResponse';
+  count?: Maybe<Scalars['Int']>;
+  transactionHistory?: Maybe<Array<TransactionLog>>;
+};
+
 export type TransactionLog = {
   __typename?: 'TransactionLog';
   amount: Scalars['Decimal'];
+  blockchain_transaction?: Maybe<BlockchainTransaction>;
   created_at: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
