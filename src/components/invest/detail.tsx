@@ -10,9 +10,11 @@ import InvestDetailSteper from "./components/detail/invest_detail_steper";
 import PitchTab from "./components/detail/pitch_tab";
 import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
+import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
+  const { detail } = useInvestDetail();
 
   return (
     <Box
@@ -31,8 +33,14 @@ export function InvestDetailPage() {
           margin: "0px auto",
         }}
       >
-        <InvestDetailHeader />
-        <InvestImageBox />
+        <InvestDetailHeader
+          title={detail?.title}
+          rate={detail?.rate}
+          totalRate={detail?.total_rate ?? 0}
+          address={detail?.address}
+          favorites={detail?.favorites ?? 0}
+        />
+        <InvestImageBox medias={detail?.profile.medias ?? []} location={detail?.location} address={detail?.address} />
         <InvestDetailSteper />
         <Box
           sx={{
@@ -93,7 +101,13 @@ export function InvestDetailPage() {
               </Button>
             </Box>
             <Divider sx={{ mt: 4 }} />
-            {tabIdx === 0 ? <PitchTab /> : tabIdx === 1 ? <UpdatesTab /> : <InvestorTab />}
+            {tabIdx === 0 ? (
+              <PitchTab hightlight={detail?.hightlight} investReason={detail?.reason_invest} />
+            ) : tabIdx === 1 ? (
+              <UpdatesTab />
+            ) : (
+              <InvestorTab />
+            )}
           </Box>
           <Box>
             <InvestDetailNftCard />

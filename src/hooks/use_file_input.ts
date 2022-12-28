@@ -127,7 +127,7 @@ export function useFileInput(allowEmpty = true, extendMode = false) {
     return false;
   };
 
-  function setPesudoFile(files: File[]) {
+  function setPseudoFile(files: File[]) {
     setValue(files);
   }
 
@@ -157,6 +157,6 @@ export function useFileInput(allowEmpty = true, extendMode = false) {
     previews,
     setPreviews,
     totalSize,
-    setPesudoFile,
+    setPseudoFile,
   };
 }

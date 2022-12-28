@@ -12,6 +12,7 @@ export type Scalars = {
   Float: number;
   DateTime: any;
   Decimal: any;
+  JSON: any;
 };
 
 export type AccountInfo = {
@@ -164,6 +165,7 @@ export type MutationWithdrawBalanceArgs = {
   address: Scalars['String'];
   amount: Scalars['String'];
   signatureOTP: Scalars['String'];
+  token: Scalars['String'];
 };
 
 export type Notification = {
@@ -202,6 +204,100 @@ export type ProfileGql = {
   user_name?: Maybe<Scalars['String']>;
 };
 
+export type Project = {
+  __typename?: 'Project';
+  address: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  enable: Scalars['Boolean'];
+  ended?: Maybe<Scalars['Boolean']>;
+  favorites?: Maybe<Scalars['Int']>;
+  hightlight: Scalars['String'];
+  id: Scalars['ID'];
+  location: Scalars['String'];
+  open_sale_at: Scalars['DateTime'];
+  policy_link: Scalars['String'];
+  price: Scalars['Int'];
+  profile?: Maybe<ProjectProfile>;
+  profit_period: Scalars['Int'];
+  rate?: Maybe<Scalars['Decimal']>;
+  reason_invest: Scalars['String'];
+  take_profit_at: Scalars['DateTime'];
+  title: Scalars['String'];
+  total_rate?: Maybe<Scalars['Int']>;
+  updated_at: Scalars['DateTime'];
+  wait_transfer_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProjectEventGql = {
+  __typename?: 'ProjectEventGql';
+  /** Event description */
+  description: Scalars['String'];
+  /** Event start time */
+  start_at: Scalars['String'];
+  /** Event title */
+  title: Scalars['String'];
+};
+
+export type ProjectGql = {
+  __typename?: 'ProjectGql';
+  address: Scalars['String'];
+  ended?: Maybe<Scalars['Boolean']>;
+  favorites?: Maybe<Scalars['Int']>;
+  hightlight: Scalars['String'];
+  id: Scalars['ID'];
+  location: Scalars['String'];
+  open_sale_at: Scalars['DateTime'];
+  policy_link: Scalars['String'];
+  price: Scalars['Int'];
+  profile: ProjectProfileGql;
+  profit_period: Scalars['Int'];
+  rate?: Maybe<Scalars['Decimal']>;
+  reason_invest: Scalars['String'];
+  take_profit_at: Scalars['DateTime'];
+  title: Scalars['String'];
+  total_rate?: Maybe<Scalars['Int']>;
+  wait_transfer_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProjectMediaGql = {
+  __typename?: 'ProjectMediaGql';
+  /** Height of image */
+  height: Scalars['Int'];
+  /** Thumbnail url */
+  thumbnail?: Maybe<Scalars['String']>;
+  /** Media url */
+  url: Scalars['String'];
+  /** Width of image */
+  width: Scalars['Int'];
+};
+
+export type ProjectOfferGql = {
+  __typename?: 'ProjectOfferGql';
+  /** Icon */
+  icon: Scalars['String'];
+  /** Title */
+  title: Scalars['String'];
+};
+
+export type ProjectProfile = {
+  __typename?: 'ProjectProfile';
+  created_at: Scalars['DateTime'];
+  events: Scalars['JSON'];
+  medias: Scalars['JSON'];
+  offers: Scalars['JSON'];
+  project: Project;
+  project_id: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+};
+
+export type ProjectProfileGql = {
+  __typename?: 'ProjectProfileGql';
+  events?: Maybe<Array<ProjectEventGql>>;
+  medias?: Maybe<Array<ProjectMediaGql>>;
+  offers?: Maybe<Array<ProjectOfferGql>>;
+  project_id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   /** get unseen notis count */
@@ -218,6 +314,8 @@ export type Query = {
   getOneTimePassword: Scalars['String'];
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
+  /** Get list referral user */
+  getProject: ProjectGql;
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -292,16 +390,9 @@ export type SubscriptionUnseenNotificationsArgs = {
   userId: Scalars['String'];
 };
 
-export type TransactionHistoryResponse = {
-  __typename?: 'TransactionHistoryResponse';
-  count?: Maybe<Scalars['Int']>;
-  transactionHistory?: Maybe<Array<TransactionLog>>;
-};
-
 export type TransactionLog = {
   __typename?: 'TransactionLog';
   amount: Scalars['Decimal'];
-  blockchain_transaction?: Maybe<BlockchainTransaction>;
   created_at: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];

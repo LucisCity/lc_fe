@@ -3,8 +3,26 @@ import Box from "@mui/material/Box";
 import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import MapDialog from "./map_dialog";
+import { ProjectMediaGql } from "../../../../gql/graphql";
+import { Skeleton } from "@mui/material";
 
-export default function InvestImageBox() {
+interface IProps {
+  medias?: ProjectMediaGql[];
+  location?: string;
+  address?: string;
+}
+export default function InvestImageBox(props: IProps) {
+  if (!props.medias || props.medias.length === 0) {
+    return <Skeleton variant="rectangular" width="100%" height="432px" sx={{ mt: 4 }} />;
+  }
+  const latlong = props.location?.split(",");
+  let lat = 0;
+  let long = 0;
+  if (latlong && latlong.length > 1) {
+    lat = Number(latlong[0]);
+    long = Number(latlong[1].trim());
+  }
+
   return (
     <Gallery>
       <Box
@@ -16,109 +34,34 @@ export default function InvestImageBox() {
           position: "relative",
         }}
       >
-        <Item
-          original="/assets/imgs/invest/imgs/img_galaxy_demo1.png"
-          thumbnail="/assets/imgs/invest/imgs/img_galaxy_demo1.png"
-          width="564"
-          height="434"
-          alt="Photo of seashore by Folkert Gorter"
-        >
-          {({ ref, open }) => (
-            <Box
-              component="img"
-              src="/assets/imgs/invest/imgs/img_galaxy_demo1.png"
-              sx={{
-                gridColumn: ["1", "1/span 2"],
-                gridRow: ["1", "1/span 2"],
-                width: "100%",
-                height: "100%",
-              }}
-              ref={ref as React.MutableRefObject<HTMLImageElement>}
-              onClick={open}
-            />
-          )}
-        </Item>
-        <Item
-          original="/assets/imgs/invest/imgs/img_galaxy_demo2.png"
-          thumbnail="/assets/imgs/invest/imgs/img_galaxy_demo2.png"
-          width="290"
-          height="210"
-          alt="Photo of seashore by Folkert Gorter"
-        >
-          {({ ref, open }) => (
-            <Box
-              component="img"
-              src="/assets/imgs/invest/imgs/img_galaxy_demo2.png"
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-              ref={ref as React.MutableRefObject<HTMLImageElement>}
-              onClick={open}
-            />
-          )}
-        </Item>
-        <Item
-          original="/assets/imgs/invest/imgs/img_galaxy_demo3.png"
-          thumbnail="/assets/imgs/invest/imgs/img_galaxy_demo3.png"
-          width="290"
-          height="210"
-          alt="Photo of seashore by Folkert Gorter"
-        >
-          {({ ref, open }) => (
-            <Box
-              component="img"
-              src="/assets/imgs/invest/imgs/img_galaxy_demo3.png"
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-              ref={ref as React.MutableRefObject<HTMLImageElement>}
-              onClick={open}
-            />
-          )}
-        </Item>
-        <Item
-          original="/assets/imgs/invest/imgs/img_galaxy_demo4.png"
-          thumbnail="/assets/imgs/invest/imgs/img_galaxy_demo4.png"
-          width="290"
-          height="210"
-          alt="Photo of seashore by Folkert Gorter"
-        >
-          {({ ref, open }) => (
-            <Box
-              component="img"
-              src="/assets/imgs/invest/imgs/img_galaxy_demo4.png"
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-              ref={ref as React.MutableRefObject<HTMLImageElement>}
-              onClick={open}
-            />
-          )}
-        </Item>
-        <Item
-          original="/assets/imgs/invest/imgs/img_galaxy_demo5.png"
-          thumbnail="/assets/imgs/invest/imgs/img_galaxy_demo5.png"
-          width="290"
-          height="220"
-          alt="Photo of seashore by Folkert Gorter"
-        >
-          {({ ref, open }) => (
-            <Box
-              component="img"
-              src="/assets/imgs/invest/imgs/img_galaxy_demo5.png"
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-              ref={ref as React.MutableRefObject<HTMLImageElement>}
-              onClick={open}
-            />
-          )}
-        </Item>
-        <MapDialog />
+        {props.medias?.map((item, idx) => {
+          return (
+            <Item
+              key={`media_${item.url}`}
+              original={item.url}
+              thumbnail={item.thumbnail ?? item.url}
+              width={item.width}
+              height={item.height}
+              alt="Project media"
+            >
+              {({ ref, open }) => (
+                <Box
+                  component="img"
+                  src={item.url}
+                  sx={{
+                    gridColumn: idx === 0 ? ["1", "1/span 2"] : "auto",
+                    gridRow: idx === 0 ? ["1", "1/span 2"] : "auto",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  ref={ref as React.MutableRefObject<HTMLImageElement>}
+                  onClick={open}
+                />
+              )}
+            </Item>
+          );
+        })}
+        {lat > 0 && long > 0 ? <MapDialog lat={lat} long={long} address={props.address} /> : null}
       </Box>
     </Gallery>
   );
