@@ -5,13 +5,15 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Typography } from "@mui/material";
+import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useWithdraw } from "../../../hooks/profile/use_withdraw";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
+import TransactionHistoryStore from "../../../store/transaction_history.store";
+
 export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void }) {
-  const { withdraw, isLoading } = useWithdraw();
+  const { withdraw, isLoading, activeStep } = useWithdraw();
   const balance = UserStore.user?.wallet?.balance;
   const onWithdraw = async (data: any) => {
     if (data.amount && data?.amount > Number(balance)) {
@@ -19,7 +21,8 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
       return;
     }
     try {
-      await withdraw(data.amount);
+      const res = await withdraw(data.amount);
+      TransactionHistoryStore.setNewTransaction(res?.transactionLog);
       onClose();
     } catch (e) {
       console.log(e);
@@ -38,12 +41,13 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
 
   return (
     <div>
-      <Dialog open={true} onClose={onClose} fullWidth maxWidth={"xs"} keepMounted={false}>
+      <Dialog open={true} fullWidth maxWidth={"xs"} keepMounted={false}>
         <DialogTitle>Rút tiền về ví</DialogTitle>
         <form onSubmit={handleSubmit(onWithdraw)}>
           <DialogContent>
             <Typography mb={1}>Số lượng tiền:</Typography>
             <TextField
+              sx={{ mb: 4 }}
               {...register("amount", {
                 required: "Số tiền không được bỏ trống!",
                 valueAsNumber: true,
@@ -55,9 +59,22 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
               error={errors.amount?.type === "required" || errors.amount?.type === "maxAmount"}
               helperText={(errors.amount?.message as string) ?? ""}
             />
+            <Stepper activeStep={activeStep} alternativeLabel>
+              <Step>
+                <StepLabel>Nhập số lượng</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Ký giao dịch</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Rút tiền</StepLabel>
+              </Step>
+            </Stepper>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose}>Hủy</Button>
+            <Button disabled={isLoading} onClick={onClose}>
+              Hủy
+            </Button>
             <LoadingButton type={"submit"} loading={isLoading} variant={"contained"}>
               Xác nhận
             </LoadingButton>

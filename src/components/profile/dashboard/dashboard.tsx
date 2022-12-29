@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Box } from "@mui/system";
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import DashboardTable from "./dashboard_table";
@@ -8,7 +7,6 @@ import SvgIcon from "../../common/svg_icon";
 import UserStore from "../../../store/user.store";
 import { formatCurrency } from "../../../utils/number.util";
 import WithdrawConfirmPopup from "../components/withdraw_confirm_popup";
-import { useWithdraw } from "../../../hooks/profile/use_withdraw";
 
 const iconSrc = "/assets/imgs/icon/";
 
