@@ -3,11 +3,16 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import SvgIcon from "../../common/svg_icon";
 import { InputUnstyled } from "@mui/base";
+import { FileUpload, useUserKyc } from "../../../hooks/profile/account/use_kyc";
 
 interface VerifyBoxProps {
+  fieldName: string;
   title: string;
   instruction: string;
   imgDesc: string;
+  handleSelectFile: (file: FileUpload) => void;
+  imageUrl?: string;
+  disabled?: boolean;
 }
 
 const VerifyBox = (props: VerifyBoxProps) => {
@@ -35,27 +40,9 @@ const VerifyBox = (props: VerifyBoxProps) => {
       return;
     }
 
-    setSelectedFile(files[0]);
+    setSelectedFile(files?.[0]);
+    props.handleSelectFile({ fieldName: props.fieldName, file: files?.[0] });
   };
-
-  // const onFileUpload = () => {
-  //
-  //   // Create an object of formData
-  //   const formData = new FormData();
-  //
-  //   // Update the formData object
-  //   formData.append(
-  //     "myFile",
-  //     selectedFile,
-  //   );
-  //
-  //   // Details of the uploaded file
-  //   console.log(selectedFile);
-  //
-  //   // Request made to the backend api
-  //   // Send formData object
-  //   axios.post("api/uploadfile", formData);
-  // };
 
   return (
     <Box
@@ -99,7 +86,10 @@ const VerifyBox = (props: VerifyBoxProps) => {
           }}
         >
           {selectedFile && (
-            <img src={preview} style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }} />
+            <img
+              src={props.disabled ? props.imageUrl : preview}
+              style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }}
+            />
           )}
           <label
             style={{
@@ -110,7 +100,12 @@ const VerifyBox = (props: VerifyBoxProps) => {
               height: "100%",
             }}
           >
-            <InputUnstyled type="file" onChange={onSelectFile} />
+            <input
+              type="file"
+              onChange={onSelectFile}
+              disabled={props.disabled}
+              accept="image/png, image/jpeg, image/jpeg"
+            />
           </label>
           <Box
             p={5}
@@ -138,18 +133,21 @@ const VerifyBox = (props: VerifyBoxProps) => {
   );
 };
 
-const verifyBoxes: VerifyBoxProps[] = [
+const verifyBoxes = [
   {
+    fieldName: "front_id",
     title: "Mặt trước thẻ CCCD/CMTND",
     imgDesc: "Ảnh mặt trước thẻ CCCD/CMTND",
     instruction: "Chụp ảnh mặt trước thẻ CCCD/CMT rõ ràng không bị chay, quăn mép, mờ chữ & hình ảnh",
   },
   {
+    fieldName: "back_id",
     title: "Mặt sau thẻ CCCD/CMTND",
     imgDesc: "Ảnh mặt sau thẻ CCCD/CMTND",
     instruction: "Chụp ảnh mặt sau thẻ CCCD/CMT rõ ràng không bị chay, quăn mép, mờ chữ & hình ảnh",
   },
   {
+    fieldName: "holding_id",
     title: "Ảnh chân dung cầm thẻ CCCD/CMTND mặt trước",
     imgDesc: "Ảnh người cầm thẻ CCCD/CMTND",
     instruction:
@@ -158,7 +156,33 @@ const verifyBoxes: VerifyBoxProps[] = [
   },
 ];
 
+type VerifyState = "NONE" | "SUCCESS" | "FAILED" | "PENDING";
+
 export default function Verification() {
+  const { data, error, loading, uploadImages } = useUserKyc();
+
+  // console.log(`data ${JSON.stringify(data)}`);
+  const [selectedFiles, setSelectedFiles] = React.useState<FileUpload[]>([]);
+  const [verification, setVerification] = React.useState<VerifyState>("NONE");
+  // console.log(`verification ${data["front_id"]}`);
+  React.useEffect(() => {
+    if (data?.status) {
+      setVerification(data?.status);
+    }
+  }, [verification]);
+
+  // console.log(`selectedFiles length ${JSON.stringify(selectedFiles)}`);
+  const handleSelectFile = (file: FileUpload) => {
+    setSelectedFiles([...selectedFiles, file]);
+  };
+
+  const handleUploadFiles = async () => {
+    const success = await uploadImages(selectedFiles);
+    if (success) {
+      setVerification("PENDING");
+    }
+  };
+
   return (
     <Box color={"#9A9A9A"} fontWeight={400} fontSize={16}>
       <Typography sx={{ mt: 5, mb: 8 }} lineHeight={"18.75px"}>
@@ -168,13 +192,26 @@ export default function Verification() {
       <Grid container spacing={5}>
         {verifyBoxes.map((i, idx) => (
           <Grid key={idx} item md={6} xs={12}>
-            <VerifyBox title={i.title} instruction={i.instruction} imgDesc={i.imgDesc} />
+            <VerifyBox
+              title={i.title}
+              instruction={i.instruction}
+              imgDesc={i.imgDesc}
+              fieldName={i.fieldName}
+              handleSelectFile={handleSelectFile}
+              imageUrl={data ? data[i.fieldName] : null}
+              disabled={!!data}
+            />
           </Grid>
         ))}
       </Grid>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} pt={11}>
         <Typography pb={5}>Thời gian xác minh danh tính có thể kéo dài 1 - 2 ngày.</Typography>
-        <Button variant="contained">Xác minh danh tính</Button>
+        {verification === "NONE" && (
+          <Button variant="contained" onClick={handleUploadFiles}>
+            Xác minh danh tính
+          </Button>
+        )}
+        {verification === "PENDING" && <Button variant="outlined">Đang xử lý</Button>}
       </Box>
     </Box>
   );
