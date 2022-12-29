@@ -6,8 +6,13 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Box, Typography } from "@mui/material";
+import { ProjectEventGql } from "../../../../gql/graphql";
+import { formatDate } from "../../../../utils/date.util";
 
-export default function UpdatesTab() {
+interface IProps {
+  events?: ProjectEventGql[];
+}
+export default function UpdatesTab({ events }: IProps) {
   return (
     <Box
       sx={{
@@ -16,14 +21,16 @@ export default function UpdatesTab() {
       }}
     >
       <Timeline sx={{ p: 0 }}>
-        <Pharse
-          time={`17 Oct, \n2020`}
-          title="Deserunt ullamco est sit aliqua dolor"
-          content="Tầm view đẹp nhất: đối diện công viên ánh sáng 36 hecta, 
-          khu biệt thự thấp tầng Mannhattan, bến du thuyền, sông Tắc và cả sông Đồng Nai.
-          Không gian tựa resort nghỉ dưỡng 5 sao, xanh mát, rộng rãi, kiến trúc sang trọng – độc đáo – khác biệt."
-        />
-        <Pharse
+        {events?.map((item, idx) => (
+          <Pharse
+            key={`timeline_${item.start_at}`}
+            time={formatDate(item.start_at, "dd MMM,  yyyy").split("  ").join("\n")}
+            title={item.title}
+            content={item.description}
+          />
+        ))}
+
+        {/* <Pharse
           time={`22 Oct, \n2020`}
           title="Deserunt ullamco est sit aliqua dolor"
           content="Tầm view đẹp nhất: đối diện công viên ánh sáng 36 hecta, 
@@ -52,7 +59,7 @@ export default function UpdatesTab() {
           content="Tầm view đẹp nhất: đối diện công viên ánh sáng 36 hecta, 
           khu biệt thự thấp tầng Mannhattan, bến du thuyền, sông Tắc và cả sông Đồng Nai.
           Không gian tựa resort nghỉ dưỡng 5 sao, xanh mát, rộng rãi, kiến trúc sang trọng – độc đáo – khác biệt."
-        />
+        /> */}
         <Pharse time={``} title="" content="" isEnd />
       </Timeline>
     </Box>
@@ -80,9 +87,14 @@ function Pharse({ isEnd, time, title, content }: { isEnd?: boolean; time: string
               display: "flex",
             }}
           >
-            <Typography variant="h5" whiteSpace="pre-line" lineHeight="18px">
-              {time}
-            </Typography>
+            <Typography
+              variant="h5"
+              whiteSpace="pre-line"
+              lineHeight="18px"
+              dangerouslySetInnerHTML={{ __html: time }}
+            />
+            {/* {time} */}
+            {/* </Typography> */}
             <Box sx={{ flex: 1, ml: ["24px", "43px"] }}>
               <Typography variant="h3">{title}</Typography>
               <Typography variant="h5" mt="8px">

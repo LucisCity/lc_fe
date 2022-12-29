@@ -1,5 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
-import Router from "next/router";
+import { gql, useQuery } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { ProjectGql } from "../../../gql/graphql";
@@ -16,8 +15,6 @@ const PROJECT_DETAIL_QUERY = gql`
       rate
       total_rate
       favorites
-      hightlight
-      reason_invest
       policy_link
       open_sale_at
       take_profit_at
@@ -26,6 +23,8 @@ const PROJECT_DETAIL_QUERY = gql`
       profit_period
       profile {
         project_id
+        hightlight
+        reason_invest
         medias {
           url
           width
@@ -51,7 +50,7 @@ export default function useInvestDetail() {
 
   const detail = useQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {
-      id: "clc5tky660000qake0yhoeco2",
+      id: "clc7go3x70000qa60c7otv2i8",
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);

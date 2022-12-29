@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDownload } from "../../hooks/use_download";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
 import InvestImageBox from "./components/detail/image_box";
@@ -15,6 +16,7 @@ import useInvestDetail from "./hooks/use_detail";
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
   const { detail } = useInvestDetail();
+  const { download } = useDownload();
 
   return (
     <Box
@@ -102,9 +104,13 @@ export function InvestDetailPage() {
             </Box>
             <Divider sx={{ mt: 4 }} />
             {tabIdx === 0 ? (
-              <PitchTab hightlight={detail?.hightlight} investReason={detail?.reason_invest} />
+              <PitchTab
+                hightlight={detail?.profile?.hightlight ?? ""}
+                investReason={detail?.profile?.reason_invest ?? ""}
+                offers={detail?.profile.offers ?? []}
+              />
             ) : tabIdx === 1 ? (
-              <UpdatesTab />
+              <UpdatesTab events={detail?.profile.events ?? []} />
             ) : (
               <InvestorTab />
             )}
@@ -125,6 +131,12 @@ export function InvestDetailPage() {
                 width: "100%",
                 mt: "20px",
                 color: "#6555EE",
+              }}
+              onClick={() => {
+                if (!detail?.policy_link) {
+                  return;
+                }
+                download(detail.policy_link, "policy.png");
               }}
             >
               Giấy tờ sử dụng nhà đất.PDF

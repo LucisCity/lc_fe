@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material";
+import { ProjectOfferGql } from "../../../../gql/graphql";
 import PlaceOfferSection from "./place_offers";
 
 interface IProps {
   hightlight?: string;
   investReason?: string;
+  offers?: ProjectOfferGql[];
 }
 export default function PitchTab(props: IProps) {
   return (
@@ -15,7 +17,7 @@ export default function PitchTab(props: IProps) {
         <Typography variant="h5" mt={6}>
           {props.hightlight}
         </Typography>
-        <PlaceOfferSection />
+        <PlaceOfferSection offers={props.offers ?? []} />
       </Box>
       <Box>
         <Typography variant="h3" mt={8}>

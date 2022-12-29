@@ -7,9 +7,12 @@ interface IProps {
   totalRate?: number;
   address?: string;
   favorites?: number;
+  takeProfitStartTime?: string;
 }
 
 export default function InvestDetailHeader(props: IProps) {
+  // const takeProfitStartTime = props.take_profit_start_time != null ? new Date(props.take_profit_start_time) : null;
+
   return (
     <>
       <Box
@@ -21,9 +24,15 @@ export default function InvestDetailHeader(props: IProps) {
         }}
       >
         <Typography variant="h2">{props.title}</Typography>
-        <Button color="success" variant="contained" sx={{ ml: 6, textTransform: "none", fontWeight: 400, px: "12px" }}>
-          Sinh lời
-        </Button>
+        {props.takeProfitStartTime && new Date() > new Date(props.takeProfitStartTime) ? (
+          <Button
+            color="success"
+            variant="contained"
+            sx={{ ml: 6, textTransform: "none", fontWeight: 400, px: "12px" }}
+          >
+            Sinh lời
+          </Button>
+        ) : null}
       </Box>
       <Box
         sx={{
