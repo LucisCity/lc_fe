@@ -220,10 +220,15 @@ export default function Verification() {
 
   // console.log(`selectedFiles length ${JSON.stringify(selectedFiles)}`);
   const handleSelectFile = (file: FileUpload) => {
-    setSelectedFiles([...selectedFiles, file]);
+    if (selectedFiles.length >= 3) {
+      setSelectedFiles([...selectedFiles.slice(-2), file]);
+    } else {
+      setSelectedFiles([...selectedFiles, file]);
+    }
   };
 
   const handleUploadFiles = async () => {
+    // console.log(`selectedFiles ${selectedFiles}`);
     const success = await uploadImages(selectedFiles);
     if (success) {
       setPendingStatus(true);

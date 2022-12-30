@@ -28,7 +28,7 @@ export function useUserKyc() {
   const uploadImages = async (input: FileUpload[]): Promise<boolean> => {
     // Create an object of formData
     const formData = new FormData();
-
+    let success = false;
     input.forEach((i) => {
       // console.log(i.file);
       formData.append(i.fieldName, i.file);
@@ -38,7 +38,7 @@ export function useUserKyc() {
     // Send formData object
     const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
     if (graphqlUrl) {
-      const postUrl = graphqlUrl.substring(0, graphqlUrl.lastIndexOf("/")) + "/upload/kyc_imgs";
+      const postUrl = graphqlUrl.substring(0, graphqlUrl.lastIndexOf("/")) + "/upload/kyc";
       // console.log(`postUrl ${postUrl}`);
       await axios
         .post(postUrl, formData, {
@@ -50,6 +50,7 @@ export function useUserKyc() {
         .then((res) => {
           if (res?.data) {
             enqueueSnackbar("Xác minh thành công", { variant: "success" });
+            success = true;
           }
         })
         .catch((err) => {
@@ -57,7 +58,7 @@ export function useUserKyc() {
         });
     }
 
-    return true;
+    return success;
   };
 
   return {
