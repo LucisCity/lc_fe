@@ -18,17 +18,14 @@ export type Scalars = {
 export type AccountInfo = {
   __typename?: 'AccountInfo';
   date_of_birth?: Maybe<Scalars['DateTime']>;
-  display_name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   family_name?: Maybe<Scalars['String']>;
   given_name?: Maybe<Scalars['String']>;
-  user_id: Scalars['ID'];
   user_name?: Maybe<Scalars['String']>;
 };
 
 export type AccountInfoUpdateInput = {
   date_of_birth?: InputMaybe<Scalars['DateTime']>;
-  display_name?: InputMaybe<Scalars['String']>;
   family_name?: InputMaybe<Scalars['String']>;
   given_name?: InputMaybe<Scalars['String']>;
   user_name?: InputMaybe<Scalars['String']>;
@@ -52,6 +49,12 @@ export type BlockchainTransaction = {
   tx_hash: Scalars['String'];
   updated_at: Scalars['DateTime'];
 };
+
+export enum KycStatus {
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Success = 'SUCCESS'
+}
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -78,10 +81,14 @@ export type Mutation = {
   sendTransaction: Scalars['Boolean'];
   /** set pool wallet */
   setPoolWallet: Scalars['Boolean'];
+  /** Vote project */
+  togleFollowProject?: Maybe<Scalars['Boolean']>;
   /** update account info */
-  updateAccountInfo?: Maybe<Scalars['Boolean']>;
+  updateAccountInfo?: Maybe<ProfileGql>;
   /** Verify email */
   verifyEmail: Scalars['String'];
+  /** Vote project */
+  voteProject?: Maybe<Scalars['Boolean']>;
   /** withdraw balance */
   withdrawBalance: TransactionLog;
 };
@@ -151,6 +158,11 @@ export type MutationSetPoolWalletArgs = {
 };
 
 
+export type MutationTogleFollowProjectArgs = {
+  projectId: Scalars['String'];
+};
+
+
 export type MutationUpdateAccountInfoArgs = {
   input: AccountInfoUpdateInput;
 };
@@ -158,6 +170,11 @@ export type MutationUpdateAccountInfoArgs = {
 
 export type MutationVerifyEmailArgs = {
   token: Scalars['String'];
+};
+
+
+export type MutationVoteProjectArgs = {
+  input: RateProjectInput;
 };
 
 
@@ -209,7 +226,6 @@ export type Project = {
   created_at: Scalars['DateTime'];
   enable: Scalars['Boolean'];
   ended?: Maybe<Scalars['Boolean']>;
-  favorites?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -217,10 +233,8 @@ export type Project = {
   price: Scalars['Int'];
   profile?: Maybe<ProjectProfile>;
   profit_period: Scalars['Int'];
-  rate?: Maybe<Scalars['Decimal']>;
   take_profit_at: Scalars['DateTime'];
   title: Scalars['String'];
-  total_rate?: Maybe<Scalars['Int']>;
   updated_at: Scalars['DateTime'];
   wait_transfer_at?: Maybe<Scalars['DateTime']>;
 };
@@ -239,7 +253,6 @@ export type ProjectGql = {
   __typename?: 'ProjectGql';
   address: Scalars['String'];
   ended?: Maybe<Scalars['Boolean']>;
-  favorites?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -247,10 +260,8 @@ export type ProjectGql = {
   price: Scalars['Int'];
   profile: ProjectProfileGql;
   profit_period: Scalars['Int'];
-  rate?: Maybe<Scalars['Decimal']>;
   take_profit_at: Scalars['DateTime'];
   title: Scalars['String'];
-  total_rate?: Maybe<Scalars['Int']>;
   wait_transfer_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -278,23 +289,29 @@ export type ProjectProfile = {
   __typename?: 'ProjectProfile';
   created_at: Scalars['DateTime'];
   events: Scalars['JSON'];
+  follows: Scalars['Int'];
   hightlight?: Maybe<Scalars['String']>;
   medias: Scalars['JSON'];
-  offers: Scalars['JSON'];
+  offers?: Maybe<Scalars['String']>;
   project: Project;
   project_id: Scalars['String'];
   reason_invest?: Maybe<Scalars['String']>;
+  total_vote: Scalars['Int'];
   updated_at: Scalars['DateTime'];
+  vote: Scalars['Decimal'];
 };
 
 export type ProjectProfileGql = {
   __typename?: 'ProjectProfileGql';
   events?: Maybe<Array<ProjectEventGql>>;
+  follows: Scalars['Int'];
   hightlight?: Maybe<Scalars['String']>;
   medias?: Maybe<Array<ProjectMediaGql>>;
   offers?: Maybe<Array<ProjectOfferGql>>;
   project_id: Scalars['String'];
   reason_invest?: Maybe<Scalars['String']>;
+  total_vote: Scalars['Int'];
+  vote: Scalars['Decimal'];
 };
 
 export type Query = {
@@ -305,6 +322,8 @@ export type Query = {
   getAccountInfo?: Maybe<AccountInfo>;
   /** get balance */
   getBalance: Wallet;
+  /** get kyc verification images */
+  getKycImages?: Maybe<UserKycVerification>;
   /** Get list referral user */
   getListReferralUser: Array<ReferralDataResponse>;
   /** get all notis */
@@ -315,6 +334,7 @@ export type Query = {
   getProject: ProjectGql;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
+  isVoted: Scalars['Boolean'];
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -341,6 +361,16 @@ export type QueryGetTransactionHistoryArgs = {
   take?: InputMaybe<Scalars['Int']>;
 };
 
+
+export type QueryIsVotedArgs = {
+  projectId: Scalars['String'];
+};
+
+export type RateProjectInput = {
+  projectId: Scalars['String'];
+  value: Scalars['Float'];
+};
+
 export type ReferralDataResponse = {
   __typename?: 'ReferralDataResponse';
   _count: UserCount;
@@ -350,6 +380,7 @@ export type ReferralDataResponse = {
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   invited_by?: Maybe<Scalars['String']>;
+  kyc_verification?: Maybe<Array<UserKycVerification>>;
   notification?: Maybe<Array<Notification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
@@ -450,6 +481,7 @@ export type User = {
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   invited_by?: Maybe<Scalars['String']>;
+  kyc_verification?: Maybe<Array<UserKycVerification>>;
   notification?: Maybe<Array<Notification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
@@ -463,6 +495,7 @@ export type User = {
 
 export type UserCount = {
   __typename?: 'UserCount';
+  kyc_verification: Scalars['Int'];
   notification: Scalars['Int'];
 };
 
@@ -471,11 +504,25 @@ export type UserGql = {
   _count: UserCount;
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  kyc_verification?: Maybe<Array<UserKycVerification>>;
   notification?: Maybe<Array<Notification>>;
   profile: ProfileGql;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
   wallet?: Maybe<Wallet>;
+};
+
+export type UserKycVerification = {
+  __typename?: 'UserKycVerification';
+  back_id: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  front_id: Scalars['String'];
+  holding_id: Scalars['String'];
+  id: Scalars['ID'];
+  status: KycStatus;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  user_id: Scalars['String'];
 };
 
 export type UserProfile = {

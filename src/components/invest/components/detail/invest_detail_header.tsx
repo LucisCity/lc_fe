@@ -1,13 +1,15 @@
 import { Box, Button, Typography } from "@mui/material";
+import VoteMenu from "./vote_menu";
 import ShareDialog from "./share_dialog";
 
 interface IProps {
   title?: string;
-  rate?: number;
-  totalRate?: number;
+  vote?: number;
+  totalVote?: number;
   address?: string;
-  favorites?: number;
+  follows?: number;
   takeProfitStartTime?: string;
+  toggleFollow?: () => void;
 }
 
 export default function InvestDetailHeader(props: IProps) {
@@ -48,9 +50,11 @@ export default function InvestDetailHeader(props: IProps) {
             alignItems: "center",
           }}
         >
-          <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" />
+          {/* <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" /> */}
+          <VoteMenu />
+
           <Typography variant="h5" ml="2px">
-            {props.rate}
+            {props.vote ?? 0}
           </Typography>
           <Box
             sx={{
@@ -63,7 +67,7 @@ export default function InvestDetailHeader(props: IProps) {
             }}
           />
           <Typography variant="h5" sx={{ display: ["none", "inherit"] }}>
-            {props.totalRate} Đánh giá
+            {props.totalVote} Đánh giá
           </Typography>
           <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"] }}>
             {props.address}
@@ -84,8 +88,9 @@ export default function InvestDetailHeader(props: IProps) {
               width: "84px",
             }}
             endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
+            onClick={props.toggleFollow}
           >
-            {props.favorites}
+            {props.follows}
           </Button>
           {/* <Button
             variant="contained"

@@ -163,6 +163,7 @@ const fields: InfoField[] = [
 const placeHolderData: AccountInfo = {
   email: "hiep@example.com", // eslint-disable-line
   date_of_birth: new Date(), // eslint-disable-line
+  //@ts-ignore
   display_name: "Display Name", // eslint-disable-line
   family_name: "Family Name", // eslint-disable-line
   user_name: "username", // eslint-disable-line
