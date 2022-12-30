@@ -15,6 +15,7 @@ import moment from "moment/moment";
 import { TransactionStatus } from "../../../gql/graphql";
 import TransactionHistoryStore from "../../../store/transaction_history.store";
 import { observer } from "mobx-react-lite";
+import { formatCurrency } from "../../../utils/number.util";
 
 interface ITableData {
   id?: string;
@@ -28,8 +29,10 @@ const getStatusColor = (status: TransactionStatus) => {
   switch (status) {
     case TransactionStatus.Succeed:
       return "#00BE13";
-    case TransactionStatus.Pending:
+    case TransactionStatus.Confirming:
       return "#D67F00";
+    case TransactionStatus.Pending:
+      return "#6ccaff";
     case TransactionStatus.Failed:
       return "#FF0B0B";
     default:
@@ -52,8 +55,10 @@ const statusRow = (status: TransactionStatus) => {
   switch (status) {
     case TransactionStatus.Succeed:
       return "Hoàn thành";
-    case TransactionStatus.Pending:
+    case TransactionStatus.Confirming:
       return "Đang thực hiện";
+    case TransactionStatus.Pending:
+      return "Chờ xử lý";
     case TransactionStatus.Failed:
       return "Lỗi";
     default:
@@ -102,7 +107,7 @@ const Row = ({ row }: { row: ITableData }) => {
       </TableCell>
       <TableCell style={{ width: "10%", textAlign: "left", color: "#504C67" }} scope="row">
         <Typography fontWeight={500} fontSize={16} color={amountColor(row.type)}>
-          {`${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} $ ${row.amount}`}
+          {`${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
         </Typography>
       </TableCell>
       <TableCell style={{ width: "20%", textAlign: "right" }} scope="row">
@@ -119,8 +124,8 @@ interface DashboardTableProps {
 }
 const DashboardTable = observer((props: DashboardTableProps) => {
   const { rowsPerPage } = props;
-  const [page, setPage] = React.useState(0);
-  const { loading, loadPage, totalRecord } = useTransactionHistory();
+  const page = TransactionHistoryStore.page;
+  const { loading, loadPage } = useTransactionHistory();
 
   const data =
     TransactionHistoryStore.transactions[page]?.map((item, index) => {
@@ -133,7 +138,7 @@ const DashboardTable = observer((props: DashboardTableProps) => {
       };
     }) ?? [];
   const handleChangePage = async (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
+    TransactionHistoryStore.page = newPage;
     await loadPage(newPage, rowsPerPage);
   };
 
@@ -162,7 +167,7 @@ const DashboardTable = observer((props: DashboardTableProps) => {
         component={"div"}
         rowsPerPageOptions={[rowsPerPage]}
         colSpan={3}
-        count={totalRecord}
+        count={TransactionHistoryStore.totalRecord}
         rowsPerPage={rowsPerPage}
         page={page}
         SelectProps={{

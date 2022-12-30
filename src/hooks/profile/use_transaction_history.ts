@@ -1,7 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useSubscription } from "@apollo/client";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { TransactionHistoryResponse } from "../../gql/graphql";
+import { BlockchainTransaction, TransactionHistoryResponse } from "../../gql/graphql";
 import React, { useState } from "react";
 import TransactionHistoryStore from "../../store/transaction_history.store";
 
@@ -24,9 +24,28 @@ const GET_LIST_TRANSACTION_HISTORY = gql`
   }
 `;
 
+const BLOCKCHAIN_WATCHER = gql`
+  subscription blockchainWatcher {
+    blockchainWatcher {
+      tx_hash
+      status
+      transaction_log_id
+    }
+  }
+`;
+
 export default function useTransactionHistory() {
   const { enqueueSnackbar } = useSnackbar();
-  const [totalRecord, setTotalRecord] = useState(0);
+
+  const { data: realtimeData } = useSubscription<{ blockchainWatcher: BlockchainTransaction }>(BLOCKCHAIN_WATCHER);
+
+  React.useEffect(() => {
+    if (realtimeData?.blockchainWatcher.status) {
+      const transactionId = realtimeData.blockchainWatcher.transaction_log_id ?? "";
+      const status = realtimeData?.blockchainWatcher.status;
+      TransactionHistoryStore.updateStatusTransaction(transactionId, status);
+    }
+  }, [realtimeData?.blockchainWatcher.status]);
   const { loading, refetch } = useQuery<{ getTransactionHistory: TransactionHistoryResponse }>(
     GET_LIST_TRANSACTION_HISTORY,
     {
@@ -50,15 +69,17 @@ export default function useTransactionHistory() {
       take: 10,
     });
     TransactionHistoryStore.setListTransaction(page, res?.data.getTransactionHistory?.transactionHistory ?? []);
-    setTotalRecord(res?.data.getTransactionHistory?.count ?? 0);
+    TransactionHistoryStore.totalRecord = res?.data.getTransactionHistory?.count ?? 0;
   };
 
   React.useEffect(() => {
     loadPage(0, 10).then();
+    return () => {
+      TransactionHistoryStore.reset();
+    };
   }, []);
   return {
     loading,
     loadPage,
-    totalRecord,
   };
 }

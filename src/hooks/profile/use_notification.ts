@@ -2,7 +2,6 @@ import { ApolloError, gql, useMutation, useQuery, useSubscription } from "@apoll
 import { NotificationGql } from "../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
-import UserStore from "../../store/user.store";
 
 export const GET_NOTIFICATIONS = gql`
   query ($page: Int!, $limit: Int!) {
@@ -49,8 +48,8 @@ export function useGetNotifications(
 }
 
 export const NOTIFICATIONS_SUBSCRIPTION = gql`
-  subscription ($userId: String!) {
-    pushNotification(userId: $userId) {
+  subscription {
+    pushNotification {
       id
       user_id
       title
@@ -63,7 +62,7 @@ export const NOTIFICATIONS_SUBSCRIPTION = gql`
 `;
 
 export function useSubToNewNoti() {
-  const { data, loading } = useSubscription(NOTIFICATIONS_SUBSCRIPTION, { variables: { userId: UserStore.user?.id } });
+  const { data, loading } = useSubscription(NOTIFICATIONS_SUBSCRIPTION);
 
   return {
     newNoti: data?.pushNotification,
@@ -92,8 +91,8 @@ export function useUnseenNotifications(): {
 }
 
 export const UNSEEN_NOTIS_SUBSCRIPTION = gql`
-  subscription ($userId: String!) {
-    unseenNotifications(userId: $userId) {
+  subscription {
+    unseenNotifications {
       count
     }
   }
@@ -101,7 +100,7 @@ export const UNSEEN_NOTIS_SUBSCRIPTION = gql`
 
 export function useSubToUnseenNotiCount() {
   // if (!userId) return null;
-  const { data, loading } = useSubscription(UNSEEN_NOTIS_SUBSCRIPTION, { variables: { userId: UserStore.user?.id } });
+  const { data, loading } = useSubscription(UNSEEN_NOTIS_SUBSCRIPTION);
 
   return {
     newData: data?.unseenNotifications.count,
