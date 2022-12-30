@@ -49,7 +49,7 @@ export function useUserKyc() {
         })
         .then((res) => {
           if (res?.data) {
-            enqueueSnackbar("Xác minh thành công", { variant: "success" });
+            enqueueSnackbar("Gửi yêu cầu xác minh thành công", { variant: "success" });
             success = true;
           }
         })

@@ -29,11 +29,6 @@ class UserStore {
   updateWallet(wallet: Wallet) {
     this._user!.wallet = wallet;
   }
-  // eslint-disable-next-line
-  updateProfile(user_name?: string, display_name?: string) {
-    this._user!.profile.user_name = user_name; // eslint-disable-line
-    this._user!.profile.display_name = display_name; // eslint-disable-line
-  }
 
   loadFromLocal() {
     if (typeof window == "undefined") {

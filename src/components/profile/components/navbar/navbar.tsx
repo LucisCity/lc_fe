@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Box } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
-import { Button, ClickAwayListener, Divider, Typography } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import React from "react";
@@ -13,6 +13,8 @@ import { observer } from "mobx-react-lite";
 import UserStore from "../../../../store/user.store";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 interface TabProps {
   href: string;
@@ -204,15 +206,7 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
     }
   }, [router.query.section]);
   const profile = UserStore.user?.profile;
-  // const profileDisplayName = profile?.display_name;
-  // console.log(`profileDisplayName ${profileDisplayName}`);
-  // const [displayName, setDisplayName] = React.useState(null);
-  // React.useEffect(() => {
-  //   if (profile) {
-  //     setDisplayName(profileDisplayName);
-  //   }
-  // }, [profileDisplayName]);
-
+  const verified = React.useMemo(() => !!UserStore.user?.kyc_verification?.find((i) => i.status === "SUCCESS"), []);
   return (
     <Box
       sx={{
@@ -257,13 +251,17 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
       >
         {UserStore.isLoggedIn ? (
           <Grid px={{ sm: 2, xs: 0 }} py={{ sm: 0, xs: 4 }} container direction="row">
-            <Grid item sm={12} xs={6}>
+            <Grid item sm={12} xs={6} display={"flex"} flexDirection={"column"} alignItems={"center"}>
               <Avatar
                 src={profile?.avatar?.toString() ?? ""}
                 sx={{ height: "120px", width: "120px", m: "auto", mt: { md: 7, sm: 3 } }}
               />
-              {/*{displayName ? <Typography variant={"h4"}>{displayName}</Typography> : null}*/}
-              <Box mt={{ sm: 6, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
+              {profile?.display_name ? (
+                <Typography variant={"h4"} fontWeight={400} pt={4} color={"#000"}>
+                  {profile?.display_name}
+                </Typography>
+              ) : null}
+              <Box mt={{ sm: 4, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
                 <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
               </Box>
             </Grid>
@@ -294,9 +292,19 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
                   LinkComponent={Link}
                   href="/profile/account?tab=verification"
                 >
-                  <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                    Xác thực tài khoản
-                  </Typography>
+                  {verified ? (
+                    <>
+                      <VerifiedIcon />
+                      <Typography fontSize={{ xs: 16 }} fontWeight={500}>
+                        Đã xác thực
+                      </Typography>
+                    </>
+                  ) : (
+                    <Typography fontSize={{ xs: 16 }} fontWeight={500}>
+                      <CheckCircleOutlineIcon />
+                      Xác thực tài khoản
+                    </Typography>
+                  )}
                 </Button>
               </Box>
               <Divider
