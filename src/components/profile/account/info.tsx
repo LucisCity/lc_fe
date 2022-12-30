@@ -163,11 +163,9 @@ const fields: InfoField[] = [
 const placeHolderData: AccountInfo = {
   email: "hiep@example.com", // eslint-disable-line
   date_of_birth: new Date(), // eslint-disable-line
-  display_name: "Display Name", // eslint-disable-line
   family_name: "Family Name", // eslint-disable-line
   user_name: "username", // eslint-disable-line
   given_name: "Given Name", // eslint-disable-line
-  user_id: "0", // eslint-disable-line
 };
 
 export default function InfoForm() {
@@ -188,6 +186,7 @@ export default function InfoForm() {
     });
   }
 
+  // TODO: sửa loading
   if (loadingAccountInfo) return <Box>Loading...</Box>;
   if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
   return (

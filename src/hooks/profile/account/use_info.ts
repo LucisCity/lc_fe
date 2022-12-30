@@ -14,9 +14,7 @@ export const GET_BALANCE = gql`
 export const GET_ACCOUNT_INFO = gql`
   query {
     getAccountInfo {
-      user_id
       user_name
-      display_name
       given_name
       family_name
       date_of_birth
@@ -41,7 +39,10 @@ export function useGetAccountInfo(): {
 
 export const UPDATE_ACCOUNT_INFO = gql`
   mutation ($input: AccountInfoUpdateInput!) {
-    updateAccountInfo(input: $input)
+    updateAccountInfo(input: $input) {
+      display_name
+      user_name
+    }
   }
 `;
 
@@ -57,6 +58,9 @@ export function useUpdateAccountInfo(): {
 
   const [updateAccountInfo, { loading: accountInfoUpdating }] = useMutation(UPDATE_ACCOUNT_INFO, {
     onCompleted: (res) => {
+      // const updatedProfile = res.data?.updateAccountInfo;
+      // UserStore.updateProfile(updatedProfile.user_name, updatedProfile.display_name);
+      // console.log(`on useUpdateAccountInfo complete ${UserStore.user?.profile.display_name}`);
       enqueueSnackbar("Success", { variant: "success" });
     },
     onError: (e) => {

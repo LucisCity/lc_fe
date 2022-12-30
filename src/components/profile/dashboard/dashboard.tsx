@@ -32,7 +32,7 @@ const DashBoardItems = () => {
       content: "----",
       svgSrc: iconSrc + "profit.svg",
     },
-    { position: 4, title: "Số dư hiện tại", content: formatCurrency(balance), svgSrc: iconSrc + "surplus.svg" },
+    { position: 4, title: "Số dư hiện tại", content: formatCurrency(balance ?? ""), svgSrc: iconSrc + "surplus.svg" },
   ];
   return (
     <>

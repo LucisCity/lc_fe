@@ -203,6 +203,15 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
       setActiveSection(`/profile/${router.query.section}`);
     }
   }, [router.query.section]);
+  const profile = UserStore.user?.profile;
+  // const profileDisplayName = profile?.display_name;
+  // console.log(`profileDisplayName ${profileDisplayName}`);
+  // const [displayName, setDisplayName] = React.useState(null);
+  // React.useEffect(() => {
+  //   if (profile) {
+  //     setDisplayName(profileDisplayName);
+  //   }
+  // }, [profileDisplayName]);
 
   return (
     <Box
@@ -246,18 +255,19 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
           height: "100%",
         }}
       >
-        <Grid px={{ sm: 2, xs: 0 }} py={{ sm: 0, xs: 4 }} container direction="row">
-          <Grid item sm={12} xs={6}>
-            <Avatar
-              src="https://images.pexels.com/photos/236599/pexels-photo-236599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              sx={{ height: "120px", width: "120px", m: "auto", mt: { md: 7, sm: 3 } }}
-            />
-            <Box mt={{ sm: 6, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
-              <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
-            </Box>
-          </Grid>
-          <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
-            {UserStore.isLoggedIn ? (
+        {UserStore.isLoggedIn ? (
+          <Grid px={{ sm: 2, xs: 0 }} py={{ sm: 0, xs: 4 }} container direction="row">
+            <Grid item sm={12} xs={6}>
+              <Avatar
+                src={profile?.avatar?.toString() ?? ""}
+                sx={{ height: "120px", width: "120px", m: "auto", mt: { md: 7, sm: 3 } }}
+              />
+              {/*{displayName ? <Typography variant={"h4"}>{displayName}</Typography> : null}*/}
+              <Box mt={{ sm: 6, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
+                <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
+              </Box>
+            </Grid>
+            <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
               <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
                 <Tab
                   href={"/login"}
@@ -282,30 +292,30 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
                     border: "1px solid",
                   }}
                   LinkComponent={Link}
-                  href="/verification"
+                  href="/profile/account?tab=verification"
                 >
                   <Typography fontSize={{ xs: 16 }} fontWeight={500}>
                     Xác thực tài khoản
                   </Typography>
                 </Button>
               </Box>
-            ) : null}
-            <Divider
-              component={"div"}
-              variant="middle"
-              sx={(theme) => ({
-                [theme.breakpoints.down("sm")]: {
-                  display: "none",
-                },
-                mx: 3,
-                mt: 9,
-                mb: 9,
-                borderBottomWidth: 1,
-                borderBottomColor: "#fff",
-              })}
-            />
+              <Divider
+                component={"div"}
+                variant="middle"
+                sx={(theme) => ({
+                  [theme.breakpoints.down("sm")]: {
+                    display: "none",
+                  },
+                  mx: 3,
+                  mt: 9,
+                  mb: 9,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#fff",
+                })}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+        ) : null}
         <Box
           sx={(theme) => ({
             [theme.breakpoints.up("sm")]: {
