@@ -1,21 +1,33 @@
 import * as React from "react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Skeleton, Typography } from "@mui/material";
 import SvgIcon from "../../common/svg_icon";
 import { InputUnstyled } from "@mui/base";
+import { FileUpload, useUserKyc } from "../../../hooks/profile/account/use_kyc";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 interface VerifyBoxProps {
+  fieldName: string;
   title: string;
   instruction: string;
   imgDesc: string;
+  handleSelectFile: (file: FileUpload) => void;
+  imageUrl?: string;
 }
 
 const VerifyBox = (props: VerifyBoxProps) => {
+  const { imgDesc, instruction, title, handleSelectFile, imageUrl, fieldName } = props;
   const [selectedFile, setSelectedFile] = useState<any>();
   const [preview, setPreview] = useState<any>();
-
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
+    // console.log(`imageUrl ${imageUrl}`);
+    if (imageUrl) {
+      setPreview(imageUrl);
+      return;
+    }
     if (!selectedFile) {
       setPreview(undefined);
       return;
@@ -35,43 +47,18 @@ const VerifyBox = (props: VerifyBoxProps) => {
       return;
     }
 
-    setSelectedFile(files[0]);
+    setSelectedFile(files?.[0]);
+    handleSelectFile({ fieldName: fieldName, file: files?.[0] });
   };
 
-  // const onFileUpload = () => {
-  //
-  //   // Create an object of formData
-  //   const formData = new FormData();
-  //
-  //   // Update the formData object
-  //   formData.append(
-  //     "myFile",
-  //     selectedFile,
-  //   );
-  //
-  //   // Details of the uploaded file
-  //   console.log(selectedFile);
-  //
-  //   // Request made to the backend api
-  //   // Send formData object
-  //   axios.post("api/uploadfile", formData);
-  // };
-
   return (
-    <Box
-      height={"100%"}
-      // sx={{
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   justifyContent: "space-between"
-      // }}
-    >
+    <Box height={"100%"}>
       <Box>
         <Typography fontWeight={500} fontSize={20} color={"#000000"}>
-          {props.title}
+          {title}
         </Typography>
         <Typography mt={2} mb={5} lineHeight={"18.75px"}>
-          {props.instruction}
+          {instruction}
         </Typography>
       </Box>
       <Box
@@ -80,7 +67,6 @@ const VerifyBox = (props: VerifyBoxProps) => {
           justifyContent: "center",
         }}
       >
-        {/*<input hidden accept="image/*" multiple type="file"/>*/}
         <Button
           sx={{
             textTransform: "none",
@@ -98,7 +84,7 @@ const VerifyBox = (props: VerifyBoxProps) => {
             position: "relative",
           }}
         >
-          {selectedFile && (
+          {(!imageUrl ? selectedFile : true) && (
             <img src={preview} style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }} />
           )}
           <label
@@ -110,7 +96,12 @@ const VerifyBox = (props: VerifyBoxProps) => {
               height: "100%",
             }}
           >
-            <InputUnstyled type="file" onChange={onSelectFile} />
+            <input
+              type="file"
+              onChange={onSelectFile}
+              disabled={!!imageUrl}
+              accept="image/png, image/jpeg, image/jpeg, image/gif"
+            />
           </label>
           <Box
             p={5}
@@ -129,7 +120,7 @@ const VerifyBox = (props: VerifyBoxProps) => {
               <SvgIcon src="/assets/imgs/icon/document_upload.svg" />
             </Box>
             <Typography color={"#9A9A9A"} lineHeight={"18.75px"} fontSize={{ md: 16, sm: 14, xs: 16 }}>
-              {props.imgDesc}
+              {imgDesc}
             </Typography>
           </Box>
         </Button>
@@ -138,18 +129,78 @@ const VerifyBox = (props: VerifyBoxProps) => {
   );
 };
 
-const verifyBoxes: VerifyBoxProps[] = [
+interface VerifyBoxSkeletonProps {
+  title: string;
+  instruction: string;
+}
+const VerifyBoxSkeleton = (props: VerifyBoxSkeletonProps) => {
+  const { title, instruction } = props;
+
+  return (
+    <Box height={"100%"}>
+      <Box>
+        <Typography fontWeight={500} fontSize={20} color={"#000000"}>
+          {title}
+        </Typography>
+        <Typography mt={2} mb={5} lineHeight={"18.75px"}>
+          {instruction}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          width: { md: "100%" },
+          aspectRatio: "3/2",
+          borderRadius: 4,
+          maxWidth: 385,
+          display: "flex",
+        }}
+      >
+        <Skeleton
+          variant={"rounded"}
+          sx={{
+            width: "100%",
+            height: "100%",
+            borderRadius: 4,
+          }}
+        ></Skeleton>
+      </Box>
+    </Box>
+  );
+};
+
+const VerifyStatus = (props: { color: string; icon: any; text: string }) => {
+  return (
+    <Button
+      variant="outlined"
+      startIcon={props.icon}
+      sx={{
+        px: 7,
+        color: props.color,
+        border: "none",
+        background: "#fff",
+        "&:hover": { borderColor: props.color, background: "#fff" },
+      }}
+    >
+      {props.text}
+    </Button>
+  );
+};
+
+const verifyBoxes = [
   {
+    fieldName: "front_id",
     title: "Mặt trước thẻ CCCD/CMTND",
     imgDesc: "Ảnh mặt trước thẻ CCCD/CMTND",
     instruction: "Chụp ảnh mặt trước thẻ CCCD/CMT rõ ràng không bị chay, quăn mép, mờ chữ & hình ảnh",
   },
   {
+    fieldName: "back_id",
     title: "Mặt sau thẻ CCCD/CMTND",
     imgDesc: "Ảnh mặt sau thẻ CCCD/CMTND",
     instruction: "Chụp ảnh mặt sau thẻ CCCD/CMT rõ ràng không bị chay, quăn mép, mờ chữ & hình ảnh",
   },
   {
+    fieldName: "holding_id",
     title: "Ảnh chân dung cầm thẻ CCCD/CMTND mặt trước",
     imgDesc: "Ảnh người cầm thẻ CCCD/CMTND",
     instruction:
@@ -158,7 +209,32 @@ const verifyBoxes: VerifyBoxProps[] = [
   },
 ];
 
+type VerifyState = "NONE" | "SUCCESS" | "FAILED" | "PENDING";
+
 export default function Verification() {
+  const { data, error, loading, uploadImages } = useUserKyc();
+
+  // console.log(`data ${JSON.stringify(data)}`);
+  const [selectedFiles, setSelectedFiles] = React.useState<FileUpload[]>([]);
+  const [pendingStatus, setPendingStatus] = React.useState<boolean | null>();
+
+  // console.log(`selectedFiles length ${JSON.stringify(selectedFiles)}`);
+  const handleSelectFile = (file: FileUpload) => {
+    if (selectedFiles.length >= 3) {
+      setSelectedFiles([...selectedFiles.slice(-2), file]);
+    } else {
+      setSelectedFiles([...selectedFiles, file]);
+    }
+  };
+
+  const handleUploadFiles = async () => {
+    // console.log(`selectedFiles ${selectedFiles}`);
+    const success = await uploadImages(selectedFiles);
+    if (success) {
+      setPendingStatus(true);
+    }
+  };
+
   return (
     <Box color={"#9A9A9A"} fontWeight={400} fontSize={16}>
       <Typography sx={{ mt: 5, mb: 8 }} lineHeight={"18.75px"}>
@@ -168,13 +244,50 @@ export default function Verification() {
       <Grid container spacing={5}>
         {verifyBoxes.map((i, idx) => (
           <Grid key={idx} item md={6} xs={12}>
-            <VerifyBox title={i.title} instruction={i.instruction} imgDesc={i.imgDesc} />
+            {loading ? (
+              <VerifyBoxSkeleton title={i.title} instruction={i.instruction} />
+            ) : (
+              <VerifyBox
+                title={i.title}
+                instruction={i.instruction}
+                imgDesc={i.imgDesc}
+                fieldName={i.fieldName}
+                handleSelectFile={handleSelectFile}
+                imageUrl={data && data.status !== "FAILED" ? data[i.fieldName] : null}
+              />
+            )}
           </Grid>
         ))}
       </Grid>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} pt={11}>
         <Typography pb={5}>Thời gian xác minh danh tính có thể kéo dài 1 - 2 ngày.</Typography>
-        <Button variant="contained">Xác minh danh tính</Button>
+        {loading ? (
+          <Skeleton variant={"rounded"} />
+        ) : pendingStatus ? (
+          <VerifyStatus color={"#F7CB73"} icon={<HourglassTopIcon />} text={"Đang xử lý"} />
+        ) : (
+          <>
+            {!data?.status && (
+              <Button variant="contained" onClick={handleUploadFiles}>
+                Xác minh danh tính
+              </Button>
+            )}
+            {data?.status === "PENDING" && (
+              <VerifyStatus color={"#F7CB73"} icon={<HourglassTopIcon />} text={"Đang xử lý"} />
+            )}
+            {data?.status === "SUCCESS" && (
+              <VerifyStatus color={"#077E8C"} icon={<CheckCircleOutlineIcon />} text={"Đã xác minh"} />
+            )}
+            {data?.status === "FAILED" && (
+              <Box display={"flex"}>
+                <VerifyStatus color={"#D9512C"} icon={<ErrorOutlineIcon />} text={"Thất bại"} />
+                <Button variant="contained" onClick={handleUploadFiles} sx={{ ml: 4, px: 7 }}>
+                  Xác minh lại
+                </Button>
+              </Box>
+            )}
+          </>
+        )}
       </Box>
     </Box>
   );

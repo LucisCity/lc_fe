@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Skeleton, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import moment from "moment";
 import Link from "next/link";
@@ -253,7 +253,20 @@ export const ProfileNotification = () => {
         </Button>
       </Box>
       {getNotificationsLoading ? (
-        <Box>Loading...</Box>
+        <Box mt={1}>
+          <PaginatedList rowsPerPage={5}>
+            {Array.from({ length: 5 }).map(() => (
+              <Skeleton
+                height={100}
+                variant={"rounded"}
+                sx={{
+                  mb: 4,
+                  borderRadius: 4,
+                }}
+              />
+            ))}
+          </PaginatedList>
+        </Box>
       ) : (
         <Box mt={1}>
           {notiList?.length > 0 ? (

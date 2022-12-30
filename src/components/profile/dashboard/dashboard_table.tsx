@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -12,14 +11,15 @@ import { Typography } from "@mui/material";
 import { table, TablePaginationActions } from "../components/table";
 import useTransactionHistory from "../../../hooks/profile/use_transaction_history";
 import { ReferralTableSkeleton } from "../components/referral_table_skeleton";
-import { LoadingButton } from "@mui/lab";
 import moment from "moment/moment";
-import { TransactionStatus, TransactionType } from "../../../gql/graphql";
+import { TransactionStatus } from "../../../gql/graphql";
+import TransactionHistoryStore from "../../../store/transaction_history.store";
+import { observer } from "mobx-react-lite";
+import { formatCurrency } from "../../../utils/number.util";
 
 interface ITableData {
   id?: string;
   date?: string;
-  name?: string;
   type: string;
   amount?: string;
   status: TransactionStatus;
@@ -29,8 +29,10 @@ const getStatusColor = (status: TransactionStatus) => {
   switch (status) {
     case TransactionStatus.Succeed:
       return "#00BE13";
-    case TransactionStatus.Pending:
+    case TransactionStatus.Confirming:
       return "#D67F00";
+    case TransactionStatus.Pending:
+      return "#6ccaff";
     case TransactionStatus.Failed:
       return "#FF0B0B";
     default:
@@ -38,12 +40,49 @@ const getStatusColor = (status: TransactionStatus) => {
   }
 };
 
-const typeTransaction = (type: string) => {
+const amountColor = (type: string) => {
   switch (type) {
     case "WITHDRAW_BALANCE":
-      return "Withdraw balance";
+      return "#FF0B0B";
     case "CLAIM_REFERRAL":
-      return "Claim referral";
+      return "#00BE13";
+    default:
+      return "";
+  }
+};
+
+const statusRow = (status: TransactionStatus) => {
+  switch (status) {
+    case TransactionStatus.Succeed:
+      return "Hoàn thành";
+    case TransactionStatus.Confirming:
+      return "Đang thực hiện";
+    case TransactionStatus.Pending:
+      return "Chờ xử lý";
+    case TransactionStatus.Failed:
+      return "Lỗi";
+    default:
+      return "Đang thực hiện";
+  }
+};
+
+const typeTransaction = (type: string): "WITHDRAW" | "DEPOSIT" | "" => {
+  switch (type) {
+    case "WITHDRAW_BALANCE":
+      return "WITHDRAW";
+    case "CLAIM_REFERRAL":
+      return "DEPOSIT";
+    default:
+      return "";
+  }
+};
+
+const descriptionRow = (type: string): string => {
+  switch (type) {
+    case "WITHDRAW_BALANCE":
+      return "Rút tiền về ví";
+    case "CLAIM_REFERRAL":
+      return "Nhận thưởng giới thiệu bạn bè";
     default:
       return "";
   }
@@ -51,29 +90,29 @@ const typeTransaction = (type: string) => {
 const Row = ({ row }: { row: ITableData }) => {
   return (
     <TableRow key={row.id}>
-      <TableCell style={{ width: "30%", textAlign: "left", color: "#6CCAFF" }} scope="row">
+      <TableCell style={{ width: "25%", textAlign: "left", color: "#6CCAFF" }} scope="row">
         <Typography fontWeight={400} fontSize={16}>
           {row.date}
         </Typography>
       </TableCell>
-      <TableCell style={{ width: "20%", textAlign: "center", color: "#000" }} scope="row">
+      <TableCell style={{ width: "35%", textAlign: "left", color: "#000" }} scope="row">
         <Typography fontWeight={500} fontSize={16}>
-          {row.name}
+          {descriptionRow(row.type)}
         </Typography>
       </TableCell>
-      <TableCell style={{ width: "20%", textAlign: "center", color: "#504C67" }} scope="row">
+      <TableCell style={{ width: "10%", textAlign: "center", color: "#504C67" }} scope="row">
         <Typography fontWeight={400} fontSize={16}>
-          {typeTransaction(row.type)}
+          {typeTransaction(row.type) === "WITHDRAW" ? "Rút" : "Nhận"}
         </Typography>
       </TableCell>
-      <TableCell style={{ width: "15%", textAlign: "right", color: "#504C67" }} scope="row">
-        <Typography fontWeight={500} fontSize={16}>
-          {row.amount}
+      <TableCell style={{ width: "10%", textAlign: "left", color: "#504C67" }} scope="row">
+        <Typography fontWeight={500} fontSize={16} color={amountColor(row.type)}>
+          {`${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
         </Typography>
       </TableCell>
-      <TableCell style={{ width: "15%", textAlign: "right" }} scope="row">
+      <TableCell style={{ width: "20%", textAlign: "right" }} scope="row">
         <Typography fontWeight={400} fontSize={16} color={getStatusColor(row.status)}>
-          {row.status}
+          {statusRow(row.status)}
         </Typography>
       </TableCell>
     </TableRow>
@@ -83,31 +122,24 @@ const Row = ({ row }: { row: ITableData }) => {
 interface DashboardTableProps {
   rowsPerPage: number;
 }
-
-export default function DashboardTable(props: DashboardTableProps) {
+const DashboardTable = observer((props: DashboardTableProps) => {
   const { rowsPerPage } = props;
-  const [page, setPage] = React.useState(0);
-  const { loading, listTransactionHistory, nextPage, totalRecord } = useTransactionHistory();
-  // const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const page = TransactionHistoryStore.page;
+  const { loading, loadPage } = useTransactionHistory();
 
-  const data = React.useMemo(() => {
-    return (
-      listTransactionHistory?.[page]?.map((item, index) => {
-        return {
-          id: item.id ?? `id-${index}`,
-          date: moment(item?.created_at).format("DD MMM YYYY, h:mm") ?? "--/--/--",
-          name: "-------",
-          type: item.type,
-          amount: `$ ${item.amount}`,
-          status: !item.blockchain_transaction ? TransactionStatus.Succeed : item.blockchain_transaction?.status,
-        };
-      }) ?? []
-    );
-  }, [listTransactionHistory, page]);
-
+  const data =
+    TransactionHistoryStore.transactions[page]?.map((item, index) => {
+      return {
+        id: item.id ?? `id-${index}`,
+        date: moment(item?.created_at).format("DD/MM/YYYY, h:mm") ?? "--/--/--",
+        type: item.type,
+        amount: `${item.amount}`,
+        status: !item.blockchain_transaction ? TransactionStatus.Succeed : item.blockchain_transaction?.status,
+      };
+    }) ?? [];
   const handleChangePage = async (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
-    await nextPage(newPage, rowsPerPage);
+    TransactionHistoryStore.page = newPage;
+    await loadPage(newPage, rowsPerPage);
   };
 
   return (
@@ -119,9 +151,11 @@ export default function DashboardTable(props: DashboardTableProps) {
               {loading ? (
                 <ReferralTableSkeleton />
               ) : data.length === 0 ? (
-                <Box display={"flex"} justifyContent={"center"}>
-                  <Typography>Không có dữ liệu!</Typography>
-                </Box>
+                <TableCell style={{ width: "100%" }} scope="row">
+                  <Box display={"flex"} justifyContent={"center"}>
+                    <Typography>Không có dữ liệu!</Typography>
+                  </Box>
+                </TableCell>
               ) : (
                 data.map((row) => <Row key={row.id} row={row} />)
               )}
@@ -133,7 +167,7 @@ export default function DashboardTable(props: DashboardTableProps) {
         component={"div"}
         rowsPerPageOptions={[rowsPerPage]}
         colSpan={3}
-        count={totalRecord}
+        count={TransactionHistoryStore.totalRecord}
         rowsPerPage={rowsPerPage}
         page={page}
         SelectProps={{
@@ -148,4 +182,6 @@ export default function DashboardTable(props: DashboardTableProps) {
       />
     </>
   );
-}
+});
+
+export default DashboardTable;

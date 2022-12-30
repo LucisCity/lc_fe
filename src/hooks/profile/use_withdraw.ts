@@ -3,6 +3,9 @@ import { useAccount, useSignMessage } from "wagmi";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
 import { TransactionLog } from "../../gql/graphql";
+import { GET_BALANCE } from "./account/use_info";
+import UserStore from "../../store/user.store";
+import React from "react";
 
 const GET_OTP = gql`
   query getOneTimePassword($address: String!) {
@@ -31,9 +34,13 @@ const WITHDRAW_BALANCE = gql`
 export const useWithdraw = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { address } = useAccount();
-
+  const [activeStep, setActiveStep] = React.useState(0);
   const [getOtp] = useLazyQuery<{ getOneTimePassword: string }>(GET_OTP);
-
+  const [getBalance] = useLazyQuery(GET_BALANCE, {
+    onCompleted: (res) => {
+      UserStore.updateWallet(res?.getBalance);
+    },
+  });
   const [withdrawMutation, { loading }] = useMutation<{ withdrawBalance: TransactionLog }>(WITHDRAW_BALANCE, {
     onCompleted: (res) => {
       if (res?.withdrawBalance?.id) {
@@ -52,6 +59,7 @@ export const useWithdraw = () => {
   const { isLoading: isLoadingSignMessage, signMessageAsync: signMessageMetamask } = useSignMessage();
 
   const withdraw = async (amount: number) => {
+    setActiveStep(1);
     const getOtpRes = await getOtp({ variables: { address: address } });
     if (getOtpRes.data?.getOneTimePassword) {
       let signature = "";
@@ -63,6 +71,7 @@ export const useWithdraw = () => {
       if (!signature) {
         throw new Error("sign message failed");
       }
+      setActiveStep(2);
       const withdrawRes = await withdrawMutation({
         variables: {
           address,
@@ -70,6 +79,7 @@ export const useWithdraw = () => {
           signatureOTP: signature,
         },
       });
+      await getBalance();
       return {
         transactionLog: withdrawRes.data?.withdrawBalance,
       };
@@ -77,6 +87,7 @@ export const useWithdraw = () => {
   };
   return {
     withdraw,
+    activeStep,
     isLoading: isLoadingSignMessage || loading,
   };
 };

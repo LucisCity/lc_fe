@@ -73,6 +73,9 @@ if (isClient) {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: process.env.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTION_URL ?? "",
+      connectionParams: {
+        authorization: `Bearer ${_getAuthToken()}`,
+      },
     }),
   );
 

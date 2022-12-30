@@ -22,6 +22,9 @@ const LOGIN_MUT = gql`
         wallet {
           balance
         }
+        kyc_verification {
+          status
+        }
       }
     }
   }
@@ -43,6 +46,9 @@ const LOGIN_GG_MUT = gql`
         wallet {
           balance
         }
+        kyc_verification {
+          status
+        }
       }
     }
   }
@@ -63,6 +69,9 @@ const LOGIN_FB_MUT = gql`
         }
         wallet {
           balance
+        }
+        kyc_verification {
+          status
         }
       }
     }

@@ -16,11 +16,30 @@ export function useChangePassword() {
 
   const [changePass, { loading }] = useMutation(CHANGE_PASSWORD_MUT, {
     onCompleted: () => {
-      enqueueSnackbar("Success", { variant: "success" });
+      enqueueSnackbar("Đổi mật khẩu thành công", { variant: "success" });
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case "USER_NOT_FOUND":
+            enqueueSnackbar("Không tìm thấy user", { variant: "error" });
+            break;
+          case "NEW_PASS_SAME_OLD_PASS":
+            enqueueSnackbar("Mật khẩu mới trùng với mật khẩu hiện tại", { variant: "error" });
+            break;
+          case "WRONG_OLD_PASS":
+            enqueueSnackbar("Mật khẩu hiện tại không đúng", { variant: "error" });
+            break;
+          case "INVALID_NEW_PASS":
+            enqueueSnackbar("Mật khẩu mới không hợp lệ (mật khẩu hợp lệ phải có 8-32 ký tự, bao gồm cả số và chữ", {
+              variant: "error",
+            });
+            break;
+          default:
+            enqueueSnackbar("Server error", { variant: "error" });
+        }
+      });
     },
   });
 
@@ -35,7 +54,7 @@ export function useChangePassword() {
       return;
     }
 
-    changePass({
+    await changePass({
       variables: {
         oldPass,
         newPass,

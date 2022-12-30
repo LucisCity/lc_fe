@@ -81,8 +81,8 @@ export type Mutation = {
   sendTransaction: Scalars['Boolean'];
   /** set pool wallet */
   setPoolWallet: Scalars['Boolean'];
-  /** Vote project */
-  togleFollowProject?: Maybe<Scalars['Boolean']>;
+  /** Toggle follow project */
+  toggleFollowProject?: Maybe<Scalars['Boolean']>;
   /** update account info */
   updateAccountInfo?: Maybe<ProfileGql>;
   /** Verify email */
@@ -158,7 +158,7 @@ export type MutationSetPoolWalletArgs = {
 };
 
 
-export type MutationTogleFollowProjectArgs = {
+export type MutationToggleFollowProjectArgs = {
   projectId: Scalars['String'];
 };
 

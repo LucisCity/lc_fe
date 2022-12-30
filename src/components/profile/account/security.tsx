@@ -176,7 +176,7 @@ export default function Security() {
   async function onSubmit(values: any) {
     // e.preventDefault();
     // console.log(`values ${JSON.stringify(values)}`);
-    onChangePass(values.oldPass, values.newPass, values.confirmPass);
+    await onChangePass(values.oldPass, values.newPass, values.confirmPass);
   }
 
   return (

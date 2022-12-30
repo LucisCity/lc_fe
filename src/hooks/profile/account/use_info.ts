@@ -14,9 +14,7 @@ export const GET_BALANCE = gql`
 export const GET_ACCOUNT_INFO = gql`
   query {
     getAccountInfo {
-      user_id
       user_name
-      display_name
       given_name
       family_name
       date_of_birth
@@ -27,28 +25,33 @@ export const GET_ACCOUNT_INFO = gql`
 
 export function useGetAccountInfo(): {
   loadingAccountInfo: boolean;
-  errorAccountInfo: ApolloError | undefined;
   dataAccountInfo: AccountInfo;
 } {
-  const { loading, error, data } = useQuery(GET_ACCOUNT_INFO, {});
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { loading, data } = useQuery(GET_ACCOUNT_INFO, {
+    onError: (e) => {
+      enqueueSnackbar("Hệ thống đang gặp trục trặc, chúng tôi sẽ cố gắng khắc phục sớm nhất có thể", {
+        variant: "error",
+      });
+    },
+  });
 
   return {
     loadingAccountInfo: loading,
-    errorAccountInfo: error,
     dataAccountInfo: data?.getAccountInfo,
   };
 }
 
 export const UPDATE_ACCOUNT_INFO = gql`
   mutation ($input: AccountInfoUpdateInput!) {
-    updateAccountInfo(input: $input)
+    updateAccountInfo(input: $input) {
+      display_name
+      user_name
+    }
   }
 `;
 
-// type UseUpdateAccountInfoProps = {
-//   onCompleted?: (data: any) => void;
-// };
-//
 export function useUpdateAccountInfo(): {
   updateAccountInfo: any;
   accountInfoUpdating: boolean;
@@ -57,11 +60,19 @@ export function useUpdateAccountInfo(): {
 
   const [updateAccountInfo, { loading: accountInfoUpdating }] = useMutation(UPDATE_ACCOUNT_INFO, {
     onCompleted: (res) => {
-      enqueueSnackbar("Success", { variant: "success" });
+      enqueueSnackbar("Cập nhật thông tin thành công", { variant: "success" });
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case "USERNAME_DUPLICATED":
+            enqueueSnackbar("Username này đã tồn tại, vui lòng chọn username khác", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Server error", { variant: "error" });
+        }
+      });
     },
     fetchPolicy: "no-cache",
   });

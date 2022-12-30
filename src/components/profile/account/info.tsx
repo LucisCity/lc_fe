@@ -1,20 +1,17 @@
 import * as React from "react";
-import FormControlUnstyled from "@mui/base/FormControlUnstyled";
 import InputUnstyled, { inputUnstyledClasses } from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { Box, Button, InputAdornment, Typography, useMediaQuery, Paper } from "@mui/material";
+import { Box, Button, Paper, Skeleton, Typography, useMediaQuery } from "@mui/material";
 import { useGetAccountInfo, useUpdateAccountInfo } from "../../../hooks/profile/account/use_info";
 import moment, { Moment } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import TextField from "@mui/material/TextField";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { CalendarPicker, DesktopDatePicker } from "@mui/x-date-pickers";
+import { CalendarPicker } from "@mui/x-date-pickers";
 import EventIcon from "@mui/icons-material/Event";
 import { ClickAwayListener } from "@mui/base";
-import { AccountInfo, AccountInfoUpdateInput } from "../../../gql/graphql";
+import { AccountInfo } from "../../../gql/graphql";
 import { isEmpty } from "lodash";
-import UserStore from "../../../store/user.store";
 import { useForm } from "react-hook-form";
 
 const grey = {
@@ -54,16 +51,7 @@ const Input = styled(InputUnstyled)<{ email?: boolean }>(
 `,
 );
 
-// const CustomInput = React.forwardRef(function CustomInput(
-//   props: InputUnstyledProps,
-//   ref: React.ForwardedRef<HTMLDivElement>,
-// ) {
-//   return (
-//     <InputUnstyled slots={{input: Input}} {...props} ref={ref}/>
-//   );
-// });
-
-const Label = styled(Typography)(({ theme }) => ({
+const Label = styled(Typography)(() => ({
   color: "#504C67",
   fontWeight: 500,
   fontSize: 16,
@@ -163,18 +151,15 @@ const fields: InfoField[] = [
 const placeHolderData: AccountInfo = {
   email: "hiep@example.com", // eslint-disable-line
   date_of_birth: new Date(), // eslint-disable-line
-  //@ts-ignore
-  display_name: "Display Name", // eslint-disable-line
   family_name: "Family Name", // eslint-disable-line
   user_name: "username", // eslint-disable-line
   given_name: "Given Name", // eslint-disable-line
-  user_id: "0", // eslint-disable-line
 };
 
 export default function InfoForm() {
   const form = useForm();
 
-  const { dataAccountInfo, loadingAccountInfo, errorAccountInfo } = useGetAccountInfo();
+  const { dataAccountInfo, loadingAccountInfo } = useGetAccountInfo();
   const dataFetched: { [index: string]: any } = dataAccountInfo ?? placeHolderData;
 
   const { updateAccountInfo } = useUpdateAccountInfo();
@@ -189,26 +174,40 @@ export default function InfoForm() {
     });
   }
 
-  if (loadingAccountInfo) return <Box>Loading...</Box>;
-  if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} style={{ minHeight: 700 }}>
       <Grid container spacing={2}>
-        {fields.map((field) => {
-          const fieldValue = dataFetched.hasOwnProperty(field.value) ? dataFetched[field.value] : null;
-          return (
-            <Grid item key={field.value} sm={field.label === "Email" ? 7 : 6} xs={12}>
-              <Label>{field.label}</Label>
-              {field.value === "email" ? (
-                <Input email={true} disabled={true} defaultValue={fieldValue} />
-              ) : field.value === "date_of_birth" ? (
-                <DatePicker defaultValue={fieldValue} form={form} />
-              ) : (
-                <Input defaultValue={fieldValue} {...form.register(field.value)} />
-              )}
-            </Grid>
-          );
-        })}
+        {loadingAccountInfo
+          ? fields.map((field) => (
+              <Grid item key={field.value} sm={field.label === "Email" ? 7 : 6} xs={12} mt={4}>
+                <Skeleton variant="text" width={"50%"} />{" "}
+                <Skeleton
+                  variant="rounded"
+                  height={50}
+                  sx={(theme) => ({
+                    [theme.breakpoints.up("sm")]: {
+                      width: "90%",
+                    },
+                    width: "100%",
+                  })}
+                />
+              </Grid>
+            ))
+          : fields.map((field) => {
+              const fieldValue = dataFetched.hasOwnProperty(field.value) ? dataFetched[field.value] : null;
+              return (
+                <Grid item key={field.value} sm={field.label === "Email" ? 7 : 6} xs={12}>
+                  <Label>{field.label}</Label>
+                  {field.value === "email" ? (
+                    <Input email={true} disabled={true} defaultValue={fieldValue} />
+                  ) : field.value === "date_of_birth" ? (
+                    <DatePicker defaultValue={fieldValue} form={form} />
+                  ) : (
+                    <Input defaultValue={fieldValue} {...form.register(field.value)} />
+                  )}
+                </Grid>
+              );
+            })}
       </Grid>
       <Box mt={{ sm: 15, xs: 10 }} display={"flex"} justifyContent={"center"}>
         <Button variant="contained" type={"submit"}>

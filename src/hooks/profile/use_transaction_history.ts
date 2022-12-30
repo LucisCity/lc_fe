@@ -1,8 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useSubscription } from "@apollo/client";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { TransactionHistoryResponse, TransactionLog } from "../../gql/graphql";
-import { useState } from "react";
+import { BlockchainTransaction, TransactionHistoryResponse } from "../../gql/graphql";
+import React, { useState } from "react";
+import TransactionHistoryStore from "../../store/transaction_history.store";
 
 const GET_LIST_TRANSACTION_HISTORY = gql`
   query getTransactionHistory($skip: Int, $take: Int) {
@@ -23,23 +24,34 @@ const GET_LIST_TRANSACTION_HISTORY = gql`
   }
 `;
 
+const BLOCKCHAIN_WATCHER = gql`
+  subscription blockchainWatcher {
+    blockchainWatcher {
+      tx_hash
+      status
+      transaction_log_id
+    }
+  }
+`;
+
 export default function useTransactionHistory() {
   const { enqueueSnackbar } = useSnackbar();
-  const [totalRecord, setTotalRecord] = useState(0);
-  const [listTransactionHistory, setListTransactionHistory] = useState<{ [page: number]: TransactionLog[] }>([]);
+
+  const { data: realtimeData } = useSubscription<{ blockchainWatcher: BlockchainTransaction }>(BLOCKCHAIN_WATCHER);
+
+  React.useEffect(() => {
+    if (realtimeData?.blockchainWatcher.status) {
+      const transactionId = realtimeData.blockchainWatcher.transaction_log_id ?? "";
+      const status = realtimeData?.blockchainWatcher.status;
+      TransactionHistoryStore.updateStatusTransaction(transactionId, status);
+    }
+  }, [realtimeData?.blockchainWatcher.status]);
   const { loading, refetch } = useQuery<{ getTransactionHistory: TransactionHistoryResponse }>(
     GET_LIST_TRANSACTION_HISTORY,
     {
       variables: {
         skip: 0,
         take: 10,
-      },
-      onCompleted: (res) => {
-        setListTransactionHistory({
-          ...listTransactionHistory,
-          0: res?.getTransactionHistory?.transactionHistory ?? [],
-        });
-        setTotalRecord(res?.getTransactionHistory.count ?? 0);
       },
       onError: (e) => {
         const errors = handleGraphqlErrors(e);
@@ -48,25 +60,26 @@ export default function useTransactionHistory() {
     },
   );
 
-  const nextPage = async (newPage: number, rowPerPage: number) => {
+  const loadPage = async (page: number, rowPerPage: number) => {
+    if (TransactionHistoryStore.transactions[page]) {
+      return;
+    }
     const res = await refetch({
-      variables: {
-        skip: rowPerPage * newPage,
-        take: 10,
-      },
+      skip: rowPerPage * page,
+      take: 10,
     });
-    setListTransactionHistory({
-      ...listTransactionHistory,
-      [newPage]: res?.data?.getTransactionHistory?.transactionHistory ?? [],
-    });
-
-    console.log(rowPerPage * newPage);
+    TransactionHistoryStore.setListTransaction(page, res?.data.getTransactionHistory?.transactionHistory ?? []);
+    TransactionHistoryStore.totalRecord = res?.data.getTransactionHistory?.count ?? 0;
   };
+
+  React.useEffect(() => {
+    loadPage(0, 10).then();
+    return () => {
+      TransactionHistoryStore.reset();
+    };
+  }, []);
   return {
     loading,
-    listTransactionHistory,
-    setListTransactionHistory,
-    nextPage,
-    totalRecord,
+    loadPage,
   };
 }
