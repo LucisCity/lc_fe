@@ -5,11 +5,16 @@ import { useModal } from "../../../../hooks/use_modal";
 import GoogleMap from "./map/google_map";
 import MarkerType from "./map/marker_type";
 
-export default function MapDialog() {
+interface IProps {
+  lat: number;
+  long: number;
+  address?: string;
+}
+export default function MapDialog(props: IProps) {
   const [highlightedItem, setHighlightedItem] = useState<MarkerType | null>(null);
   const [center, setCenter] = useState<google.maps.LatLngLiteral>({
-    lat: 21.026573,
-    lng: 105.828041,
+    lat: props.lat, // 21.026573,
+    lng: props.long, //105.828041,
   });
   const [zoom, setZoom] = useState<number>(15);
   const modal = useModal();
@@ -71,7 +76,7 @@ export default function MapDialog() {
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
               center={center}
               zoom={zoom}
-              markers={[{ lat: 21.026573, long: 105.828041, id: "1", title: "Demo" }]}
+              markers={[{ lat: props.lat, long: props.long, id: "1", title: props.address ?? "Demo" }]}
               onIdle={onIdle}
               onMarkerClick={onMarkerClick}
               highlightedMarkerId={highlightedItem?.id}

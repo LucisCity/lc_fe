@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDownload } from "../../hooks/use_download";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
 import InvestImageBox from "./components/detail/image_box";
@@ -10,9 +11,12 @@ import InvestDetailSteper from "./components/detail/invest_detail_steper";
 import PitchTab from "./components/detail/pitch_tab";
 import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
+import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
+  const { detail } = useInvestDetail();
+  const { download } = useDownload();
 
   return (
     <Box
@@ -31,8 +35,14 @@ export function InvestDetailPage() {
           margin: "0px auto",
         }}
       >
-        <InvestDetailHeader />
-        <InvestImageBox />
+        <InvestDetailHeader
+          title={detail?.title}
+          rate={detail?.rate}
+          totalRate={detail?.total_rate ?? 0}
+          address={detail?.address}
+          favorites={detail?.favorites ?? 0}
+        />
+        <InvestImageBox medias={detail?.profile.medias ?? []} location={detail?.location} address={detail?.address} />
         <InvestDetailSteper />
         <Box
           sx={{
@@ -93,7 +103,17 @@ export function InvestDetailPage() {
               </Button>
             </Box>
             <Divider sx={{ mt: 4 }} />
-            {tabIdx === 0 ? <PitchTab /> : tabIdx === 1 ? <UpdatesTab /> : <InvestorTab />}
+            {tabIdx === 0 ? (
+              <PitchTab
+                hightlight={detail?.profile?.hightlight ?? ""}
+                investReason={detail?.profile?.reason_invest ?? ""}
+                offers={detail?.profile.offers ?? []}
+              />
+            ) : tabIdx === 1 ? (
+              <UpdatesTab events={detail?.profile.events ?? []} />
+            ) : (
+              <InvestorTab />
+            )}
           </Box>
           <Box>
             <InvestDetailNftCard />
@@ -111,6 +131,12 @@ export function InvestDetailPage() {
                 width: "100%",
                 mt: "20px",
                 color: "#6555EE",
+              }}
+              onClick={() => {
+                if (!detail?.policy_link) {
+                  return;
+                }
+                download(detail.policy_link, "policy.png");
               }}
             >
               Giấy tờ sử dụng nhà đất.PDF

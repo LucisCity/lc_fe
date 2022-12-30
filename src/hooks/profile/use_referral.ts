@@ -18,7 +18,7 @@ const GET_LIST_REFERRAL_USER = gql`
       }
       referral_log {
         user_id
-        isClaim
+        is_claim
         type
         created_at
       }

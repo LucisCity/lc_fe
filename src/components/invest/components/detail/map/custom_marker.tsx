@@ -65,7 +65,7 @@ export default function CustomMarker({ data, map, onClick, highlight }: CustomMa
                   </Typography>
                 </Box>
                 <Typography variant="caption" whiteSpace="pre-line" sx={{ fontSize: "10px", color: "#969696" }}>
-                  1901 Thornridge Cir. Shiloh, Hawaii 81063
+                  {data.title}
                 </Typography>
                 <LinearProgress variant="determinate" color="primary" value={50} sx={{ borderRadius: "2px" }} />
                 <Box

@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
+import { ProjectOfferGql } from "../../../../gql/graphql";
 
 const OFFER_DATA = [
   {
@@ -38,14 +39,17 @@ const OFFER_DATA = [
     title: "Đường quốc lộ",
   },
 ];
-export default function PlaceOfferSection() {
+interface IProps {
+  offers?: ProjectOfferGql[];
+}
+export default function PlaceOfferSection({ offers }: IProps) {
   return (
     <Box>
       <Typography variant="h3" mt={8}>
         What this place offers
       </Typography>
       <Grid container mt={1} spacing={6}>
-        {OFFER_DATA.map((item) => (
+        {offers?.map((item) => (
           <Grid key={`place_offer_${item.title}`} item xs={6} md={4}>
             <PlaceOfferItem icon={item.icon} title={item.title} />
           </Grid>

@@ -6,9 +6,10 @@ import Link from "next/link";
 import { Right } from "../../common/right";
 import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
-import { ApolloError } from "@apollo/client";
+import { ApolloError, useLazyQuery } from "@apollo/client";
 import { useSubToUnseenNotiCount, useUnseenNotifications } from "../../../hooks/profile/use_notification";
 import { isNumber } from "lodash";
+import { GET_BALANCE } from "../../../hooks/profile/account/use_info";
 
 const NotificationBell = () => {
   const { dataUnseenNotis } = useUnseenNotifications();
@@ -33,6 +34,16 @@ const NotificationBell = () => {
 export const AuthBox = observer(() => {
   const loading = !UserStore.isLoadedFromLocal;
   const balance = UserStore.user?.wallet?.balance;
+  const [getBalance] = useLazyQuery(GET_BALANCE, {
+    onCompleted: (res) => {
+      UserStore.updateWallet(res?.getBalance);
+    },
+  });
+
+  React.useEffect(() => {
+    getBalance();
+  }, []);
+
   return (
     <Right>
       <IconButton sx={{ mr: 2 }}>

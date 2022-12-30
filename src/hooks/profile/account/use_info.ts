@@ -1,10 +1,16 @@
-import { ApolloError, ApolloQueryResult, gql, useMutation, useQuery } from "@apollo/client";
-import { AccountInfo, AccountInfoUpdateInput, MutationUpdateAccountInfoArgs } from "../../../gql/graphql";
-import { isEmpty } from "lodash";
+import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
+import { AccountInfo } from "../../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
-import UserStore from "../../../store/user.store";
 
+export const GET_BALANCE = gql`
+  query getBalance {
+    getBalance {
+      balance
+      user_id
+    }
+  }
+`;
 export const GET_ACCOUNT_INFO = gql`
   query {
     getAccountInfo {
