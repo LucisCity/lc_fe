@@ -1,9 +1,12 @@
 import * as React from "react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Skeleton, Typography } from "@mui/material";
 import SvgIcon from "../../common/svg_icon";
 import { InputUnstyled } from "@mui/base";
 import { FileUpload, useUserKyc } from "../../../hooks/profile/account/use_kyc";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 interface VerifyBoxProps {
   fieldName: string;
@@ -12,15 +15,19 @@ interface VerifyBoxProps {
   imgDesc: string;
   handleSelectFile: (file: FileUpload) => void;
   imageUrl?: string;
-  disabled?: boolean;
 }
 
 const VerifyBox = (props: VerifyBoxProps) => {
+  const { imgDesc, instruction, title, handleSelectFile, imageUrl, fieldName } = props;
   const [selectedFile, setSelectedFile] = useState<any>();
   const [preview, setPreview] = useState<any>();
-
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
+    // console.log(`imageUrl ${imageUrl}`);
+    if (imageUrl) {
+      setPreview(imageUrl);
+      return;
+    }
     if (!selectedFile) {
       setPreview(undefined);
       return;
@@ -41,24 +48,17 @@ const VerifyBox = (props: VerifyBoxProps) => {
     }
 
     setSelectedFile(files?.[0]);
-    props.handleSelectFile({ fieldName: props.fieldName, file: files?.[0] });
+    handleSelectFile({ fieldName: fieldName, file: files?.[0] });
   };
 
   return (
-    <Box
-      height={"100%"}
-      // sx={{
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   justifyContent: "space-between"
-      // }}
-    >
+    <Box height={"100%"}>
       <Box>
         <Typography fontWeight={500} fontSize={20} color={"#000000"}>
-          {props.title}
+          {title}
         </Typography>
         <Typography mt={2} mb={5} lineHeight={"18.75px"}>
-          {props.instruction}
+          {instruction}
         </Typography>
       </Box>
       <Box
@@ -67,7 +67,6 @@ const VerifyBox = (props: VerifyBoxProps) => {
           justifyContent: "center",
         }}
       >
-        {/*<input hidden accept="image/*" multiple type="file"/>*/}
         <Button
           sx={{
             textTransform: "none",
@@ -85,11 +84,8 @@ const VerifyBox = (props: VerifyBoxProps) => {
             position: "relative",
           }}
         >
-          {selectedFile && (
-            <img
-              src={props.disabled ? props.imageUrl : preview}
-              style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }}
-            />
+          {(!imageUrl ? selectedFile : true) && (
+            <img src={preview} style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }} />
           )}
           <label
             style={{
@@ -103,8 +99,8 @@ const VerifyBox = (props: VerifyBoxProps) => {
             <input
               type="file"
               onChange={onSelectFile}
-              disabled={props.disabled}
-              accept="image/png, image/jpeg, image/jpeg"
+              disabled={!!imageUrl}
+              accept="image/png, image/jpeg, image/jpeg, image/gif"
             />
           </label>
           <Box
@@ -124,12 +120,69 @@ const VerifyBox = (props: VerifyBoxProps) => {
               <SvgIcon src="/assets/imgs/icon/document_upload.svg" />
             </Box>
             <Typography color={"#9A9A9A"} lineHeight={"18.75px"} fontSize={{ md: 16, sm: 14, xs: 16 }}>
-              {props.imgDesc}
+              {imgDesc}
             </Typography>
           </Box>
         </Button>
       </Box>
     </Box>
+  );
+};
+
+interface VerifyBoxSkeletonProps {
+  title: string;
+  instruction: string;
+}
+const VerifyBoxSkeleton = (props: VerifyBoxSkeletonProps) => {
+  const { title, instruction } = props;
+
+  return (
+    <Box height={"100%"}>
+      <Box>
+        <Typography fontWeight={500} fontSize={20} color={"#000000"}>
+          {title}
+        </Typography>
+        <Typography mt={2} mb={5} lineHeight={"18.75px"}>
+          {instruction}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          width: { md: "100%" },
+          aspectRatio: "3/2",
+          borderRadius: 4,
+          maxWidth: 385,
+          display: "flex",
+        }}
+      >
+        <Skeleton
+          variant={"rounded"}
+          sx={{
+            width: "100%",
+            height: "100%",
+            borderRadius: 4,
+          }}
+        ></Skeleton>
+      </Box>
+    </Box>
+  );
+};
+
+const VerifyStatus = (props: { color: string; icon: any; text: string }) => {
+  return (
+    <Button
+      variant="outlined"
+      startIcon={props.icon}
+      sx={{
+        px: 7,
+        color: props.color,
+        border: "none",
+        background: "#fff",
+        "&:hover": { borderColor: props.color, background: "#fff" },
+      }}
+    >
+      {props.text}
+    </Button>
   );
 };
 
@@ -163,13 +216,7 @@ export default function Verification() {
 
   // console.log(`data ${JSON.stringify(data)}`);
   const [selectedFiles, setSelectedFiles] = React.useState<FileUpload[]>([]);
-  const [verification, setVerification] = React.useState<VerifyState>("NONE");
-  // console.log(`verification ${data["front_id"]}`);
-  React.useEffect(() => {
-    if (data?.status) {
-      setVerification(data?.status);
-    }
-  }, [verification]);
+  const [pendingStatus, setPendingStatus] = React.useState<boolean | null>();
 
   // console.log(`selectedFiles length ${JSON.stringify(selectedFiles)}`);
   const handleSelectFile = (file: FileUpload) => {
@@ -179,7 +226,7 @@ export default function Verification() {
   const handleUploadFiles = async () => {
     const success = await uploadImages(selectedFiles);
     if (success) {
-      setVerification("PENDING");
+      setPendingStatus(true);
     }
   };
 
@@ -192,26 +239,50 @@ export default function Verification() {
       <Grid container spacing={5}>
         {verifyBoxes.map((i, idx) => (
           <Grid key={idx} item md={6} xs={12}>
-            <VerifyBox
-              title={i.title}
-              instruction={i.instruction}
-              imgDesc={i.imgDesc}
-              fieldName={i.fieldName}
-              handleSelectFile={handleSelectFile}
-              imageUrl={data ? data[i.fieldName] : null}
-              disabled={!!data}
-            />
+            {loading ? (
+              <VerifyBoxSkeleton title={i.title} instruction={i.instruction} />
+            ) : (
+              <VerifyBox
+                title={i.title}
+                instruction={i.instruction}
+                imgDesc={i.imgDesc}
+                fieldName={i.fieldName}
+                handleSelectFile={handleSelectFile}
+                imageUrl={data && data.status !== "FAILED" ? data[i.fieldName] : null}
+              />
+            )}
           </Grid>
         ))}
       </Grid>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} pt={11}>
         <Typography pb={5}>Thời gian xác minh danh tính có thể kéo dài 1 - 2 ngày.</Typography>
-        {verification === "NONE" && (
-          <Button variant="contained" onClick={handleUploadFiles}>
-            Xác minh danh tính
-          </Button>
+        {loading ? (
+          <Skeleton variant={"rounded"} />
+        ) : pendingStatus ? (
+          <VerifyStatus color={"#F7CB73"} icon={<HourglassTopIcon />} text={"Đang xử lý"} />
+        ) : (
+          <>
+            {!data?.status && (
+              <Button variant="contained" onClick={handleUploadFiles}>
+                Xác minh danh tính
+              </Button>
+            )}
+            {data?.status === "PENDING" && (
+              <VerifyStatus color={"#F7CB73"} icon={<HourglassTopIcon />} text={"Đang xử lý"} />
+            )}
+            {data?.status === "SUCCESS" && (
+              <VerifyStatus color={"#077E8C"} icon={<CheckCircleOutlineIcon />} text={"Đã xác minh"} />
+            )}
+            {data?.status === "FAILED" && (
+              <Box display={"flex"}>
+                <VerifyStatus color={"#D9512C"} icon={<ErrorOutlineIcon />} text={"Thất bại"} />
+                <Button variant="contained" onClick={handleUploadFiles} sx={{ ml: 4, px: 7 }}>
+                  Xác minh lại
+                </Button>
+              </Box>
+            )}
+          </>
         )}
-        {verification === "PENDING" && <Button variant="outlined">Đang xử lý</Button>}
       </Box>
     </Box>
   );

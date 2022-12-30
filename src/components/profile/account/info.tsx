@@ -186,6 +186,7 @@ export default function InfoForm() {
     });
   }
 
+  // TODO: sửa loading
   if (loadingAccountInfo) return <Box>Loading...</Box>;
   if (errorAccountInfo) return <Box>Error! ${errorAccountInfo.message}</Box>;
   return (

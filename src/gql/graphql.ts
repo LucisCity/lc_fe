@@ -18,17 +18,14 @@ export type Scalars = {
 export type AccountInfo = {
   __typename?: 'AccountInfo';
   date_of_birth?: Maybe<Scalars['DateTime']>;
-  display_name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   family_name?: Maybe<Scalars['String']>;
   given_name?: Maybe<Scalars['String']>;
-  user_id: Scalars['ID'];
   user_name?: Maybe<Scalars['String']>;
 };
 
 export type AccountInfoUpdateInput = {
   date_of_birth?: InputMaybe<Scalars['DateTime']>;
-  display_name?: InputMaybe<Scalars['String']>;
   family_name?: InputMaybe<Scalars['String']>;
   given_name?: InputMaybe<Scalars['String']>;
   user_name?: InputMaybe<Scalars['String']>;
@@ -52,6 +49,12 @@ export type BlockchainTransaction = {
   tx_hash: Scalars['String'];
   updated_at: Scalars['DateTime'];
 };
+
+export enum KycStatus {
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Success = 'SUCCESS'
+}
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -79,7 +82,7 @@ export type Mutation = {
   /** set pool wallet */
   setPoolWallet: Scalars['Boolean'];
   /** update account info */
-  updateAccountInfo?: Maybe<Scalars['Boolean']>;
+  updateAccountInfo?: Maybe<ProfileGql>;
   /** Verify email */
   verifyEmail: Scalars['String'];
   /** withdraw balance */
@@ -305,6 +308,8 @@ export type Query = {
   getAccountInfo?: Maybe<AccountInfo>;
   /** get balance */
   getBalance: Wallet;
+  /** get kyc verification images */
+  getKycImages?: Maybe<UserKycVerification>;
   /** Get list referral user */
   getListReferralUser: Array<ReferralDataResponse>;
   /** get all notis */
@@ -350,6 +355,7 @@ export type ReferralDataResponse = {
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   invited_by?: Maybe<Scalars['String']>;
+  kyc_verification?: Maybe<Array<UserKycVerification>>;
   notification?: Maybe<Array<Notification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
@@ -450,6 +456,7 @@ export type User = {
   google_id?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   invited_by?: Maybe<Scalars['String']>;
+  kyc_verification?: Maybe<Array<UserKycVerification>>;
   notification?: Maybe<Array<Notification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
@@ -463,6 +470,7 @@ export type User = {
 
 export type UserCount = {
   __typename?: 'UserCount';
+  kyc_verification: Scalars['Int'];
   notification: Scalars['Int'];
 };
 
@@ -471,11 +479,24 @@ export type UserGql = {
   _count: UserCount;
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  kyc_verification?: Maybe<Array<UserKycVerification>>;
   notification?: Maybe<Array<Notification>>;
   profile: ProfileGql;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
   wallet?: Maybe<Wallet>;
+};
+
+export type UserKycVerification = {
+  __typename?: 'UserKycVerification';
+  back_id: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  front_id: Scalars['String'];
+  holding_id: Scalars['String'];
+  status: KycStatus;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  user_id: Scalars['ID'];
 };
 
 export type UserProfile = {
