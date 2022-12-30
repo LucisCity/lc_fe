@@ -38,7 +38,7 @@ export function useUserKyc() {
     // Send formData object
     const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
     if (graphqlUrl) {
-      const postUrl = graphqlUrl.substring(0, graphqlUrl.lastIndexOf("/")) + "/upload/kyc";
+      const postUrl = graphqlUrl.substring(0, graphqlUrl.lastIndexOf("/")) + "/api/upload_kyc";
       // console.log(`postUrl ${postUrl}`);
       await axios
         .post(postUrl, formData, {
