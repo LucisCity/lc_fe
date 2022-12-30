@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useWithdraw } from "../../../hooks/profile/use_withdraw";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
@@ -41,7 +41,7 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
 
   return (
     <div>
-      <Dialog open={true} fullWidth maxWidth={"xs"} keepMounted={false}>
+      <Dialog open={true} fullWidth maxWidth={"xs"}>
         <DialogTitle>Rút tiền về ví</DialogTitle>
         <form onSubmit={handleSubmit(onWithdraw)}>
           <DialogContent>
@@ -56,6 +56,9 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
               fullWidth
               type={"number"}
               variant="outlined"
+              InputProps={{
+                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              }}
               error={errors.amount?.type === "required" || errors.amount?.type === "maxAmount"}
               helperText={(errors.amount?.message as string) ?? ""}
             />

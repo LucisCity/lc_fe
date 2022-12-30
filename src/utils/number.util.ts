@@ -20,7 +20,7 @@ export function formatNumber(value: number | string | undefined, option?: Intl.N
 
 export function formatCurrency(value: number | string, option?: Intl.NumberFormatOptions | undefined) {
   return (
-    "$ " +
+    "$" +
     value.toLocaleString(undefined, {
       maximumFractionDigits: 3,
       ...option,

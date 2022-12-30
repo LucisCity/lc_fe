@@ -15,6 +15,7 @@ import moment from "moment/moment";
 import { TransactionStatus } from "../../../gql/graphql";
 import TransactionHistoryStore from "../../../store/transaction_history.store";
 import { observer } from "mobx-react-lite";
+import { formatCurrency } from "../../../utils/number.util";
 
 interface ITableData {
   id?: string;
@@ -106,7 +107,7 @@ const Row = ({ row }: { row: ITableData }) => {
       </TableCell>
       <TableCell style={{ width: "10%", textAlign: "left", color: "#504C67" }} scope="row">
         <Typography fontWeight={500} fontSize={16} color={amountColor(row.type)}>
-          {`${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} $ ${row.amount}`}
+          {`${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
         </Typography>
       </TableCell>
       <TableCell style={{ width: "20%", textAlign: "right" }} scope="row">
