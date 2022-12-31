@@ -13,7 +13,6 @@ import { observer } from "mobx-react-lite";
 import UserStore from "../../../../store/user.store";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
 interface TabProps {
@@ -301,7 +300,6 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
                     </>
                   ) : (
                     <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                      <CheckCircleOutlineIcon />
                       Xác thực tài khoản
                     </Typography>
                   )}
