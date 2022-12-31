@@ -81,10 +81,14 @@ export type Mutation = {
   sendTransaction: Scalars['Boolean'];
   /** set pool wallet */
   setPoolWallet: Scalars['Boolean'];
+  /** Toggle follow project */
+  toggleFollowProject?: Maybe<Scalars['Boolean']>;
   /** update account info */
   updateAccountInfo?: Maybe<ProfileGql>;
   /** Verify email */
   verifyEmail: Scalars['String'];
+  /** Vote project */
+  voteProject?: Maybe<Scalars['Boolean']>;
   /** withdraw balance */
   withdrawBalance: TransactionLog;
 };
@@ -154,6 +158,11 @@ export type MutationSetPoolWalletArgs = {
 };
 
 
+export type MutationToggleFollowProjectArgs = {
+  projectId: Scalars['String'];
+};
+
+
 export type MutationUpdateAccountInfoArgs = {
   input: AccountInfoUpdateInput;
 };
@@ -161,6 +170,11 @@ export type MutationUpdateAccountInfoArgs = {
 
 export type MutationVerifyEmailArgs = {
   token: Scalars['String'];
+};
+
+
+export type MutationVoteProjectArgs = {
+  input: RateProjectInput;
 };
 
 
@@ -212,7 +226,6 @@ export type Project = {
   created_at: Scalars['DateTime'];
   enable: Scalars['Boolean'];
   ended?: Maybe<Scalars['Boolean']>;
-  favorites?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -220,10 +233,10 @@ export type Project = {
   price: Scalars['Int'];
   profile?: Maybe<ProjectProfile>;
   profit_period: Scalars['Int'];
-  rate?: Maybe<Scalars['Decimal']>;
   take_profit_at: Scalars['DateTime'];
+  thumbnail: Scalars['String'];
   title: Scalars['String'];
-  total_rate?: Maybe<Scalars['Int']>;
+  type: ProjectType;
   updated_at: Scalars['DateTime'];
   wait_transfer_at?: Maybe<Scalars['DateTime']>;
 };
@@ -238,11 +251,14 @@ export type ProjectEventGql = {
   title: Scalars['String'];
 };
 
+export type ProjectFilter = {
+  type?: InputMaybe<ProjectType>;
+};
+
 export type ProjectGql = {
   __typename?: 'ProjectGql';
   address: Scalars['String'];
   ended?: Maybe<Scalars['Boolean']>;
-  favorites?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -250,10 +266,10 @@ export type ProjectGql = {
   price: Scalars['Int'];
   profile: ProjectProfileGql;
   profit_period: Scalars['Int'];
-  rate?: Maybe<Scalars['Decimal']>;
   take_profit_at: Scalars['DateTime'];
+  thumbnail: Scalars['String'];
   title: Scalars['String'];
-  total_rate?: Maybe<Scalars['Int']>;
+  type: ProjectType;
   wait_transfer_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -281,24 +297,38 @@ export type ProjectProfile = {
   __typename?: 'ProjectProfile';
   created_at: Scalars['DateTime'];
   events: Scalars['JSON'];
+  follows: Scalars['Int'];
   hightlight?: Maybe<Scalars['String']>;
   medias: Scalars['JSON'];
-  offers: Scalars['JSON'];
+  offers?: Maybe<Scalars['String']>;
   project: Project;
   project_id: Scalars['String'];
   reason_invest?: Maybe<Scalars['String']>;
+  total_vote: Scalars['Int'];
   updated_at: Scalars['DateTime'];
+  vote: Scalars['Decimal'];
 };
 
 export type ProjectProfileGql = {
   __typename?: 'ProjectProfileGql';
   events?: Maybe<Array<ProjectEventGql>>;
+  follows: Scalars['Int'];
   hightlight?: Maybe<Scalars['String']>;
   medias?: Maybe<Array<ProjectMediaGql>>;
   offers?: Maybe<Array<ProjectOfferGql>>;
   project_id: Scalars['String'];
   reason_invest?: Maybe<Scalars['String']>;
+  total_vote: Scalars['Int'];
+  vote: Scalars['Decimal'];
 };
+
+export enum ProjectType {
+  Homestay = 'HOMESTAY',
+  Hotel = 'HOTEL',
+  House = 'HOUSE',
+  TouristVillage = 'TOURIST_VILLAGE',
+  Villa = 'VILLA'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -318,8 +348,11 @@ export type Query = {
   getOneTimePassword: Scalars['String'];
   /** Get list referral user */
   getProject: ProjectGql;
+  /** Get related project */
+  getProjects: Array<ProjectGql>;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
+  isVoted: Scalars['Boolean'];
   /** Auth resolver */
   temp: Scalars['String'];
 };
@@ -341,9 +374,24 @@ export type QueryGetProjectArgs = {
 };
 
 
+export type QueryGetProjectsArgs = {
+  filter?: InputMaybe<ProjectFilter>;
+};
+
+
 export type QueryGetTransactionHistoryArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryIsVotedArgs = {
+  projectId: Scalars['String'];
+};
+
+export type RateProjectInput = {
+  projectId: Scalars['String'];
+  value: Scalars['Float'];
 };
 
 export type ReferralDataResponse = {
@@ -493,10 +541,11 @@ export type UserKycVerification = {
   created_at: Scalars['DateTime'];
   front_id: Scalars['String'];
   holding_id: Scalars['String'];
+  id: Scalars['ID'];
   status: KycStatus;
   updated_at: Scalars['DateTime'];
   user: User;
-  user_id: Scalars['ID'];
+  user_id: Scalars['String'];
 };
 
 export type UserProfile = {

@@ -255,8 +255,9 @@ export const ProfileNotification = () => {
       {getNotificationsLoading ? (
         <Box mt={1}>
           <PaginatedList rowsPerPage={5}>
-            {Array.from({ length: 5 }).map(() => (
+            {Array.from({ length: 5 }).map((idx) => (
               <Skeleton
+                key={`notification_loading_${idx}`}
                 height={100}
                 variant={"rounded"}
                 sx={{

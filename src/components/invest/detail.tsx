@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDownload } from "../../hooks/use_download";
+import { formatNumber } from "../../utils/number.util";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
 import InvestImageBox from "./components/detail/image_box";
@@ -15,7 +16,7 @@ import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
-  const { detail } = useInvestDetail();
+  const { detail, onToggleFollow, relateProjects } = useInvestDetail();
   const { download } = useDownload();
 
   return (
@@ -37,13 +38,14 @@ export function InvestDetailPage() {
       >
         <InvestDetailHeader
           title={detail?.title}
-          rate={detail?.rate}
-          totalRate={detail?.total_rate ?? 0}
+          vote={detail?.profile.vote}
+          totalVote={detail?.profile.total_vote ?? 0}
           address={detail?.address}
-          favorites={detail?.favorites ?? 0}
+          follows={detail?.profile.follows ?? 0}
+          toggleFollow={onToggleFollow}
         />
         <InvestImageBox medias={detail?.profile.medias ?? []} location={detail?.location} address={detail?.address} />
-        <InvestDetailSteper />
+        <InvestDetailSteper detail={detail} />
         <Box
           sx={{
             width: "100%",
@@ -157,10 +159,17 @@ export function InvestDetailPage() {
             gap: 6,
           }}
         >
-          {fakeData.map((item, index) => {
+          {relateProjects?.map((item, index) => {
             return (
-              <Box key={"invest" + index}>
-                <Card key={"invest" + index} {...item} isCollapseContent={false} />
+              <Box key={`relate_project_${item.id}`}>
+                <Card
+                  key={"invest" + index}
+                  isCollapseContent={false}
+                  address={item.address}
+                  image={item.thumbnail}
+                  name={item.title}
+                  price={formatNumber(item.price)}
+                />
               </Box>
             );
           })}
@@ -198,56 +207,5 @@ const fakeData = [
     price: "123532",
     image:
       "https://statics.vincom.com.vn/vincom-tttm/gioi_thieu/anh_bai_viet/Hinh-anh-cac-thuong-hieu-o-Vincom-Ba-Trieu-so-1_1632322535.jpeg",
-  },
-  {
-    label: "NovaLand",
-    name: "NovaLand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "624542",
-    image:
-      "https://cafefcdn.com/thumb_w/650/203337114487263232/2022/12/9/photo1670561661183-16705616612862130643853.jpeg",
-  },
-  {
-    label: "Ocenpark",
-    name: "Ocenpark",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123537",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Royal City",
-    name: "Royal City",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "343632",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Phú Nhuận",
-    name: "Phú Nhuận",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53638",
-    image: "https://batdongsanhungthinh.com.vn/wp-content/uploads/2017/10/Orchard-parkview-1.jpg",
-  },
-  {
-    label: "Grandland",
-    name: "Grandland",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "223032",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Aqualand",
-    name: "Aqualand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "127532",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
-  },
-  {
-    label: "Thanh Bình Park",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
   },
 ];
