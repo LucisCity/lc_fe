@@ -1,59 +1,18 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { FILTER_PROJECT_QUERY, PROJECT_DETAIL_QUERY, PROJECT_FOLLOW_MUT } from "../../../config/api/invest.config";
 import { ProjectGql } from "../../../gql/graphql";
 import projectStore from "../../../store/project.store";
+import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
-
-const PROJECT_DETAIL_QUERY = gql`
-  query getProject($id: String!) {
-    getProject(id: $id) {
-      id
-      title
-      price
-      address
-      location
-      policy_link
-      open_sale_at
-      take_profit_at
-      wait_transfer_at
-      ended
-      profit_period
-      profile {
-        project_id
-        hightlight
-        reason_invest
-        vote
-        total_vote
-        follows
-        medias {
-          url
-          width
-          height
-        }
-        offers {
-          icon
-          title
-        }
-        events {
-          start_at
-          title
-          description
-        }
-      }
-    }
-  }
-`;
-
-const PROJECT_FOLLOW_MUT = gql`
-  mutation toggleFollowProject($projectId: String!) {
-    toggleFollowProject(projectId: $projectId)
-  }
-`;
 
 export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const detail = useQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {
@@ -71,6 +30,13 @@ export default function useInvestDetail() {
     // fetchPolicy: "cache-and-network",
   });
 
+  const [getRelateProjects, relateProjects] = useLazyQuery<{ getProjects: ProjectGql[] }>(FILTER_PROJECT_QUERY, {
+    onError: (e) => {
+      const errors = handleGraphqlErrors(e);
+      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+    },
+  });
+
   const [toggleFollowProject, { loading }] = useMutation(PROJECT_FOLLOW_MUT, {
     onCompleted: () => {
       enqueueSnackbar("Request successfully!", {
@@ -86,8 +52,25 @@ export default function useInvestDetail() {
     },
   });
 
+  useEffect(() => {
+    if (detail.data?.getProject && !relateProjects.data?.getProjects) {
+      getRelateProjects({
+        variables: {
+          filter: {
+            type: detail.data.getProject.type,
+          },
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detail.data, relateProjects.data]);
+
   function onToggleFollow() {
     const projectId = detail.data?.getProject.id;
+    if (!userStore.isLoggedIn) {
+      router.push("/login");
+      return;
+    }
     if (!projectId || loading) {
       return;
     }
@@ -100,6 +83,7 @@ export default function useInvestDetail() {
 
   return {
     detail: detail.data?.getProject,
+    relateProjects: relateProjects.data?.getProjects,
     form,
     onToggleFollow,
   };

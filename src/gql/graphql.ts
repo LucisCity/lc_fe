@@ -234,7 +234,9 @@ export type Project = {
   profile?: Maybe<ProjectProfile>;
   profit_period: Scalars['Int'];
   take_profit_at: Scalars['DateTime'];
+  thumbnail: Scalars['String'];
   title: Scalars['String'];
+  type: ProjectType;
   updated_at: Scalars['DateTime'];
   wait_transfer_at?: Maybe<Scalars['DateTime']>;
 };
@@ -249,6 +251,10 @@ export type ProjectEventGql = {
   title: Scalars['String'];
 };
 
+export type ProjectFilter = {
+  type?: InputMaybe<ProjectType>;
+};
+
 export type ProjectGql = {
   __typename?: 'ProjectGql';
   address: Scalars['String'];
@@ -261,7 +267,9 @@ export type ProjectGql = {
   profile: ProjectProfileGql;
   profit_period: Scalars['Int'];
   take_profit_at: Scalars['DateTime'];
+  thumbnail: Scalars['String'];
   title: Scalars['String'];
+  type: ProjectType;
   wait_transfer_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -314,6 +322,14 @@ export type ProjectProfileGql = {
   vote: Scalars['Decimal'];
 };
 
+export enum ProjectType {
+  Homestay = 'HOMESTAY',
+  Hotel = 'HOTEL',
+  House = 'HOUSE',
+  TouristVillage = 'TOURIST_VILLAGE',
+  Villa = 'VILLA'
+}
+
 export type Query = {
   __typename?: 'Query';
   /** get unseen notis count */
@@ -332,6 +348,8 @@ export type Query = {
   getOneTimePassword: Scalars['String'];
   /** Get list referral user */
   getProject: ProjectGql;
+  /** Get related project */
+  getProjects: Array<ProjectGql>;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
   isVoted: Scalars['Boolean'];
@@ -353,6 +371,11 @@ export type QueryGetOneTimePasswordArgs = {
 
 export type QueryGetProjectArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetProjectsArgs = {
+  filter?: InputMaybe<ProjectFilter>;
 };
 
 

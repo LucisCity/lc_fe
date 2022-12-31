@@ -1,22 +1,12 @@
-import { gql, useApolloClient, useLazyQuery, useMutation } from "@apollo/client";
+import { useApolloClient, useLazyQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { PROJECT_CHECK_VOTE_QUERY, PROJECT_VOTE_MUT } from "../../../config/api/invest.config";
 import useMenu from "../../../hooks/use_menu";
 import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 
-const PROJECT_VOTE_MUT = gql`
-  mutation voteProject($input: RateProjectInput!) {
-    voteProject(input: $input)
-  }
-`;
-
-const PROJECT_CHECK_VOTE_QUERY = gql`
-  query isVoted($projectId: String!) {
-    isVoted(projectId: $projectId)
-  }
-`;
 // isVoted
 export default function useVote() {
   const menu = useMenu();
