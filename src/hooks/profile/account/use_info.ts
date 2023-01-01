@@ -2,6 +2,7 @@ import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
 import { AccountInfo } from "../../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import UserStore from "../../../store/user.store";
 
 export const GET_BALANCE = gql`
   query getBalance {
@@ -60,6 +61,7 @@ export function useUpdateAccountInfo(): {
 
   const [updateAccountInfo, { loading: accountInfoUpdating }] = useMutation(UPDATE_ACCOUNT_INFO, {
     onCompleted: (res) => {
+      UserStore.updateDisplayName(res?.updateAccountInfo.display_name);
       enqueueSnackbar("Cập nhật thông tin thành công", { variant: "success" });
     },
     onError: (e) => {

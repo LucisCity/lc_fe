@@ -30,6 +30,10 @@ class UserStore {
     this._user!.wallet = wallet;
   }
 
+  updateDisplayName(display_name: string) {
+    this._user!.profile.display_name = display_name;
+  }
+
   loadFromLocal() {
     if (typeof window == "undefined") {
       return;
