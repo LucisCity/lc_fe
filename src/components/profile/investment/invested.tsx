@@ -7,6 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import React from "react";
 import StackAnim from "../../anim/stack_anim";
 import PaginatedList from "../components/paginated_list";
+import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
 
 const fakeData = [
   {
@@ -71,11 +72,11 @@ const fakeData = [
 ];
 
 const fadeVariant = {
-  visible: {opacity: 1, y: 0},
-  hidden: {opacity: 0, y: 20},
+  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 20 },
 };
 
-const Icon = styled("img")(({theme}) => ({
+const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
   width: 10,
   height: 10,
@@ -89,15 +90,18 @@ interface IProps {
   image?: string;
 }
 
-const HighlightCard = (props: IProps) => {
+const InvestedCard = (props: IProps) => {
+  const { name } = props;
+  const href = `/invest/${name}`;
+
   return (
-    <Card sx={{borderRadius: 4}} elevation={0}>
-      <Link href={`/invest/${props.name}`}>
+    <Card sx={{ borderRadius: 4 }} elevation={0}>
+      <Link href={href}>
         <CardActionArea component={"div"}>
-          <Grid container sx={{px: 3, py: 4}} spacing={3}>
+          <Grid container sx={{ px: 3, py: 4 }} spacing={3}>
             <Grid item xs={12} sm={4}>
               <CardMedia
-                sx={{borderRadius: 4, maxHeight: 182, height: "100%"}}
+                sx={{ borderRadius: 4, maxHeight: 182, height: "100%" }}
                 component="img"
                 image={props.image}
                 alt="green iguana"
@@ -106,10 +110,10 @@ const HighlightCard = (props: IProps) => {
             <Grid item xs={12} sm={8} container spacing={3}>
               <Grid item sm={6} xs={12}>
                 <Box mb={1} display={"flex"} justifyContent={"space-between"} alignItems={"baseline"}>
-                  <Typography fontSize={{lg: 20, md: 18, sm: 16, xs: 20}} fontWeight={600}>
+                  <Typography fontSize={{ lg: 20, md: 18, sm: 16, xs: 20 }} fontWeight={600}>
                     {props.name}
                   </Typography>
-                  <Typography fontWeight={500} fontSize={{lg: 18, md: 16, sm: 14, sx: 18}} color={"#33E179"}>
+                  <Typography fontWeight={500} fontSize={{ lg: 18, md: 16, sm: 14, sx: 18 }} color={"#33E179"}>
                     ($230.02)
                   </Typography>
                 </Box>
@@ -117,23 +121,15 @@ const HighlightCard = (props: IProps) => {
                   {props.address}
                 </Typography>
               </Grid>
-              <Grid item sm={6} xs={12} display={{sm: "inline", xs: "flex"}}
-                    flexDirection={{sm: "column", xs: "row"}}>
-                <Box display={"flex"} justifyContent={{sm: "flex-end"}} width={{sm: "100%", xs: "50%"}}>
-                  <Button
-                    variant="contained"
-                    color={"secondary"}
-                    sx={(theme) => ({
-                      background: "rgba(0, 218, 87, 0.8)",
-                      color: "#fff",
-                      width: 80,
-                      height: 40,
-                      marginRight: 1,
-                      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-                    })}
-                  >
-                    <Typography whiteSpace={"nowrap"}>Sinh lời</Typography>
-                  </Button>
+              <Grid
+                item
+                sm={6}
+                xs={12}
+                display={{ sm: "inline", xs: "flex" }}
+                flexDirection={{ sm: "column", xs: "row" }}
+              >
+                <Box display={"flex"} justifyContent={{ sm: "flex-end" }} width={{ sm: "100%", xs: "50%" }}>
+                  <ProjectStatus status={ProjectSalePeriod.PROFITING} />
                   <Button
                     variant="contained"
                     color={"secondary"}
@@ -144,66 +140,70 @@ const HighlightCard = (props: IProps) => {
                       height: 40,
                       padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
                     })}
-                    endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt=""/>}
+                    endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
                   >
                     235
                   </Button>
                 </Box>
-                <Box mt={{sm: 3, xs: 4}} mb={{sm: 3}} width={{sm: "100%", xs: "50%"}}>
-                  <LinearProgress variant="determinate" value={30}/>
+                <Box mt={{ sm: 3, xs: 4 }} mb={{ sm: 3 }} width={{ sm: "100%", xs: "50%" }}>
+                  <LinearProgress variant="determinate" value={30} />
                 </Box>
               </Grid>
               <Grid item xs={6}>
-                <Box width={{md: "80%", xs: "100%"}}>
+                <Box width={{ md: "80%", xs: "100%" }}>
                   <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
-                      <Icon src="/assets/imgs/invest/icons/dollar.svg"/>
+                      <Icon src="/assets/imgs/invest/icons/dollar.svg" />
                       Tổng giá trị
                     </Typography>
-                    <Typography variant={"caption"} fontWeight={500}>${props.price}</Typography>
+                    <Typography variant={"caption"} fontWeight={500}>
+                      ${props.price}
+                    </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
                     <Typography variant={"caption"}>
-                      <Icon src="/assets/imgs/invest/icons/total_supply.svg"/>
+                      <Icon src="/assets/imgs/invest/icons/total_supply.svg" />
                       Tokens sở hữu
                     </Typography>
-                    <Typography variant={"caption"} fontWeight={500}>530</Typography>
+                    <Typography variant={"caption"} fontWeight={500}>
+                      530
+                    </Typography>
                   </Box>
                 </Box>
               </Grid>
               <Grid item xs={6}>
-                <Box width={{md: "80%", xs: "100%"}}>
+                <Box width={{ md: "80%", xs: "100%" }}>
                   <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
-                      <Icon src="/assets/imgs/invest/icons/home.svg"/>
+                      <Icon src="/assets/imgs/invest/icons/home.svg" />
                       Giá mua vào
                     </Typography>
-                    <Typography variant={"caption"} fontWeight={500}>$100.00</Typography>
+                    <Typography variant={"caption"} fontWeight={500}>
+                      $100.00
+                    </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
                     <Typography variant={"caption"}>
-                      <Icon src="/assets/imgs/invest/icons/sale.svg"/>
+                      <Icon src="/assets/imgs/invest/icons/sale.svg" />
                       Lợi nhuận
                     </Typography>
-                    <Typography variant={"caption"} fontWeight={500}>10%</Typography>
+                    <Typography variant={"caption"} fontWeight={500}>
+                      10%
+                    </Typography>
                   </Box>
                 </Box>
               </Grid>
               <Grid item xs={6}>
-                <Button variant="contained">
+                <Button href={`${href}#buy`} LinkComponent={Link} variant="contained">
                   Buy/Sell
                 </Button>
               </Grid>
               <Grid item xs={6}>
                 <Box display={"flex"}>
-                  <Button
-                    variant="contained"
-                    disabled
-                    sx={{mr: 1}}
-                  >
+                  <Button href={`${href}#vote`} LinkComponent={Link} variant="contained" sx={{ mr: 1 }}>
                     Vote
                   </Button>
-                  <Button variant="contained">
+                  <Button href={`${href}#claim`} LinkComponent={Link} variant="contained">
                     Claim
                   </Button>
                 </Box>
@@ -217,18 +217,17 @@ const HighlightCard = (props: IProps) => {
 };
 
 export default function InvestmentInvested() {
-
   return (
-    <React.Fragment>
+    <>
       <PaginatedList rowsPerPage={5}>
         {fakeData.map((i, idx) => (
-          <Box key={idx} px={{md: 4}} pt={{xs: 4}}>
+          <Box key={idx} px={{ md: 4 }} pt={{ xs: 4 }}>
             <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
-              <HighlightCard {...i} />
+              <InvestedCard {...i} />
             </StackAnim>
           </Box>
         ))}
       </PaginatedList>
-    </React.Fragment>
-  )
+    </>
+  );
 }

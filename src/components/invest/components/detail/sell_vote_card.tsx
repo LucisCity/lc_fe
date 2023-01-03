@@ -9,7 +9,7 @@ export default function SellVoteCard() {
   const [voted, setVoted] = useState(false);
 
   return (
-    <Box mt={6}>
+    <Box id={"vote"} mt={6}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h3">Vote bán</Typography>

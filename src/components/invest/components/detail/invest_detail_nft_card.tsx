@@ -6,6 +6,7 @@ import { NftInfoCard } from "../../../landing/nft_section";
 export default function InvestDetailNftCard() {
   return (
     <Box
+      id={"buy"}
       sx={{
         width: ["100%", "404px"],
         background: "white",

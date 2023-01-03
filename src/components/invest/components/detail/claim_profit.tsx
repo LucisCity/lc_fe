@@ -6,7 +6,7 @@ type Props = {
 // DCDCDC
 export default function ClaimProfitCard(props: Props) {
   return (
-    <Box mt={6}>
+    <Box id={"claim"} mt={6}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h3">Nhận lợi nhuận</Typography>
