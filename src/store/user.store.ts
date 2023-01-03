@@ -30,9 +30,11 @@ class UserStore {
     this._user!.wallet = wallet;
   }
 
+  /* eslint-disable */
   updateDisplayName(display_name: string) {
     this._user!.profile.display_name = display_name;
   }
+  /* eslint-enable */
 
   loadFromLocal() {
     if (typeof window == "undefined") {
