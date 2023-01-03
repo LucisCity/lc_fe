@@ -4,6 +4,47 @@ import { useSnackbar } from "notistack";
 import { ProjectGql } from "../../gql/graphql";
 import { useState } from "react";
 
+const GET_INVESTED_PROJECTS = gql`
+  query investedProjects {
+    investedProjects {
+      id
+      title
+      price
+      thumbnail
+      address
+      location
+      policy_link
+      open_sale_at
+      take_profit_at
+      wait_transfer_at
+      ended
+      profit_period
+      profile {
+        follows
+      }
+    }
+  }
+`;
+
+export const useInvestedProject = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [investedProjects, setInvestedProjects] = useState<ProjectGql[]>([]);
+  const { loading } = useQuery<{ investedProjects: ProjectGql[] }>(GET_INVESTED_PROJECTS, {
+    onCompleted: (res) => {
+      setInvestedProjects(res?.investedProjects);
+    },
+    onError: (e) => {
+      const errors = handleGraphqlErrors(e);
+      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+    },
+  });
+
+  return {
+    loading,
+    investedProjects,
+  };
+};
+
 const GET_FOLLOWING_PROJECTS = gql`
   query followingProjects {
     followingProjects {

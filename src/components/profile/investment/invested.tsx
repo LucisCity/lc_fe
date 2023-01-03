@@ -1,80 +1,14 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import Link from "next/link";
-import { Button, Card, CardActionArea, LinearProgress, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, LinearProgress, Skeleton, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import React from "react";
-import StackAnim from "../../anim/stack_anim";
 import PaginatedList from "../components/paginated_list";
 import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
-
-const fakeData = [
-  {
-    label: "VincomBaTrieu",
-    name: "VincomBaTrieu",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123532",
-    image:
-      "https://statics.vincom.com.vn/vincom-tttm/gioi_thieu/anh_bai_viet/Hinh-anh-cac-thuong-hieu-o-Vincom-Ba-Trieu-so-1_1632322535.jpeg",
-  },
-  {
-    label: "NovaLand",
-    name: "NovaLand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "624542",
-    image:
-      "https://cafefcdn.com/thumb_w/650/203337114487263232/2022/12/9/photo1670561661183-16705616612862130643853.jpeg",
-  },
-  {
-    label: "Ocenpark",
-    name: "Ocenpark",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123537",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Royal City",
-    name: "Royal City",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "343632",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Phú Nhuận",
-    name: "Phú Nhuận",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53638",
-    image: "https://batdongsanhungthinh.com.vn/wp-content/uploads/2017/10/Orchard-parkview-1.jpg",
-  },
-  {
-    label: "Grandland",
-    name: "Grandland",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "223032",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Aqualand",
-    name: "Aqualand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "127532",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
-  },
-  {
-    label: "Thanh Bình Park",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-];
-
-const fadeVariant = {
-  visible: { opacity: 1, y: 0 },
-  hidden: { opacity: 0, y: 20 },
-};
+import { useInvestedProject } from "../../../hooks/profile/use_investment";
+import { ProjectGql } from "../../../gql/graphql";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -82,17 +16,32 @@ const Icon = styled("img")(({ theme }) => ({
   height: 10,
 }));
 
-interface IProps {
-  isCollapseContent?: boolean;
-  name?: string;
-  address?: string;
-  price?: string;
-  image?: string;
-}
+const InvestedCard = (props: ProjectGql) => {
+  /* eslint-disable */
+  const {
+    id,
+    title,
+    thumbnail,
+    address,
+    price,
+    open_sale_at: openSaleAt,
+    take_profit_at: takeProfitAt,
+    wait_transfer_at: waitTransferAt,
+    ended,
+    profile: { follows },
+  } = props;
+  /* eslint-enable */
+  const salePeriod = ended
+    ? ProjectSalePeriod.CLOSED
+    : waitTransferAt && new Date() > new Date(waitTransferAt)
+    ? ProjectSalePeriod.TRANSFERRING
+    : takeProfitAt && new Date() > new Date(takeProfitAt)
+    ? ProjectSalePeriod.PROFITING
+    : openSaleAt && new Date() > new Date(openSaleAt)
+    ? ProjectSalePeriod.OPEN
+    : ProjectSalePeriod.UPCOMING;
 
-const InvestedCard = (props: IProps) => {
-  const { name } = props;
-  const href = `/invest/${name}`;
+  const href = `/invest/${id}`;
 
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>
@@ -103,7 +52,7 @@ const InvestedCard = (props: IProps) => {
               <CardMedia
                 sx={{ borderRadius: 4, maxHeight: 182, height: "100%" }}
                 component="img"
-                image={props.image}
+                image={thumbnail}
                 alt="green iguana"
               />
             </Grid>
@@ -111,14 +60,14 @@ const InvestedCard = (props: IProps) => {
               <Grid item sm={6} xs={12}>
                 <Box mb={1} display={"flex"} justifyContent={"space-between"} alignItems={"baseline"}>
                   <Typography fontSize={{ lg: 20, md: 18, sm: 16, xs: 20 }} fontWeight={600}>
-                    {props.name}
+                    {title}
                   </Typography>
                   <Typography fontWeight={500} fontSize={{ lg: 18, md: 16, sm: 14, sx: 18 }} color={"#33E179"}>
                     ($230.02)
                   </Typography>
                 </Box>
                 <Typography color="text.secondary" lineHeight={1.4} fontSize={12}>
-                  {props.address}
+                  {address}
                 </Typography>
               </Grid>
               <Grid
@@ -129,7 +78,7 @@ const InvestedCard = (props: IProps) => {
                 flexDirection={{ sm: "column", xs: "row" }}
               >
                 <Box display={"flex"} justifyContent={{ sm: "flex-end" }} width={{ sm: "100%", xs: "50%" }}>
-                  <ProjectStatus status={ProjectSalePeriod.PROFITING} />
+                  <ProjectStatus status={salePeriod} />
                   <Button
                     variant="contained"
                     color={"secondary"}
@@ -142,7 +91,7 @@ const InvestedCard = (props: IProps) => {
                     })}
                     endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
                   >
-                    235
+                    {follows}
                   </Button>
                 </Box>
                 <Box mt={{ sm: 3, xs: 4 }} mb={{ sm: 3 }} width={{ sm: "100%", xs: "50%" }}>
@@ -157,7 +106,7 @@ const InvestedCard = (props: IProps) => {
                       Tổng giá trị
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      ${props.price}
+                      ${price}
                     </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
@@ -217,17 +166,33 @@ const InvestedCard = (props: IProps) => {
 };
 
 export default function InvestmentInvested() {
+  const { loading, investedProjects } = useInvestedProject();
   return (
     <>
-      <PaginatedList rowsPerPage={5}>
-        {fakeData.map((i, idx) => (
-          <Box key={idx} px={{ md: 4 }} pt={{ xs: 4 }}>
-            <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
+      {loading ? (
+        <PaginatedList rowsPerPage={5}>
+          {Array.from({ length: 5 }).map((i, idx) => (
+            <Box key={idx} px={{ md: 4 }} pt={{ xs: 4 }}>
+              <Skeleton
+                key={`notification_loading_${idx}`}
+                variant={"rounded"}
+                sx={{
+                  borderRadius: 4,
+                  height: { sm: 205, xs: 430 },
+                }}
+              />
+            </Box>
+          ))}
+        </PaginatedList>
+      ) : (
+        <PaginatedList rowsPerPage={5}>
+          {investedProjects.map((i, idx) => (
+            <Box key={idx} px={{ md: 4 }} pt={{ xs: 4 }}>
               <InvestedCard {...i} />
-            </StackAnim>
-          </Box>
-        ))}
-      </PaginatedList>
+            </Box>
+          ))}
+        </PaginatedList>
+      )}
     </>
   );
 }
