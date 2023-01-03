@@ -30,8 +30,8 @@ class UserStore {
     this._user!.wallet = wallet;
   }
 
-  updateDisplayName(display_name: string) {
-    this._user!.profile.display_name = display_name;
+  updateDisplayName(displayName: string) {
+    this._user!.profile.display_name = displayName;
   }
 
   loadFromLocal() {
