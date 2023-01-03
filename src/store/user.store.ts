@@ -31,6 +31,7 @@ class UserStore {
   }
 
   updateDisplayName(displayName: string) {
+    // eslint-disable-next-line
     this._user!.profile.display_name = displayName;
   }
 
