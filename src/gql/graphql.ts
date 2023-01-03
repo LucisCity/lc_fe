@@ -334,6 +334,8 @@ export type Query = {
   __typename?: 'Query';
   /** get unseen notis count */
   countUnseenNotifications?: Maybe<Scalars['Int']>;
+  /** get list of projects user is following */
+  followingProjects: Array<ProjectGql>;
   /** get account info */
   getAccountInfo?: Maybe<AccountInfo>;
   /** get balance */
@@ -352,7 +354,13 @@ export type Query = {
   getProjects: Array<ProjectGql>;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
+  /** get list of hot projects */
+  hotProjects: Array<ProjectGql>;
+  /** get list of projects user has invested */
+  investedProjects: Array<ProjectGql>;
   isVoted: Scalars['Boolean'];
+  /** get list of projects to recommend to user */
+  recommendedProjects: Array<ProjectGql>;
   /** Auth resolver */
   temp: Scalars['String'];
 };
