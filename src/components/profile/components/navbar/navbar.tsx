@@ -150,6 +150,116 @@ const MobileDropDown = (props: MobileDropDownProps) => {
   );
 };
 
+const AvatarBox = () => {
+  const profile = UserStore.user?.profile;
+  const verified = React.useMemo(() => !!UserStore.user?.kyc_verification?.find((i) => i.status === "SUCCESS"), []);
+  return (
+    <>
+      {UserStore.isLoggedIn ? (
+        <Grid px={{ sm: 2, xs: 0 }} py={{ sm: 0, xs: 4 }} container direction="row">
+          <Grid item sm={12} xs={6} display={"flex"} flexDirection={"column"} alignItems={"center"}>
+            <Box
+              sx={{
+                position: "relative",
+                m: "auto",
+                mt: { md: 7, sm: 3 },
+              }}
+            >
+              <Avatar
+                src={profile?.avatar?.toString() ?? ""}
+                sx={{
+                  height: "120px",
+                  width: "120px",
+                }}
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  zIndex: 5,
+                  height: "120px",
+                  width: "120px",
+                  top: 0,
+                  borderRadius: 100,
+                  "&:hover": {
+                    backgroundColor: "rgba(0,0,0,.4)",
+                    transition: "background-color .2s ease-in-out",
+                  },
+                }}
+              >
+                {/*Thay đổi*/}
+              </Box>
+            </Box>
+            {profile?.display_name ? (
+              <Typography variant={"h4"} fontWeight={400} pt={4} color={"#000"}>
+                {profile?.display_name}
+              </Typography>
+            ) : null}
+            <Box mt={{ sm: 4, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
+              <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
+            </Box>
+          </Grid>
+          <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
+            <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
+              <Tab
+                href={"/login"}
+                name={"Đăng xuất"}
+                svgSrc={"/assets/imgs/icon/log_out.svg"}
+                logoutButton={true}
+                topLogoutButton={true}
+                onClick={() => UserStore.logout()}
+              />
+              <Button
+                variant="outlined"
+                className={s.verifyButton}
+                sx={{
+                  color: "#6555EE",
+                  textTransform: "none",
+                  background: "rgba(255, 255, 255, 0.3)",
+                  mt: 5,
+                  textAlign: "center",
+                  width: { sm: "100%", xs: "auto" },
+                  py: { xs: 0 },
+                  px: 0,
+                  border: "1px solid",
+                }}
+                LinkComponent={Link}
+                href="/profile/account?tab=verification"
+              >
+                {verified ? (
+                  <>
+                    <VerifiedIcon />
+                    <Typography fontSize={{ xs: 16 }} fontWeight={500}>
+                      Đã xác thực
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography fontSize={{ xs: 16 }} fontWeight={500}>
+                    Xác thực tài khoản
+                  </Typography>
+                )}
+              </Button>
+            </Box>
+            <Divider
+              component={"div"}
+              variant="middle"
+              sx={(theme) => ({
+                [theme.breakpoints.down("sm")]: {
+                  display: "none",
+                },
+                mx: 3,
+                mt: 9,
+                mb: 9,
+                borderBottomWidth: 1,
+                borderBottomColor: "#fff",
+              })}
+            />
+          </Grid>
+        </Grid>
+      ) : null}
+    </>
+  );
+};
+
 const iconSrc = "/assets/imgs/icon/";
 
 interface Section {
@@ -193,7 +303,6 @@ const tabs: Section[] = [
 
 interface ProfileNavBarProps {
   activeSection?: string;
-  // isLogin: boolean;
 }
 
 export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
@@ -204,8 +313,6 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
       setActiveSection(`/profile/${router.query.section}`);
     }
   }, [router.query.section]);
-  const profile = UserStore.user?.profile;
-  const verified = React.useMemo(() => !!UserStore.user?.kyc_verification?.find((i) => i.status === "SUCCESS"), []);
   return (
     <Box
       sx={{
@@ -248,80 +355,7 @@ export const ProfileNavBar = observer((props: ProfileNavBarProps) => {
           height: "100%",
         }}
       >
-        {UserStore.isLoggedIn ? (
-          <Grid px={{ sm: 2, xs: 0 }} py={{ sm: 0, xs: 4 }} container direction="row">
-            <Grid item sm={12} xs={6} display={"flex"} flexDirection={"column"} alignItems={"center"}>
-              <Avatar
-                src={profile?.avatar?.toString() ?? ""}
-                sx={{ height: "120px", width: "120px", m: "auto", mt: { md: 7, sm: 3 } }}
-              />
-              {profile?.display_name ? (
-                <Typography variant={"h4"} fontWeight={400} pt={4} color={"#000"}>
-                  {profile?.display_name}
-                </Typography>
-              ) : null}
-              <Box mt={{ sm: 4, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
-                <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
-              </Box>
-            </Grid>
-            <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
-              <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
-                <Tab
-                  href={"/login"}
-                  name={"Đăng xuất"}
-                  svgSrc={"/assets/imgs/icon/log_out.svg"}
-                  logoutButton={true}
-                  topLogoutButton={true}
-                  onClick={() => UserStore.logout()}
-                />
-                <Button
-                  variant="outlined"
-                  className={s.verifyButton}
-                  sx={{
-                    color: "#6555EE",
-                    textTransform: "none",
-                    background: "rgba(255, 255, 255, 0.3)",
-                    mt: 5,
-                    textAlign: "center",
-                    width: { sm: "100%", xs: "auto" },
-                    py: { xs: 0 },
-                    px: 0,
-                    border: "1px solid",
-                  }}
-                  LinkComponent={Link}
-                  href="/profile/account?tab=verification"
-                >
-                  {verified ? (
-                    <>
-                      <VerifiedIcon />
-                      <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                        Đã xác thực
-                      </Typography>
-                    </>
-                  ) : (
-                    <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                      Xác thực tài khoản
-                    </Typography>
-                  )}
-                </Button>
-              </Box>
-              <Divider
-                component={"div"}
-                variant="middle"
-                sx={(theme) => ({
-                  [theme.breakpoints.down("sm")]: {
-                    display: "none",
-                  },
-                  mx: 3,
-                  mt: 9,
-                  mb: 9,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#fff",
-                })}
-              />
-            </Grid>
-          </Grid>
-        ) : null}
+        <AvatarBox />
         <Box
           sx={(theme) => ({
             [theme.breakpoints.up("sm")]: {
