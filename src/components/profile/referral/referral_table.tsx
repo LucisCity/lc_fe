@@ -86,20 +86,17 @@ export const ReferralTable = (props: ReferralTableProps) => {
   const { rowsPerPage } = props;
   const [page, setPage] = React.useState(0);
   const { listReferralUser, loading, claimReferral, setListReferralUser } = useReferral();
-  const data = React.useMemo(() => {
-    return (
-      listReferralUser?.map((item, index) => {
-        return {
-          id: item.referral_log?.user_id ?? `id-${index}`,
-          date: moment(item.referral_log?.created_at).format("DD/MM/YYYY, h:mm") ?? "--/--/--",
-          name: item.profile?.user_name ?? item.email ?? "no-email",
-          type: item.referral_log?.type === ReferralType.Register ? "Đăng ký" : "Mua thẻ",
-          reward: `$ ${item.reward}`,
-          isClaim: item.referral_log?.is_claim ?? true,
-        };
-      }) ?? []
-    );
-  }, [listReferralUser]);
+  const data =
+    listReferralUser?.map((item, index) => {
+      return {
+        id: item.referral_log?.user_id ?? `id-${index}`,
+        date: moment(item.referral_log?.created_at).format("DD/MM/YYYY, h:mm") ?? "--/--/--",
+        name: item.profile?.user_name ?? item.email ?? "no-email",
+        type: item.referral_log?.type === ReferralType.Register ? "Đăng ký" : "Mua thẻ",
+        reward: `$ ${item.reward}`,
+        isClaim: item.referral_log?.is_claim ?? true,
+      };
+    }) ?? [];
 
   // const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -111,7 +108,7 @@ export const ReferralTable = (props: ReferralTableProps) => {
 
   const dataEachPage = React.useMemo(
     () => data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [page, rowsPerPage, data],
+    [page, rowsPerPage],
   );
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
