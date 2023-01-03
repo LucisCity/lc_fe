@@ -10,7 +10,9 @@
     "lint": "next lint",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "serve": "npx serve out",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "prepare": "husky install",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@apollo/client": "^3.7.1",
