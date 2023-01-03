@@ -11,7 +11,7 @@ import { handleGraphqlErrors } from "../../../utils/apolo.util";
 export default function useVote() {
   const menu = useMenu();
   const { enqueueSnackbar } = useSnackbar();
-  const [value, setValue] = useState(3);
+  const [value, setValue] = useState(5);
   const client = useApolloClient();
 
   const [fetchIsVoted] = useLazyQuery<{ isVoted: boolean }>(PROJECT_CHECK_VOTE_QUERY, {
@@ -20,10 +20,12 @@ export default function useVote() {
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
     onCompleted(data) {
-      projectStore.setProjectDetail({
-        ...(projectStore.projectDetail as any),
-        isVoted: true,
-      });
+      if (data.isVoted) {
+        projectStore.setProjectDetail({
+          ...(projectStore.projectDetail as any),
+          isVoted: true,
+        });
+      }
     },
   });
 
@@ -46,6 +48,7 @@ export default function useVote() {
     if (!userStore.isLoggedIn || !projectStore.projectDetail || projectStore.projectDetail.isVoted != null) {
       return;
     }
+    setValue(projectStore.projectDetail.profile.vote);
     fetchIsVoted({
       variables: {
         projectId: projectStore.projectDetail.id,

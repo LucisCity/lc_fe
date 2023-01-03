@@ -8,7 +8,7 @@ import useVote from "../../hooks/use_vote";
 
 export default function VoteMenu() {
   const { menu, onOpenVoteMenu, value, setValue, onVote } = useVote();
-  const [hoverVAlue, setHoverValue] = React.useState(3);
+  const [hoverValue, setHoverValue] = React.useState(-1);
 
   return (
     <React.Fragment>
@@ -57,11 +57,8 @@ export default function VoteMenu() {
       >
         <Box px="16px" py="8px" sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
           <Typography variant="h3" textAlign="center">
-            {hoverVAlue != -1 ? hoverVAlue : value}
+            {hoverValue != -1 ? hoverValue : value}
           </Typography>
-          {/* <Center>
-            <Rating onChange={onChangeRating} />
-          </Center> */}
           <Rating
             name="half-rating"
             defaultValue={value}
