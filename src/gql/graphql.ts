@@ -340,6 +340,8 @@ export type Query = {
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
   /** get list of hot projects */
   hotProjects: Array<ProjectGql>;
+  /** get list of projects user has invested */
+  investedProjects: Array<ProjectGql>;
   isVoted: Scalars["Boolean"];
   /** get list of projects to recommend to user */
   recommendedProjects: Array<ProjectGql>;
