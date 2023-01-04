@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 
-export function useFileInput(imageUrl: string) {
+export function useFileInput(imageUrl?: string) {
   const [selectedFile, setSelectedFile] = useState<any>();
   const [preview, setPreview] = useState<any>();
   // create a preview as a side effect, whenever selected file is changed

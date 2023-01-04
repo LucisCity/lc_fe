@@ -3,6 +3,7 @@ import { GET_ACCOUNT_INFO } from "./use_info";
 import axios from "axios";
 import UserStore from "../../../store/user.store";
 import { useSnackbar } from "notistack";
+import { REST_API_ENDPOINT } from "../use_upload_avatar";
 
 export const GET_KYC_IMAGES = gql`
   query getKycImages {
@@ -36,9 +37,8 @@ export function useUserKyc() {
 
     // Request made to the backend api
     // Send formData object
-    const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
-    if (graphqlUrl) {
-      const postUrl = graphqlUrl.substring(0, graphqlUrl.lastIndexOf("/")) + "/api/upload_kyc";
+    if (REST_API_ENDPOINT) {
+      const postUrl = REST_API_ENDPOINT + "/upload_kyc";
       // console.log(`postUrl ${postUrl}`);
       await axios
         .post(postUrl, formData, {

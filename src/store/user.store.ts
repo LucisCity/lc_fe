@@ -33,6 +33,12 @@ class UserStore {
   updateDisplayName(displayName: string) {
     // eslint-disable-next-line
     this._user!.profile.display_name = displayName;
+    StorageHelper.setUser(this._user);
+  }
+
+  updateAvatar(avatar: string) {
+    this._user!.profile.avatar = avatar;
+    StorageHelper.setUser(this._user);
   }
 
   loadFromLocal() {

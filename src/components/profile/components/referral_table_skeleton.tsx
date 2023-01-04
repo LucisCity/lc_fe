@@ -6,7 +6,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import { Button, Skeleton, Typography } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import { table } from "./table";
 
 export const ReferralTableSkeleton = () => {

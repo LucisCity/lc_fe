@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import { Card, Grid } from "@mui/material";
-import { ProfileNavBar } from "./components/navbar/navbar";
+import { ProfileNavBar } from "./components/navbar";
 import ScrollPage from "../layout/scroll_page";
 import { Box, Container } from "@mui/system";
 import s from "./index.module.sass";

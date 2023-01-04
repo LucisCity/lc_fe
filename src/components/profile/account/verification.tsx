@@ -1,12 +1,12 @@
 import * as React from "react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 import { Box, Button, Grid, Skeleton, Typography } from "@mui/material";
 import SvgIcon from "../../common/svg_icon";
-import { InputUnstyled } from "@mui/base";
 import { FileUpload, useUserKyc } from "../../../hooks/profile/account/use_kyc";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { useFileInput } from "../../../hooks/use_file_input";
 
 interface VerifyBoxProps {
   fieldName: string;
@@ -19,26 +19,7 @@ interface VerifyBoxProps {
 
 const VerifyBox = (props: VerifyBoxProps) => {
   const { imgDesc, instruction, title, handleSelectFile, imageUrl, fieldName } = props;
-  const [selectedFile, setSelectedFile] = useState<any>();
-  const [preview, setPreview] = useState<any>();
-  // create a preview as a side effect, whenever selected file is changed
-  useEffect(() => {
-    // console.log(`imageUrl ${imageUrl}`);
-    if (imageUrl) {
-      setPreview(imageUrl);
-      return;
-    }
-    if (!selectedFile) {
-      setPreview(undefined);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
+  const { selectedFile, setSelectedFile, preview } = useFileInput(imageUrl);
 
   const onSelectFile = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -85,7 +66,11 @@ const VerifyBox = (props: VerifyBoxProps) => {
           }}
         >
           {(!imageUrl ? selectedFile : true) && (
-            <img src={preview} style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }} />
+            <img
+              src={preview}
+              style={{ position: "absolute", width: "100%", height: "100%", borderRadius: 16 }}
+              alt="kyc image"
+            />
           )}
           <label
             style={{
@@ -133,6 +118,7 @@ interface VerifyBoxSkeletonProps {
   title: string;
   instruction: string;
 }
+
 const VerifyBoxSkeleton = (props: VerifyBoxSkeletonProps) => {
   const { title, instruction } = props;
 
@@ -209,10 +195,8 @@ const verifyBoxes = [
   },
 ];
 
-type VerifyState = "NONE" | "SUCCESS" | "FAILED" | "PENDING";
-
 export default function Verification() {
-  const { data, error, loading, uploadImages } = useUserKyc();
+  const { data, loading, uploadImages } = useUserKyc();
 
   // console.log(`data ${JSON.stringify(data)}`);
   const [selectedFiles, setSelectedFiles] = React.useState<FileUpload[]>([]);
