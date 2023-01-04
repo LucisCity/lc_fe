@@ -24,9 +24,16 @@ export const GET_ACCOUNT_INFO = gql`
   }
 `;
 
+export const GET_WALLET_ADDRESS = gql`
+  query {
+    getWalletAddress
+  }
+`;
+
 export function useGetAccountInfo(): {
   loadingAccountInfo: boolean;
   dataAccountInfo: AccountInfo;
+  walletAddress: string | null | undefined;
 } {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -38,9 +45,19 @@ export function useGetAccountInfo(): {
     },
   });
 
+  const { data: walletAddressRes } = useQuery<{ getWalletAddress: string }>(GET_WALLET_ADDRESS, {
+    onError: (e) => {
+      enqueueSnackbar("Hệ thống đang gặp trục trặc, chúng tôi sẽ cố gắng khắc phục sớm nhất có thể", {
+        variant: "error",
+      });
+    },
+    skip: !!UserStore.user?.wallet_address,
+  });
+
   return {
     loadingAccountInfo: loading,
     dataAccountInfo: data?.getAccountInfo,
+    walletAddress: walletAddressRes?.getWalletAddress,
   };
 }
 

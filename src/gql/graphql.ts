@@ -85,6 +85,8 @@ export type Mutation = {
   toggleFollowProject?: Maybe<Scalars["Boolean"]>;
   /** update account info */
   updateAccountInfo?: Maybe<ProfileGql>;
+  /** upadate wallet address */
+  updateWalletAddress?: Maybe<Scalars["Boolean"]>;
   /** Verify email */
   verifyEmail: Scalars["String"];
   /** Vote project */
@@ -152,6 +154,10 @@ export type MutationToggleFollowProjectArgs = {
 
 export type MutationUpdateAccountInfoArgs = {
   input: AccountInfoUpdateInput;
+};
+
+export type MutationUpdateWalletAddressArgs = {
+  walletAddress: Scalars["String"];
 };
 
 export type MutationVerifyEmailArgs = {
@@ -338,6 +344,8 @@ export type Query = {
   getProjects: Array<ProjectGql>;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
+  /** get wallet address */
+  getWalletAddress?: Maybe<Scalars["String"]>;
   /** get list of hot projects */
   hotProjects: Array<ProjectGql>;
   /** get list of projects user has invested */
@@ -400,6 +408,7 @@ export type ReferralDataResponse = {
   status: UserStatus;
   updated_at: Scalars["DateTime"];
   wallet?: Maybe<Wallet>;
+  wallet_address?: Maybe<Scalars["String"]>;
 };
 
 export type ReferralLog = {
@@ -420,16 +429,9 @@ export enum ReferralType {
 
 export type Subscription = {
   __typename?: "Subscription";
+  blockchainWatcher: BlockchainTransaction;
   pushNotification: NotificationGql;
   unseenNotifications: UnseenNotifications;
-};
-
-export type SubscriptionPushNotificationArgs = {
-  userId: Scalars["String"];
-};
-
-export type SubscriptionUnseenNotificationsArgs = {
-  userId: Scalars["String"];
 };
 
 export type TransactionHistoryResponse = {
@@ -445,8 +447,7 @@ export type TransactionLog = {
   created_at: Scalars["DateTime"];
   description?: Maybe<Scalars["String"]>;
   id: Scalars["ID"];
-  transaction_type: TransactionType;
-  type: Scalars["String"];
+  type: TransactionType;
   updated_at: Scalars["DateTime"];
   user_id: Scalars["String"];
   wallet: Wallet;
@@ -460,18 +461,12 @@ export enum TransactionStatus {
   Succeed = "SUCCEED",
 }
 
-export type TransactionType = {
-  __typename?: "TransactionType";
-  _count: TransactionTypeCount;
-  code: Scalars["String"];
-  description: Scalars["String"];
-  transaction_log?: Maybe<Array<TransactionLog>>;
-};
-
-export type TransactionTypeCount = {
-  __typename?: "TransactionTypeCount";
-  transaction_log: Scalars["Int"];
-};
+export enum TransactionType {
+  BuyNft = "BUY_NFT",
+  ClaimProfit = "CLAIM_PROFIT",
+  ClaimReferral = "CLAIM_REFERRAL",
+  WithdrawBalance = "WITHDRAW_BALANCE",
+}
 
 export type UnseenNotifications = {
   __typename?: "UnseenNotifications";
@@ -498,6 +493,7 @@ export type User = {
   status: UserStatus;
   updated_at: Scalars["DateTime"];
   wallet?: Maybe<Wallet>;
+  wallet_address?: Maybe<Scalars["String"]>;
 };
 
 export type UserCount = {
@@ -517,6 +513,7 @@ export type UserGql = {
   ref_code: Scalars["String"];
   referral_log?: Maybe<ReferralLog>;
   wallet?: Maybe<Wallet>;
+  wallet_address?: Maybe<Scalars["String"]>;
 };
 
 export type UserKycVerification = {
