@@ -50,6 +50,27 @@ export type BlockchainTransaction = {
   updated_at: Scalars["DateTime"];
 };
 
+export type InvestedProjectGql = {
+  __typename?: "InvestedProjectGql";
+  address: Scalars["String"];
+  ended?: Maybe<Scalars["Boolean"]>;
+  id: Scalars["ID"];
+  location: Scalars["String"];
+  nft_bought: ProjectNftBoughtGql;
+  open_sale_at: Scalars["DateTime"];
+  policy_link: Scalars["String"];
+  price: Scalars["Int"];
+  profile: ProjectProfileGql;
+  profit_balance: ProjectProfitBalanceGql;
+  profit_period: Scalars["Int"];
+  profit_period_index: Scalars["Int"];
+  take_profit_at: Scalars["DateTime"];
+  thumbnail: Scalars["String"];
+  title: Scalars["String"];
+  type: ProjectType;
+  wait_transfer_at?: Maybe<Scalars["DateTime"]>;
+};
+
 export enum KycStatus {
   Failed = "FAILED",
   Pending = "PENDING",
@@ -60,6 +81,8 @@ export type Mutation = {
   __typename?: "Mutation";
   /** change password */
   changePassword?: Maybe<Scalars["Boolean"]>;
+  /** Claim project profit */
+  claimProjectProfit?: Maybe<Scalars["Boolean"]>;
   /** claim referral */
   claimReferral?: Maybe<Wallet>;
   /** Forgot password */
@@ -96,6 +119,10 @@ export type Mutation = {
 export type MutationChangePasswordArgs = {
   newPass: Scalars["String"];
   oldPass: Scalars["String"];
+};
+
+export type MutationClaimProjectProfitArgs = {
+  projectId: Scalars["String"];
 };
 
 export type MutationClaimReferralArgs = {
@@ -217,6 +244,7 @@ export type Project = {
   price: Scalars["Int"];
   profile?: Maybe<ProjectProfile>;
   profit_period: Scalars["Int"];
+  profit_period_index: Scalars["Int"];
   take_profit_at: Scalars["DateTime"];
   thumbnail: Scalars["String"];
   title: Scalars["String"];
@@ -250,6 +278,7 @@ export type ProjectGql = {
   price: Scalars["Int"];
   profile: ProjectProfileGql;
   profit_period: Scalars["Int"];
+  profit_period_index: Scalars["Int"];
   take_profit_at: Scalars["DateTime"];
   thumbnail: Scalars["String"];
   title: Scalars["String"];
@@ -267,6 +296,13 @@ export type ProjectMediaGql = {
   url: Scalars["String"];
   /** Width of image */
   width: Scalars["Int"];
+};
+
+export type ProjectNftBoughtGql = {
+  __typename?: "ProjectNftBoughtGql";
+  currency_amount: Scalars["Decimal"];
+  project_ended: Scalars["Boolean"];
+  total_nft: Scalars["Int"];
 };
 
 export type ProjectOfferGql = {
@@ -306,6 +342,21 @@ export type ProjectProfileGql = {
   vote: Scalars["Decimal"];
 };
 
+export type ProjectProfitBalance = {
+  __typename?: "ProjectProfitBalance";
+  balance: Scalars["Decimal"];
+  created_at: Scalars["DateTime"];
+  project_id: Scalars["String"];
+  updated_at: Scalars["DateTime"];
+  user_id: Scalars["String"];
+};
+
+export type ProjectProfitBalanceGql = {
+  __typename?: "ProjectProfitBalanceGql";
+  balance: Scalars["Decimal"];
+  user_id: Scalars["String"];
+};
+
 export enum ProjectType {
   Homestay = "HOMESTAY",
   Hotel = "HOTEL",
@@ -332,6 +383,8 @@ export type Query = {
   getNotifications?: Maybe<Array<NotificationGql>>;
   /** get OTP */
   getOneTimePassword: Scalars["String"];
+  /** Get profit balance */
+  getProfitBalance: Array<ProjectProfitBalance>;
   /** Get list referral user */
   getProject: ProjectGql;
   /** Get related project */
@@ -341,7 +394,7 @@ export type Query = {
   /** get list of hot projects */
   hotProjects: Array<ProjectGql>;
   /** get list of projects user has invested */
-  investedProjects: Array<ProjectGql>;
+  investedProjects: Array<InvestedProjectGql>;
   isVoted: Scalars["Boolean"];
   /** get list of projects to recommend to user */
   recommendedProjects: Array<ProjectGql>;
@@ -356,6 +409,10 @@ export type QueryGetNotificationsArgs = {
 
 export type QueryGetOneTimePasswordArgs = {
   address: Scalars["String"];
+};
+
+export type QueryGetProfitBalanceArgs = {
+  projectId: Scalars["String"];
 };
 
 export type QueryGetProjectArgs = {
@@ -445,8 +502,7 @@ export type TransactionLog = {
   created_at: Scalars["DateTime"];
   description?: Maybe<Scalars["String"]>;
   id: Scalars["ID"];
-  transaction_type: TransactionType;
-  type: Scalars["String"];
+  type: TransactionType;
   updated_at: Scalars["DateTime"];
   user_id: Scalars["String"];
   wallet: Wallet;
@@ -460,18 +516,10 @@ export enum TransactionStatus {
   Succeed = "SUCCEED",
 }
 
-export type TransactionType = {
-  __typename?: "TransactionType";
-  _count: TransactionTypeCount;
-  code: Scalars["String"];
-  description: Scalars["String"];
-  transaction_log?: Maybe<Array<TransactionLog>>;
-};
-
-export type TransactionTypeCount = {
-  __typename?: "TransactionTypeCount";
-  transaction_log: Scalars["Int"];
-};
+export enum TransactionType {
+  ClaimProfit = "CLAIM_PROFIT",
+  ClaimReferral = "CLAIM_REFERRAL",
+}
 
 export type UnseenNotifications = {
   __typename?: "UnseenNotifications";
