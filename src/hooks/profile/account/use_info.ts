@@ -31,11 +31,11 @@ export function useGetAccountInfo(): {
   const { enqueueSnackbar } = useSnackbar();
 
   const { loading, data } = useQuery(GET_ACCOUNT_INFO, {
-    onError: (e) => {
-      enqueueSnackbar("Hệ thống đang gặp trục trặc, chúng tôi sẽ cố gắng khắc phục sớm nhất có thể", {
-        variant: "error",
-      });
-    },
+    // onError: (e) => {
+    //   enqueueSnackbar("Error", {
+    //     variant: "error",
+    //   });
+    // },
   });
 
   return {
