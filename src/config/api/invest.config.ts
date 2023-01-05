@@ -60,6 +60,24 @@ export const PROJECT_DETAIL_QUERY = gql`
   }
 `;
 
+export const PROJECT_BALANCE_QUERY = gql`
+  query getProfitBalance($projectId: String!) {
+    getProfitBalance(projectId: $projectId) {
+      user_id
+      project_id
+      balance
+      from
+      to
+    }
+  }
+`;
+
+export const PROJECT_CLAIM_PROFIT_MUT = gql`
+  mutation claimProjectProfit($projectId: String!) {
+    claimProjectProfit(projectId: $projectId)
+  }
+`;
+
 export const PROJECT_FOLLOW_MUT = gql`
   mutation toggleFollowProject($projectId: String!) {
     toggleFollowProject(projectId: $projectId)

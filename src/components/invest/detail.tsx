@@ -16,7 +16,7 @@ import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
-  const { detail, onToggleFollow, relateProjects } = useInvestDetail();
+  const { detail, projectBalance, relateProjects, claimProfitData, onToggleFollow, onClaimProfit } = useInvestDetail();
   const { download } = useDownload();
 
   return (
@@ -119,7 +119,7 @@ export function InvestDetailPage() {
           </Box>
           <Box>
             <InvestDetailNftCard />
-            <ClaimProfitCard enable={false} />
+            <ClaimProfitCard balance={projectBalance} onClaim={onClaimProfit} loading={claimProfitData.loading} />
             <SellVoteCard />
             <Typography variant="h3" mt="24px">
               Giấy tờ pháp lý
