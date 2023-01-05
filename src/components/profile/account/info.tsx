@@ -3,7 +3,7 @@ import InputUnstyled, { inputUnstyledClasses } from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Paper, Skeleton, Typography, useMediaQuery } from "@mui/material";
-import { useGetAccountInfo, useUpdateAccountInfo } from "../../../hooks/profile/account/use_info";
+import { useGetAccountInfo, useUpdateAccountInfo, useWalletAddress } from "../../../hooks/profile/account/use_info";
 import moment, { Moment } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -27,11 +27,13 @@ const grey = {
   900: "#1A2027",
 };
 
-const Input = styled(InputUnstyled)<{ email?: boolean }>(
+const Input = styled(InputUnstyled, { shouldForwardProp: (propName: PropertyKey) => propName !== "email" })<{
+  email?: boolean;
+}>(
   ({ email, theme }) => `
   .${inputUnstyledClasses.input} {
     width: ${useMediaQuery(theme.breakpoints.up("sm")) ? "90%" : "100%"};
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1.5;
     color: ${email ? "#c9c8cd" : "#504C67"};
@@ -152,7 +154,8 @@ const fields: InfoField[] = [
 export default function InfoForm() {
   const form = useForm();
 
-  const { dataAccountInfo, loadingAccountInfo, walletAddress } = useGetAccountInfo();
+  const { dataAccountInfo, loadingAccountInfo } = useGetAccountInfo();
+  const { walletAddress } = useWalletAddress();
 
   const { updateAccountInfo } = useUpdateAccountInfo();
 
@@ -201,12 +204,12 @@ export default function InfoForm() {
               );
             })}
             <Grid item sm={7} xs={12}>
-              <Label>Email</Label>
-              <Input email={true} disabled={true} defaultValue={dataAccountInfo?.email ?? ""} />
+              <Label>Địa chỉ ví</Label>
+              <Input disabled={true} defaultValue={walletAddress ?? ""} />
             </Grid>
             <Grid item sm={7} xs={12}>
-              <Label>Địa chỉ ví</Label>
-              <Input email={true} disabled={true} defaultValue={walletAddress ?? ""} />
+              <Label>Email</Label>
+              <Input email={true} disabled={true} defaultValue={dataAccountInfo?.email ?? ""} />
             </Grid>
           </>
         )}

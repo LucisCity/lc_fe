@@ -30,10 +30,55 @@ export const GET_WALLET_ADDRESS = gql`
   }
 `;
 
+export const UPDATE_WALLET_ADDRESS = gql`
+  mutation updateWalletAddress($walletAddress: String!) {
+    updateWalletAddress(walletAddress: $walletAddress)
+  }
+`;
+
+export function useWalletAddress() {
+  const { enqueueSnackbar } = useSnackbar();
+  const { data: walletAddressRes } = useQuery<{ getWalletAddress: string }>(GET_WALLET_ADDRESS, {
+    onCompleted: (data) => {
+      UserStore.updateWalletAddress(data.getWalletAddress);
+    },
+
+    skip: !!UserStore.user?.wallet_address,
+  });
+
+  const [updateWalletAddress, { loading }] = useMutation<{ updateWalletAddress: string }>(UPDATE_WALLET_ADDRESS, {
+    onCompleted: (res) => {
+      UserStore.updateWalletAddress(res?.updateWalletAddress);
+      enqueueSnackbar("Cập nhật địa chỉ ví thông tin thành công", { variant: "success" });
+    },
+    onError: (e) => {
+      const errors = handleGraphqlErrors(e);
+      errors.forEach((err) => {
+        switch (err.code) {
+          case "DUPLICATE_ADDRESS":
+            enqueueSnackbar("Địa chỉ ví này đã có người khác dùng, làm ơn kết nối địa chỉ khác. ", {
+              variant: "error",
+            });
+            break;
+          case "USER_CONNECTED":
+            enqueueSnackbar("Tài khoản của bạn đã liên kết với địa chỉ ví khác.", {
+              variant: "error",
+            });
+            break;
+        }
+      });
+    },
+  });
+
+  return {
+    walletAddress: walletAddressRes?.getWalletAddress ?? UserStore.user?.wallet_address,
+    updateWalletAddress,
+  };
+}
+
 export function useGetAccountInfo(): {
   loadingAccountInfo: boolean;
   dataAccountInfo: AccountInfo;
-  walletAddress: string | null | undefined;
 } {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -45,19 +90,9 @@ export function useGetAccountInfo(): {
     },
   });
 
-  const { data: walletAddressRes } = useQuery<{ getWalletAddress: string }>(GET_WALLET_ADDRESS, {
-    onError: (e) => {
-      enqueueSnackbar("Hệ thống đang gặp trục trặc, chúng tôi sẽ cố gắng khắc phục sớm nhất có thể", {
-        variant: "error",
-      });
-    },
-    skip: !!UserStore.user?.wallet_address,
-  });
-
   return {
     loadingAccountInfo: loading,
     dataAccountInfo: data?.getAccountInfo,
-    walletAddress: walletAddressRes?.getWalletAddress,
   };
 }
 
