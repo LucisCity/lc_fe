@@ -28,6 +28,13 @@ class UserStore {
 
   updateWallet(wallet: Wallet) {
     this._user!.wallet = wallet;
+    StorageHelper.setUser(this._user);
+  }
+
+  updateWalletAddress(address: string) {
+    // eslint-disable-next-line
+    this._user!.wallet_address = address;
+    StorageHelper.setUser(this._user);
   }
 
   updateDisplayName(displayName: string) {

@@ -11,6 +11,7 @@ import { useSubToUnseenNotiCount, useUnseenNotifications } from "../../../hooks/
 import { isNumber } from "lodash";
 import { GET_BALANCE } from "../../../hooks/profile/account/use_info";
 import { useDisconnect } from "wagmi";
+import { useRouter } from "next/router";
 
 const NotificationBell = () => {
   const { dataUnseenNotis } = useUnseenNotifications();
@@ -34,7 +35,7 @@ const NotificationBell = () => {
 
 export const AuthBox = observer(() => {
   const { disconnect } = useDisconnect();
-
+  const router = useRouter();
   const loading = !UserStore.isLoadedFromLocal;
   const balance = UserStore.user?.wallet?.balance;
   const [getBalance] = useLazyQuery(GET_BALANCE, {
@@ -53,7 +54,7 @@ export const AuthBox = observer(() => {
         <Box component="img" src="/assets/imgs/landing/global.svg" alt="i18n" />
       </IconButton>
       {loading ? null : !UserStore.isLoggedIn ? (
-        <Button LinkComponent={Link} href={"/login"} variant="contained">
+        <Button LinkComponent={Link} href={`/login?redirect_url=${router.asPath}`} variant="contained">
           Đăng nhập
         </Button>
       ) : (

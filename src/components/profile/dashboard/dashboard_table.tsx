@@ -12,7 +12,7 @@ import { table, TablePaginationActions } from "../components/table";
 import useTransactionHistory from "../../../hooks/profile/use_transaction_history";
 import { ReferralTableSkeleton } from "../components/referral_table_skeleton";
 import moment from "moment/moment";
-import { TransactionStatus } from "../../../gql/graphql";
+import { TransactionStatus, TransactionType } from "../../../gql/graphql";
 import TransactionHistoryStore from "../../../store/transaction_history.store";
 import { observer } from "mobx-react-lite";
 import { formatCurrency } from "../../../utils/number.util";
@@ -20,7 +20,7 @@ import { formatCurrency } from "../../../utils/number.util";
 interface ITableData {
   id?: string;
   date?: string;
-  type: string;
+  type: TransactionType;
   amount?: string;
   status: TransactionStatus;
 }
@@ -40,11 +40,13 @@ const getStatusColor = (status: TransactionStatus) => {
   }
 };
 
-const amountColor = (type: string) => {
+const amountColor = (type: TransactionType) => {
   switch (type) {
-    case "WITHDRAW_BALANCE":
+    case TransactionType.WithdrawBalance:
       return "#FF0B0B";
-    case "CLAIM_REFERRAL":
+    case TransactionType.ClaimReferral:
+      return "#00BE13";
+    case TransactionType.BuyNft:
       return "#00BE13";
     default:
       return "";
@@ -77,12 +79,14 @@ const typeTransaction = (type: string): "WITHDRAW" | "DEPOSIT" | "" => {
   }
 };
 
-const descriptionRow = (type: string): string => {
+const descriptionRow = (type: TransactionType): string => {
   switch (type) {
-    case "WITHDRAW_BALANCE":
+    case TransactionType.ClaimProfit:
       return "Rút tiền về ví";
-    case "CLAIM_REFERRAL":
+    case TransactionType.ClaimReferral:
       return "Nhận thưởng giới thiệu bạn bè";
+    case TransactionType.BuyNft:
+      return "Mua 1 nft thành công";
     default:
       return "";
   }
@@ -107,7 +111,9 @@ const Row = ({ row }: { row: ITableData }) => {
       </TableCell>
       <TableCell style={{ width: "10%", textAlign: "left", color: "#504C67" }} scope="row">
         <Typography fontWeight={500} fontSize={16} color={amountColor(row.type)}>
-          {`${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
+          {row.type === TransactionType.BuyNft
+            ? "+1NFT"
+            : `${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
         </Typography>
       </TableCell>
       <TableCell style={{ width: "20%", textAlign: "right" }} scope="row">

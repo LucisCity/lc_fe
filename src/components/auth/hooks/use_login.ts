@@ -25,6 +25,7 @@ const LOGIN_MUT = gql`
         kyc_verification {
           status
         }
+        wallet_address
       }
     }
   }
@@ -49,6 +50,7 @@ const LOGIN_GG_MUT = gql`
         kyc_verification {
           status
         }
+        wallet_address
       }
     }
   }
@@ -73,6 +75,7 @@ const LOGIN_FB_MUT = gql`
         kyc_verification {
           status
         }
+        wallet_address
       }
     }
   }
@@ -90,6 +93,10 @@ export default function useLogin() {
         localStorage.removeItem("referralCode");
       }
       setAuthToken(res.login.token);
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
@@ -104,6 +111,10 @@ export default function useLogin() {
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
       }
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
@@ -117,6 +128,10 @@ export default function useLogin() {
       UserStore.saveLoginInfo(res.loginFacebook.token, res.loginFacebook.user);
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
+      }
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
       }
       Router.push("/");
     },

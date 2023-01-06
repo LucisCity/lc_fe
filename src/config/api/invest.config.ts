@@ -63,6 +63,10 @@ export const PROJECT_DETAIL_QUERY = gql`
           description
         }
       }
+      contract {
+        address
+        abi
+      }
     }
   }
 `;

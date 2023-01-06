@@ -41,7 +41,7 @@ export default function ConfirmDialog(props: IProps) {
       <DialogActions>
         {actions.map((item, idx) => (
           <Button
-            key={`dialog_btn_item`}
+            key={`dialog_btn_item` + idx}
             // autoFocus
             onClick={() => {
               props.onClose(idx === 0);

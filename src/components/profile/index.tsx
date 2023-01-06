@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type Props = {
   children: any;
@@ -17,6 +18,7 @@ type Props = {
 
 export const ProfileLayout = observer((props: Props) => {
   const loading = !UserStore.isLoadedFromLocal;
+  const router = useRouter();
 
   return (
     <ScrollPage>
@@ -91,7 +93,7 @@ export const ProfileLayout = observer((props: Props) => {
                   <Typography variant={"h3"} mb={4} textAlign={"center"}>
                     Bạn phải đăng nhập mới có thể xem thông tin.
                   </Typography>
-                  <Button LinkComponent={Link} href={"/login"} variant={"contained"}>
+                  <Button LinkComponent={Link} href={`/login?redirect_url=${router.asPath}`} variant={"contained"}>
                     Đăng nhập
                   </Button>
                 </Box>
