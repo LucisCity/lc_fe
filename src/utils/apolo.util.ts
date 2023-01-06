@@ -5,8 +5,7 @@ import { onError } from "@apollo/client/link/error";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
-import { useDisconnect } from "wagmi";
-import AuthStore from "../store/auth.store";
+import { ethereumClient } from "../components/profile/account/wallet/components/web3_provider";
 import userStore from "../store/user.store";
 import { StorageHelper } from "./index";
 //   import { CachePersistor } from 'apollo-cache-persist';
@@ -104,9 +103,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
         if (_getAuthToken() != null) {
-          const { disconnect } = useDisconnect();
-          disconnect();
+          // const { disconnect } = useDisconnect();
+          // disconnect();
           userStore.logout();
+          ethereumClient.disconnect();
           // clearLocalAuthInfo();
           // AuthGameStore.resetStates(); // reset game store
           // Modal.info({content: "sdfsdfsdfsd"});

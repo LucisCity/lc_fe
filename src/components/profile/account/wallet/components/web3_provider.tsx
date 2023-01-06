@@ -18,8 +18,9 @@ const wagmiClient = createClient({
   connectors: modalConnectors({ appName: "web3Modal", chains }),
   provider,
 });
+
 // Web3Modal Ethereum Client
-const ethereumClient = new EthereumClient(wagmiClient, chains);
+export const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 export default function Web3Provider(props: React.PropsWithChildren) {
   return (
