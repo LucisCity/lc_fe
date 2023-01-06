@@ -8,7 +8,7 @@ type Props = {
   loading?: boolean;
   onClaim?: () => void;
 };
-// DCDCDC
+
 export default function ClaimProfitCard({ balance, onClaim, loading }: Props) {
   const isDisable = !balance || balance.balance <= 0;
   return (

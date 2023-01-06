@@ -5,13 +5,13 @@ import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import {
   FILTER_PROJECT_QUERY,
-  PROFITBALANCE_SUBSCRIPTION,
-  PROJECT_BALANCE_QUERY,
+  PROJECT_EXTRA_INFO_QUERY,
   PROJECT_CLAIM_PROFIT_MUT,
   PROJECT_DETAIL_QUERY,
   PROJECT_FOLLOW_MUT,
+  PROFIT_BALANCE_SUBSCRIPTION,
 } from "../../../config/api/invest.config";
-import { ProjectGql, ProjectProfitBalance } from "../../../gql/graphql";
+import { ProjectGql, ProjectNftBought, ProjectProfitBalance } from "../../../gql/graphql";
 import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
@@ -45,15 +45,26 @@ export default function useInvestDetail() {
     },
   });
 
-  const [getProjectBalance, projectProfitBalance] = useLazyQuery<{ getProfitBalance: ProjectProfitBalance }>(
-    PROJECT_BALANCE_QUERY,
-    {
-      onError: (e) => {
-        const errors = handleGraphqlErrors(e);
-        errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
-      },
+  const [getExtraInfo, extraInfo] = useLazyQuery<{
+    isVoted: boolean;
+    getProfitBalance: ProjectProfitBalance;
+    getNftBought: ProjectNftBought;
+  }>(PROJECT_EXTRA_INFO_QUERY, {
+    onError: (e) => {
+      const errors = handleGraphqlErrors(e);
+      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
-  );
+    onCompleted(data) {
+      if (data.isVoted) {
+        projectStore.setProjectDetail({
+          ...(projectStore.projectDetail as any),
+          isVoted: data.isVoted ?? false,
+          profitBalance: data.getProfitBalance,
+          nftBought: data.getNftBought,
+        });
+      }
+    },
+  });
 
   const [toggleFollowProject, { loading }] = useMutation(PROJECT_FOLLOW_MUT, {
     onCompleted: () => {
@@ -86,7 +97,7 @@ export default function useInvestDetail() {
   });
 
   const profitBalanceSubscription = useSubscription<{ profitBalanceChange: ProjectProfitBalance }>(
-    PROFITBALANCE_SUBSCRIPTION,
+    PROFIT_BALANCE_SUBSCRIPTION,
     {
       variables: {
         projectId: projectId,
@@ -95,8 +106,8 @@ export default function useInvestDetail() {
   );
 
   const profitBalance = useMemo(() => {
-    return profitBalanceSubscription.data?.profitBalanceChange ?? projectProfitBalance.data?.getProfitBalance;
-  }, [projectProfitBalance.data?.getProfitBalance, profitBalanceSubscription.data]);
+    return profitBalanceSubscription.data?.profitBalanceChange ?? extraInfo.data?.getProfitBalance;
+  }, [extraInfo.data?.getProfitBalance, profitBalanceSubscription.data]);
 
   useEffect(() => {
     if (detail.data?.getProject && !relateProjects.data?.getProjects) {
@@ -114,7 +125,7 @@ export default function useInvestDetail() {
   useEffect(() => {
     if (detail.data?.getProject && userStore.isLoggedIn) {
       const projectId = detail.data?.getProject.id;
-      getProjectBalance({
+      getExtraInfo({
         variables: {
           projectId,
         },
@@ -157,6 +168,7 @@ export default function useInvestDetail() {
   return {
     detail: detail.data?.getProject,
     relateProjects: relateProjects.data?.getProjects,
+    following: loading,
     profitBalance,
     claimProfitData,
     form,

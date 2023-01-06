@@ -16,7 +16,8 @@ import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
-  const { detail, profitBalance, relateProjects, claimProfitData, onToggleFollow, onClaimProfit } = useInvestDetail();
+  const { detail, profitBalance, relateProjects, claimProfitData, following, onToggleFollow, onClaimProfit } =
+    useInvestDetail();
   const { download } = useDownload();
 
   return (
@@ -43,6 +44,7 @@ export function InvestDetailPage() {
           address={detail?.address}
           follows={detail?.profile.follows ?? 0}
           toggleFollow={onToggleFollow}
+          voting={following}
         />
         <InvestImageBox medias={detail?.profile.medias ?? []} location={detail?.location} address={detail?.address} />
         <InvestDetailSteper detail={detail} />

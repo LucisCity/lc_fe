@@ -16,7 +16,7 @@ const GET_INVESTED_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {
@@ -57,7 +57,7 @@ const GET_FOLLOWING_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {
@@ -98,7 +98,7 @@ const GET_RECOMMENDED_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {
@@ -139,7 +139,7 @@ const GET_HOT_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {

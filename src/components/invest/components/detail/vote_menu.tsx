@@ -5,9 +5,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Button, Rating } from "@mui/material";
 import useVote from "../../hooks/use_vote";
+import { LoadingButton } from "@mui/lab";
 
 export default function VoteMenu() {
-  const { menu, onOpenVoteMenu, value, setValue, onVote } = useVote();
+  const { menu, voting, onOpenVoteMenu, value, setValue, onVote } = useVote();
   const [hoverValue, setHoverValue] = React.useState(-1);
 
   return (
@@ -74,16 +75,17 @@ export default function VoteMenu() {
           />
           <Typography variant="body2">[Rate] Click to rate this</Typography>
           <Box sx={{ display: "flex", gap: "8px" }}>
-            <Button
+            <LoadingButton
               variant="contained"
               fullWidth
               sx={{
                 height: "40px",
               }}
+              loading={voting}
               onClick={onVote}
             >
               Send
-            </Button>
+            </LoadingButton>
           </Box>
         </Box>
       </Menu>

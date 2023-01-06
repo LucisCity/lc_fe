@@ -26,7 +26,7 @@ const InvestedCard = (props: ProjectGql) => {
     price,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
-    wait_transfer_at: waitTransferAt,
+    start_time_vote_sell: waitTransferAt,
     ended,
     profile: { follows },
   } = props;
