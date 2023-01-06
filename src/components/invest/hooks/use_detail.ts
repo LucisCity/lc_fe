@@ -11,7 +11,7 @@ import {
   PROJECT_FOLLOW_MUT,
   PROFIT_BALANCE_SUBSCRIPTION,
 } from "../../../config/api/invest.config";
-import { ProjectGql, ProjectNftBought, ProjectProfitBalance } from "../../../gql/graphql";
+import { ProjectGql, ProjectNftOwner, ProjectProfitBalance } from "../../../gql/graphql";
 import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
@@ -48,7 +48,7 @@ export default function useInvestDetail() {
   const [getExtraInfo, extraInfo] = useLazyQuery<{
     isVoted: boolean;
     getProfitBalance: ProjectProfitBalance;
-    getNftBought: ProjectNftBought;
+    getNftBought: ProjectNftOwner;
   }>(PROJECT_EXTRA_INFO_QUERY, {
     onError: (e) => {
       const errors = handleGraphqlErrors(e);

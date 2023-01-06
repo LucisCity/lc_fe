@@ -1,7 +1,6 @@
 import { ApolloClient, ApolloError, ApolloLink, createHttpLink, from, InMemoryCache, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
@@ -52,8 +51,6 @@ const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = _getAuthToken();
 
-  //console.log("{apolo.authLink} token: ", token);
-
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -103,13 +100,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
         if (_getAuthToken() != null) {
-          // const { disconnect } = useDisconnect();
-          // disconnect();
           userStore.logout();
           ethereumClient.disconnect();
-          // clearLocalAuthInfo();
-          // AuthGameStore.resetStates(); // reset game store
-          // Modal.info({content: "sdfsdfsdfsd"});
         }
       } else {
       }
