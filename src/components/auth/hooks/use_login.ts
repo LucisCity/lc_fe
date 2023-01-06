@@ -93,6 +93,10 @@ export default function useLogin() {
         localStorage.removeItem("referralCode");
       }
       setAuthToken(res.login.token);
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
@@ -107,6 +111,10 @@ export default function useLogin() {
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
       }
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
@@ -120,6 +128,10 @@ export default function useLogin() {
       UserStore.saveLoginInfo(res.loginFacebook.token, res.loginFacebook.user);
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
+      }
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
       }
       Router.push("/");
     },

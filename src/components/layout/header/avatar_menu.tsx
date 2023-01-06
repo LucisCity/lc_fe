@@ -98,14 +98,12 @@ export default function AvatarMenu(props: Props) {
           </MenuItem>
         </Link>
 
-        <Link href="/login">
-          <MenuItem onClick={logout}>
-            <ListItemIcon>
-              <LogoutIcon fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-        </Link>
+        <MenuItem onClick={logout}>
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
       </Menu>
     </>
   );

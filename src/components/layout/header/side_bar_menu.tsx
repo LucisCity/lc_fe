@@ -5,6 +5,7 @@ import { headerHeight, HeaderNextLink, IPage, LogoImage, mobileHeaderHeight, pag
 import { Container, Grid, IconButton, Button } from "@mui/material";
 import Link from "next/link";
 import { Right } from "../../common/right";
+import Router from "next/router";
 
 const widthSidebar = 360;
 const MenuListStyled = styled("div")(({ theme }) => ({
@@ -53,8 +54,8 @@ const MenuList = ({ activePage, onClose, isLogin }: { activePage: IPage; onClose
         ))}
         {!isLogin && (
           <li>
-            <Button variant={"contained"} LinkComponent={Link} href={"/login"}>
-              Login
+            <Button variant={"contained"} LinkComponent={Link} href={`/login?redirect_url=${Router.asPath}`}>
+              Đăng nhập
             </Button>
           </li>
         )}
