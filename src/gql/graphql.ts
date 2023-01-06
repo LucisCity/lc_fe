@@ -50,6 +50,50 @@ export type BlockchainTransaction = {
   updated_at: Scalars["DateTime"];
 };
 
+export type Contract = {
+  __typename?: "Contract";
+  abi?: Maybe<Scalars["String"]>;
+  address: Scalars["String"];
+  admin?: Maybe<Scalars["String"]>;
+  admin_prv_key?: Maybe<Scalars["String"]>;
+  created_at: Scalars["DateTime"];
+  id: Scalars["ID"];
+  project?: Maybe<Project>;
+  type?: Maybe<ContractType>;
+  updated_at: Scalars["DateTime"];
+};
+
+export enum ContractType {
+  Nft = "NFT",
+  Token = "TOKEN",
+}
+
+export type InvestedProjectGql = {
+  __typename?: "InvestedProjectGql";
+  address: Scalars["String"];
+  contract?: Maybe<Contract>;
+  contract_address?: Maybe<Scalars["String"]>;
+  end_time_vote_sell?: Maybe<Scalars["DateTime"]>;
+  ended: Scalars["Boolean"];
+  id: Scalars["ID"];
+  location: Scalars["String"];
+  nft_bought: ProjectNftOwnerGql;
+  nft_price: Scalars["Decimal"];
+  open_sale_at: Scalars["DateTime"];
+  policy_link: Scalars["String"];
+  price: Scalars["Int"];
+  profile: ProjectProfileGql;
+  profit_balance: ProjectProfitBalanceGql;
+  profit_period: Scalars["Int"];
+  profit_period_index: Scalars["Int"];
+  start_time_vote_sell?: Maybe<Scalars["DateTime"]>;
+  take_profit_at: Scalars["DateTime"];
+  thumbnail: Scalars["String"];
+  title: Scalars["String"];
+  total_nft: Scalars["Int"];
+  type: ProjectType;
+};
+
 export enum KycStatus {
   Failed = "FAILED",
   Pending = "PENDING",
@@ -87,6 +131,8 @@ export type Mutation = {
   toggleFollowProject?: Maybe<Scalars["Boolean"]>;
   /** update account info */
   updateAccountInfo?: Maybe<ProfileGql>;
+  /** upadate wallet address */
+  updateWalletAddress?: Maybe<Scalars["String"]>;
   /** Verify email */
   verifyEmail: Scalars["String"];
   /** Vote project */
@@ -162,6 +208,10 @@ export type MutationUpdateAccountInfoArgs = {
   input: AccountInfoUpdateInput;
 };
 
+export type MutationUpdateWalletAddressArgs = {
+  walletAddress: Scalars["String"];
+};
+
 export type MutationVerifyEmailArgs = {
   token: Scalars["String"];
 };
@@ -220,6 +270,8 @@ export type ProfileGql = {
 export type Project = {
   __typename?: "Project";
   address: Scalars["String"];
+  contract?: Maybe<Contract>;
+  contract_address?: Maybe<Scalars["String"]>;
   created_at: Scalars["DateTime"];
   enable: Scalars["Boolean"];
   end_time_vote_sell?: Maybe<Scalars["DateTime"]>;
@@ -259,6 +311,8 @@ export type ProjectFilter = {
 export type ProjectGql = {
   __typename?: "ProjectGql";
   address: Scalars["String"];
+  contract?: Maybe<Contract>;
+  contract_address?: Maybe<Scalars["String"]>;
   end_time_vote_sell?: Maybe<Scalars["DateTime"]>;
   ended: Scalars["Boolean"];
   id: Scalars["ID"];
@@ -290,8 +344,8 @@ export type ProjectMediaGql = {
   width: Scalars["Int"];
 };
 
-export type ProjectNftBought = {
-  __typename?: "ProjectNftBought";
+export type ProjectNftOwner = {
+  __typename?: "ProjectNftOwner";
   created_at: Scalars["DateTime"];
   currency_amount: Scalars["Decimal"];
   is_sell_voted: Scalars["Boolean"];
@@ -300,6 +354,16 @@ export type ProjectNftBought = {
   total_nft: Scalars["Int"];
   updated_at: Scalars["DateTime"];
   user_id: Scalars["String"];
+};
+
+export type ProjectNftOwnerGql = {
+  __typename?: "ProjectNftOwnerGql";
+  created_at: Scalars["DateTime"];
+  currency_amount: Scalars["Decimal"];
+  is_sell_voted: Scalars["Boolean"];
+  project_ended: Scalars["Boolean"];
+  total_nft: Scalars["Int"];
+  updated_at: Scalars["DateTime"];
 };
 
 export type ProjectOfferGql = {
@@ -350,6 +414,14 @@ export type ProjectProfitBalance = {
   user_id: Scalars["String"];
 };
 
+export type ProjectProfitBalanceGql = {
+  __typename?: "ProjectProfitBalanceGql";
+  balance: Scalars["Decimal"];
+  from: Scalars["DateTime"];
+  to: Scalars["DateTime"];
+  user_id: Scalars["String"];
+};
+
 export enum ProjectType {
   Homestay = "HOMESTAY",
   Hotel = "HOTEL",
@@ -373,7 +445,7 @@ export type Query = {
   /** Get list referral user */
   getListReferralUser: Array<ReferralDataResponse>;
   /** Get nft bought of user */
-  getNftBought?: Maybe<ProjectNftBought>;
+  getNftBought?: Maybe<ProjectNftOwner>;
   /** get all notis */
   getNotifications?: Maybe<Array<NotificationGql>>;
   /** get OTP */
@@ -386,10 +458,14 @@ export type Query = {
   getProjects: Array<ProjectGql>;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
+  /** get vip card info */
+  getVipCard?: Maybe<VipCard>;
+  /** get wallet address */
+  getWalletAddress?: Maybe<Scalars["String"]>;
   /** get list of hot projects */
   hotProjects: Array<ProjectGql>;
   /** get list of projects user has invested */
-  investedProjects: Array<ProjectGql>;
+  investedProjects: Array<InvestedProjectGql>;
   isVoted: Scalars["Boolean"];
   /** get list of projects to recommend to user */
   recommendedProjects: Array<ProjectGql>;
@@ -456,6 +532,7 @@ export type ReferralDataResponse = {
   status: UserStatus;
   updated_at: Scalars["DateTime"];
   wallet?: Maybe<Wallet>;
+  wallet_address?: Maybe<Scalars["String"]>;
 };
 
 export type ReferralLog = {
@@ -476,6 +553,7 @@ export enum ReferralType {
 
 export type Subscription = {
   __typename?: "Subscription";
+  blockchainWatcher: BlockchainTransaction;
   profitBalanceChange?: Maybe<ProjectProfitBalance>;
   pushNotification: NotificationGql;
   unseenNotifications: UnseenNotifications;
@@ -483,14 +561,6 @@ export type Subscription = {
 
 export type SubscriptionProfitBalanceChangeArgs = {
   projectId: Scalars["String"];
-};
-
-export type SubscriptionPushNotificationArgs = {
-  userId: Scalars["String"];
-};
-
-export type SubscriptionUnseenNotificationsArgs = {
-  userId: Scalars["String"];
 };
 
 export type TransactionHistoryResponse = {
@@ -521,6 +591,7 @@ export enum TransactionStatus {
 }
 
 export enum TransactionType {
+  BuyNft = "BUY_NFT",
   ClaimProfit = "CLAIM_PROFIT",
   ClaimReferral = "CLAIM_REFERRAL",
   WithdrawBalance = "WITHDRAW_BALANCE",
@@ -551,6 +622,7 @@ export type User = {
   status: UserStatus;
   updated_at: Scalars["DateTime"];
   wallet?: Maybe<Wallet>;
+  wallet_address?: Maybe<Scalars["String"]>;
 };
 
 export type UserCount = {
@@ -570,6 +642,7 @@ export type UserGql = {
   ref_code: Scalars["String"];
   referral_log?: Maybe<ReferralLog>;
   wallet?: Maybe<Wallet>;
+  wallet_address?: Maybe<Scalars["String"]>;
 };
 
 export type UserKycVerification = {
@@ -611,6 +684,23 @@ export enum UserStatus {
   Active = "ACTIVE",
   Banned = "BANNED",
   Pending = "PENDING",
+}
+
+export type VipCard = {
+  __typename?: "VipCard";
+  created_at: Scalars["DateTime"];
+  expired_at?: Maybe<Scalars["DateTime"]>;
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  number: Scalars["String"];
+  password: Scalars["String"];
+  tier?: Maybe<VipCardTier>;
+  updated_at: Scalars["DateTime"];
+  user_id: Scalars["String"];
+};
+
+export enum VipCardTier {
+  GalaxyPremium = "GALAXY_PREMIUM",
 }
 
 export type Wallet = {

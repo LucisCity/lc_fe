@@ -1,18 +1,19 @@
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import { VOTE_SELLPROJECT_MUT } from "../../../config/api/invest.config";
-import useMenu from "../../../hooks/use_menu";
 import projectStore from "../../../store/project.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 
+type VoteType = "accept" | "deny";
+
 export default function useVoteSell() {
-  const menu = useMenu();
   const { enqueueSnackbar } = useSnackbar();
   const client = useApolloClient();
+  const [voteType, setVoteType] = useState<VoteType>("accept");
 
   const [voteProject, { loading }] = useMutation(VOTE_SELLPROJECT_MUT, {
     onCompleted: () => {
-      menu.onClose();
       enqueueSnackbar("Request successfully!", {
         variant: "success",
       });
@@ -43,8 +44,9 @@ export default function useVoteSell() {
   }
 
   return {
-    menu,
     voting: loading,
+    voteType,
+    setVoteType,
     onVote,
   };
 }

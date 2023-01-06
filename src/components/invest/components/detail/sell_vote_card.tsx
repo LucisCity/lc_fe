@@ -1,8 +1,10 @@
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useCountdownTime } from "../../../../hooks/use_countdown";
 import projectStore from "../../../../store/project.store";
+import userStore from "../../../../store/user.store";
 import { formatDate } from "../../../../utils/date.util";
 import { KMath } from "../../../../utils/math.util";
 import { formatNumber } from "../../../../utils/number.util";
@@ -12,11 +14,22 @@ const DEMO_OFFET_TIME = 5 * 24 * 60 * 60 * 1000;
 const SellVoteCard = observer(() => {
   const project = projectStore.projectDetail;
   const duration = useCountdownTime(project?.end_time_vote_sell);
-  const [voted, setVoted] = useState(false);
-  const { menu, onVote, voting } = useVoteSell();
+
+  const { onVote, voting, voteType, setVoteType } = useVoteSell();
 
   const nftBought = project?.nftBought;
   const receiveAmount = KMath.mul(project?.nft_price ?? 0, nftBought?.total_nft ?? 0).toNumber();
+
+  const now = new Date();
+  if (
+    !userStore.isLoggedIn ||
+    !project?.start_time_vote_sell ||
+    !project.end_time_vote_sell ||
+    now < project.start_time_vote_sell ||
+    now > project.end_time_vote_sell
+  ) {
+    return null;
+  }
 
   return (
     <Box id={"vote"} mt={6}>
@@ -53,33 +66,40 @@ const SellVoteCard = observer(() => {
           }S LEFT`}
           color="primary"
         />
-        <Divider
-          sx={{
-            mt: "10px",
-          }}
-        />
-        <Box sx={{ display: "flex", mt: "17px" }}>
-          <Button
-            variant="contained"
-            sx={{ flex: 1 }}
-            disabled={voted}
-            onClick={() => {
-              setVoted(true);
-            }}
-          >
-            Yes
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ background: "#C5CEE8", flex: 1, ml: "6px" }}
-            disabled={voted}
-            onClick={() => {
-              setVoted(true);
-            }}
-          >
-            No
-          </Button>
-        </Box>
+        {nftBought?.is_sell_voted === true ? null : (
+          <>
+            <Divider
+              sx={{
+                mt: "10px",
+              }}
+            />
+
+            <Box sx={{ display: "flex", mt: "17px" }}>
+              <LoadingButton
+                variant="contained"
+                sx={{ flex: 1 }}
+                onClick={() => {
+                  setVoteType("accept");
+                  onVote(true);
+                }}
+                loading={voting && voteType === "accept"}
+              >
+                Yes
+              </LoadingButton>
+              <LoadingButton
+                variant="contained"
+                sx={{ background: "#C5CEE8", flex: 1, ml: "6px" }}
+                onClick={() => {
+                  setVoteType("deny");
+                  onVote(false);
+                }}
+                loading={voting && voteType === "deny"}
+              >
+                No
+              </LoadingButton>
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );
