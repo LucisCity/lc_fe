@@ -11,9 +11,11 @@ export default function useVoteSell() {
   const { enqueueSnackbar } = useSnackbar();
   const client = useApolloClient();
   const [voteType, setVoteType] = useState<VoteType>("accept");
+  const [voted, setVoted] = useState(false);
 
   const [voteProject, { loading }] = useMutation(VOTE_SELLPROJECT_MUT, {
     onCompleted: () => {
+      setVoted(true);
       enqueueSnackbar("Request successfully!", {
         variant: "success",
       });
@@ -48,5 +50,6 @@ export default function useVoteSell() {
     voteType,
     setVoteType,
     onVote,
+    voted,
   };
 }

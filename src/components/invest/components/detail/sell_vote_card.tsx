@@ -15,7 +15,7 @@ const SellVoteCard = observer(() => {
   const project = projectStore.projectDetail;
   const duration = useCountdownTime(project?.end_time_vote_sell);
 
-  const { onVote, voting, voteType, setVoteType } = useVoteSell();
+  const { onVote, voting, voteType, setVoteType, voted } = useVoteSell();
 
   const nftBought = project?.nftBought;
   const receiveAmount = KMath.mul(project?.nft_price ?? 0, nftBought?.total_nft ?? 0).toNumber();
@@ -66,7 +66,7 @@ const SellVoteCard = observer(() => {
           }S LEFT`}
           color="primary"
         />
-        {nftBought?.is_sell_voted === true ? null : (
+        {nftBought?.is_sell_voted === true || voted ? null : (
           <>
             <Divider
               sx={{
