@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { Center } from "../../../common/center";
 import { NftInfoCard } from "../../../landing/nft_section";
 import { useNft } from "../../hooks/use_nft";
@@ -8,11 +8,13 @@ import BuyNftPopup from "./buy_nft_popup";
 import React from "react";
 import { useAccount } from "wagmi";
 import UserStore from "../../../../store/user.store";
+import Link from "next/link";
 
 export default function InvestDetailNftCard() {
   const { data, refetchContractData } = useNft();
   const [progressValue, setProgressValue] = React.useState(0);
   const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
+  const [showAlearConnectWallet, setShowAlearConnectWallet] = React.useState(false);
   const [showPopup, setShowPopup] = React.useState(false);
   const { address } = useAccount({});
   const userWalletAddress = UserStore.user?.wallet_address;
@@ -127,12 +129,33 @@ export default function InvestDetailNftCard() {
                 sx={{
                   height: "50px",
                 }}
-                disabled={!userWalletAddress}
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
-                onClick={() => setShowPopup(true)}
+                onClick={() => {
+                  if (!userWalletAddress) {
+                    setShowAlearConnectWallet(true);
+                    return;
+                  }
+                  setShowPopup(true);
+                }}
               >
                 Mua NFT
               </Button>
+              {showAlearConnectWallet && (
+                <>
+                  <Alert severity="error" sx={{ mt: 4 }}>
+                    Bạn cần kết nối ví để mua NFT.
+                  </Alert>
+                  <Box display={"flex"} justifyContent={"flex-end"}>
+                    <Button
+                      component={Link}
+                      href={"/profile/account?tab=connect_wallet"}
+                      sx={{ textTransform: "capitalize" }}
+                    >
+                      Kết nối ví
+                    </Button>
+                  </Box>
+                </>
+              )}
             </Box>
           </Grid>
         </Grid>
