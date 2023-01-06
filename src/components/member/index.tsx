@@ -4,7 +4,8 @@ import { CardSection } from "../landing/card_section";
 import { Avatar, Container, Grid, Paper, Typography } from "@mui/material";
 import { Background } from "../landing/components/background";
 import ScrollPage from "../layout/scroll_page";
-import { VipCard } from "./vip_card";
+import { VipCard } from "./components/vipcard";
+import UserStore from "../../store/user.store";
 
 const data = [
   {
@@ -148,7 +149,7 @@ export const MemberPage = () => {
         }}
       />
       <Box mt={-10}>
-        <VipCard />
+        {UserStore.isLoggedIn ? <VipCard /> : null}
         <CardSection disabledBackground={true} disabledReadmoreButton={true} />
       </Box>
       <Box pb={10} position={"relative"}>
