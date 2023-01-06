@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import TokenErc20Abi from "./abi/TokenErc20Abi.json";
+import { erc20Abi } from "./abi/TokenErc20Abi";
 import Erc721Abi from "./abi/Erc721Abi.json";
 import BigNumber from "bignumber.js";
 import { makeError } from "../utils/error";
@@ -48,7 +48,7 @@ export default class BlockchainService {
   }
 
   private getContractWithSignerErc20(contractAddress: string): ethers.Contract {
-    return new ethers.Contract(contractAddress, TokenErc20Abi.abi, this.getSigner());
+    return new ethers.Contract(contractAddress, erc20Abi.abi, this.getSigner());
   }
 
   private getContractWithSignerErc721(contractAddress: string): ethers.Contract {

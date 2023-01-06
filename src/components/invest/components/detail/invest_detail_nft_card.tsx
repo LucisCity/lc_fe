@@ -1,81 +1,142 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import Link from "next/link";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { Center } from "../../../common/center";
 import { NftInfoCard } from "../../../landing/nft_section";
+import { useNft } from "../../hooks/use_nft";
+import { ethers } from "ethers";
+import { formatCurrency } from "../../../../utils/number.util";
+import BuyNftPopup from "./buy_nft_popup";
+import React from "react";
+import { useAccount } from "wagmi";
+import UserStore from "../../../../store/user.store";
 
 export default function InvestDetailNftCard() {
+  const { data, refetchContractData } = useNft();
+  const [progressValue, setProgressValue] = React.useState(0);
+  const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
+  const [showPopup, setShowPopup] = React.useState(false);
+  const { address } = useAccount({});
+  const userWalletAddress = UserStore.user?.wallet_address;
+  const pricePerOne = React.useMemo(() => Number(ethers.utils.formatUnits(data?.[0] ?? 0)), [data?.[0]]);
+  const totalSupply = React.useMemo(() => Number(data?.[1] ?? 0), [data?.[1]]);
+  const totalSold = React.useMemo(() => Number(data?.[3] ?? 0), [data?.[3]]);
+  const floorPrice = React.useMemo(() => data?.[0] ?? 0, [data?.[0]]);
+
+  const onClosePopup = React.useCallback(() => setShowPopup(false), []);
+
+  // 10s refetch data from blockchain
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      refetchContractData();
+      setProgressValue(0);
+    }, 10 * 1000);
+    const timer = setInterval(() => {
+      setProgressValue((oldState) => oldState + 10);
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+      clearInterval(timer);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (address !== userWalletAddress) {
+      setIsDifferentAddress(true);
+    } else {
+      setIsDifferentAddress(false);
+    }
+  }, [address]);
   return (
-    <Box
-      id={"buy"}
-      sx={{
-        width: ["100%", "404px"],
-        background: "white",
-        p: "18px",
-        borderRadius: 4,
-        mt: [6, 0],
-      }}
-    >
-      <Typography variant="subtitle1" mt="12px">
-        Tổng NFT đã bán
-      </Typography>
+    <>
+      {showPopup && (
+        <BuyNftPopup
+          isDifferentAddress={isDifferentAddress}
+          onClose={onClosePopup}
+          floorPrice={floorPrice}
+          availableItems={totalSupply - totalSold}
+        />
+      )}
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          mt: "10px",
+          width: ["100%", "404px"],
+          background: "white",
+          p: "18px",
+          borderRadius: 4,
+          mt: [6, 0],
         }}
       >
-        <Typography variant="h3">$126,214.01</Typography>
-        <Typography variant="caption">126,214 NFT đang bán</Typography>
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            mt: "10px",
+          }}
+        >
+          <Typography variant="subtitle1" mt="12px">
+            Tổng NFT đã bán
+          </Typography>
+          <CircularProgress variant="determinate" size={20} value={progressValue} />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            mt: "10px",
+          }}
+        >
+          <Typography variant="h3">{formatCurrency(pricePerOne * totalSold ?? 0)}</Typography>
+          <Typography variant="caption">{`${totalSold}/${totalSupply}`} NFT đang bán</Typography>
+        </Box>
 
-      <Grid container spacing={2} mt={5}>
-        <Grid item xs={6}>
-          <NftInfoCard title="Total raise" content="$ 45,948.55" bgColor="#CFD8F11F" />
-        </Grid>
-        <Grid item xs={6}>
-          <NftInfoCard title="Total supply" content="2M Tokens" bgColor="#CFD8F11F" />
-        </Grid>
-        <Grid item xs={6}>
-          <NftInfoCard
-            title="Accepted currency"
-            content="$45,948.55"
-            icon="/assets/imgs/landing/ic_usdt.svg"
-            bgColor="#CFD8F11F"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <NftInfoCard title="Price per token" content="$ 1" bgColor="#CFD8F11F" />
-        </Grid>
-        <Grid item xs={6}>
-          <NftInfoCard title="Network" content="BSC" icon="/assets/imgs/landing/ic_bsc.svg" bgColor="#CFD8F11F" />
-        </Grid>
-        <Grid item xs={6}>
-          <NftInfoCard title="Asset" content="1" bgColor="#CFD8F11F" />
-        </Grid>
-        <Grid item xs={12}>
-          <Box>
-            <Center>
-              <Typography variant="caption" mt={4} mb={3}>
-                1 USDT minimum investment
-              </Typography>
-            </Center>
-            <Link href="/nft/1">
+        <Grid container spacing={2} mt={5}>
+          <Grid item xs={6}>
+            <NftInfoCard title="Giá trị" content={formatCurrency(totalSupply * pricePerOne)} bgColor="#CFD8F11F" />
+          </Grid>
+          <Grid item xs={6}>
+            <NftInfoCard title="Tổng cung" content={totalSupply.toString()} bgColor="#CFD8F11F" />
+          </Grid>
+          <Grid item xs={6}>
+            <NftInfoCard
+              title="Đồng tiền chấp nhận"
+              content="USDT"
+              icon="/assets/imgs/landing/ic_usdt.svg"
+              bgColor="#CFD8F11F"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <NftInfoCard title="Giá trên 1 NFT" content={formatCurrency(pricePerOne)} bgColor="#CFD8F11F" />
+          </Grid>
+          <Grid item xs={6}>
+            <NftInfoCard title="Network" content="BSC" icon="/assets/imgs/landing/ic_bsc.svg" bgColor="#CFD8F11F" />
+          </Grid>
+          <Grid item xs={6}>
+            <NftInfoCard title="Tài sản" content={"Bất động sản"} bgColor="#CFD8F11F" />
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+              <Center>
+                <Typography variant="caption" mt={4} mb={3}>
+                  {formatCurrency(Number(ethers.utils.formatUnits(data?.[0] ?? 0)))} đầu tư với số vốn tối thiểu
+                </Typography>
+              </Center>
               <Button
                 variant="contained"
                 fullWidth
                 sx={{
                   height: "50px",
                 }}
+                disabled={!userWalletAddress}
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
+                onClick={() => setShowPopup(true)}
               >
                 Mua NFT
               </Button>
-            </Link>
-          </Box>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 }

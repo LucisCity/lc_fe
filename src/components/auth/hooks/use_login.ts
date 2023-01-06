@@ -25,6 +25,7 @@ const LOGIN_MUT = gql`
         kyc_verification {
           status
         }
+        wallet_address
       }
     }
   }
@@ -49,6 +50,7 @@ const LOGIN_GG_MUT = gql`
         kyc_verification {
           status
         }
+        wallet_address
       }
     }
   }
@@ -73,6 +75,7 @@ const LOGIN_FB_MUT = gql`
         kyc_verification {
           status
         }
+        wallet_address
       }
     }
   }
