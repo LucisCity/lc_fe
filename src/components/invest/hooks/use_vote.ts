@@ -48,7 +48,7 @@ export default function useVote() {
     if (!userStore.isLoggedIn || !projectStore.projectDetail || projectStore.projectDetail.isVoted != null) {
       return;
     }
-    setValue(projectStore.projectDetail.profile.vote);
+    setValue(Number(projectStore.projectDetail.profile.vote));
     fetchIsVoted({
       variables: {
         projectId: projectStore.projectDetail.id,

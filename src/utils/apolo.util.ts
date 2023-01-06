@@ -76,6 +76,7 @@ if (isClient) {
       connectionParams: {
         authorization: `Bearer ${_getAuthToken()}`,
       },
+      shouldRetry: (e) => true,
     }),
   );
 
@@ -93,8 +94,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach((e) => {
       const { message, path, extensions } = e;
+      console.log("e: ", e);
       console.log(`[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`);
-      if (message === "Unauthorized" || extensions.code === "UNAUTHENTICATED") {
+      if (message === "Unauthorized" || extensions?.code === "UNAUTHENTICATED") {
         // Clean auth info in case of auth error
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user

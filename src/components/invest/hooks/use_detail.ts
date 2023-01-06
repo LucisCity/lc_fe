@@ -1,10 +1,11 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import {
   FILTER_PROJECT_QUERY,
+  PROFITBALANCE_SUBSCRIPTION,
   PROJECT_BALANCE_QUERY,
   PROJECT_CLAIM_PROFIT_MUT,
   PROJECT_DETAIL_QUERY,
@@ -19,10 +20,11 @@ export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
+  const projectId = "clcavhniw0000qalfi1sn8738";
 
   const detail = useQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {
-      id: "clcavhniw0000qalfi1sn8738",
+      id: projectId,
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
@@ -43,7 +45,7 @@ export default function useInvestDetail() {
     },
   });
 
-  const [getProjectBalance, projectBalance] = useLazyQuery<{ getProfitBalance: ProjectProfitBalance }>(
+  const [getProjectBalance, projectProfitBalance] = useLazyQuery<{ getProfitBalance: ProjectProfitBalance }>(
     PROJECT_BALANCE_QUERY,
     {
       onError: (e) => {
@@ -82,6 +84,19 @@ export default function useInvestDetail() {
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
   });
+
+  const profitBalanceSubscription = useSubscription<{ profitBalanceChange: ProjectProfitBalance }>(
+    PROFITBALANCE_SUBSCRIPTION,
+    {
+      variables: {
+        projectId: projectId,
+      },
+    },
+  );
+
+  const profitBalance = useMemo(() => {
+    return profitBalanceSubscription.data?.profitBalanceChange ?? projectProfitBalance.data?.getProfitBalance;
+  }, [projectProfitBalance.data?.getProfitBalance, profitBalanceSubscription.data]);
 
   useEffect(() => {
     if (detail.data?.getProject && !relateProjects.data?.getProjects) {
@@ -142,7 +157,7 @@ export default function useInvestDetail() {
   return {
     detail: detail.data?.getProject,
     relateProjects: relateProjects.data?.getProjects,
-    projectBalance: projectBalance.data?.getProfitBalance,
+    profitBalance,
     claimProfitData,
     form,
     onToggleFollow,

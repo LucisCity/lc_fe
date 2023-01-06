@@ -95,3 +95,15 @@ export const PROJECT_CHECK_VOTE_QUERY = gql`
     isVoted(projectId: $projectId)
   }
 `;
+
+export const PROFITBALANCE_SUBSCRIPTION = gql`
+  subscription profitBalanceChange($projectId: String!) {
+    profitBalanceChange(projectId: $projectId) {
+      user_id
+      project_id
+      balance
+      from
+      to
+    }
+  }
+`;
