@@ -1,10 +1,16 @@
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Typography } from "@mui/material";
+import { ProjectProfitBalance } from "../../../../gql/graphql";
+import { formatDate } from "../../../../utils/date.util";
 
 type Props = {
-  enable: boolean;
+  balance?: ProjectProfitBalance;
+  loading?: boolean;
+  onClaim?: () => void;
 };
 // DCDCDC
-export default function ClaimProfitCard(props: Props) {
+export default function ClaimProfitCard({ balance, onClaim, loading }: Props) {
+  const isDisable = !balance || balance.balance <= 0;
   return (
     <Box id={"claim"} mt={6}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -12,7 +18,12 @@ export default function ClaimProfitCard(props: Props) {
           <Typography variant="h3">Nhận lợi nhuận</Typography>
           <Box component="img" src="/assets/imgs/invest/icons/ic_info.svg" alt="" ml="6px" />
         </Box>
-        <Typography variant="caption">02, Sep 2022 - 02, Nov 2022</Typography>
+        {!isDisable ? (
+          <Typography variant="caption">{`${formatDate(balance?.from, "dd, MMM yyyy")} - ${formatDate(
+            balance?.to,
+            "dd, MMM yyyy",
+          )}`}</Typography>
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -27,12 +38,18 @@ export default function ClaimProfitCard(props: Props) {
           // opacity: 0.5,
         }}
       >
-        <Typography variant="h3" color={props.enable === false ? "#DCDCDC" : "primary"}>
-          $ 250.21
+        <Typography variant="h3" color={isDisable ? "#DCDCDC" : "primary"}>
+          $ {balance?.balance ?? 0}
         </Typography>
-        <Button variant="contained" disabled sx={{ background: props.enable === false ? "#DCDCDC" : "primary" }}>
+        <LoadingButton
+          variant="contained"
+          disabled={isDisable}
+          loading={loading}
+          sx={{ background: isDisable ? "#DCDCDC" : "primary" }}
+          onClick={onClaim}
+        >
           Claim
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );

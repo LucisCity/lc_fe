@@ -60,6 +60,24 @@ export const PROJECT_DETAIL_QUERY = gql`
   }
 `;
 
+export const PROJECT_BALANCE_QUERY = gql`
+  query getProfitBalance($projectId: String!) {
+    getProfitBalance(projectId: $projectId) {
+      user_id
+      project_id
+      balance
+      from
+      to
+    }
+  }
+`;
+
+export const PROJECT_CLAIM_PROFIT_MUT = gql`
+  mutation claimProjectProfit($projectId: String!) {
+    claimProjectProfit(projectId: $projectId)
+  }
+`;
+
 export const PROJECT_FOLLOW_MUT = gql`
   mutation toggleFollowProject($projectId: String!) {
     toggleFollowProject(projectId: $projectId)
@@ -75,5 +93,17 @@ export const PROJECT_VOTE_MUT = gql`
 export const PROJECT_CHECK_VOTE_QUERY = gql`
   query isVoted($projectId: String!) {
     isVoted(projectId: $projectId)
+  }
+`;
+
+export const PROFITBALANCE_SUBSCRIPTION = gql`
+  subscription profitBalanceChange($projectId: String!) {
+    profitBalanceChange(projectId: $projectId) {
+      user_id
+      project_id
+      balance
+      from
+      to
+    }
   }
 `;

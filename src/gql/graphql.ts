@@ -50,27 +50,6 @@ export type BlockchainTransaction = {
   updated_at: Scalars['DateTime'];
 };
 
-export type InvestedProjectGql = {
-  __typename?: 'InvestedProjectGql';
-  address: Scalars['String'];
-  ended?: Maybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
-  location: Scalars['String'];
-  nft_bought: ProjectNftBoughtGql;
-  open_sale_at: Scalars['DateTime'];
-  policy_link: Scalars['String'];
-  price: Scalars['Int'];
-  profile: ProjectProfileGql;
-  profit_balance: ProjectProfitBalanceGql;
-  profit_period: Scalars['Int'];
-  profit_period_index: Scalars['Int'];
-  take_profit_at: Scalars['DateTime'];
-  thumbnail: Scalars['String'];
-  title: Scalars['String'];
-  type: ProjectType;
-  wait_transfer_at?: Maybe<Scalars['DateTime']>;
-};
-
 export enum KycStatus {
   Failed = 'FAILED',
   Pending = 'PENDING',
@@ -253,7 +232,7 @@ export type Project = {
   address: Scalars['String'];
   created_at: Scalars['DateTime'];
   enable: Scalars['Boolean'];
-  ended?: Maybe<Scalars['Boolean']>;
+  ended: Scalars['Boolean'];
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -287,7 +266,7 @@ export type ProjectFilter = {
 export type ProjectGql = {
   __typename?: 'ProjectGql';
   address: Scalars['String'];
-  ended?: Maybe<Scalars['Boolean']>;
+  ended: Scalars['Boolean'];
   id: Scalars['ID'];
   location: Scalars['String'];
   open_sale_at: Scalars['DateTime'];
@@ -313,13 +292,6 @@ export type ProjectMediaGql = {
   url: Scalars['String'];
   /** Width of image */
   width: Scalars['Int'];
-};
-
-export type ProjectNftBoughtGql = {
-  __typename?: 'ProjectNftBoughtGql';
-  currency_amount: Scalars['Decimal'];
-  project_ended: Scalars['Boolean'];
-  total_nft: Scalars['Int'];
 };
 
 export type ProjectOfferGql = {
@@ -363,14 +335,10 @@ export type ProjectProfitBalance = {
   __typename?: 'ProjectProfitBalance';
   balance: Scalars['Decimal'];
   created_at: Scalars['DateTime'];
+  from: Scalars['DateTime'];
   project_id: Scalars['String'];
+  to: Scalars['DateTime'];
   updated_at: Scalars['DateTime'];
-  user_id: Scalars['String'];
-};
-
-export type ProjectProfitBalanceGql = {
-  __typename?: 'ProjectProfitBalanceGql';
-  balance: Scalars['Decimal'];
   user_id: Scalars['String'];
 };
 
@@ -384,6 +352,8 @@ export enum ProjectType {
 
 export type Query = {
   __typename?: 'Query';
+  /** Test compute profit */
+  computeProfit?: Maybe<Scalars['Boolean']>;
   /** get unseen notis count */
   countUnseenNotifications?: Maybe<Scalars['Int']>;
   /** get list of projects user is following */
@@ -401,19 +371,17 @@ export type Query = {
   /** get OTP */
   getOneTimePassword: Scalars['String'];
   /** Get profit balance */
-  getProfitBalance: Array<ProjectProfitBalance>;
+  getProfitBalance?: Maybe<ProjectProfitBalance>;
   /** Get list referral user */
   getProject: ProjectGql;
   /** Get related project */
   getProjects: Array<ProjectGql>;
   /** get list transaction history */
   getTransactionHistory?: Maybe<TransactionHistoryResponse>;
-  /** get vip card info */
-  getVipCard?: Maybe<VipCard>;
   /** get list of hot projects */
   hotProjects: Array<ProjectGql>;
   /** get list of projects user has invested */
-  investedProjects: Array<InvestedProjectGql>;
+  investedProjects: Array<ProjectGql>;
   isVoted: Scalars['Boolean'];
   /** get list of projects to recommend to user */
   recommendedProjects: Array<ProjectGql>;
@@ -546,7 +514,8 @@ export enum TransactionStatus {
 
 export enum TransactionType {
   ClaimProfit = 'CLAIM_PROFIT',
-  ClaimReferral = 'CLAIM_REFERRAL'
+  ClaimReferral = 'CLAIM_REFERRAL',
+  WithdrawBalance = 'WITHDRAW_BALANCE'
 }
 
 export type UnseenNotifications = {
@@ -634,23 +603,6 @@ export enum UserStatus {
   Active = 'ACTIVE',
   Banned = 'BANNED',
   Pending = 'PENDING'
-}
-
-export type VipCard = {
-  __typename?: 'VipCard';
-  created_at: Scalars['DateTime'];
-  expired_at?: Maybe<Scalars['DateTime']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  number: Scalars['String'];
-  password: Scalars['String'];
-  tier?: Maybe<VipCardTier>;
-  updated_at: Scalars['DateTime'];
-  user_id: Scalars['String'];
-};
-
-export enum VipCardTier {
-  GalaxyPremium = 'GALAXY_PREMIUM'
 }
 
 export type Wallet = {
