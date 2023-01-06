@@ -61,9 +61,9 @@ export const AvatarBox = observer(() => {
                 {profile?.display_name}
               </Typography>
             ) : null}
-            <Box mt={{ sm: 4, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>
-              <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
-            </Box>
+            {/*<Box mt={{ sm: 4, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>*/}
+            {/*  <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />*/}
+            {/*</Box>*/}
           </Grid>
           <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
             <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
