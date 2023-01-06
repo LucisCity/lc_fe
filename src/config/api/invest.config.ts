@@ -38,6 +38,7 @@ export const PROJECT_DETAIL_QUERY = gql`
       end_time_vote_sell
       ended
       profit_period
+      profit_period_index
       total_nft
       nft_price
       profile {

@@ -41,12 +41,23 @@ export default function InvestDetailSteper({ detail }: IProps) {
 
     if (new Date(detail.take_profit_at) <= new Date()) {
       steps.push(formatDate(detail.take_profit_at, "dd, MMM, yyyy"));
-    } else {
-      steps.push("");
-    }
+      activeIndex = 2;
 
-    if (new Date(detail.take_profit_at) <= new Date()) {
-      steps.push(formatDate(detail.take_profit_at, "dd, MMM, yyyy"));
+      const MS_IN_DAY = 1000 * 24 * 60 * 60;
+      const takeProfitAtTime = new Date(detail.take_profit_at).getTime();
+      const profitDays = (new Date().getTime() - takeProfitAtTime) / MS_IN_DAY;
+      const profitPeriod = profitDays / detail.profit_period;
+      const profitPeriodIndex = Math.floor(profitPeriod);
+      if (profitPeriodIndex > 0) {
+        const endPeriodDate = new Date(
+          takeProfitAtTime + (detail.profit_period_index ?? 0) * detail.profit_period * MS_IN_DAY,
+        );
+
+        steps.push(formatDate(endPeriodDate, "dd, MMM, yyyy"));
+        activeIndex = 3;
+      } else {
+        steps.push("");
+      }
     } else {
       steps.push("");
     }
@@ -54,11 +65,15 @@ export default function InvestDetailSteper({ detail }: IProps) {
     const now = new Date();
     if (detail.start_time_vote_sell && now > new Date(detail.start_time_vote_sell)) {
       steps.push(formatDate(detail.start_time_vote_sell, "dd, MMM, yyyy"));
+      activeIndex = 4;
     } else {
       steps.push("");
     }
-
+    if (detail.ended) {
+      activeIndex = 5;
+    }
     steps.push("");
+    // console.log("steps: ", steps);
     return { steps, activeIndex };
   }, [detail]);
 
