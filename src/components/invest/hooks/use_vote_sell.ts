@@ -1,19 +1,16 @@
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
-import { PROJECT_VOTE_MUT } from "../../../config/api/invest.config";
+import { VOTE_SELLPROJECT_MUT } from "../../../config/api/invest.config";
 import useMenu from "../../../hooks/use_menu";
 import projectStore from "../../../store/project.store";
-import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 
-export default function useVote() {
+export default function useVoteSell() {
   const menu = useMenu();
   const { enqueueSnackbar } = useSnackbar();
-  const [value, setValue] = useState(5);
   const client = useApolloClient();
 
-  const [voteProject, { loading }] = useMutation(PROJECT_VOTE_MUT, {
+  const [voteProject, { loading }] = useMutation(VOTE_SELLPROJECT_MUT, {
     onCompleted: () => {
       menu.onClose();
       enqueueSnackbar("Request successfully!", {
@@ -29,15 +26,7 @@ export default function useVote() {
     },
   });
 
-  useEffect(() => {
-    if (!userStore.isLoggedIn || !projectStore.projectDetail) {
-      return;
-    }
-    setValue(Number(projectStore.projectDetail.profile.vote));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userStore.isLoggedIn, projectStore.projectDetail]);
-
-  function onVote() {
+  function onVote(isSell: boolean) {
     if (!projectStore.projectDetail) {
       return;
     }
@@ -47,27 +36,15 @@ export default function useVote() {
 
     voteProject({
       variables: {
-        input: {
-          projectId: projectStore.projectDetail.id,
-          value,
-        },
+        projectId: projectStore.projectDetail.id,
+        isSell,
       },
     });
-  }
-
-  function onOpenVoteMenu(event: React.MouseEvent<HTMLElement>) {
-    if (!userStore.isLoggedIn || projectStore.projectDetail?.isVoted) {
-      return;
-    }
-    menu.onOpen(event);
   }
 
   return {
     menu,
     voting: loading,
-    onOpenVoteMenu,
     onVote,
-    value,
-    setValue,
   };
 }

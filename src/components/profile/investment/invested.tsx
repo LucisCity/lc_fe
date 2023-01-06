@@ -8,7 +8,7 @@ import React from "react";
 import PaginatedList from "../components/paginated_list";
 import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
 import { useInvestedProject } from "../../../hooks/profile/use_investment";
-import { ProjectGql } from "../../../gql/graphql";
+import { InvestedProjectGql } from "../../../gql/graphql";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -16,7 +16,9 @@ const Icon = styled("img")(({ theme }) => ({
   height: 10,
 }));
 
-const InvestedCard = (props: ProjectGql) => {
+const TOTAL_TOKENS = 1000;
+
+const InvestedCard = (props: InvestedProjectGql) => {
   /* eslint-disable */
   const {
     id,
@@ -26,10 +28,13 @@ const InvestedCard = (props: ProjectGql) => {
     price,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
-    wait_transfer_at: waitTransferAt,
+    start_time_vote_sell: waitTransferAt,
     ended,
     profile: { follows },
+    nft_bought: { total_nft: totalNft, currency_amount: currencyAmount },
+    profit_balance: { balance },
   } = props;
+  const purchasePrice = ((price / TOTAL_TOKENS) * totalNft).toFixed(2);
   /* eslint-enable */
   const salePeriod = ended
     ? ProjectSalePeriod.CLOSED
@@ -63,7 +68,7 @@ const InvestedCard = (props: ProjectGql) => {
                     {title}
                   </Typography>
                   <Typography fontWeight={500} fontSize={{ lg: 18, md: 16, sm: 14, sx: 18 }} color={"#33E179"}>
-                    ($230.02)
+                    (${Number.parseFloat(balance).toFixed(2)})
                   </Typography>
                 </Box>
                 <Typography color="text.secondary" lineHeight={1.4} fontSize={12}>
@@ -95,7 +100,7 @@ const InvestedCard = (props: ProjectGql) => {
                   </Button>
                 </Box>
                 <Box mt={{ sm: 3, xs: 4 }} mb={{ sm: 3 }} width={{ sm: "100%", xs: "50%" }}>
-                  <LinearProgress variant="determinate" value={30} />
+                  <LinearProgress variant="determinate" value={10} />
                 </Box>
               </Grid>
               <Grid item xs={6}>
@@ -115,7 +120,7 @@ const InvestedCard = (props: ProjectGql) => {
                       Tokens sở hữu
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      530
+                      {totalNft}
                     </Typography>
                   </Box>
                 </Box>
@@ -128,7 +133,7 @@ const InvestedCard = (props: ProjectGql) => {
                       Giá mua vào
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      $100.00
+                      ${purchasePrice}
                     </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>

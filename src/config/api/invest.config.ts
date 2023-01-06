@@ -12,9 +12,12 @@ export const FILTER_PROJECT_QUERY = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
+      end_time_vote_sell
       ended
       profit_period
+      total_nft
+      nft_price
     }
   }
 `;
@@ -31,9 +34,12 @@ export const PROJECT_DETAIL_QUERY = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
+      end_time_vote_sell
       ended
       profit_period
+      total_nft
+      nft_price
       profile {
         project_id
         hightlight
@@ -64,6 +70,12 @@ export const PROJECT_DETAIL_QUERY = gql`
   }
 `;
 
+export const PROJECT_CLAIM_PROFIT_MUT = gql`
+  mutation claimProjectProfit($projectId: String!) {
+    claimProjectProfit(projectId: $projectId)
+  }
+`;
+
 export const PROJECT_FOLLOW_MUT = gql`
   mutation toggleFollowProject($projectId: String!) {
     toggleFollowProject(projectId: $projectId)
@@ -76,8 +88,40 @@ export const PROJECT_VOTE_MUT = gql`
   }
 `;
 
-export const PROJECT_CHECK_VOTE_QUERY = gql`
-  query isVoted($projectId: String!) {
+export const VOTE_SELLPROJECT_MUT = gql`
+  mutation voteProject($projectId: String!, $isSell: Boolean!) {
+    voteSellProject(projectId: $projectId, isSell: $isSell)
+  }
+`;
+
+export const PROFIT_BALANCE_SUBSCRIPTION = gql`
+  subscription profitBalanceChange($projectId: String!) {
+    profitBalanceChange(projectId: $projectId) {
+      user_id
+      project_id
+      balance
+      from
+      to
+    }
+  }
+`;
+
+export const PROJECT_EXTRA_INFO_QUERY = gql`
+  query projectExtraQuery($projectId: String!) {
     isVoted(projectId: $projectId)
+    getProfitBalance(projectId: $projectId) {
+      user_id
+      project_id
+      balance
+      from
+      to
+    }
+    getNftBought(projectId: $projectId) {
+      project_id
+      user_id
+      total_nft
+      currency_amount
+      is_sell_voted
+    }
   }
 `;

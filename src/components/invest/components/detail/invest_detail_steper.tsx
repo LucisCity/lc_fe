@@ -51,8 +51,9 @@ export default function InvestDetailSteper({ detail }: IProps) {
       steps.push("");
     }
 
-    if (detail.wait_transfer_at && new Date(detail.wait_transfer_at) <= new Date()) {
-      steps.push(formatDate(detail.wait_transfer_at, "dd, MMM, yyyy"));
+    const now = new Date();
+    if (detail.start_time_vote_sell && now > new Date(detail.start_time_vote_sell)) {
+      steps.push(formatDate(detail.start_time_vote_sell, "dd, MMM, yyyy"));
     } else {
       steps.push("");
     }

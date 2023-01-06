@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import VoteMenu from "./vote_menu";
 import ShareDialog from "./share_dialog";
+import { LoadingButton } from "@mui/lab";
 
 interface IProps {
   title?: string;
@@ -10,6 +11,7 @@ interface IProps {
   follows?: number;
   takeProfitStartTime?: string;
   toggleFollow?: () => void;
+  voting?: boolean;
 }
 
 export default function InvestDetailHeader(props: IProps) {
@@ -80,18 +82,21 @@ export default function InvestDetailHeader(props: IProps) {
             gap: 3,
           }}
         >
-          <Button
+          <LoadingButton
             variant="contained"
             color={"secondary"}
             sx={{
               color: "#FF6C6C",
               width: "84px",
             }}
-            endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
+            endIcon={
+              props.voting ? null : <Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />
+            }
+            loading={props.voting}
             onClick={props.toggleFollow}
           >
             {props.follows}
-          </Button>
+          </LoadingButton>
           {/* <Button
             variant="contained"
             endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_share.svg" alt="" />}

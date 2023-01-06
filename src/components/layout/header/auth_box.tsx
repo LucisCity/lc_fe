@@ -10,6 +10,7 @@ import { ApolloError, useLazyQuery } from "@apollo/client";
 import { useSubToUnseenNotiCount, useUnseenNotifications } from "../../../hooks/profile/use_notification";
 import { isNumber } from "lodash";
 import { GET_BALANCE } from "../../../hooks/profile/account/use_info";
+import { useDisconnect } from "wagmi";
 
 const NotificationBell = () => {
   const { dataUnseenNotis } = useUnseenNotifications();
@@ -32,6 +33,8 @@ const NotificationBell = () => {
 };
 
 export const AuthBox = observer(() => {
+  const { disconnect } = useDisconnect();
+
   const loading = !UserStore.isLoadedFromLocal;
   const balance = UserStore.user?.wallet?.balance;
   const [getBalance] = useLazyQuery(GET_BALANCE, {
@@ -61,6 +64,7 @@ export const AuthBox = observer(() => {
             avatar={UserStore.user?.profile?.avatar?.toString()}
             username={UserStore.user?.profile?.display_name?.toString() ?? UserStore.user?.email?.toString()}
             onLogout={() => {
+              disconnect();
               UserStore.logout();
             }}
           />

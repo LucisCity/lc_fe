@@ -4,6 +4,7 @@ export const isClient = typeof window !== "undefined";
 export const StorageHelper = {
   clearSession() {
     Storage.removeItem("token");
+    Storage.removeItem("user");
   },
   getToken: () => {
     return Storage.getItem("token") as string;

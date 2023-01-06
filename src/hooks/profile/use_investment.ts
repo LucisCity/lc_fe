@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { ProjectGql } from "../../gql/graphql";
+import { InvestedProjectGql, ProjectGql } from "../../gql/graphql";
 import { useState } from "react";
 
 const GET_INVESTED_PROJECTS = gql`
@@ -12,15 +12,19 @@ const GET_INVESTED_PROJECTS = gql`
       price
       thumbnail
       address
-      location
-      policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
-      profit_period
       profile {
         follows
+      }
+      profit_balance {
+        balance
+      }
+      nft_bought {
+        total_nft
+        currency_amount
       }
     }
   }
@@ -28,8 +32,8 @@ const GET_INVESTED_PROJECTS = gql`
 
 export const useInvestedProject = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [investedProjects, setInvestedProjects] = useState<ProjectGql[]>([]);
-  const { loading } = useQuery<{ investedProjects: ProjectGql[] }>(GET_INVESTED_PROJECTS, {
+  const [investedProjects, setInvestedProjects] = useState<InvestedProjectGql[]>([]);
+  const { loading } = useQuery<{ investedProjects: InvestedProjectGql[] }>(GET_INVESTED_PROJECTS, {
     onCompleted: (res) => {
       setInvestedProjects(res?.investedProjects);
     },
@@ -57,7 +61,7 @@ const GET_FOLLOWING_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {
@@ -98,7 +102,7 @@ const GET_RECOMMENDED_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {
@@ -139,7 +143,7 @@ const GET_HOT_PROJECTS = gql`
       policy_link
       open_sale_at
       take_profit_at
-      wait_transfer_at
+      start_time_vote_sell
       ended
       profit_period
       profile {

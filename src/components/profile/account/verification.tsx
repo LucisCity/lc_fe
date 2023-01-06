@@ -7,6 +7,7 @@ import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { useFileInput } from "../../../hooks/use_file_input";
+import { useSnackbar } from "notistack";
 
 interface VerifyBoxProps {
   fieldName: string;
@@ -197,6 +198,7 @@ const verifyBoxes = [
 
 export default function Verification() {
   const { data, loading, uploadImages } = useUserKyc();
+  const { enqueueSnackbar } = useSnackbar();
 
   // console.log(`data ${JSON.stringify(data)}`);
   const [selectedFiles, setSelectedFiles] = React.useState<FileUpload[]>([]);
@@ -204,15 +206,15 @@ export default function Verification() {
 
   // console.log(`selectedFiles length ${JSON.stringify(selectedFiles)}`);
   const handleSelectFile = (file: FileUpload) => {
-    if (selectedFiles.length >= 3) {
-      setSelectedFiles([...selectedFiles.slice(-2), file]);
-    } else {
-      setSelectedFiles([...selectedFiles, file]);
-    }
+    setSelectedFiles([...selectedFiles.filter((i) => i.fieldName !== file.fieldName), file]);
   };
 
   const handleUploadFiles = async () => {
     // console.log(`selectedFiles ${selectedFiles}`);
+    if (selectedFiles.length < 3) {
+      enqueueSnackbar("Vui lòng upload đủ 3 ảnh", { variant: "error" });
+      return;
+    }
     const success = await uploadImages(selectedFiles);
     if (success) {
       setPendingStatus(true);
