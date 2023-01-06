@@ -14,9 +14,9 @@ export default function InvestDetailNftCard() {
   const { data, refetchContractData } = useNft();
   const [progressValue, setProgressValue] = React.useState(0);
   const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
-  const [showAlearConnectWallet, setShowAlearConnectWallet] = React.useState(false);
+  const [showAlertConnectWallet, setShowAlertConnectWallet] = React.useState(false);
   const [showPopup, setShowPopup] = React.useState(false);
-  const { address } = useAccount({});
+  const { address, isConnected } = useAccount({});
   const userWalletAddress = UserStore.user?.wallet_address;
   const pricePerOne = React.useMemo(() => Number(ethers.utils.formatUnits(data?.[0] ?? 0)), [data?.[0]]);
   const totalSupply = React.useMemo(() => Number(data?.[1] ?? 0), [data?.[1]]);
@@ -131,8 +131,8 @@ export default function InvestDetailNftCard() {
                 }}
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
                 onClick={() => {
-                  if (!userWalletAddress) {
-                    setShowAlearConnectWallet(true);
+                  if (!userWalletAddress || !isConnected) {
+                    setShowAlertConnectWallet(true);
                     return;
                   }
                   setShowPopup(true);
@@ -140,7 +140,7 @@ export default function InvestDetailNftCard() {
               >
                 Mua NFT
               </Button>
-              {showAlearConnectWallet && (
+              {showAlertConnectWallet && (
                 <>
                   <Alert severity="error" sx={{ mt: 4 }}>
                     Bạn cần kết nối ví để mua NFT.
