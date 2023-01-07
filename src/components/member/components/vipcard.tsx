@@ -5,6 +5,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ShareVipCardDialog from "./vipcard_qr_dialog";
 import { useVipCard } from "../hooks/use_vipcard";
 import moment from "moment";
+import QRReader from "./qr_reader";
 
 const Title = styled("img")(({ theme }) => ({
   height: 25,
@@ -190,9 +191,7 @@ export const VipCard = () => {
       </Card>
       <Box mt={10}>
         <ShareVipCardDialog />
-        <Button variant={"contained"} endIcon={<Box component={"img"} src={"/assets/imgs/member/scan-qr.svg"} />}>
-          Scan QR code
-        </Button>
+        <QRReader />
       </Box>
       <Typography color={"#000"} sx={{ mt: 6 }}>
         Nội dung ngắn gọn ở đây

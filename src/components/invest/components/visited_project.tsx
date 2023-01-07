@@ -29,14 +29,7 @@ const VisitedProject = observer(() => {
           //   }
           return (
             <Box key={"invest" + index}>
-              <Card
-                key={"invest" + index}
-                address={item.address}
-                image={item.thumbnail}
-                name={item.title}
-                price={formatNumber(item.price)}
-                isCollapseContent={false}
-              />
+              <Card key={"invest" + index} data={{ ...item }} isCollapseContent={false} />
             </Box>
           );
         })}

@@ -155,18 +155,24 @@ export default function InfoForm() {
   const form = useForm();
 
   const { dataAccountInfo, loadingAccountInfo } = useGetAccountInfo();
+  const [compareData, setCompareData] = React.useState<any>(dataAccountInfo);
   const { walletAddress } = useWalletAddress();
 
   const { updateAccountInfo } = useUpdateAccountInfo();
 
   async function onSubmit(values: any) {
+    // console.log(compareData);
+    const valuesChanged = !!Object.keys(values).find((i: any) => values[i] !== compareData[i]);
+    if (valuesChanged) {
+      await updateAccountInfo({
+        variables: {
+          input: values,
+        },
+        skip: isEmpty(values),
+      });
+      setCompareData(values);
+    }
     // e.preventDefault();
-    await updateAccountInfo({
-      variables: {
-        input: values,
-      },
-      skip: isEmpty(values),
-    });
   }
 
   return (
