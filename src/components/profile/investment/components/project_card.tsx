@@ -29,14 +29,14 @@ export const ProjectStatus = (props: { status: ProjectSalePeriod }) => {
         return "rgba(80, 76, 103, 0.8)";
       case ProjectSalePeriod.OPEN:
         return "rgba(255, 140, 4, 0.8)";
+      case ProjectSalePeriod.EXPECTED_PROFITING:
+        return "rgba(6, 151, 255, 0.8)";
       case ProjectSalePeriod.PROFITING:
         return "rgba(0, 218, 87, 0.8)";
       case ProjectSalePeriod.TRANSFERRING:
         return "rgba(101, 85, 238, 0.8)";
       case ProjectSalePeriod.UPCOMING:
         return "rgba(71, 204, 233, 0.8)";
-      case ProjectSalePeriod.EXPECTED_PROFITING:
-        return "rgba(6, 151, 255, 0.8)";
       default:
         return "rgba(71, 204, 233, 0.8)";
     }
@@ -67,6 +67,7 @@ export const ProjectCard = (props: ProjectGql) => {
     thumbnail,
     address,
     price,
+    total_nft: totalNft,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
     start_time_vote_sell: waitTransferAt,
@@ -74,15 +75,17 @@ export const ProjectCard = (props: ProjectGql) => {
     profile: { follows },
   } = props;
   /* eslint-enable */
-  const salePeriod = ended
-    ? ProjectSalePeriod.CLOSED
-    : waitTransferAt && new Date() > new Date(waitTransferAt)
-    ? ProjectSalePeriod.TRANSFERRING
-    : takeProfitAt && new Date() > new Date(takeProfitAt)
-    ? ProjectSalePeriod.PROFITING
-    : openSaleAt && new Date() > new Date(openSaleAt)
-    ? ProjectSalePeriod.OPEN
-    : ProjectSalePeriod.UPCOMING;
+  const salePeriod = React.useMemo(() => {
+    return ended
+      ? ProjectSalePeriod.CLOSED
+      : waitTransferAt && new Date() > new Date(waitTransferAt)
+      ? ProjectSalePeriod.TRANSFERRING
+      : takeProfitAt && new Date() > new Date(takeProfitAt)
+      ? ProjectSalePeriod.PROFITING
+      : openSaleAt && new Date() > new Date(openSaleAt)
+      ? ProjectSalePeriod.OPEN
+      : ProjectSalePeriod.UPCOMING;
+  }, [waitTransferAt, takeProfitAt, openSaleAt, ended]);
   // console.log(`openSaleAt ${openSaleAt}`);
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>
@@ -143,7 +146,7 @@ export const ProjectCard = (props: ProjectGql) => {
                       Tổng số tokens
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      530
+                      {totalNft}
                     </Typography>
                   </Box>
                   <Box display={"flex"} pb={2} justifyContent={"space-between"}>
@@ -152,7 +155,7 @@ export const ProjectCard = (props: ProjectGql) => {
                       Số tokens đang bán
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      2M
+                      {totalNft}
                     </Typography>
                   </Box>
                 </Box>

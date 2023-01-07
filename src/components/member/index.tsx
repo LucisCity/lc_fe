@@ -6,6 +6,7 @@ import { Background } from "../landing/components/background";
 import ScrollPage from "../layout/scroll_page";
 import { VipCard } from "./components/vipcard";
 import UserStore from "../../store/user.store";
+import { hasVipCard } from "./hooks/use_vipcard";
 
 const data = [
   {
@@ -135,6 +136,7 @@ const DataItem = () => {
   );
 };
 export const MemberPage = () => {
+  const { data } = hasVipCard();
   return (
     <ScrollPage pt={0}>
       <Box
@@ -149,7 +151,7 @@ export const MemberPage = () => {
         }}
       />
       <Box mt={-10}>
-        {UserStore.isLoggedIn ? <VipCard /> : null}
+        {UserStore.isLoggedIn && data ? <VipCard /> : null}
         <CardSection disabledBackground={true} disabledReadmoreButton={true} />
       </Box>
       <Box pb={10} position={"relative"}>
