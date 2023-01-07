@@ -110,7 +110,9 @@ export default function ConnectWallet() {
           if (accept) {
             web3Modal.open();
             setIsShowWarning(false);
+            return;
           }
+          setIsShowWarning(false);
         }}
       >
         {!!userWalletAddress ? (
