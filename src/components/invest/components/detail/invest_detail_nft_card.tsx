@@ -10,21 +10,8 @@ import { useAccount } from "wagmi";
 import UserStore from "../../../../store/user.store";
 import Link from "next/link";
 
-export default function InvestDetailNftCard() {
-  const { data, refetchContractData } = useNft();
+const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => void }) => {
   const [progressValue, setProgressValue] = React.useState(0);
-  const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
-  const [showAlertConnectWallet, setShowAlertConnectWallet] = React.useState(false);
-  const [showPopup, setShowPopup] = React.useState(false);
-  const { address, isConnected } = useAccount({});
-  const userWalletAddress = UserStore.user?.wallet_address;
-  const pricePerOne = React.useMemo(() => Number(ethers.utils.formatUnits(data?.[0] ?? 0)), [data?.[0]]);
-  const totalSupply = React.useMemo(() => Number(data?.[1] ?? 0), [data?.[1]]);
-  const totalSold = React.useMemo(() => Number(data?.[3] ?? 0), [data?.[3]]);
-  const floorPrice = React.useMemo(() => data?.[0] ?? 0, [data?.[0]]);
-
-  const onClosePopup = React.useCallback(() => setShowPopup(false), []);
-
   // 10s refetch data from blockchain
   React.useEffect(() => {
     const id = setInterval(() => {
@@ -40,6 +27,23 @@ export default function InvestDetailNftCard() {
       clearInterval(timer);
     };
   }, []);
+
+  return <CircularProgress variant="determinate" size={20} value={progressValue} />;
+};
+export default function InvestDetailNftCard() {
+  const { data, refetchContractData } = useNft();
+
+  const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
+  const [showAlertConnectWallet, setShowAlertConnectWallet] = React.useState(false);
+  const [showPopup, setShowPopup] = React.useState(false);
+  const { address, isConnected } = useAccount({});
+  const userWalletAddress = UserStore.user?.wallet_address;
+  const pricePerOne = React.useMemo(() => Number(ethers.utils.formatUnits(data?.[0] ?? 0)), [data?.[0]]);
+  const totalSupply = React.useMemo(() => Number(data?.[1] ?? 0), [data?.[1]]);
+  const totalSold = React.useMemo(() => Number(data?.[3] ?? 0), [data?.[3]]);
+  const floorPrice = React.useMemo(() => data?.[0] ?? 0, [data?.[0]]);
+
+  const onClosePopup = React.useCallback(() => setShowPopup(false), []);
 
   React.useEffect(() => {
     if (address !== userWalletAddress) {
@@ -78,7 +82,7 @@ export default function InvestDetailNftCard() {
           <Typography variant="subtitle1" mt="12px">
             Tổng NFT đã bán
           </Typography>
-          <CircularProgress variant="determinate" size={20} value={progressValue} />
+          <ProgressWaitData refetchContractData={refetchContractData} />
         </Box>
         <Box
           sx={{
