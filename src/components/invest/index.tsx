@@ -32,99 +32,6 @@ const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !==
     justifyContent: "space-between",
   }),
 );
-const fakeData = [
-  {
-    label: "VincomBaTrieu",
-    name: "VincomBaTrieu",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123532",
-    image:
-      "https://statics.vincom.com.vn/vincom-tttm/gioi_thieu/anh_bai_viet/Hinh-anh-cac-thuong-hieu-o-Vincom-Ba-Trieu-so-1_1632322535.jpeg",
-  },
-  {
-    label: "NovaLand",
-    name: "NovaLand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "624542",
-    image:
-      "https://cafefcdn.com/thumb_w/650/203337114487263232/2022/12/9/photo1670561661183-16705616612862130643853.jpeg",
-  },
-  {
-    label: "Ocenpark",
-    name: "Ocenpark",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123537",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Royal City",
-    name: "Royal City",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "343632",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Phú Nhuận",
-    name: "Phú Nhuận",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53638",
-    image: "https://batdongsanhungthinh.com.vn/wp-content/uploads/2017/10/Orchard-parkview-1.jpg",
-  },
-  {
-    label: "Grandland",
-    name: "Grandland",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "223032",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Aqualand",
-    name: "Aqualand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "127532",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
-  },
-  {
-    label: "Thanh Bình Park",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-];
-
-const fakeData2 = [
-  {
-    label: "Grandland 1",
-    name: "Grandland",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "223032",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Aqualand 1",
-    name: "Aqualand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "127532",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
-  },
-  {
-    label: "Thanh Bình Park 1",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-  {
-    label: "Thanh Bình Park",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-];
 
 const Search = styled(Autocomplete)(({ theme }) => ({
   width: 290,
@@ -334,7 +241,7 @@ export const InvestPage = () => {
                     .concat("ALL" as any)
                     .map((item) => {
                       const label = (type: ProjectType) => {
-                        switch (item) {
+                        switch (type) {
                           case ProjectType.House:
                             return "Nhà";
                           case ProjectType.Hotel:
