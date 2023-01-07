@@ -22,7 +22,7 @@ export default function useInvestDetail() {
   const [disableClaim, setDisableClaim] = useState(false);
   const router = useRouter();
   const _id = router.query["id"] as string;
-  const _temps = (_id ?? "").split("id.");
+  const _temps = (_id ?? "").split(".");
   const projectId = _temps.length > 1 ? _temps[1] : null;
 
   const [fetchProject, detail] = useLazyQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
@@ -79,9 +79,9 @@ export default function useInvestDetail() {
 
   const [toggleFollowProject, { loading }] = useMutation(PROJECT_FOLLOW_MUT, {
     onCompleted: () => {
-      enqueueSnackbar("Request successfully!", {
-        variant: "success",
-      });
+      // enqueueSnackbar("Request successfully!", {
+      //   variant: "success",
+      // });
       fetchProject({
         variables: {
           id: projectId,
@@ -96,7 +96,7 @@ export default function useInvestDetail() {
 
   const [claimProfit, claimProfitData] = useMutation(PROJECT_CLAIM_PROFIT_MUT, {
     onCompleted: () => {
-      enqueueSnackbar("Request successfully!", {
+      enqueueSnackbar("Nhận lãi thành công!", {
         variant: "success",
       });
       detail.client.refetchQueries({
@@ -165,7 +165,7 @@ export default function useInvestDetail() {
   function onClaimProfit() {
     const projectId = detail.data?.getProject.id;
     if (!userStore.isLoggedIn) {
-      router.push("/login");
+      router.push(`/login?redirect_url=${router.asPath}`);
       return;
     }
     if (!projectId || claimProfitData.loading) {

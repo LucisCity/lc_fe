@@ -1,15 +1,10 @@
-import { useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
-import { useRouter } from "next/router";
+import { useQuery } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
 import { FILTER_PROJECT_QUERY, GET_HOT_PROJECT } from "../../../config/api/invest.config";
-import { ProjectGql, ProjectNftOwner, ProjectProfitBalance } from "../../../gql/graphql";
-import projectStore from "../../../store/project.store";
+import { ProjectGql } from "../../../gql/graphql";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 
 export default function useProject() {
-  const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
 
   const { data: highlightProjects, loading: loadingHighlightProject } = useQuery<{ hotProjects: ProjectGql[] }>(
@@ -21,6 +16,14 @@ export default function useProject() {
       },
     },
   );
+
+  const {
+    data: projectSearchData,
+    loading: searchLoading,
+    refetch: searchProject,
+  } = useQuery<{ getProjects: ProjectGql[] }>(FILTER_PROJECT_QUERY, {
+    skip: true,
+  });
 
   const {
     data: projects,
@@ -39,5 +42,8 @@ export default function useProject() {
     projects: projects?.getProjects ?? [],
     loadProjects: refetch,
     loadingProjects,
+    projectSearchData: projectSearchData?.getProjects ?? [],
+    searchProject,
+    searchLoading,
   };
 }

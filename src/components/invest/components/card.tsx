@@ -72,7 +72,14 @@ export const Card = (props: IProps) => {
               {props.data.address}
             </Typography>
             <Box mt={5} mb={5}>
-              <LinearProgress variant="determinate" value={30} />
+              <LinearProgress
+                variant="determinate"
+                value={
+                  isNaN(props.data.total_nft_sold / props.data.total_nft)
+                    ? 0
+                    : props.data.total_nft_sold / props.data.total_nft
+                }
+              />
             </Box>
 
             <Collapse in={state}>

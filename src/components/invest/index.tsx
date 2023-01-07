@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { Container, Divider, MenuItem, Popper, Select } from "@mui/material";
+import { CircularProgress, Container, Divider, MenuItem, Popper, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
@@ -22,7 +22,8 @@ import "swiper/css/pagination";
 import { HighlightCardSkeleton } from "./components/highlight_card_skeleton";
 import { useFollowingProject } from "../../hooks/profile/use_investment";
 import { CardSkeleton } from "./components/card_skeleton";
-import { ProjectType } from "../../gql/graphql";
+import { ProjectGql, ProjectType } from "../../gql/graphql";
+import { debounce, throttle } from "lodash";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -31,104 +32,6 @@ const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !==
     justifyContent: "space-between",
   }),
 );
-const fakeData = [
-  {
-    label: "VincomBaTrieu",
-    name: "VincomBaTrieu",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123532",
-    image:
-      "https://statics.vincom.com.vn/vincom-tttm/gioi_thieu/anh_bai_viet/Hinh-anh-cac-thuong-hieu-o-Vincom-Ba-Trieu-so-1_1632322535.jpeg",
-  },
-  {
-    label: "NovaLand",
-    name: "NovaLand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "624542",
-    image:
-      "https://cafefcdn.com/thumb_w/650/203337114487263232/2022/12/9/photo1670561661183-16705616612862130643853.jpeg",
-  },
-  {
-    label: "Ocenpark",
-    name: "Ocenpark",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123537",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Royal City",
-    name: "Royal City",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "343632",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Phú Nhuận",
-    name: "Phú Nhuận",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53638",
-    image: "https://batdongsanhungthinh.com.vn/wp-content/uploads/2017/10/Orchard-parkview-1.jpg",
-  },
-  {
-    label: "Grandland",
-    name: "Grandland",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "223032",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Aqualand",
-    name: "Aqualand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "127532",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
-  },
-  {
-    label: "Thanh Bình Park",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-];
-
-const fakeData2 = [
-  {
-    label: "Grandland 1",
-    name: "Grandland",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "223032",
-    image: "https://www.villasvinhomesriverside.com/images/users/images/vinhomes-ocean-park-1.jpg",
-  },
-  {
-    label: "Aqualand 1",
-    name: "Aqualand",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "127532",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8TOGifEREG12639XMUxwB92qhsagOV7U06C_flRDp1DSD2Vk87DvwFu2rLyeNCCOdIs&usqp=CAU",
-  },
-  {
-    label: "Thanh Bình Park 1",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-  {
-    label: "Thanh Bình Park",
-    name: "Thanh Bình Park",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "53032",
-    image: "https://danhkhoireal.vn/wp-content/uploads/2019/01/masteri-parkland.jpg",
-  },
-];
-
-const fadeVariant = {
-  visible: { opacity: 1, y: 0 },
-  hidden: { opacity: 0, y: 20 },
-};
 
 const Search = styled(Autocomplete)(({ theme }) => ({
   width: 290,
@@ -137,27 +40,13 @@ const Search = styled(Autocomplete)(({ theme }) => ({
   },
 }));
 export const InvestPage = () => {
-  const [loading, setLoading] = React.useState(false);
-  const [isLoadAll, setIsLoadAll] = React.useState(false);
-  const [listInvests, setListInvests] = React.useState<any[]>(fakeData);
-  const { highlightProjects, loadingHighlightProject, projects, loadingProjects, loadProjects } = useProject();
+  const { highlightProjects, loadingHighlightProject, projects, loadingProjects, loadProjects, searchProject } =
+    useProject();
   const { loading: loadingFollowingProject, followingProjects } = useFollowingProject();
-  // const handleGetInvest = async () => {
-  //   setLoading(true);
-  //   try {
-  //     setTimeout(() => {
-  //       setListInvests([...listInvests, ...fakeData2]);
-  //       setLoading(false);
-  //       setIsLoadAll(true);
-  //     }, 500);
-  //   } catch (error) {
-  //     setIsLoadAll(true);
-  //     throw error;
-  //   }
-  // };
-  // @ts-ignore
-
-  const handleChangeType = async (e) => {
+  const [inputValue, setInputValue] = React.useState("");
+  const [searchLoading, setSearchLoading] = React.useState(false);
+  const [options, setOptions] = React.useState<readonly ProjectGql[]>([]);
+  const handleChangeType = async (e: any) => {
     const type = e.target.value;
     if (type === "ALL") {
       await loadProjects({
@@ -173,6 +62,24 @@ export const InvestPage = () => {
       },
     });
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetch = React.useCallback(
+    debounce((inputValue: string) => {
+      searchProject({ search: inputValue }).then((res) => setOptions(res.data?.getProjects ?? []));
+      setSearchLoading(false);
+    }, 500),
+    [],
+  );
+  React.useEffect(() => {
+    setSearchLoading(true);
+    if (!inputValue) {
+      setOptions([]);
+      setSearchLoading(false);
+      return;
+    }
+    fetch(inputValue);
+  }, [inputValue]);
   return (
     <ScrollPage>
       <Box
@@ -269,6 +176,9 @@ export const InvestPage = () => {
               autoComplete={false}
               // disablePortal
               freeSolo
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
               PopperComponent={(prop) => (
                 <Popper {...prop} sx={{ width: { xs: "auto", sm: "500px !important" } }} placement={"bottom-start"} />
               )}
@@ -284,16 +194,23 @@ export const InvestPage = () => {
                       paddingLeft: 12,
                       height: 40,
                     },
+                    endAdornment: (
+                      <React.Fragment>
+                        {searchLoading ? <CircularProgress color="inherit" size={12} sx={{ mr: 2 }} /> : null}
+                        {/*{params.InputProps.endAdornment}*/}
+                      </React.Fragment>
+                    ),
                   }}
                   placeholder={"Tìm kiếm dự án bạn quan tâm"}
                 />
               )}
-              options={listInvests}
+              options={options}
+              getOptionLabel={(option: any) => option?.title}
               renderOption={(props, option) => (
                 // @ts-ignore
                 <Box p={1} {...props}>
                   {/* @ts-ignore */}
-                  <SearchOption {...option} />
+                  <SearchOption data={option} />
                 </Box>
               )}
             />
@@ -324,7 +241,7 @@ export const InvestPage = () => {
                     .concat("ALL" as any)
                     .map((item) => {
                       const label = (type: ProjectType) => {
-                        switch (item) {
+                        switch (type) {
                           case ProjectType.House:
                             return "Nhà";
                           case ProjectType.Hotel:

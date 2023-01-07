@@ -93,6 +93,11 @@ export const useBuyNft = () => {
       });
     },
     onError: async (res) => {
+      if (res.name === "UserRejectedRequestError") {
+        enqueueSnackbar("Bạn cần ký để thực hiện giao dịch!", {
+          variant: "error",
+        });
+      }
       enqueueSnackbar("Lỗi giao dịch, thực hiện lại sau vài phút!", {
         variant: "error",
       });
