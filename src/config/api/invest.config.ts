@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const FILTER_PROJECT_QUERY = gql`
-  query getProjects($filter: ProjectFilter) {
-    getProjects(filter: $filter) {
+  query getProjects($filter: ProjectFilter, $search: String) {
+    getProjects(filter: $filter, search: $search) {
       id
       title
       price

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { Container, Divider, MenuItem, Popper, Select } from "@mui/material";
+import { CircularProgress, Container, Divider, MenuItem, Popper, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
@@ -22,7 +22,8 @@ import "swiper/css/pagination";
 import { HighlightCardSkeleton } from "./components/highlight_card_skeleton";
 import { useFollowingProject } from "../../hooks/profile/use_investment";
 import { CardSkeleton } from "./components/card_skeleton";
-import { ProjectType } from "../../gql/graphql";
+import { ProjectGql, ProjectType } from "../../gql/graphql";
+import { debounce, throttle } from "lodash";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -125,11 +126,6 @@ const fakeData2 = [
   },
 ];
 
-const fadeVariant = {
-  visible: { opacity: 1, y: 0 },
-  hidden: { opacity: 0, y: 20 },
-};
-
 const Search = styled(Autocomplete)(({ theme }) => ({
   width: 290,
   [theme.breakpoints.down("sm")]: {
@@ -137,27 +133,13 @@ const Search = styled(Autocomplete)(({ theme }) => ({
   },
 }));
 export const InvestPage = () => {
-  const [loading, setLoading] = React.useState(false);
-  const [isLoadAll, setIsLoadAll] = React.useState(false);
-  const [listInvests, setListInvests] = React.useState<any[]>(fakeData);
-  const { highlightProjects, loadingHighlightProject, projects, loadingProjects, loadProjects } = useProject();
+  const { highlightProjects, loadingHighlightProject, projects, loadingProjects, loadProjects, searchProject } =
+    useProject();
   const { loading: loadingFollowingProject, followingProjects } = useFollowingProject();
-  // const handleGetInvest = async () => {
-  //   setLoading(true);
-  //   try {
-  //     setTimeout(() => {
-  //       setListInvests([...listInvests, ...fakeData2]);
-  //       setLoading(false);
-  //       setIsLoadAll(true);
-  //     }, 500);
-  //   } catch (error) {
-  //     setIsLoadAll(true);
-  //     throw error;
-  //   }
-  // };
-  // @ts-ignore
-
-  const handleChangeType = async (e) => {
+  const [inputValue, setInputValue] = React.useState("");
+  const [searchLoading, setSearchLoading] = React.useState(false);
+  const [options, setOptions] = React.useState<readonly ProjectGql[]>([]);
+  const handleChangeType = async (e: any) => {
     const type = e.target.value;
     if (type === "ALL") {
       await loadProjects({
@@ -173,6 +155,24 @@ export const InvestPage = () => {
       },
     });
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetch = React.useCallback(
+    debounce((inputValue: string) => {
+      searchProject({ search: inputValue }).then((res) => setOptions(res.data?.getProjects ?? []));
+      setSearchLoading(false);
+    }, 500),
+    [],
+  );
+  React.useEffect(() => {
+    setSearchLoading(true);
+    if (!inputValue) {
+      setOptions([]);
+      setSearchLoading(false);
+      return;
+    }
+    fetch(inputValue);
+  }, [inputValue]);
   return (
     <ScrollPage>
       <Box
@@ -269,6 +269,9 @@ export const InvestPage = () => {
               autoComplete={false}
               // disablePortal
               freeSolo
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
               PopperComponent={(prop) => (
                 <Popper {...prop} sx={{ width: { xs: "auto", sm: "500px !important" } }} placement={"bottom-start"} />
               )}
@@ -284,16 +287,23 @@ export const InvestPage = () => {
                       paddingLeft: 12,
                       height: 40,
                     },
+                    endAdornment: (
+                      <React.Fragment>
+                        {searchLoading ? <CircularProgress color="inherit" size={12} sx={{ mr: 2 }} /> : null}
+                        {/*{params.InputProps.endAdornment}*/}
+                      </React.Fragment>
+                    ),
                   }}
                   placeholder={"Tìm kiếm dự án bạn quan tâm"}
                 />
               )}
-              options={listInvests}
+              options={options}
+              getOptionLabel={(option: any) => option?.title}
               renderOption={(props, option) => (
                 // @ts-ignore
                 <Box p={1} {...props}>
                   {/* @ts-ignore */}
-                  <SearchOption {...option} />
+                  <SearchOption data={option} />
                 </Box>
               )}
             />
