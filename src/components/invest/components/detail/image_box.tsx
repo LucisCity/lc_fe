@@ -13,7 +13,6 @@ export default function InvestImageBox({ project }: IProps) {
   if (!project?.profile?.medias || project.profile.medias.length === 0) {
     return <Skeleton variant="rectangular" width="100%" height="432px" sx={{ mt: 4 }} />;
   }
-
   const medias = project.profile.medias;
 
   return (

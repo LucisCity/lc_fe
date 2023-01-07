@@ -1,8 +1,10 @@
 import { Close } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton, Modal } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
+import EMITER_KEY from "../../../../config/emiter.key";
 import { ProjectGql } from "../../../../gql/graphql";
 import { useModal } from "../../../../hooks/use_modal";
+import { AppEmitter } from "../../../../utils/emitter";
 import GoogleMap from "./map/google_map";
 import MarkerType from "./map/marker_type";
 
@@ -24,6 +26,14 @@ export default function MapDialog({ project }: IProps) {
   });
   const [zoom, setZoom] = useState<number>(15);
   const modal = useModal();
+
+  useEffect(() => {
+    AppEmitter.addListener(EMITER_KEY.openMap, () => {
+      console.log("openMap");
+      modal.onOpen();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onIdle = (map: google.maps.Map) => {
     setZoom(map.getZoom()!);
