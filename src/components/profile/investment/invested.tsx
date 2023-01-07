@@ -9,6 +9,7 @@ import PaginatedList from "../components/paginated_list";
 import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
 import { useInvestedProject } from "../../../hooks/profile/use_investment";
 import { InvestedProjectGql } from "../../../gql/graphql";
+import { formatCurrency } from "../../../utils/number.util";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -68,7 +69,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                     {title}
                   </Typography>
                   <Typography fontWeight={500} fontSize={{ lg: 18, md: 16, sm: 14, sx: 18 }} color={"#33E179"}>
-                    (${Number.parseFloat(balance).toFixed(2)})
+                    ({formatCurrency(balance)})
                   </Typography>
                 </Box>
                 <Typography color="text.secondary" lineHeight={1.4} fontSize={12}>
@@ -111,7 +112,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                       Tổng giá trị
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      ${price}
+                      {formatCurrency(price)}
                     </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
@@ -133,7 +134,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                       Giá mua vào
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      ${purchasePrice}
+                      {formatCurrency(purchasePrice)}
                     </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>

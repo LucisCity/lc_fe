@@ -60,6 +60,7 @@ const GET_FOLLOWING_PROJECTS = gql`
       location
       policy_link
       total_nft
+      total_nft_sold
       open_sale_at
       take_profit_at
       start_time_vote_sell
@@ -102,6 +103,7 @@ const GET_RECOMMENDED_PROJECTS = gql`
       location
       policy_link
       total_nft
+      total_nft_sold
       open_sale_at
       take_profit_at
       start_time_vote_sell
@@ -144,6 +146,7 @@ const GET_HOT_PROJECTS = gql`
       location
       policy_link
       total_nft
+      total_nft_sold
       open_sale_at
       take_profit_at
       start_time_vote_sell
