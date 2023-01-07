@@ -3,25 +3,18 @@ import Box from "@mui/material/Box";
 import "photoswipe/dist/photoswipe.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import MapDialog from "./map_dialog";
-import { ProjectMediaGql } from "../../../../gql/graphql";
+import { ProjectGql, ProjectMediaGql } from "../../../../gql/graphql";
 import { Skeleton } from "@mui/material";
 
 interface IProps {
-  medias?: ProjectMediaGql[];
-  location?: string;
-  address?: string;
+  project?: ProjectGql;
 }
-export default function InvestImageBox(props: IProps) {
-  if (!props.medias || props.medias.length === 0) {
+export default function InvestImageBox({ project }: IProps) {
+  if (!project?.profile?.medias || project.profile.medias.length === 0) {
     return <Skeleton variant="rectangular" width="100%" height="432px" sx={{ mt: 4 }} />;
   }
-  const latlong = props.location?.split(",");
-  let lat = 0;
-  let long = 0;
-  if (latlong && latlong.length > 1) {
-    lat = Number(latlong[0]);
-    long = Number(latlong[1].trim());
-  }
+
+  const medias = project.profile.medias;
 
   return (
     <Gallery>
@@ -34,7 +27,7 @@ export default function InvestImageBox(props: IProps) {
           position: "relative",
         }}
       >
-        {props.medias?.map((item, idx) => {
+        {medias?.map((item, idx) => {
           return (
             <Item
               key={`media_${item.url}`}
@@ -61,7 +54,7 @@ export default function InvestImageBox(props: IProps) {
             </Item>
           );
         })}
-        {lat > 0 && long > 0 ? <MapDialog lat={lat} long={long} address={props.address} /> : null}
+        {project.location?.length > 0 ? <MapDialog project={project} /> : null}
       </Box>
     </Gallery>
   );

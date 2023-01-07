@@ -33,9 +33,9 @@ const GoogleMap = React.memo(function GMap({
   onMarkerClick,
   highlightedMarkerId,
 }: GoogleMapProps) {
-  const filtered = useMemo(() => {
-    return markers?.filter((m) => m.lat && m.long);
-  }, [markers]);
+  // const filtered = useMemo(() => {
+  //   return markers?.filter((m) => m.lat && m.long);
+  // }, [markers]);
 
   return (
     <Wrapper apiKey={apiKey} render={render}>
@@ -52,12 +52,12 @@ const GoogleMap = React.memo(function GMap({
         zoomControl={false}
         clickableIcons={false}
       >
-        {filtered?.map((item) => (
+        {markers?.map((item) => (
           <Marker
-            key={item.id || item.title}
+            key={item.project.id}
             data={item}
             onClick={onMarkerClick}
-            highlight={item.id === highlightedMarkerId}
+            highlight={item.project.id === highlightedMarkerId}
           />
         ))}
       </Map>

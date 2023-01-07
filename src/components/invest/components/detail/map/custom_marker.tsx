@@ -3,6 +3,8 @@ import OverlayView from "./overlay_view";
 import { motion } from "framer-motion";
 import MapDataType from "./marker_type";
 import { Box, LinearProgress, Typography } from "@mui/material";
+import { formatNumber } from "../../../../../utils/number.util";
+import { KMath } from "../../../../../utils/math.util";
 
 interface CustomMarkerProps {
   data: MapDataType;
@@ -17,13 +19,26 @@ export default function CustomMarker({ data, map, onClick, highlight }: CustomMa
     onClick(data);
   }, [onClick, data]);
 
+  let lat = 0;
+  let lng = 0;
+  const latlong = data.project?.location?.split(",");
+  if (latlong && latlong.length > 1) {
+    lat = Number(latlong[0]);
+    lng = Number(latlong[1].trim());
+  }
+  console.log("lat: ", lat);
+  const media =
+    data.project.profile.medias && data.project.profile.medias.length > 0
+      ? data.project.profile.medias[0].url ?? ""
+      : "";
+
   return (
     <>
       {map && (
         <OverlayView
           position={{
-            lat: data.lat,
-            lng: data.long,
+            lat,
+            lng,
           }}
           map={map}
           zIndex={highlight ? 99 : 0}
@@ -52,22 +67,23 @@ export default function CustomMarker({ data, map, onClick, highlight }: CustomMa
                 p: "12px",
               }}
             >
-              <Box
-                component="img"
-                src="/assets/imgs/invest/imgs/img_marker_demo.png"
-                sx={{ width: "100px", height: "100%" }}
-              />
-              <Box ml="12px">
+              <Box component="img" src={media} sx={{ width: "100px", height: "100%" }} />
+              <Box ml="12px" sx={{ flex: 1 }}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body2">$948.55</Typography>
+                  <Typography variant="body2">${formatNumber(data.project.price)}</Typography>
                   <Typography color="primary" sx={{ fontSize: "8px", ml: "8px" }}>
                     For Sale
                   </Typography>
                 </Box>
                 <Typography variant="caption" whiteSpace="pre-line" sx={{ fontSize: "10px", color: "#969696" }}>
-                  {data.title}
+                  {data.project.address}
                 </Typography>
-                <LinearProgress variant="determinate" color="primary" value={50} sx={{ borderRadius: "2px" }} />
+                <LinearProgress
+                  variant="determinate"
+                  color="primary"
+                  value={KMath.div(data.project.total_nft_sold, data.project.total_nft).multipliedBy(100).toNumber()}
+                  sx={{ borderRadius: "2px" }}
+                />
                 <Box
                   sx={{
                     display: "flex",
@@ -76,26 +92,27 @@ export default function CustomMarker({ data, map, onClick, highlight }: CustomMa
                   }}
                 >
                   <Box component="img" src="/assets/imgs/invest/icons/ic_total_suply.svg" />
-                  <Typography ml="8px" variant="caption" sx={{ color: "#737373", flex: 1 }}>
+                  <Typography ml="8px" variant="caption" sx={{ color: "#737373", marginRight: "8px", flex: 1 }}>
                     Total supply
                   </Typography>
                   <Typography variant="body2" sx={{ fontSize: "14px", lineHeight: "16px" }}>
-                    2M Tokens
+                    {formatNumber(data.project.total_nft)}
                   </Typography>
                 </Box>
                 <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
+                    // gap: "8px",
                     mt: "5px",
                   }}
                 >
                   <Box component="img" src="/assets/imgs/invest/icons/ic_dolar.svg" />
-                  <Typography ml="8px" variant="caption" sx={{ color: "#737373", flex: 1 }}>
+                  <Typography ml="8px" variant="caption" sx={{ color: "#737373", marginRight: "8px", flex: 1 }}>
                     Total raise
                   </Typography>
                   <Typography variant="body2" sx={{ fontSize: "14px", lineHeight: "16px" }}>
-                    $95,492.13
+                    ${formatNumber(data.project.total_nft_sold * data.project.price)}
                   </Typography>
                 </Box>
               </Box>

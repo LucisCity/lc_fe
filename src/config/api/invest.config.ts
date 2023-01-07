@@ -40,10 +40,11 @@ export const PROJECT_DETAIL_QUERY = gql`
       profit_period
       profit_period_index
       total_nft
+      total_nft_sold
       nft_price
       profile {
         project_id
-        hightlight
+        highlight
         reason_invest
         vote
         total_vote
