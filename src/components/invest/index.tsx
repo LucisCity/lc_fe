@@ -14,6 +14,15 @@ import StackAnim from "../anim/stack_anim";
 import Typography from "@mui/material/Typography";
 import { HighlightCard } from "./components/highlight_card";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import useProject from "./hooks/use_project";
+import { Mousewheel, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { HighlightCardSkeleton } from "./components/highlight_card_skeleton";
+import { useFollowingProject } from "../../hooks/profile/use_investment";
+import { CardSkeleton } from "./components/card_skeleton";
+import { ProjectType } from "../../gql/graphql";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -131,20 +140,39 @@ export const InvestPage = () => {
   const [loading, setLoading] = React.useState(false);
   const [isLoadAll, setIsLoadAll] = React.useState(false);
   const [listInvests, setListInvests] = React.useState<any[]>(fakeData);
-  const handleGetInvest = async () => {
-    setLoading(true);
-    try {
-      setTimeout(() => {
-        setListInvests([...listInvests, ...fakeData2]);
-        setLoading(false);
-        setIsLoadAll(true);
-      }, 500);
-    } catch (error) {
-      setIsLoadAll(true);
-      throw error;
-    }
-  };
+  const { highlightProjects, loadingHighlightProject, projects, loadingProjects, loadProjects } = useProject();
+  const { loading: loadingFollowingProject, followingProjects } = useFollowingProject();
+  // const handleGetInvest = async () => {
+  //   setLoading(true);
+  //   try {
+  //     setTimeout(() => {
+  //       setListInvests([...listInvests, ...fakeData2]);
+  //       setLoading(false);
+  //       setIsLoadAll(true);
+  //     }, 500);
+  //   } catch (error) {
+  //     setIsLoadAll(true);
+  //     throw error;
+  //   }
+  // };
   // @ts-ignore
+
+  const handleChangeType = async (e) => {
+    const type = e.target.value;
+    if (type === "ALL") {
+      await loadProjects({
+        filter: {
+          type: null,
+        },
+      });
+      return;
+    }
+    await loadProjects({
+      filter: {
+        type: type,
+      },
+    });
+  };
   return (
     <ScrollPage>
       <Box
@@ -163,18 +191,49 @@ export const InvestPage = () => {
           <Typography variant={"h2"} mb={5}>
             Dự án đáng chú ý
           </Typography>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={6}>
-              <StackAnim order={0} step={0.1} variants={fadeVariant} duration={0.6}>
-                <HighlightCard {...fakeData[0]} />
-              </StackAnim>
+          {!loadingHighlightProject ? (
+            <Box width={"100%"} id={"invest-highlight-projects"}>
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={24}
+                watchSlidesProgress={true}
+                breakpoints={{
+                  1024: {
+                    slidesPerView: 2,
+                  },
+                  360: {
+                    slidesPerView: 1,
+                  },
+                }}
+                pagination={{
+                  clickable: true,
+                }}
+                speed={800}
+                modules={[Mousewheel, Pagination]}
+                style={{
+                  // overflow: "hidden",
+                  width: "100%",
+                }}
+              >
+                {highlightProjects.map((item) => {
+                  return (
+                    <SwiperSlide style={{ height: "100%" }} key={item.id}>
+                      <HighlightCard data={item} />
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </Box>
+          ) : (
+            <Grid container spacing={6}>
+              <Grid item xs={12} md={6}>
+                <HighlightCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <HighlightCardSkeleton />
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <StackAnim order={1} step={0.1} variants={fadeVariant} duration={0.6}>
-                <HighlightCard {...fakeData[1]} />
-              </StackAnim>
-            </Grid>
-          </Grid>
+          )}
         </Box>
 
         <Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
@@ -248,26 +307,56 @@ export const InvestPage = () => {
                 },
               })}
             >
+              {/*<Box mr={2}>*/}
+              {/*  <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>*/}
+              {/*    <MenuItem value={1}>For Sale</MenuItem>*/}
+              {/*  </Select>*/}
+              {/*</Box>*/}
               <Box mr={2}>
-                <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>
-                  <MenuItem value={1}>For Sale</MenuItem>
+                <Select
+                  variant={"filled"}
+                  sx={{ height: 40 }}
+                  defaultValue={"ALL"}
+                  color={"secondary"}
+                  onChange={handleChangeType}
+                >
+                  {Object.values(ProjectType)
+                    .concat("ALL" as any)
+                    .map((item) => {
+                      const label = (type: ProjectType) => {
+                        switch (item) {
+                          case ProjectType.House:
+                            return "Nhà";
+                          case ProjectType.Hotel:
+                            return "Khách sạn";
+                          case ProjectType.Homestay:
+                            return "Homestay";
+                          case ProjectType.Villa:
+                            return "Villa";
+                          case ProjectType.TouristVillage:
+                            return "Tourist Village";
+                          default:
+                            return "Tất cả";
+                        }
+                      };
+                      return (
+                        <MenuItem key={item} value={item}>
+                          {label(item)}
+                        </MenuItem>
+                      );
+                    })}
                 </Select>
               </Box>
-              <Box mr={2}>
-                <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1} color={"secondary"}>
-                  <MenuItem value={1}>Type: House</MenuItem>
-                </Select>
-              </Box>
-              <Box mr={2}>
-                <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>
-                  <MenuItem value={1}>Min Price: $500K</MenuItem>
-                </Select>
-              </Box>
-              <Box mr={2}>
-                <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>
-                  <MenuItem value={1}>Min Price: $7500K</MenuItem>
-                </Select>
-              </Box>
+              {/*<Box mr={2}>*/}
+              {/*  <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>*/}
+              {/*    <MenuItem value={1}>Min Price: $500K</MenuItem>*/}
+              {/*  </Select>*/}
+              {/*</Box>*/}
+              {/*<Box mr={2}>*/}
+              {/*  <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>*/}
+              {/*    <MenuItem value={1}>Min Price: $7500K</MenuItem>*/}
+              {/*  </Select>*/}
+              {/*</Box>*/}
             </Box>
             {/*<Box mr={2}>*/}
             {/*  <Select variant={"filled"} sx={{ height: 40 }} defaultValue={1}>*/}
@@ -302,52 +391,60 @@ export const InvestPage = () => {
         </FilterView>
 
         <Grid container spacing={6}>
-          {listInvests.map((item, index) => {
-            const visibleOrder = Math.floor(index / 3);
-            // TODO: Never use index as key for real data
-            return (
-              <Grid item lg={3} md={4} sm={6} xs={12} key={"invest" + index}>
-                <StackAnim order={visibleOrder} step={0.1}>
-                  <Card isCollapseContent={false} {...item} />
-                </StackAnim>
-              </Grid>
-            );
-          })}
+          {loadingProjects
+            ? [
+                Array.from({ length: 8 }).map((item, index) => (
+                  <Grid item lg={3} md={4} sm={6} xs={12} key={"skeleton-project" + index}>
+                    <CardSkeleton />
+                  </Grid>
+                )),
+              ]
+            : projects.map((item) => {
+                return (
+                  <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
+                    <Card isCollapseContent={false} data={item} />
+                  </Grid>
+                );
+              })}
         </Grid>
-        <Box mt={8}>
-          <Grid container>
-            <Grid item xs={12} sx={{ textAlign: "center" }}>
-              {!isLoadAll ? (
-                <LoadingButton
-                  variant={"contained"}
-                  endIcon={<KeyboardArrowDownRoundedIcon />}
-                  loading={loading}
-                  onClick={handleGetInvest}
-                >
-                  Xem thêm
-                </LoadingButton>
-              ) : (
-                <Typography>Đã tải hết bài viết!</Typography>
-              )}
-            </Grid>
-          </Grid>
-        </Box>
+        {/*<Box mt={8}>*/}
+        {/*  <Grid container>*/}
+        {/*    <Grid item xs={12} sx={{ textAlign: "center" }}>*/}
+        {/*      {!isLoadAll ? (*/}
+        {/*        <LoadingButton*/}
+        {/*          variant={"contained"}*/}
+        {/*          endIcon={<KeyboardArrowDownRoundedIcon />}*/}
+        {/*          loading={loading}*/}
+        {/*          onClick={handleGetInvest}*/}
+        {/*        >*/}
+        {/*          Xem thêm*/}
+        {/*        </LoadingButton>*/}
+        {/*      ) : (*/}
+        {/*        <Typography>Đã tải hết bài viết!</Typography>*/}
+        {/*      )}*/}
+        {/*    </Grid>*/}
+        {/*  </Grid>*/}
+        {/*</Box>*/}
         <Divider sx={{ mt: 8, mb: 8 }} />
         <Typography variant={"h2"} mb={5}>
           Dự án bạn quan tâm
         </Typography>
         <Grid container spacing={6}>
-          {fakeData.map((item, index) => {
-            const visibleOrder = Math.floor(index / 3);
-            // TODO: Never use index as key for real data
-            return (
-              <Grid item lg={3} md={4} sm={6} xs={12} key={"invest" + index}>
-                <StackAnim order={visibleOrder} step={0.1}>
-                  <Card isCollapseContent={false} {...item} />
-                </StackAnim>
-              </Grid>
-            );
-          })}
+          {loadingFollowingProject
+            ? [
+                Array.from({ length: 8 }).map((item, index) => (
+                  <Grid item lg={3} md={4} sm={6} xs={12} key={"skeleton-project" + index}>
+                    <CardSkeleton />
+                  </Grid>
+                )),
+              ]
+            : followingProjects.map((item) => {
+                return (
+                  <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
+                    <Card isCollapseContent={false} data={item} />
+                  </Grid>
+                );
+              })}
         </Grid>
       </Container>
     </ScrollPage>

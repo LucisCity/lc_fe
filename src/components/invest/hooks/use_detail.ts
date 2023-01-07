@@ -20,7 +20,7 @@ export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
-  const projectId = "clcavhniw0000qalfi1sn8738";
+  const projectId = "clckhq24j0001u67hoa9rgbgd";
 
   const detail = useQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {

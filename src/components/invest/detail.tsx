@@ -109,7 +109,7 @@ export function InvestDetailPage() {
             <Divider sx={{ mt: 4 }} />
             {tabIdx === 0 ? (
               <PitchTab
-                hightlight={detail?.profile?.hightlight ?? ""}
+                hightlight={detail?.profile?.highlight ?? ""}
                 investReason={detail?.profile?.reason_invest ?? ""}
                 offers={detail?.profile.offers ?? []}
               />
@@ -164,38 +164,31 @@ export function InvestDetailPage() {
           {relateProjects?.map((item, index) => {
             return (
               <Box key={`relate_project_${item.id}`}>
-                <Card
-                  key={"invest" + index}
-                  isCollapseContent={false}
-                  address={item.address}
-                  image={item.thumbnail}
-                  name={item.title}
-                  price={formatNumber(item.price)}
-                />
+                <Card data={item} />
               </Box>
             );
           })}
         </Box>
-        <Divider sx={{ my: 8 }} />
-        <Typography variant="h3" mb={6}>
-          Dự án bạn đã xem
-        </Typography>
-        <Box
-          sx={{
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: ["1fr", "repeat(2, 1fr)", "repeat(4, 1fr)", "repeat(4, 1fr)"],
-            gap: 6,
-          }}
-        >
-          {fakeData.map((item, index) => {
-            return (
-              <Box key={"invest" + index}>
-                <Card key={"invest" + index} {...item} isCollapseContent={false} />
-              </Box>
-            );
-          })}
-        </Box>
+        {/*<Divider sx={{ my: 8 }} />*/}
+        {/*<Typography variant="h3" mb={6}>*/}
+        {/*  Dự án bạn đã xem*/}
+        {/*</Typography>*/}
+        {/*<Box*/}
+        {/*  sx={{*/}
+        {/*    width: "100%",*/}
+        {/*    display: "grid",*/}
+        {/*    gridTemplateColumns: ["1fr", "repeat(2, 1fr)", "repeat(4, 1fr)", "repeat(4, 1fr)"],*/}
+        {/*    gap: 6,*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  {fakeData.map((item, index) => {*/}
+        {/*    return (*/}
+        {/*      <Box key={"invest" + index}>*/}
+        {/*        <Card key={"invest" + index} {...item} isCollapseContent={false} />*/}
+        {/*      </Box>*/}
+        {/*    );*/}
+        {/*  })}*/}
+        {/*</Box>*/}
       </Box>
     </Box>
   );

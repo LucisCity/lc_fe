@@ -18,6 +18,36 @@ export const FILTER_PROJECT_QUERY = gql`
       profit_period
       total_nft
       nft_price
+      total_nft_sold
+      profile {
+        follows
+      }
+    }
+  }
+`;
+
+export const GET_HOT_PROJECT = gql`
+  query getHotProjects {
+    hotProjects {
+      id
+      title
+      price
+      thumbnail
+      address
+      location
+      policy_link
+      open_sale_at
+      take_profit_at
+      start_time_vote_sell
+      end_time_vote_sell
+      ended
+      profit_period
+      total_nft
+      total_nft_sold
+      nft_price
+      profile {
+        follows
+      }
     }
   }
 `;
@@ -42,7 +72,7 @@ export const PROJECT_DETAIL_QUERY = gql`
       nft_price
       profile {
         project_id
-        hightlight
+        highlight
         reason_invest
         vote
         total_vote

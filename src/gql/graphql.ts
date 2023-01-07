@@ -91,6 +91,7 @@ export type InvestedProjectGql = {
   thumbnail: Scalars["String"];
   title: Scalars["String"];
   total_nft: Scalars["Int"];
+  total_nft_sold: Scalars["Int"];
   type: ProjectType;
 };
 
@@ -290,6 +291,7 @@ export type Project = {
   thumbnail: Scalars["String"];
   title: Scalars["String"];
   total_nft: Scalars["Int"];
+  total_nft_sold: Scalars["Int"];
   type: ProjectType;
   updated_at: Scalars["DateTime"];
 };
@@ -329,6 +331,7 @@ export type ProjectGql = {
   thumbnail: Scalars["String"];
   title: Scalars["String"];
   total_nft: Scalars["Int"];
+  total_nft_sold: Scalars["Int"];
   type: ProjectType;
 };
 
@@ -379,7 +382,7 @@ export type ProjectProfile = {
   created_at: Scalars["DateTime"];
   events: Scalars["JSON"];
   follows: Scalars["Int"];
-  hightlight?: Maybe<Scalars["String"]>;
+  highlight?: Maybe<Scalars["String"]>;
   medias: Scalars["JSON"];
   offers?: Maybe<Scalars["String"]>;
   project: Project;
@@ -394,7 +397,7 @@ export type ProjectProfileGql = {
   __typename?: "ProjectProfileGql";
   events?: Maybe<Array<ProjectEventGql>>;
   follows: Scalars["Int"];
-  hightlight?: Maybe<Scalars["String"]>;
+  highlight?: Maybe<Scalars["String"]>;
   medias?: Maybe<Array<ProjectMediaGql>>;
   offers?: Maybe<Array<ProjectOfferGql>>;
   project_id: Scalars["String"];
