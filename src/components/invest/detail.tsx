@@ -177,7 +177,7 @@ export function InvestDetailPage() {
           })}
         </Box>
         <Divider sx={{ my: 8 }} />
-        <Typography variant="h3" mb={6}>
+        {/* <Typography variant="h3" mb={6}>
           Dự án bạn đã xem
         </Typography>
         <Box
@@ -195,19 +195,8 @@ export function InvestDetailPage() {
               </Box>
             );
           })}
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
 }
-
-const fakeData = [
-  {
-    label: "VincomBaTrieu",
-    name: "VincomBaTrieu",
-    address: "3891 Ranchview Dr. Richardson, California 62639",
-    price: "123532",
-    image:
-      "https://statics.vincom.com.vn/vincom-tttm/gioi_thieu/anh_bai_viet/Hinh-anh-cac-thuong-hieu-o-Vincom-Ba-Trieu-so-1_1632322535.jpeg",
-  },
-];
