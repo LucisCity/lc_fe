@@ -20,9 +20,12 @@ export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
-  const projectId = "clcavhniw0000qalfi1sn8738";
+  const _id = router.query["id"] as string;
+  const _temps = (_id ?? "").split("id.");
+  const projectId = _temps.length > 1 ? _temps[1] : null;
+  console.log("projectId: ", projectId);
 
-  const detail = useQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
+  const [fetchProject, detail] = useLazyQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {
       id: projectId,
     },
@@ -71,8 +74,10 @@ export default function useInvestDetail() {
       enqueueSnackbar("Request successfully!", {
         variant: "success",
       });
-      detail.client.refetchQueries({
-        include: ["getProject"],
+      fetchProject({
+        variables: {
+          id: projectId,
+        },
       });
     },
     onError: (e) => {
@@ -87,7 +92,7 @@ export default function useInvestDetail() {
         variant: "success",
       });
       detail.client.refetchQueries({
-        include: ["getProfitBalance"],
+        include: ["projectExtraQuery"],
       });
     },
     onError: (e) => {
@@ -123,15 +128,18 @@ export default function useInvestDetail() {
   }, [detail.data, relateProjects.data]);
 
   useEffect(() => {
-    if (detail.data?.getProject && userStore.isLoggedIn) {
-      const projectId = detail.data?.getProject.id;
+    if (!projectId) {
+      return;
+    }
+    fetchProject();
+    if (userStore.isLoggedIn) {
       getExtraInfo({
         variables: {
           projectId,
         },
       });
     }
-  }, [detail.data]);
+  }, [projectId]);
 
   function onToggleFollow() {
     const projectId = detail.data?.getProject.id;
