@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ProjectProfitBalance } from "../../../../gql/graphql";
 import { formatDate } from "../../../../utils/date.util";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function ClaimProfitCard({ balance, onClaim, loading }: Props) {
-  const isDisable = !balance || balance.balance <= 0;
+  const isDisable = !balance || balance.balance <= 0 || loading;
   return (
     <Box id={"claim"} mt={6}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

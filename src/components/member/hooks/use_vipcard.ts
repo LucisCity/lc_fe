@@ -34,3 +34,18 @@ export const useVipCard = () => {
     vipCard,
   };
 };
+
+const HAS_VIP_CARD = gql`
+  query hasVipCard {
+    hasVipCard
+  }
+`;
+
+export const useHasVipCard = () => {
+  const { loading, data } = useQuery<{ hasVipCard: boolean }>(HAS_VIP_CARD);
+
+  return {
+    loading,
+    data: data?.hasVipCard,
+  };
+};

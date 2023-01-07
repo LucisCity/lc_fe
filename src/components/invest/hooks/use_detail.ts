@@ -1,7 +1,7 @@
 import { useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   FILTER_PROJECT_QUERY,
@@ -19,10 +19,13 @@ import { handleGraphqlErrors } from "../../../utils/apolo.util";
 export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const [disableClaim, setDisableClaim] = useState(false);
   const router = useRouter();
-  const projectId = "clckhq24j0001u67hoa9rgbgd";
+  const _id = router.query["id"] as string;
+  const _temps = (_id ?? "").split("id.");
+  const projectId = _temps.length > 1 ? _temps[1] : null;
 
-  const detail = useQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
+  const [fetchProject, detail] = useLazyQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {
       id: projectId,
     },
@@ -33,6 +36,14 @@ export default function useInvestDetail() {
     onCompleted(data) {
       if (data.getProject) {
         projectStore.setProjectDetail(data.getProject);
+        if (userStore.isLoggedIn) {
+          getExtraInfo({
+            variables: {
+              projectId,
+            },
+          });
+        }
+        projectStore.cacheVisitedProject(data.getProject);
       }
     },
     // fetchPolicy: "cache-and-network",
@@ -55,14 +66,14 @@ export default function useInvestDetail() {
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
     onCompleted(data) {
-      if (data.isVoted) {
-        projectStore.setProjectDetail({
-          ...(projectStore.projectDetail as any),
-          isVoted: data.isVoted ?? false,
-          profitBalance: data.getProfitBalance,
-          nftBought: data.getNftBought,
-        });
-      }
+      setDisableClaim(false);
+      console.log("data: ", data);
+      projectStore.setProjectDetail({
+        ...(projectStore.projectDetail as any),
+        isVoted: data.isVoted ?? false,
+        profitBalance: data.getProfitBalance,
+        nftBought: data.getNftBought,
+      });
     },
   });
 
@@ -71,8 +82,10 @@ export default function useInvestDetail() {
       enqueueSnackbar("Request successfully!", {
         variant: "success",
       });
-      detail.client.refetchQueries({
-        include: ["getProject"],
+      fetchProject({
+        variables: {
+          id: projectId,
+        },
       });
     },
     onError: (e) => {
@@ -87,7 +100,7 @@ export default function useInvestDetail() {
         variant: "success",
       });
       detail.client.refetchQueries({
-        include: ["getProfitBalance"],
+        include: ["projectExtraQuery"],
       });
     },
     onError: (e) => {
@@ -123,15 +136,15 @@ export default function useInvestDetail() {
   }, [detail.data, relateProjects.data]);
 
   useEffect(() => {
-    if (detail.data?.getProject && userStore.isLoggedIn) {
-      const projectId = detail.data?.getProject.id;
-      getExtraInfo({
-        variables: {
-          projectId,
-        },
-      });
+    if (!projectId) {
+      return;
     }
-  }, [detail.data]);
+    fetchProject();
+  }, [projectId]);
+
+  useEffect(() => {
+    projectStore.loadVisitedProject();
+  }, []);
 
   function onToggleFollow() {
     const projectId = detail.data?.getProject.id;
@@ -158,6 +171,7 @@ export default function useInvestDetail() {
     if (!projectId || claimProfitData.loading) {
       return;
     }
+    setDisableClaim(true);
     claimProfit({
       variables: {
         projectId,
@@ -166,11 +180,13 @@ export default function useInvestDetail() {
   }
 
   return {
+    projectId,
     detail: detail.data?.getProject,
     relateProjects: relateProjects.data?.getProjects,
     following: loading,
     profitBalance,
     claimProfitData,
+    disableClaim,
     form,
     onToggleFollow,
     onClaimProfit,
