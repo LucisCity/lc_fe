@@ -6,7 +6,7 @@ import { Background } from "../landing/components/background";
 import ScrollPage from "../layout/scroll_page";
 import { VipCard } from "./components/vipcard";
 import UserStore from "../../store/user.store";
-import { hasVipCard } from "./hooks/use_vipcard";
+import { useHasVipCard } from "./hooks/use_vipcard";
 
 const data = [
   {
@@ -136,7 +136,7 @@ const DataItem = () => {
   );
 };
 export const MemberPage = () => {
-  const { data } = hasVipCard();
+  const { data } = useHasVipCard();
   return (
     <ScrollPage pt={0}>
       <Box

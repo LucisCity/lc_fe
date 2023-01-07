@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const FILTER_PROJECT_QUERY = gql`
-  query getProjects($filter: ProjectFilter) {
-    getProjects(filter: $filter) {
+  query getProjects($filter: ProjectFilter, $search: String) {
+    getProjects(filter: $filter, search: $search) {
       id
       title
       price
@@ -18,6 +18,36 @@ export const FILTER_PROJECT_QUERY = gql`
       profit_period
       total_nft
       nft_price
+      total_nft_sold
+      profile {
+        follows
+      }
+    }
+  }
+`;
+
+export const GET_HOT_PROJECT = gql`
+  query getHotProjects {
+    hotProjects {
+      id
+      title
+      price
+      thumbnail
+      address
+      location
+      policy_link
+      open_sale_at
+      take_profit_at
+      start_time_vote_sell
+      end_time_vote_sell
+      ended
+      profit_period
+      total_nft
+      total_nft_sold
+      nft_price
+      profile {
+        follows
+      }
     }
   }
 `;

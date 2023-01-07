@@ -41,7 +41,7 @@ const HAS_VIP_CARD = gql`
   }
 `;
 
-export const hasVipCard = () => {
+export const useHasVipCard = () => {
   const { loading, data } = useQuery<{ hasVipCard: boolean }>(HAS_VIP_CARD);
 
   return {

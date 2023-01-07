@@ -6,13 +6,14 @@ import UserStore from "../../../store/user.store";
 import { erc20Abi } from "../../../services/abi/TokenErc20Abi";
 import { BigNumber, ethers } from "ethers";
 import { useSnackbar } from "notistack";
+import { lucisCity721Abi } from "../../../services/abi/lucisCity721Abi";
 
 export const useNft = () => {
   const contract = ProjectStore.projectDetail?.contract;
   const address = UserStore.user?.wallet_address;
   const contractConfig = {
     address: contract?.address ?? "",
-    abi: JSON.parse(contract?.abi ?? "{}"),
+    abi: lucisCity721Abi,
   };
 
   const { data, refetch: refetchContractData } = useContractReads({
@@ -85,7 +86,7 @@ export const useBuyNft = () => {
   } = useContractWrite({
     mode: "recklesslyUnprepared",
     address: contract?.address,
-    abi: JSON.parse(contract?.abi ?? "{}"),
+    abi: lucisCity721Abi,
     functionName: "mint",
     onSuccess: async (res) => {
       enqueueSnackbar("Bạn mua NFT thành công, đợi 1, 2 phút để giao dịch hoàn thành!", {
@@ -93,6 +94,11 @@ export const useBuyNft = () => {
       });
     },
     onError: async (res) => {
+      if (res.name === "UserRejectedRequestError") {
+        enqueueSnackbar("Bạn cần ký để thực hiện giao dịch!", {
+          variant: "error",
+        });
+      }
       enqueueSnackbar("Lỗi giao dịch, thực hiện lại sau vài phút!", {
         variant: "error",
       });

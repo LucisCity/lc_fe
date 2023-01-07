@@ -6,11 +6,13 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions, Collapse, IconButton, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import Grid from "@mui/material/Grid";
+import { ProjectGql } from "../../../gql/graphql";
+import { formatCurrency } from "../../../utils/number.util";
+import { slugify } from "../../../utils/string.util";
+import { ProjectSalePeriod, ProjectStatus } from "../../profile/investment/components/project_card";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(3),
@@ -28,45 +30,41 @@ const ImageContent = styled(Box)(({ theme }) => ({
 }));
 
 interface IProps {
-  isCollapseContent?: boolean;
-  name?: string;
-  address?: string;
-  price?: string;
-  image?: string;
+  data: ProjectGql;
 }
 export const HighlightCard = (props: IProps) => {
+  const {
+    ended,
+    start_time_vote_sell: waitTransferAt,
+    open_sale_at: openSaleAt,
+    take_profit_at: takeProfitAt,
+  } = props.data;
+  const salePeriod = React.useMemo(() => {
+    return ended
+      ? ProjectSalePeriod.CLOSED
+      : waitTransferAt && new Date() > new Date(waitTransferAt)
+      ? ProjectSalePeriod.TRANSFERRING
+      : takeProfitAt && new Date() > new Date(takeProfitAt)
+      ? ProjectSalePeriod.PROFITING
+      : openSaleAt && new Date() > new Date(openSaleAt)
+      ? ProjectSalePeriod.OPEN
+      : ProjectSalePeriod.UPCOMING;
+  }, [waitTransferAt, takeProfitAt, openSaleAt, ended]);
   return (
     <MuiCard sx={{ borderRadius: 4 }} elevation={0}>
-      <Link href={`/invest/${props.name}`}>
+      <Link href={`/invest/${slugify(props.data.title)}.${props.data.id}`}>
         <CardActionArea component={"div"}>
           <Grid container sx={{ p: 6 }} spacing={6}>
             <Grid item xs={12} sm={6}>
               <Box sx={{ position: "relative", height: "100%" }}>
                 <CardMedia
-                  sx={{ borderRadius: 4 }}
+                  sx={{ borderRadius: 4, height: { sm: 320, md: 250 } }}
                   component="img"
-                  height="100%"
-                  image={props.image}
-                  alt="green iguana"
+                  image={props.data.thumbnail}
+                  alt={props.data.title}
                 />
                 <ImageContent>
-                  <Button
-                    variant="contained"
-                    color={"secondary"}
-                    sx={(theme) => ({
-                      background: "rgba(71, 204, 233, 0.8)",
-                      color: "#fff",
-                      width: 80,
-                      height: 40,
-                      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-
-                      ":hover": {
-                        background: "rgba(71, 204, 233, 0.8)",
-                      },
-                    })}
-                  >
-                    <Typography whiteSpace={"nowrap"}>Sắp bán</Typography>
-                  </Button>
+                  <ProjectStatus status={salePeriod} />
                   <Button
                     variant="contained"
                     color={"secondary"}
@@ -78,7 +76,7 @@ export const HighlightCard = (props: IProps) => {
                     })}
                     endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
                   >
-                    235
+                    {props.data.profile.follows}
                   </Button>
                 </ImageContent>
               </Box>
@@ -86,50 +84,57 @@ export const HighlightCard = (props: IProps) => {
             <Grid item xs={12} sm={6}>
               <CardContent sx={{ p: 0, ":last-child": { pb: 0 } }}>
                 <Typography variant="h3" mb={1}>
-                  {props.name}
+                  {props.data.title}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {props.address}
+                  {props.data.address}
                 </Typography>
                 <Box mt={5} mb={5}>
-                  <LinearProgress variant="determinate" value={30} />
+                  <LinearProgress
+                    variant="determinate"
+                    value={
+                      isNaN(props.data.total_nft_sold / props.data.total_nft)
+                        ? 0
+                        : props.data.total_nft_sold / props.data.total_nft
+                    }
+                  />
                 </Box>
 
                 <Box>
                   <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/dollar.svg" />
-                      Total raise
+                      Giá trị
                     </Typography>
-                    <Typography variant={"caption"}>${props.price}</Typography>
+                    <Typography variant={"caption"}>{formatCurrency(props.data.price)}</Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/total_supply.svg" />
-                      Total supply
+                      Tổng cung
                     </Typography>
-                    <Typography variant={"caption"}>2M Tokens</Typography>
+                    <Typography variant={"caption"}>{props.data.total_nft}</Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/dollar_cirle.svg" />
-                      Accepted currency
+                      Chấp nhận
                     </Typography>
                     <Typography variant={"caption"}>USDT</Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"} mb={3}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/home.svg" />
-                      Underlying Asset
+                      Tài sản
                     </Typography>
-                    <Typography variant={"caption"}>Real Estate</Typography>
+                    <Typography variant={"caption"}>Bất động sản</Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
                     <Typography variant={"caption"}>
                       <Icon src="/assets/imgs/invest/icons/sale.svg" />
-                      Total expected return
+                      Lợi nhuận cam kết
                     </Typography>
-                    <Typography variant={"caption"}>30%</Typography>
+                    <Typography variant={"caption"}>10%</Typography>
                   </Box>
                 </Box>
               </CardContent>

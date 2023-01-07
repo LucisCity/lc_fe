@@ -66,3 +66,8 @@ w3m-modal {
   position: relative;
   z-index: 1200;
 }
+
+#invest-highlight-projects .swiper-pagination-bullets {
+  position: initial !important;
+  bottom: -30px !important;
+}

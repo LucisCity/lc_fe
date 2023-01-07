@@ -3,58 +3,33 @@ import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
 import Link from "next/link";
-
-const Icon = styled("img")(({ theme }) => ({
-  marginRight: theme.spacing(3),
-  width: 10,
-  height: 10,
-}));
+import { ProjectGql } from "../../../gql/graphql";
+import { slugify } from "../../../utils/string.util";
+import { formatCurrency } from "../../../utils/number.util";
 
 interface IProps {
-  name?: string;
-  address?: string;
-  price?: string;
-  image?: string;
+  data: ProjectGql;
 }
 export const SearchOption = (props: IProps) => {
   return (
     <MuiCard sx={{ background: "transparent", width: "100%" }} elevation={0}>
-      <Link href={`/invest/${props.name}`}>
+      <Link href={`/invest/${slugify(props.data.title)}.${props.data.id}`}>
         <CardContent sx={{ px: { sm: 4, xs: 1 }, py: 0, ":last-child": { pb: 0 } }}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} gap={3}>
             <Box display={"flex"}>
-              <img
-                src={
-                  props.image
-                    ? props.image
-                    : "https://pyxis.nymag.com/v1/imgs/328/e2c/b53d1ba1965696d1175212c08bfb6a1fec-neverland-ranch-lede.rsocial.w1200.jpg"
-                }
-                alt="123"
-                height={45}
-                width={45}
-              />
+              <img src={props.data.thumbnail} alt={props.data.title} height={45} width={45} />
               <Box ml={4}>
                 <Typography color={"#000"} variant={"h5"}>
-                  {props.name ? props.name : "Navaland"}
+                  {props.data.title}
                 </Typography>
-                <Typography
-                  variant="caption"
-                  color="#D9D9D9"
-                  component={"p"}
-                  sx={{
-                    textOverflow: "c",
-                  }}
-                >
-                  {props.address ? props.address : "1901 Thornridge Cir. Shiloh,\n" + "Hawaii 81063"}
+                <Typography variant="caption" color="#D9D9D9" component={"p"}>
+                  {props.data.address}
                 </Typography>
               </Box>
             </Box>
-            <Typography color="#D9D9D9">${props.price ? props.price : 10000}</Typography>
+            <Typography color="#D9D9D9">{formatCurrency(props.data.price)}</Typography>
           </Box>
         </CardContent>
       </Link>
