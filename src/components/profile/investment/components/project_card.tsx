@@ -129,7 +129,7 @@ export const ProjectCard = (props: ProjectGql) => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <LinearProgress variant="determinate" value={30} />
+                <LinearProgress variant="determinate" value={(totalNftSold / totalNft) * 100} />
               </Grid>
               <Grid item xs={6}>
                 <Box pr={{ md: 3 }}>

@@ -16,6 +16,9 @@ const GET_INVESTED_PROJECTS = gql`
       take_profit_at
       start_time_vote_sell
       ended
+      nft_price
+      total_nft
+      total_nft_sold
       profile {
         follows
       }
