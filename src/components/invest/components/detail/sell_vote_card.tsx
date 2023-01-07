@@ -1,7 +1,6 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
 import { useCountdownTime } from "../../../../hooks/use_countdown";
 import projectStore from "../../../../store/project.store";
 import userStore from "../../../../store/user.store";
@@ -9,14 +8,11 @@ import { formatDate } from "../../../../utils/date.util";
 import { KMath } from "../../../../utils/math.util";
 import { formatNumber } from "../../../../utils/number.util";
 import useVoteSell from "../../hooks/use_vote_sell";
-const DEMO_OFFET_TIME = 5 * 24 * 60 * 60 * 1000;
 
 const SellVoteCard = observer(() => {
   const project = projectStore.projectDetail;
-  const duration = useCountdownTime(project?.end_time_vote_sell);
 
   const { onVote, voting, voteType, setVoteType, voted } = useVoteSell();
-
   const nftBought = project?.nftBought;
   const receiveAmount = KMath.mul(project?.nft_price ?? 0, nftBought?.total_nft ?? 0).toNumber();
 
@@ -59,14 +55,8 @@ const SellVoteCard = observer(() => {
           )}`}
         />
         <SellInfoItem title="Số tiền nhận về sau khi bán" content={`$ ${formatNumber(receiveAmount)}`} />
-        <SellInfoItem
-          title="Thời gian vote"
-          content={`${duration.days ?? 0}D : ${duration.hours ?? 0}H : ${duration.minutes ?? 0}M : ${
-            duration.seconds ?? 0
-          }S LEFT`}
-          color="primary"
-        />
-        {nftBought?.is_sell_voted === true || voted ? null : (
+        <VoteCountdown endTime={project?.end_time_vote_sell} />
+        {voted || !nftBought || nftBought.is_sell_voted === true || nftBought.total_nft < 1 ? null : (
           <>
             <Divider
               sx={{
@@ -122,5 +112,18 @@ function SellInfoItem({ title, content, color }: { title: string; content: strin
         {content}
       </Typography>
     </Box>
+  );
+}
+
+function VoteCountdown({ endTime }: { endTime: Date | string | undefined }) {
+  const duration = useCountdownTime(endTime);
+  return (
+    <SellInfoItem
+      title="Thời gian vote"
+      content={`${duration.days ?? 0}D : ${duration.hours ?? 0}H : ${duration.minutes ?? 0}M : ${
+        duration.seconds ?? 0
+      }S LEFT`}
+      color="primary"
+    />
   );
 }

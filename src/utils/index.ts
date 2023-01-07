@@ -23,7 +23,22 @@ export const StorageHelper = {
       const _result = Storage.getItem("user") as string;
       return _result != null && _result !== "" ? JSON.parse(_result) : undefined;
     } catch (err) {
-      console.log("error parse user: ");
+      console.log("error parse daa: ", err);
+    }
+  },
+
+  setVistedProject: (data: string) => {
+    localStorage.setItem("visited_project", data);
+  },
+  getVistedProject: () => {
+    try {
+      if (!localStorage) {
+        return;
+      }
+      const _result = localStorage.getItem("visited_project") as string;
+      return _result != null && _result !== "" ? JSON.parse(_result) : undefined;
+    } catch (err) {
+      console.log("error parse daa: ", err);
     }
   },
 };

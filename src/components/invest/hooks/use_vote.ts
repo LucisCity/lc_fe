@@ -30,7 +30,7 @@ export default function useVote() {
   });
 
   useEffect(() => {
-    if (!userStore.isLoggedIn || !projectStore.projectDetail) {
+    if (!userStore.isLoggedIn || !projectStore.projectDetail?.profile) {
       return;
     }
     setValue(Number(projectStore.projectDetail.profile.vote));

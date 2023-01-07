@@ -12,12 +12,22 @@ import InvestDetailSteper from "./components/detail/invest_detail_steper";
 import PitchTab from "./components/detail/pitch_tab";
 import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
+import VisitedProject from "./components/visited_project";
 import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
-  const { detail, profitBalance, relateProjects, claimProfitData, following, onToggleFollow, onClaimProfit } =
-    useInvestDetail();
+  const {
+    projectId,
+    detail,
+    profitBalance,
+    relateProjects,
+    claimProfitData,
+    following,
+    onToggleFollow,
+    onClaimProfit,
+    disableClaim,
+  } = useInvestDetail();
   const { download } = useDownload();
 
   return (
@@ -121,7 +131,11 @@ export function InvestDetailPage() {
           </Box>
           <Box>
             <InvestDetailNftCard />
-            <ClaimProfitCard balance={profitBalance} onClaim={onClaimProfit} loading={claimProfitData.loading} />
+            <ClaimProfitCard
+              balance={profitBalance}
+              onClaim={onClaimProfit}
+              loading={claimProfitData.loading || disableClaim}
+            />
             <SellVoteCard />
             <Typography variant="h3" mt="24px">
               Giấy tờ pháp lý
@@ -162,6 +176,9 @@ export function InvestDetailPage() {
           }}
         >
           {relateProjects?.map((item, index) => {
+            if (item.id === projectId) {
+              return null;
+            }
             return (
               <Box key={`relate_project_${item.id}`}>
                 <Card
@@ -176,26 +193,7 @@ export function InvestDetailPage() {
             );
           })}
         </Box>
-        <Divider sx={{ my: 8 }} />
-        {/* <Typography variant="h3" mb={6}>
-          Dự án bạn đã xem
-        </Typography>
-        <Box
-          sx={{
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: ["1fr", "repeat(2, 1fr)", "repeat(4, 1fr)", "repeat(4, 1fr)"],
-            gap: 6,
-          }}
-        >
-          {fakeData.map((item, index) => {
-            return (
-              <Box key={"invest" + index}>
-                <Card key={"invest" + index} {...item} isCollapseContent={false} />
-              </Box>
-            );
-          })}
-        </Box> */}
+        <VisitedProject />
       </Box>
     </Box>
   );

@@ -1,7 +1,7 @@
 import { useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   FILTER_PROJECT_QUERY,
@@ -19,11 +19,11 @@ import { handleGraphqlErrors } from "../../../utils/apolo.util";
 export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const [disableClaim, setDisableClaim] = useState(false);
   const router = useRouter();
   const _id = router.query["id"] as string;
   const _temps = (_id ?? "").split("id.");
   const projectId = _temps.length > 1 ? _temps[1] : null;
-  console.log("projectId: ", projectId);
 
   const [fetchProject, detail] = useLazyQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     variables: {
@@ -36,6 +36,14 @@ export default function useInvestDetail() {
     onCompleted(data) {
       if (data.getProject) {
         projectStore.setProjectDetail(data.getProject);
+        if (userStore.isLoggedIn) {
+          getExtraInfo({
+            variables: {
+              projectId,
+            },
+          });
+        }
+        projectStore.cacheVisitedProject(data.getProject);
       }
     },
     // fetchPolicy: "cache-and-network",
@@ -58,14 +66,14 @@ export default function useInvestDetail() {
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
     },
     onCompleted(data) {
-      if (data.isVoted) {
-        projectStore.setProjectDetail({
-          ...(projectStore.projectDetail as any),
-          isVoted: data.isVoted ?? false,
-          profitBalance: data.getProfitBalance,
-          nftBought: data.getNftBought,
-        });
-      }
+      setDisableClaim(false);
+      console.log("data: ", data);
+      projectStore.setProjectDetail({
+        ...(projectStore.projectDetail as any),
+        isVoted: data.isVoted ?? false,
+        profitBalance: data.getProfitBalance,
+        nftBought: data.getNftBought,
+      });
     },
   });
 
@@ -132,14 +140,11 @@ export default function useInvestDetail() {
       return;
     }
     fetchProject();
-    if (userStore.isLoggedIn) {
-      getExtraInfo({
-        variables: {
-          projectId,
-        },
-      });
-    }
   }, [projectId]);
+
+  useEffect(() => {
+    projectStore.loadVisitedProject();
+  }, []);
 
   function onToggleFollow() {
     const projectId = detail.data?.getProject.id;
@@ -166,6 +171,7 @@ export default function useInvestDetail() {
     if (!projectId || claimProfitData.loading) {
       return;
     }
+    setDisableClaim(true);
     claimProfit({
       variables: {
         projectId,
@@ -174,11 +180,13 @@ export default function useInvestDetail() {
   }
 
   return {
+    projectId,
     detail: detail.data?.getProject,
     relateProjects: relateProjects.data?.getProjects,
     following: loading,
     profitBalance,
     claimProfitData,
+    disableClaim,
     form,
     onToggleFollow,
     onClaimProfit,
