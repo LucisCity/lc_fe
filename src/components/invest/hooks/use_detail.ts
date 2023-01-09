@@ -10,8 +10,9 @@ import {
   PROJECT_DETAIL_QUERY,
   PROJECT_FOLLOW_MUT,
   PROFIT_BALANCE_SUBSCRIPTION,
+  PROJECT_INVESTOR_QUERY,
 } from "../../../config/api/invest.config";
-import { ProjectGql, ProjectNftOwner, ProjectProfitBalance } from "../../../gql/graphql";
+import { ProjectGql, ProjectNftOwner, ProjectNftOwnerGql, ProjectProfitBalance } from "../../../gql/graphql";
 import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
@@ -26,9 +27,6 @@ export default function useInvestDetail() {
   const projectId = _temps.length > 1 ? _temps[1] : null;
 
   const [fetchProject, detail] = useLazyQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
-    variables: {
-      id: projectId,
-    },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
@@ -74,6 +72,20 @@ export default function useInvestDetail() {
         nftBought: data.getNftBought,
       });
     },
+  });
+
+  const [getInvestor, investorData] = useLazyQuery<{
+    getInvestor: [ProjectNftOwnerGql];
+  }>(PROJECT_INVESTOR_QUERY, {
+    onError: (e) => {
+      const errors = handleGraphqlErrors(e);
+      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+    },
+    // onCompleted(data) {
+    //   setDisableClaim(false);
+    //   projectStore.setInvestor(data.getInvestor)
+    // },
+    fetchPolicy: "cache-first",
   });
 
   const [toggleFollowProject, { loading }] = useMutation(PROJECT_FOLLOW_MUT, {
@@ -135,10 +147,20 @@ export default function useInvestDetail() {
   }, [detail.data, relateProjects.data]);
 
   useEffect(() => {
-    if (!projectId) {
+    if (!projectId || projectId === detail.data?.getProject.id) {
       return;
     }
-    fetchProject();
+    fetchProject({
+      variables: {
+        id: projectId,
+      },
+    }).finally(() => {
+      getInvestor({
+        variables: {
+          projectId,
+        },
+      });
+    });
   }, [projectId]);
 
   useEffect(() => {
@@ -181,6 +203,7 @@ export default function useInvestDetail() {
   return {
     projectId,
     detail: detail.data?.getProject,
+    investors: investorData.data?.getInvestor,
     relateProjects: relateProjects.data?.getProjects,
     following: loading,
     profitBalance,

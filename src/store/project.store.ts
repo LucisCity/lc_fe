@@ -1,11 +1,12 @@
 import { makeAutoObservable } from "mobx";
-import { ProjectGql } from "../gql/graphql";
+import { ProjectGql, ProjectNftOwnerGql } from "../gql/graphql";
 import { ProjectModel } from "../model/project.model";
 import { StorageHelper } from "../utils";
 
 class ProjectStore {
   private _projectDetail: ProjectModel | null = null;
   private _visitedProject: { [key: string]: ProjectGql } = {};
+  private _investor: { [key: string]: ProjectNftOwnerGql } = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -36,6 +37,14 @@ class ProjectStore {
 
   loadVisitedProject() {
     this._visitedProject = StorageHelper.getVistedProject() ?? {};
+  }
+
+  setInvestor(item: ProjectNftOwnerGql) {
+    this._investor[item.project_id] = item;
+  }
+
+  getInvestor(projectId: string) {
+    return this._investor[projectId];
   }
 }
 

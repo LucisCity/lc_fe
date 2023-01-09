@@ -355,7 +355,7 @@ export const InvestPage = () => {
                   </Grid>
                 )),
               ]
-            : followingProjects.map((item) => {
+            : followingProjects?.map((item) => {
                 return (
                   <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
                     <Card isCollapseContent={false} data={item} />

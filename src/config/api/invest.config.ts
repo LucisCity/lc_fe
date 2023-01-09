@@ -157,3 +157,25 @@ export const PROJECT_EXTRA_INFO_QUERY = gql`
     }
   }
 `;
+
+export const PROJECT_INVESTOR_QUERY = gql`
+  query getInvestor($projectId: String!) {
+    getInvestor(projectId: $projectId) {
+      project_id
+      total_nft
+      currency_amount
+      user {
+        id
+        profile {
+          display_name
+          family_name
+          given_name
+        }
+        vipCard {
+          id
+          name
+        }
+      }
+    }
+  }
+`;

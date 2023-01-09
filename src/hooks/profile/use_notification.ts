@@ -1,7 +1,9 @@
-import { ApolloError, gql, useMutation, useQuery, useSubscription } from "@apollo/client";
+import { ApolloError, gql, useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { NotificationGql } from "../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
+import { useEffect } from "react";
+import userStore from "../../store/user.store";
 
 export const GET_NOTIFICATIONS = gql`
   query ($page: Int!, $limit: Int!) {
@@ -81,12 +83,18 @@ export function useUnseenNotifications(): {
   errorUnseenNotis: ApolloError | undefined;
   dataUnseenNotis: number;
 } {
-  const { loading, error, data } = useQuery(UNSEEN_NOTIFICATIONS, {});
+  const [getUnseenNotify, unseenData] = useLazyQuery<{ countUnseenNotifications: any }>(UNSEEN_NOTIFICATIONS, {});
+
+  useEffect(() => {
+    if (userStore.isLoggedIn) {
+      getUnseenNotify();
+    }
+  }, []);
 
   return {
-    loadingUnseenNotis: loading,
-    errorUnseenNotis: error,
-    dataUnseenNotis: data?.countUnseenNotifications,
+    loadingUnseenNotis: unseenData.loading,
+    errorUnseenNotis: unseenData.error,
+    dataUnseenNotis: unseenData.data?.countUnseenNotifications,
   };
 }
 

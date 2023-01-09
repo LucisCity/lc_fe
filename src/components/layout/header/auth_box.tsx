@@ -45,7 +45,9 @@ export const AuthBox = observer(() => {
   });
 
   React.useEffect(() => {
-    getBalance();
+    if (UserStore.isLoggedIn) {
+      getBalance();
+    }
   }, []);
 
   return (
