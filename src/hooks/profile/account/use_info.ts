@@ -36,7 +36,7 @@ export const UPDATE_WALLET_ADDRESS = gql`
   }
 `;
 
-export function useWalletAddress({ errorCallback }: { errorCallback?: () => void }) {
+export function useWalletAddress(props?: { errorCallback?: () => void }) {
   const { enqueueSnackbar } = useSnackbar();
   const { data: walletAddressRes } = useQuery<{ getWalletAddress: string }>(GET_WALLET_ADDRESS, {
     onCompleted: (data) => {
@@ -68,8 +68,8 @@ export function useWalletAddress({ errorCallback }: { errorCallback?: () => void
         }
       });
       // disconnect wallet
-      if (errorCallback) {
-        errorCallback();
+      if (props?.errorCallback) {
+        props.errorCallback();
       }
     },
   });
