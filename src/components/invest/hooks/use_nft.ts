@@ -30,12 +30,6 @@ export const useNft = () => {
         ...contractConfig,
         functionName: "totalSold",
       },
-
-      {
-        ...contractConfig,
-        functionName: "balanceOf",
-        args: [address],
-      },
     ],
   });
   return {
