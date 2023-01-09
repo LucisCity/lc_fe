@@ -10,7 +10,7 @@ import { useAccount } from "wagmi";
 import UserStore from "../../../../store/user.store";
 import Link from "next/link";
 
-const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => void }) => {
+export const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => void }) => {
   const [progressValue, setProgressValue] = React.useState(0);
   // 10s refetch data from blockchain
   React.useEffect(() => {
@@ -51,7 +51,7 @@ export default function InvestDetailNftCard() {
     } else {
       setIsDifferentAddress(false);
     }
-  }, [address]);
+  }, [address, userWalletAddress]);
   return (
     <>
       {showPopup && (

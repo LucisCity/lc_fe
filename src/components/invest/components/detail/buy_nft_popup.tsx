@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Alert, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Alert, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import { useBuyNft } from "../../hooks/use_nft";
@@ -29,12 +29,15 @@ const BuyNftPopup = ({
     userAddress,
     contract,
     allowance,
-    isLoadingApprove,
     balanceOfUsdt,
     balance,
     coinSymbol,
-    isLoadingMintNft,
-  } = useBuyNft();
+    loadingBuyNFT,
+    setLoadingBuyNFT,
+    loadingApprove,
+    setLoadingApprove,
+    loadingFetchData,
+  } = useBuyNft({ callBack: onClose });
   const {
     register,
     handleSubmit,
@@ -97,14 +100,15 @@ const BuyNftPopup = ({
       setErrorInput(false);
     }
   }, [watchAmount, errorInput, activeStep]);
-
   const onBuyNft = async (data: any) => {
     if (isApprove) {
+      setLoadingBuyNFT(true);
       await mintNft?.({
         recklesslySetUnpreparedArgs: [userAddress, data.amount],
       });
       return;
     }
+    setLoadingApprove(true);
     await approve?.({
       recklesslySetUnpreparedArgs: [contract?.address, ethers.constants.MaxUint256],
     });
@@ -160,7 +164,7 @@ const BuyNftPopup = ({
               </Step>
             </Stepper>
 
-            {!isNaN(watchAmount) && !isBuy && (
+            {!loadingFetchData && !isNaN(watchAmount) && !isBuy && (
               <Alert severity="error" sx={{ mt: 4 }}>
                 Bạn không đủ USDT để thực hiện giao dịch.
               </Alert>
@@ -172,18 +176,18 @@ const BuyNftPopup = ({
             )}
           </DialogContent>
           <DialogActions>
-            <Button disabled={isLoadingApprove || isLoadingMintNft} onClick={onClose}>
+            <Button disabled={loadingApprove || loadingBuyNFT} onClick={onClose}>
               Hủy
             </Button>
             {isApprove ? (
-              <LoadingButton type={"submit"} disabled={!isBuy} loading={isLoadingMintNft} variant={"contained"}>
+              <LoadingButton type={"submit"} disabled={!isBuy} loading={loadingBuyNFT} variant={"contained"}>
                 Mua
               </LoadingButton>
             ) : (
               <LoadingButton
                 type={"submit"}
                 disabled={isNaN(watchAmount)}
-                loading={isLoadingApprove}
+                loading={loadingApprove}
                 variant={"contained"}
               >
                 Chấp thuận
