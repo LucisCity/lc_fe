@@ -104,7 +104,10 @@ export const useBuyNft = ({ callBack }: { callBack?: () => void }) => {
     onSuccess: async (res) => {
       await res.wait(1);
       setLoadingBuyNFT(false);
-      enqueueSnackbar("Bạn mua NFT thành công, đợi 1, 2 phút để giao dịch hoàn thành!", {
+      // enqueueSnackbar("Bạn mua NFT thành công, đợi 1, 2 phút để giao dịch hoàn thành!", {
+      //   variant: "success",
+      // });
+      enqueueSnackbar("Bạn mua NFT thành công!", {
         variant: "success",
       });
       // close popup
