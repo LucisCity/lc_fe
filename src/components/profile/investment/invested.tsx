@@ -9,6 +9,7 @@ import PaginatedList from "../components/paginated_list";
 import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
 import { useInvestedProject } from "../../../hooks/profile/use_investment";
 import { InvestedProjectGql } from "../../../gql/graphql";
+import { formatCurrency } from "../../../utils/number.util";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -30,11 +31,13 @@ const InvestedCard = (props: InvestedProjectGql) => {
     take_profit_at: takeProfitAt,
     start_time_vote_sell: waitTransferAt,
     ended,
+    nft_price: nftPrice,
+    total_nft: totalNft,
+    total_nft_sold: totalNftSold,
     profile: { follows },
-    nft_bought: { total_nft: totalNft, currency_amount: currencyAmount },
+    nft_bought: { total_nft: totalNftOwned },
     profit_balance: { balance },
   } = props;
-  const purchasePrice = ((price / TOTAL_TOKENS) * totalNft).toFixed(2);
   /* eslint-enable */
   const salePeriod = ended
     ? ProjectSalePeriod.CLOSED
@@ -68,7 +71,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                     {title}
                   </Typography>
                   <Typography fontWeight={500} fontSize={{ lg: 18, md: 16, sm: 14, sx: 18 }} color={"#33E179"}>
-                    (${Number.parseFloat(balance).toFixed(2)})
+                    ({formatCurrency(balance)})
                   </Typography>
                 </Box>
                 <Typography color="text.secondary" lineHeight={1.4} fontSize={12}>
@@ -100,7 +103,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                   </Button>
                 </Box>
                 <Box mt={{ sm: 3, xs: 4 }} mb={{ sm: 3 }} width={{ sm: "100%", xs: "50%" }}>
-                  <LinearProgress variant="determinate" value={10} />
+                  <LinearProgress variant="determinate" value={(totalNftSold / totalNft) * 100} />
                 </Box>
               </Grid>
               <Grid item xs={6}>
@@ -111,7 +114,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                       Tổng giá trị
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      ${price}
+                      {formatCurrency(price)}
                     </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
@@ -120,7 +123,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                       Tokens sở hữu
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      {totalNft}
+                      {totalNftOwned}
                     </Typography>
                   </Box>
                 </Box>
@@ -133,7 +136,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
                       Giá mua vào
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      ${purchasePrice}
+                      {formatCurrency(totalNftOwned * nftPrice)}
                     </Typography>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>

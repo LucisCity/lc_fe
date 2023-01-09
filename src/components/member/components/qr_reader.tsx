@@ -61,7 +61,7 @@ export default function QRReader() {
                 console.info(error);
               }
             }}
-            constraints={{ facingMode: "user" }}
+            constraints={{ facingMode: "environment" }}
             containerStyle={{ width: "100%" }}
             videoContainerStyle={{ width: "100%" }}
             videoStyle={{ width: "100%" }}

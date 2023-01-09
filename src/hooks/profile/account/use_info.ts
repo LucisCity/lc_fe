@@ -3,6 +3,7 @@ import { AccountInfo } from "../../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import UserStore from "../../../store/user.store";
+import * as React from "react";
 
 export const GET_BALANCE = gql`
   query getBalance {
@@ -80,23 +81,19 @@ export function useWalletAddress(props?: { errorCallback?: () => void }) {
   };
 }
 
-export function useGetAccountInfo(): {
-  loadingAccountInfo: boolean;
-  dataAccountInfo: AccountInfo;
-} {
-  const { enqueueSnackbar } = useSnackbar();
-
+export function useGetAccountInfo() {
+  const [compareData, setCompareData] = React.useState<any>();
   const { loading, data } = useQuery(GET_ACCOUNT_INFO, {
-    // onError: (e) => {
-    //   enqueueSnackbar("Error", {
-    //     variant: "error",
-    //   });
-    // },
+    onCompleted: (res) => {
+      setCompareData(res?.getAccountInfo);
+    },
   });
 
   return {
     loadingAccountInfo: loading,
     dataAccountInfo: data?.getAccountInfo,
+    compareData,
+    setCompareData,
   };
 }
 

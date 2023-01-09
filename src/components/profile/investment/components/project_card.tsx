@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { Box } from "@mui/system";
 import React from "react";
 import { ProjectGql } from "../../../../gql/graphql";
+import { formatCurrency } from "../../../../utils/number.util";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -68,6 +69,7 @@ export const ProjectCard = (props: ProjectGql) => {
     address,
     price,
     total_nft: totalNft,
+    total_nft_sold: totalNftSold,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
     start_time_vote_sell: waitTransferAt,
@@ -127,7 +129,7 @@ export const ProjectCard = (props: ProjectGql) => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <LinearProgress variant="determinate" value={30} />
+                <LinearProgress variant="determinate" value={(totalNftSold / totalNft) * 100} />
               </Grid>
               <Grid item xs={6}>
                 <Box pr={{ md: 3 }}>
@@ -137,7 +139,7 @@ export const ProjectCard = (props: ProjectGql) => {
                       Tổng giá trị
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      ${price}
+                      {formatCurrency(price)}
                     </Typography>
                   </Box>
                   <Box display={"flex"} pb={2} justifyContent={"space-between"} mb={1}>
@@ -155,7 +157,7 @@ export const ProjectCard = (props: ProjectGql) => {
                       Số tokens đang bán
                     </Typography>
                     <Typography variant={"caption"} fontWeight={500}>
-                      {totalNft}
+                      {totalNft - totalNftSold}
                     </Typography>
                   </Box>
                 </Box>
