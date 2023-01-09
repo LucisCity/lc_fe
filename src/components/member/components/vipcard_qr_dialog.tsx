@@ -21,16 +21,16 @@ const Transition = React.forwardRef(function Transition(
 });
 const QR_ID = "vip_card_qr";
 
-export default function ShareVipCardDialog() {
+export default function ShareVipCardDialog({ cardId }: { cardId: string }) {
   // const { userStore } = useStores();
   const [open, setOpen] = React.useState(false);
   const { captureAndDownloadElement } = useDownload();
   const [_, copy] = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [shareLink, setShareLink] = React.useState("demo");
-
+  const link = window?.location?.origin ? window.location.origin + `/member/${cardId}` : "";
   React.useEffect(() => {
-    setShareLink(window.location.href);
+    setShareLink(link);
   }, []);
 
   const handleClickOpen = () => {
@@ -41,7 +41,7 @@ export default function ShareVipCardDialog() {
     setOpen(false);
   };
   const onCopy = () => {
-    copy(window?.location.href ?? "");
+    copy(link);
     enqueueSnackbar("Copied", { variant: "success" });
   };
 
@@ -128,7 +128,7 @@ export default function ShareVipCardDialog() {
                 hoặc liên kết dưới đây
               </Typography>
               <Typography variant="body1" color="primary" sx={{ mt: "29px" }}>
-                {window?.location.href ?? ""}
+                {link}
               </Typography>
               <Button
                 variant="contained"

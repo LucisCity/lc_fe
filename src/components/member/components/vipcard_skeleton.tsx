@@ -3,7 +3,6 @@ import React from "react";
 import { styled } from "@mui/system";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ShareVipCardDialog from "./vipcard_qr_dialog";
-import { useVipCard } from "../hooks/use_vipcard";
 import moment from "moment";
 import QRReader from "./qr_reader";
 
@@ -17,21 +16,8 @@ const Title = styled("img")(({ theme }) => ({
   },
 }));
 
-function formatCardNumber(number: string) {
-  if (number) {
-    [4, 9, 14].forEach((i) => {
-      number = number.slice(0, i) + " " + number.slice(i);
-    });
-    return number;
-  }
-  return "---- ---- ---- ----";
-}
-
-export const VipCard = ({ infoCard }: { infoCard: any }) => {
+export const VipCardSkeleton = () => {
   // console.log(`expiredAt ${expiredAt}`);
-  if (!infoCard) return null;
-  const { id, number, name, tier, expired_at: expiredAt } = infoCard; // eslint-disable-line
-  const cardNumberFormatted = formatCardNumber(number);
   return (
     <Box mt={30} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
       <Box sx={{ position: "relative" }}>
@@ -76,56 +62,26 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
             sx={{ position: "absolute" }}
           />
           <CardContent sx={{ flex: "1 0 auto" }}>
-            {!infoCard ? (
-              <>
-                <Skeleton
-                  variant="text"
-                  sx={{
-                    fontSize: 21,
-                    fontWeight: 500,
-                    position: "absolute",
-                    bottom: 40,
-                    left: 30,
-                  }}
-                />
-                <Skeleton
-                  variant="text"
-                  sx={{
-                    fontSize: 12,
-                    fontWeight: 300,
-                    position: "absolute",
-                    bottom: 15,
-                    left: 30,
-                  }}
-                />
-              </>
-            ) : (
-              <>
-                <Typography
-                  sx={{
-                    fontSize: 21,
-                    fontWeight: 500,
-                    position: "absolute",
-                    bottom: 40,
-                    left: 30,
-                  }}
-                >
-                  {cardNumberFormatted}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 12,
-                    fontWeight: 300,
-                    position: "absolute",
-                    bottom: 15,
-                    left: 30,
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {name.toLowerCase()}
-                </Typography>
-              </>
-            )}
+            <Skeleton
+              variant="text"
+              sx={{
+                fontSize: 21,
+                fontWeight: 500,
+                position: "absolute",
+                bottom: 40,
+                left: 30,
+              }}
+            />
+            <Skeleton
+              variant="text"
+              sx={{
+                fontSize: 12,
+                fontWeight: 300,
+                position: "absolute",
+                bottom: 15,
+                left: 30,
+              }}
+            />
           </CardContent>
         </Box>
         <Box
@@ -145,18 +101,15 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
             image="/assets/imgs/member/card-end.png"
             alt="vip card"
           />
-          <Typography
+          <Skeleton
+            variant={"text"}
             sx={{
               fontSize: 12,
-              fontWeight: 300,
               lineHeight: 1.5,
               mx: 10,
               mt: 5.5,
-              textTransform: "capitalize",
             }}
-          >
-            {tier?.replaceAll("_", " ").toLowerCase()}
-          </Typography>
+          />
           <Box
             sx={{
               display: "flex",
@@ -181,15 +134,13 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
             }}
           >
             <Typography fontSize={12}>VALID THRU</Typography>
-            <Typography fontSize={19} fontWeight={500} letterSpacing={1.5}>
-              {expiredAt ? moment(expiredAt).format("MM/YY") : "--/--"}
-            </Typography>
+            <Skeleton variant={"text"} sx={{ fontSize: 19 }} />
           </Box>
         </Box>
       </Card>
       <Box mt={10}>
-        <ShareVipCardDialog cardId={id} />
-        <QRReader />
+        <Skeleton variant={"rounded"} width={210} height={50} />
+        <Skeleton variant={"rounded"} width={210} height={50} />
       </Box>
       <Typography color={"#000"} sx={{ mt: 6 }}>
         Nội dung ngắn gọn ở đây
