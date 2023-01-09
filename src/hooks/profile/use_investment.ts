@@ -1,8 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
 import { InvestedProjectGql, ProjectGql } from "../../gql/graphql";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import userStore from "../../store/user.store";
 
 const GET_INVESTED_PROJECTS = gql`
   query investedProjects {
@@ -78,20 +79,25 @@ const GET_FOLLOWING_PROJECTS = gql`
 
 export const useFollowingProject = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [followingProjects, setFollowingProjects] = useState<ProjectGql[]>([]);
-  const { loading } = useQuery<{ followingProjects: ProjectGql[] }>(GET_FOLLOWING_PROJECTS, {
-    onCompleted: (res) => {
-      setFollowingProjects(res?.followingProjects);
+  const [getFollowingProjects, followingData] = useLazyQuery<{ followingProjects: ProjectGql[] }>(
+    GET_FOLLOWING_PROJECTS,
+    {
+      onError: (e) => {
+        const errors = handleGraphqlErrors(e);
+        errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      },
     },
-    onError: (e) => {
-      const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
-    },
-  });
+  );
+
+  useEffect(() => {
+    if (userStore.isLoggedIn) {
+      getFollowingProjects();
+    }
+  }, []);
 
   return {
-    loading,
-    followingProjects,
+    loading: followingData.loading,
+    followingProjects: followingData.data?.followingProjects,
   };
 };
 
