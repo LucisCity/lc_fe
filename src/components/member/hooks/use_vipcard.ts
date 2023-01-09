@@ -3,6 +3,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { VipCard } from "../../../gql/graphql";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import UserStore from "../../../store/user.store";
 
 const GET_VIP_CARD = gql`
   query getVipCard {
@@ -15,11 +16,20 @@ const GET_VIP_CARD = gql`
     }
   }
 `;
+const HAS_VIP_CARD = gql`
+  query hasVipCard {
+    hasVipCard
+  }
+`;
 
 export const useVipCard = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [vipCard, setVipCard] = useState<any>();
+  const { data, loading: loadingHasVipCard } = useQuery<{ hasVipCard: boolean }>(HAS_VIP_CARD, {
+    skip: !UserStore.isLoggedIn,
+  });
   const { loading } = useQuery<{ getVipCard: VipCard }>(GET_VIP_CARD, {
+    skip: !UserStore.isLoggedIn,
     onCompleted: (res) => {
       setVipCard(res?.getVipCard);
     },
@@ -32,20 +42,7 @@ export const useVipCard = () => {
   return {
     loading,
     vipCard,
-  };
-};
-
-const HAS_VIP_CARD = gql`
-  query hasVipCard {
-    hasVipCard
-  }
-`;
-
-export const useHasVipCard = () => {
-  const { loading, data } = useQuery<{ hasVipCard: boolean }>(HAS_VIP_CARD);
-
-  return {
-    loading,
-    data: data?.hasVipCard,
+    loadingHasVipCard,
+    isVipMember: data?.hasVipCard ?? false,
   };
 };

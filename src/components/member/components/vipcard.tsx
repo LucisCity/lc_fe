@@ -27,11 +27,10 @@ function formatCardNumber(number: string) {
   return "---- ---- ---- ----";
 }
 
-export const VipCard = () => {
-  const { loading, vipCard } = useVipCard();
+export const VipCard = ({ infoCard }: { infoCard: any }) => {
   // console.log(`expiredAt ${expiredAt}`);
-  if (!vipCard) return null;
-  const { id, number, name, tier, expired_at: expiredAt } = vipCard; // eslint-disable-line
+  if (!infoCard) return null;
+  const { id, number, name, tier, expired_at: expiredAt } = infoCard; // eslint-disable-line
   const cardNumberFormatted = formatCardNumber(number);
   return (
     <Box mt={30} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
@@ -77,7 +76,7 @@ export const VipCard = () => {
             sx={{ position: "absolute" }}
           />
           <CardContent sx={{ flex: "1 0 auto" }}>
-            {loading ? (
+            {!infoCard ? (
               <>
                 <Skeleton
                   variant="text"
