@@ -12,7 +12,6 @@ import InvestDetailSteper from "./components/detail/invest_detail_steper";
 import PitchTab from "./components/detail/pitch_tab";
 import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
-import VisitedProject from "./components/visited_project";
 import useInvestDetail from "./hooks/use_detail";
 import React from "react";
 
