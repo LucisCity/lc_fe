@@ -52,7 +52,6 @@ class UserStore {
     if (typeof window == "undefined") {
       return;
     }
-    console.log("loadFromLocal: ", this._isLoadedFromLocal);
     if (this._isLoadedFromLocal) {
       return;
     }

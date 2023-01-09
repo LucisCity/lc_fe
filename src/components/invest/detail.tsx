@@ -56,7 +56,7 @@ export function InvestDetailPage() {
           toggleFollow={onToggleFollow}
           voting={following}
         />
-        <InvestImageBox medias={detail?.profile.medias ?? []} location={detail?.location} address={detail?.address} />
+        <InvestImageBox project={detail} />
         <InvestDetailSteper detail={detail} />
         <Box
           sx={{
@@ -119,7 +119,7 @@ export function InvestDetailPage() {
             <Divider sx={{ mt: 4 }} />
             {tabIdx === 0 ? (
               <PitchTab
-                hightlight={detail?.profile?.highlight ?? ""}
+                highlight={detail?.profile?.highlight ?? ""}
                 investReason={detail?.profile?.reason_invest ?? ""}
                 offers={detail?.profile.offers ?? []}
               />

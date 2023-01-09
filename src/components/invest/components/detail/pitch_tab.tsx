@@ -3,7 +3,7 @@ import { ProjectOfferGql } from "../../../../gql/graphql";
 import PlaceOfferSection from "./place_offers";
 
 interface IProps {
-  hightlight?: string;
+  highlight?: string;
   investReason?: string;
   offers?: ProjectOfferGql[];
 }
@@ -12,10 +12,10 @@ export default function PitchTab(props: IProps) {
     <>
       <Box>
         <Typography variant="h3" mt={4}>
-          Hightlight
+          Highlight
         </Typography>
         <Typography variant="h5" mt={6}>
-          {props.hightlight}
+          {props.highlight}
         </Typography>
         <PlaceOfferSection offers={props.offers ?? []} />
       </Box>

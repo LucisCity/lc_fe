@@ -67,7 +67,6 @@ export default function useInvestDetail() {
     },
     onCompleted(data) {
       setDisableClaim(false);
-      console.log("data: ", data);
       projectStore.setProjectDetail({
         ...(projectStore.projectDetail as any),
         isVoted: data.isVoted ?? false,

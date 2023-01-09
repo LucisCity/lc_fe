@@ -2,6 +2,8 @@ import { Box, Button, Typography } from "@mui/material";
 import VoteMenu from "./vote_menu";
 import ShareDialog from "./share_dialog";
 import { LoadingButton } from "@mui/lab";
+import { AppEmitter } from "../../../../utils/emitter";
+import EMITER_KEY from "../../../../config/emiter.key";
 
 interface IProps {
   title?: string;
@@ -15,7 +17,9 @@ interface IProps {
 }
 
 export default function InvestDetailHeader(props: IProps) {
-  // const takeProfitStartTime = props.take_profit_start_time != null ? new Date(props.take_profit_start_time) : null;
+  function onOpenMap() {
+    AppEmitter.emit(EMITER_KEY.openMap);
+  }
 
   return (
     <>
@@ -71,7 +75,7 @@ export default function InvestDetailHeader(props: IProps) {
           <Typography variant="h5" sx={{ display: ["none", "inherit"] }}>
             {props.totalVote} Đánh giá
           </Typography>
-          <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"] }}>
+          <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"], cursor: "pointer" }} onClick={onOpenMap}>
             {props.address}
           </Typography>
         </Box>

@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import mapStyle from "./map_style";
 import { useDeepCompareEffectForMaps } from "./use_deep_compare";
 import { Box } from "@mui/material";
-// import { useDeepCompareEffectForMaps } from "./useDeepCompareEffectForMaps";
 
 interface MapProps extends google.maps.MapOptions {
   onClick?: (e: google.maps.MapMouseEvent) => void;
@@ -19,7 +18,7 @@ export default function Map({ onClick, onIdle, children, ...options }: MapProps)
   useEffect(() => {
     if (ref.current && map === undefined) {
       const googleMap = new window.google.maps.Map(ref.current, {
-        styles: mapStyle,
+        // styles: mapStyle,
       });
       setMap(googleMap);
     }
