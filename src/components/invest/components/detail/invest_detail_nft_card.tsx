@@ -10,7 +10,7 @@ import { useAccount } from "wagmi";
 import UserStore from "../../../../store/user.store";
 import Link from "next/link";
 
-const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => void }) => {
+export const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => void }) => {
   const [progressValue, setProgressValue] = React.useState(0);
   // 10s refetch data from blockchain
   React.useEffect(() => {
@@ -30,7 +30,7 @@ const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => 
 
   return <CircularProgress variant="determinate" size={20} value={progressValue} />;
 };
-export default function InvestDetailNftCard() {
+export default function InvestDetailNftCard({ isVoteTime }: { isVoteTime: boolean }) {
   const { data, refetchContractData } = useNft();
 
   const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
@@ -40,7 +40,7 @@ export default function InvestDetailNftCard() {
   const userWalletAddress = UserStore.user?.wallet_address;
   const pricePerOne = React.useMemo(() => Number(ethers.utils.formatUnits(data?.[0] ?? 0)), [data?.[0]]);
   const totalSupply = React.useMemo(() => Number(data?.[1] ?? 0), [data?.[1]]);
-  const totalSold = React.useMemo(() => Number(data?.[3] ?? 0), [data?.[3]]);
+  const totalSold = React.useMemo(() => Number(data?.[2] ?? 0), [data?.[2]]);
   const floorPrice = React.useMemo(() => data?.[0] ?? 0, [data?.[0]]);
 
   const onClosePopup = React.useCallback(() => setShowPopup(false), []);
@@ -51,7 +51,7 @@ export default function InvestDetailNftCard() {
     } else {
       setIsDifferentAddress(false);
     }
-  }, [address]);
+  }, [address, userWalletAddress]);
   return (
     <>
       {showPopup && (
@@ -133,6 +133,7 @@ export default function InvestDetailNftCard() {
                 sx={{
                   height: "50px",
                 }}
+                disabled={isVoteTime}
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
                 onClick={() => {
                   if (!userWalletAddress || !isConnected) {

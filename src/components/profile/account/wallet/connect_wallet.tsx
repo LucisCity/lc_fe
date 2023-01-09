@@ -70,9 +70,9 @@ const WalletCard = (props: WalletCardProps) => {
 export default function ConnectWallet() {
   const [isShowWarning, setIsShowWarning] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const { walletAddress, updateWalletAddress } = useWalletAddress();
-  const web3Modal = useWeb3Modal();
   const { disconnect } = useDisconnect();
+  const { walletAddress, updateWalletAddress } = useWalletAddress({ errorCallback: disconnect });
+  const web3Modal = useWeb3Modal();
   const userWalletAddress = walletAddress ?? UserStore.user?.wallet_address;
   const { address, isConnected, isConnecting } = useAccount({});
 
@@ -93,13 +93,9 @@ export default function ConnectWallet() {
         variables: {
           walletAddress: address,
         },
-      })
-        .then()
-        .catch(() => {
-          disconnect();
-        });
+      }).then();
     }
-  }, [address]);
+  }, [address, userWalletAddress]);
 
   return (
     <React.Fragment>

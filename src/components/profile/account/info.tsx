@@ -154,16 +154,22 @@ const fields: InfoField[] = [
 export default function InfoForm() {
   const form = useForm();
 
-  const { dataAccountInfo, loadingAccountInfo } = useGetAccountInfo();
-  const [compareData, setCompareData] = React.useState<any>(dataAccountInfo);
+  const { dataAccountInfo, loadingAccountInfo, compareData, setCompareData } = useGetAccountInfo();
   const { walletAddress } = useWalletAddress();
 
   const { updateAccountInfo } = useUpdateAccountInfo();
 
   async function onSubmit(values: any) {
-    // console.log(compareData);
-    const valuesChanged = !!Object.keys(values).find((i: any) => values[i] !== compareData[i]);
-    if (valuesChanged) {
+    let updateInfo = false;
+    Object.keys(values).forEach((i) => {
+      if (!values[i]) {
+        delete values[i]; // only retains truthy values
+      } else if (values[i] !== compareData[i]) {
+        updateInfo = true; // only update if there's a change in values
+      }
+    });
+
+    if (updateInfo && Object.keys(values).length > 0) {
       await updateAccountInfo({
         variables: {
           input: values,
@@ -172,7 +178,6 @@ export default function InfoForm() {
       });
       setCompareData(values);
     }
-    // e.preventDefault();
   }
 
   return (

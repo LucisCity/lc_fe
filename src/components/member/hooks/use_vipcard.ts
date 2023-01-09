@@ -18,7 +18,7 @@ const GET_VIP_CARD = gql`
 
 export const useVipCard = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [vipCard, setVipCard] = useState<any>({});
+  const [vipCard, setVipCard] = useState<any>();
   const { loading } = useQuery<{ getVipCard: VipCard }>(GET_VIP_CARD, {
     onCompleted: (res) => {
       setVipCard(res?.getVipCard);

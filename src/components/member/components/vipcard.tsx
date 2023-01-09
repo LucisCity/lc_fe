@@ -28,12 +28,11 @@ function formatCardNumber(number: string) {
 }
 
 export const VipCard = () => {
-  const {
-    loading,
-    vipCard: { id, number, name, tier, expired_at: expiredAt }, // eslint-disable-line
-  } = useVipCard();
+  const { loading, vipCard } = useVipCard();
   // console.log(`expiredAt ${expiredAt}`);
-  const cardNumberFormatted = React.useMemo(() => formatCardNumber(number), [number]);
+  if (!vipCard) return null;
+  const { id, number, name, tier, expired_at: expiredAt } = vipCard; // eslint-disable-line
+  const cardNumberFormatted = formatCardNumber(number);
   return (
     <Box mt={30} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
       <Box sx={{ position: "relative" }}>

@@ -10,10 +10,21 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { NavBarTab } from "./navbar";
 import { ChangeAvatarDialog } from "./change_avatar_dialog";
 import { observer } from "mobx-react-lite";
+import { useVipCard } from "../../member/hooks/use_vipcard";
+import { VipCardTier } from "../../../gql/graphql";
 
 export const AvatarBox = observer(() => {
+  const { loading: loadingVipCard, vipCard } = useVipCard();
   const profile = UserStore.user?.profile;
   const verified = React.useMemo(() => !!UserStore.user?.kyc_verification?.find((i) => i.status === "SUCCESS"), []);
+  const userBadge = React.useMemo(() => {
+    switch (vipCard?.tier) {
+      case VipCardTier.GalaxyPremium:
+        return "/assets/imgs/landing/card_title.png";
+      default:
+        return "/assets/imgs/landing/card_title.png";
+    }
+  }, [vipCard?.tier]);
   return (
     <>
       {UserStore.isLoggedIn ? (
@@ -61,9 +72,17 @@ export const AvatarBox = observer(() => {
                 {profile?.display_name}
               </Typography>
             ) : null}
-            {/*<Box mt={{ sm: 4, xs: 2 }} sx={{ display: "flex", justifyContent: "center" }}>*/}
-            {/*  <img width={"80%"} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />*/}
-            {/*</Box>*/}
+            {loadingVipCard
+              ? null
+              : vipCard && (
+                  <Box
+                    component={"img"}
+                    src={userBadge}
+                    alt="premium badge"
+                    mt={{ sm: 4, xs: 2 }}
+                    sx={{ width: "80%", display: "flex", justifyContent: "center" }}
+                  />
+                )}
           </Grid>
           <Grid item sm={12} xs={6} px={{ sm: 0, xs: 3 }}>
             <Box display={"flex"} flexDirection={"column"} alignItems={"flex-end"}>
