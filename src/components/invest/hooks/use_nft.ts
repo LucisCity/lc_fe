@@ -96,14 +96,13 @@ export const useBuyNft = ({ callBack }: { callBack?: () => void }) => {
     abi: lucisCity721Abi,
     functionName: "mint",
     onSuccess: async (res) => {
-      await res.wait(1);
       setLoadingBuyNFT(false);
-      // enqueueSnackbar("Bạn mua NFT thành công, đợi 1, 2 phút để giao dịch hoàn thành!", {
-      //   variant: "success",
-      // });
-      enqueueSnackbar("Bạn mua NFT thành công!", {
+      enqueueSnackbar("Bạn mua NFT thành công, đợi 1, 2 phút để giao dịch hoàn thành!", {
         variant: "success",
       });
+      // enqueueSnackbar("Bạn mua NFT thành công!", {
+      //   variant: "success",
+      // });
       // close popup
       if (callBack) {
         callBack();
@@ -114,6 +113,7 @@ export const useBuyNft = ({ callBack }: { callBack?: () => void }) => {
         enqueueSnackbar("Bạn cần ký để thực hiện giao dịch!", {
           variant: "error",
         });
+        return;
       }
       enqueueSnackbar("Lỗi giao dịch, thực hiện lại sau vài phút!", {
         variant: "error",
@@ -127,6 +127,9 @@ export const useBuyNft = ({ callBack }: { callBack?: () => void }) => {
   } = useContractWrite({
     ...configStableCoin,
     onSuccess: async (res) => {
+      enqueueSnackbar("Đang thực hiện giao dịch ...", {
+        variant: "info",
+      });
       await res.wait(1);
       setLoadingApprove(false);
       enqueueSnackbar("Bạn chấp thuận USDT thành công!", {
