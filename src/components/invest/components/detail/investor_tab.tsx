@@ -14,6 +14,8 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { ProjectNftOwnerGql } from "../../../../gql/graphql";
+import { formatNumber } from "../../../../utils/number.util";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -72,26 +74,30 @@ function createData(name: string, level: string, progress: string, amount: numbe
   return { name, level, progress, amount };
 }
 
-const rows = [
-  createData("Wade Warren", "Galaxy Platinum", "234/10.000", "$202.87"),
-  createData("Jane Cooper", "Galaxy Platinum", "97/10.000", "$576.28"),
-  createData("Esther Howard", "Galaxy Platinum", "234/10.000", "$396.84"),
-  createData("Cameron Williamson", "Galaxy Platinum", "454/10.000", "$202.87"),
-  createData("Brooklyn Simmons", "None", "234/10.000", "$202.87"),
-  createData("Leslie Alexander", "None", "234/10.000", "$396.84"),
-  createData("Jenny Wilson", "None", "234/10.000", "$202.87"),
-  createData("Guy Hawkins", "None", "234/10.000", "$202.87"),
-  createData("Robert Fox", "None", "234/10.000", "$202.87"),
-  createData("Wade Warren", "None", "234/10.000", "$202.87"),
-  createData("Robert Fox", "None", "234/10.000", "$202.87"),
-];
+// const rows = [
+//   createData("Wade Warren", "Galaxy Platinum", "234/10.000", "$202.87"),
+//   createData("Jane Cooper", "Galaxy Platinum", "97/10.000", "$576.28"),
+//   createData("Esther Howard", "Galaxy Platinum", "234/10.000", "$396.84"),
+//   createData("Cameron Williamson", "Galaxy Platinum", "454/10.000", "$202.87"),
+//   createData("Brooklyn Simmons", "None", "234/10.000", "$202.87"),
+//   createData("Leslie Alexander", "None", "234/10.000", "$396.84"),
+//   createData("Jenny Wilson", "None", "234/10.000", "$202.87"),
+//   createData("Guy Hawkins", "None", "234/10.000", "$202.87"),
+//   createData("Robert Fox", "None", "234/10.000", "$202.87"),
+//   createData("Wade Warren", "None", "234/10.000", "$202.87"),
+//   createData("Robert Fox", "None", "234/10.000", "$202.87"),
+// ];
 
-export default function InvestorTab() {
+interface IProps {
+  investors: ProjectNftOwnerGql[];
+  totalNftSupply: number;
+}
+export default function InvestorTab({ investors, totalNftSupply }: IProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - investors.length) : 0;
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -106,22 +112,24 @@ export default function InvestorTab() {
     <TableContainer>
       <Table sx={{ minWidth: 500, mt: "43px" }} aria-label="custom pagination table">
         <TableBody>
-          {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row" align="left">
-                {row.name}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="center">
-                {row.level}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="center">
-                {row.progress}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="center">
-                {row.amount}
-              </TableCell>
-            </TableRow>
-          ))}
+          {(rowsPerPage > 0 ? investors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : investors).map(
+            (row) => (
+              <TableRow key={`${row.project_id}_${row.user_id}`}>
+                <TableCell component="th" scope="row" align="left">
+                  {row.user.profile.display_name ?? row.user.profile.given_name}
+                </TableCell>
+                <TableCell style={{ width: 160 }} align="center">
+                  {row.user.vipCard?.name}
+                </TableCell>
+                <TableCell style={{ width: 160 }} align="center">
+                  {`${formatNumber(row.total_nft)}/${formatNumber(totalNftSupply)}`}
+                </TableCell>
+                <TableCell style={{ width: 160 }} align="center">
+                  {`$${formatNumber(row.currency_amount)}`}
+                </TableCell>
+              </TableRow>
+            ),
+          )}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
@@ -133,7 +141,7 @@ export default function InvestorTab() {
       {/* <TableRow> */}
       <TablePagination
         colSpan={3}
-        count={rows.length}
+        count={investors.length}
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[rowsPerPage]}

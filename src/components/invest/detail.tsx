@@ -1,7 +1,6 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDownload } from "../../hooks/use_download";
-import { formatNumber } from "../../utils/number.util";
 import { Card } from "./components/card";
 import ClaimProfitCard from "./components/detail/claim_profit";
 import InvestImageBox from "./components/detail/image_box";
@@ -12,7 +11,6 @@ import InvestDetailSteper from "./components/detail/invest_detail_steper";
 import PitchTab from "./components/detail/pitch_tab";
 import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
-import VisitedProject from "./components/visited_project";
 import useInvestDetail from "./hooks/use_detail";
 
 export function InvestDetailPage() {
@@ -23,6 +21,7 @@ export function InvestDetailPage() {
     profitBalance,
     relateProjects,
     claimProfitData,
+    investors,
     following,
     onToggleFollow,
     onClaimProfit,
@@ -126,7 +125,7 @@ export function InvestDetailPage() {
             ) : tabIdx === 1 ? (
               <UpdatesTab events={detail?.profile.events ?? []} />
             ) : (
-              <InvestorTab />
+              <InvestorTab investors={investors ?? []} totalNftSupply={detail?.total_nft ?? 0} />
             )}
           </Box>
           <Box>

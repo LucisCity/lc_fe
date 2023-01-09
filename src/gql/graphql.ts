@@ -95,6 +95,23 @@ export type InvestedProjectGql = {
   type: ProjectType;
 };
 
+export type InvestorGql = {
+  __typename?: 'InvestorGql';
+  id: Scalars['ID'];
+  profile: InvestorProfileGql;
+  vipCard?: Maybe<VipCard>;
+};
+
+export type InvestorProfileGql = {
+  __typename?: 'InvestorProfileGql';
+  avatar?: Maybe<Scalars['String']>;
+  cover?: Maybe<Scalars['String']>;
+  display_name?: Maybe<Scalars['String']>;
+  family_name?: Maybe<Scalars['String']>;
+  given_name?: Maybe<Scalars['String']>;
+  user_id: Scalars['ID'];
+};
+
 export enum KycStatus {
   Failed = 'FAILED',
   Pending = 'PENDING',
@@ -362,17 +379,17 @@ export type ProjectNftOwner = {
   project_id: Scalars['String'];
   total_nft: Scalars['Int'];
   updated_at: Scalars['DateTime'];
+  user: User;
   user_id: Scalars['String'];
 };
 
 export type ProjectNftOwnerGql = {
   __typename?: 'ProjectNftOwnerGql';
-  created_at: Scalars['DateTime'];
   currency_amount: Scalars['Decimal'];
-  is_sell_voted: Scalars['Boolean'];
-  project_ended: Scalars['Boolean'];
+  project_id: Scalars['String'];
   total_nft: Scalars['Int'];
-  updated_at: Scalars['DateTime'];
+  user: InvestorGql;
+  user_id: Scalars['String'];
 };
 
 export type ProjectOfferGql = {
@@ -451,6 +468,8 @@ export type Query = {
   getAccountInfo?: Maybe<AccountInfo>;
   /** get balance */
   getBalance?: Maybe<Wallet>;
+  /** Get nft bought of user */
+  getInvestor?: Maybe<Array<ProjectNftOwnerGql>>;
   /** get kyc verification images */
   getKycImages?: Maybe<UserKycVerification>;
   /** Get list referral user */
@@ -484,6 +503,11 @@ export type Query = {
   recommendedProjects: Array<ProjectGql>;
   /** Auth resolver */
   temp: Scalars['String'];
+};
+
+
+export type QueryGetInvestorArgs = {
+  projectId: Scalars['String'];
 };
 
 
@@ -546,12 +570,14 @@ export type ReferralDataResponse = {
   kyc_verification?: Maybe<Array<UserKycVerification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
+  projectNfts?: Maybe<Array<ProjectNftOwner>>;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
   reward?: Maybe<Scalars['String']>;
   role: UserRole;
   status: UserStatus;
   updated_at: Scalars['DateTime'];
+  vipCard?: Maybe<VipCard>;
   wallet?: Maybe<Wallet>;
   wallet_address?: Maybe<Scalars['String']>;
 };
@@ -637,11 +663,13 @@ export type User = {
   kyc_verification?: Maybe<Array<UserKycVerification>>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<UserProfile>;
+  projectNfts?: Maybe<Array<ProjectNftOwner>>;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
   role: UserRole;
   status: UserStatus;
   updated_at: Scalars['DateTime'];
+  vipCard?: Maybe<VipCard>;
   wallet?: Maybe<Wallet>;
   wallet_address?: Maybe<Scalars['String']>;
 };
@@ -649,17 +677,18 @@ export type User = {
 export type UserCount = {
   __typename?: 'UserCount';
   kyc_verification: Scalars['Int'];
+  projectNfts: Scalars['Int'];
 };
 
 export type UserGql = {
   __typename?: 'UserGql';
-  _count: UserCount;
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   kyc_verification?: Maybe<Array<UserKycVerification>>;
   profile: ProfileGql;
   ref_code: Scalars['String'];
   referral_log?: Maybe<ReferralLog>;
+  vipCard?: Maybe<VipCard>;
   wallet?: Maybe<Wallet>;
   wallet_address?: Maybe<Scalars['String']>;
 };
@@ -715,6 +744,7 @@ export type VipCard = {
   password: Scalars['String'];
   tier?: Maybe<VipCardTier>;
   updated_at: Scalars['DateTime'];
+  user: User;
   user_id: Scalars['String'];
 };
 
