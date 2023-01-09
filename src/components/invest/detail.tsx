@@ -14,6 +14,7 @@ import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
 import VisitedProject from "./components/visited_project";
 import useInvestDetail from "./hooks/use_detail";
+import React from "react";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
@@ -29,7 +30,10 @@ export function InvestDetailPage() {
     disableClaim,
   } = useInvestDetail();
   const { download } = useDownload();
-
+  const isVoteTime = React.useMemo(() => {
+    if (!detail?.start_time_vote_sell) return false;
+    return Date.now() >= new Date(detail?.start_time_vote_sell).getTime();
+  }, [detail?.start_time_vote_sell]);
   return (
     <Box
       sx={{
@@ -130,7 +134,7 @@ export function InvestDetailPage() {
             )}
           </Box>
           <Box>
-            <InvestDetailNftCard />
+            <InvestDetailNftCard isVoteTime={isVoteTime} />
             <ClaimProfitCard
               balance={profitBalance}
               onClaim={onClaimProfit}
