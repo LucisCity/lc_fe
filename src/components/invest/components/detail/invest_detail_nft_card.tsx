@@ -40,7 +40,7 @@ export default function InvestDetailNftCard() {
   const userWalletAddress = UserStore.user?.wallet_address;
   const pricePerOne = React.useMemo(() => Number(ethers.utils.formatUnits(data?.[0] ?? 0)), [data?.[0]]);
   const totalSupply = React.useMemo(() => Number(data?.[1] ?? 0), [data?.[1]]);
-  const totalSold = React.useMemo(() => Number(data?.[2] ?? 0), [data?.[3]]);
+  const totalSold = React.useMemo(() => Number(data?.[2] ?? 0), [data?.[2]]);
   const floorPrice = React.useMemo(() => data?.[0] ?? 0, [data?.[0]]);
 
   const onClosePopup = React.useCallback(() => setShowPopup(false), []);
