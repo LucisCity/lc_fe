@@ -24,9 +24,22 @@ export default function QRReaderDialog() {
   const [result, setResult] = React.useState("No result");
   const [_, copy] = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
+  const browserHasCamera = React.useRef(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = async () => {
+    await navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+      })
+      .then(() => {
+        browserHasCamera.current = true;
+      })
+      .catch(() => {
+        browserHasCamera.current = false;
+      })
+      .finally(() => {
+        setOpen(true);
+      });
   };
   const handleClose = () => {
     setOpen(false);
@@ -36,19 +49,6 @@ export default function QRReaderDialog() {
     enqueueSnackbar("Copied", { variant: "success" });
   };
 
-  const browserHasCamera = React.useRef(false);
-  React.useEffect(() => {
-    if (open) {
-      navigator.mediaDevices
-        .getUserMedia({
-          video: true,
-        })
-        .then(() => {
-          browserHasCamera.current = true;
-        })
-        .catch();
-    }
-  });
   // console.log(browserHasCamera.current);
 
   return (
