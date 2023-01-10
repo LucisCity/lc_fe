@@ -18,38 +18,102 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function QRReaderDialog() {
-  // const { userStore } = useStores();
-  const [open, setOpen] = React.useState(false);
+const QRReader = ({ open }: { open: boolean }) => {
   const [result, setResult] = React.useState("No result");
   const [_, copy] = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
-  const browserHasCamera = React.useRef(false);
-
-  const handleClickOpen = async () => {
-    await navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-      })
-      .then(() => {
-        browserHasCamera.current = true;
-      })
-      .catch(() => {
-        browserHasCamera.current = false;
-      })
-      .finally(() => {
-        setOpen(true);
-      });
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const [loading, setLoading] = React.useState(true);
+  // const hasCam = React.useRef(true);
+  // React.useState(() => {
+  //   navigator.mediaDevices
+  //     .getUserMedia({
+  //       video: true,
+  //     })
+  //     .then((mediaStream) => {
+  //       hasCam.current = true;
+  //       const video = document.querySelector("video");
+  //       if (video) {
+  //         video.srcObject = mediaStream;
+  //         video.onloadedmetadata = () => {
+  //           video.play();
+  //         };
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       hasCam.current = false;
+  //       console.log("false");
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // });
   const onCopy = () => {
     copy(result);
     enqueueSnackbar("Copied", { variant: "success" });
   };
 
-  // console.log(browserHasCamera.current);
+  if (!open) return null;
+  return (
+    <>
+      {/*{loading ? (*/}
+      {/*  <></>*/}
+      {/*) : hasCam.current ? (*/}
+      {/*  <>*/}
+      <Typography variant="h5" mb="20px">
+        Quét mã QR
+      </Typography>
+      <QrReader
+        onResult={(result, error) => {
+          if (!!result) {
+            setResult(result?.getText());
+          }
+
+          if (!!error) {
+            console.info(error);
+          }
+        }}
+        constraints={{ facingMode: "environment" }}
+        containerStyle={{ width: "100%" }}
+        videoContainerStyle={{ width: "100%" }}
+        videoStyle={{ width: "100%" }}
+      />
+      <Typography
+        variant="body1"
+        color="primary"
+        textAlign={"center"}
+        sx={{ mt: 5, width: { md: "80%", xs: "95%" } }}
+        style={{ wordWrap: "break-word" }}
+      >
+        {result}
+      </Typography>
+      <Button
+        variant="contained"
+        sx={{ mt: "8px" }}
+        onClick={() => {
+          onCopy();
+        }}
+      >
+        Copy
+      </Button>
+      {/*  </>*/}
+      {/*) : (*/}
+      {/*  <Typography variant={"h4"}>*/}
+      {/*    Thiết bị của bạn không hỗ trợ quét QR, vui lòng chuyển sang thiết bị có camera để trải nghiệm chức năng này*/}
+      {/*  </Typography>*/}
+      {/*)}*/}
+    </>
+  );
+};
+
+export default function QRReaderDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = async () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -74,47 +138,8 @@ export default function QRReaderDialog() {
         maxWidth="xs"
         aria-describedby="alert-dialog-slide-description"
       >
-        {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
-        <DialogContent sx={{ display: open ? "flex" : "none", flexDirection: "column", alignItems: "center" }}>
-          {browserHasCamera.current ? (
-            <>
-              <Typography variant="h5" mb="20px">
-                Quét mã QR
-              </Typography>
-              <QrReader
-                onResult={(result, error) => {
-                  if (!!result) {
-                    setResult(result?.getText());
-                  }
-
-                  if (!!error) {
-                    console.info(error);
-                  }
-                }}
-                constraints={{ facingMode: "environment" }}
-                containerStyle={{ width: "100%" }}
-                videoContainerStyle={{ width: "100%" }}
-                videoStyle={{ width: "100%" }}
-              />
-              <Typography variant="h5" my="20px">
-                {result}
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{ mt: "8px" }}
-                onClick={() => {
-                  onCopy();
-                }}
-              >
-                Copy
-              </Button>
-            </>
-          ) : (
-            <Typography variant={"h4"}>
-              Thiết bị của bạn không hỗ trợ quét QR, vui lòng chuyển sang thiết bị có camera để trải nghiệm chức năng
-              này
-            </Typography>
-          )}
+        <DialogContent sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <QRReader open={open} />
         </DialogContent>
       </Dialog>
     </>
