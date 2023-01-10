@@ -226,7 +226,7 @@ export default function InfoForm() {
         )}
       </Grid>
       <Box mt={{ sm: 15, xs: 10 }} display={"flex"} justifyContent={"center"}>
-        <Button variant="contained" type={"submit"} disabled={!form.formState.isDirty}>
+        <Button variant="contained" type={"submit"}>
           <Typography variant={"h5"}>Cập nhật thông tin</Typography>
         </Button>
       </Box>

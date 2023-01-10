@@ -14,7 +14,7 @@ interface VerifyBoxProps {
   title: string;
   instruction: string;
   imgDesc: string;
-  handleSelectFile: (file: FileUpload) => void;
+  handleSelectFile: (file: any) => void;
   imageUrl?: string;
 }
 
@@ -26,6 +26,7 @@ const VerifyBox = (props: VerifyBoxProps) => {
     const files = e.target.files;
     if (!files || files.length === 0) {
       setSelectedFile(undefined);
+      handleSelectFile({ fieldName: fieldName, file: null });
       return;
     }
 
@@ -211,7 +212,7 @@ export default function Verification() {
 
   const handleUploadFiles = async () => {
     // console.log(`selectedFiles ${selectedFiles}`);
-    if (selectedFiles.length < 3) {
+    if (selectedFiles.length < 3 || selectedFiles.find((i) => !i.file)) {
       enqueueSnackbar("Vui lòng upload đủ 3 ảnh", { variant: "error" });
       return;
     }

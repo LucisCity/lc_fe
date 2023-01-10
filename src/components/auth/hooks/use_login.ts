@@ -111,6 +111,7 @@ export default function useLogin() {
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
       }
+      setAuthToken(res.loginGoogle.token);
       if (Router.query?.redirect_url) {
         Router.push(Router.query?.redirect_url as string);
         return;
@@ -129,6 +130,7 @@ export default function useLogin() {
       if (typeof localStorage !== undefined) {
         localStorage.removeItem("referralCode");
       }
+      setAuthToken(res.loginFacebook.token);
       if (Router.query?.redirect_url) {
         Router.push(Router.query?.redirect_url as string);
         return;

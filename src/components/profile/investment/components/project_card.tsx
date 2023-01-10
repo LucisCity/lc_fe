@@ -24,7 +24,7 @@ export enum ProjectSalePeriod {
 }
 
 export const ProjectStatus = (props: { status: ProjectSalePeriod }) => {
-  const color = React.useMemo(() => {
+  const bgColor = React.useMemo(() => {
     switch (props.status) {
       case ProjectSalePeriod.CLOSED:
         return "rgba(80, 76, 103, 0.8)";
@@ -42,17 +42,21 @@ export const ProjectStatus = (props: { status: ProjectSalePeriod }) => {
         return "rgba(71, 204, 233, 0.8)";
     }
   }, [props.status]);
+  const hoverBgColor = bgColor.substring(0, bgColor.length - 2) + "99" + bgColor.charAt(bgColor.length - 1);
   return (
     <Button
       variant="contained"
       color={"secondary"}
       sx={(theme) => ({
-        background: color,
+        background: bgColor,
         color: "#fff",
         width: 80,
         height: 40,
         marginRight: 3,
         padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+        "&:hover": {
+          background: hoverBgColor,
+        },
       })}
     >
       <Typography whiteSpace={"nowrap"}>{props.status}</Typography>
