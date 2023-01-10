@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, Typography, Skeleton } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/system";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -36,7 +36,9 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
     <Box mt={30} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
       <Title className={s.title} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
       <Box sx={{ position: "relative" }}>
-        <InfoOutlinedIcon className={s.infoIcon} sx={{ position: "absolute", color: "white", top: 30, right: -40 }} />
+        <Tooltip title={"Card Info"}>
+          <InfoOutlinedIcon className={s.infoIcon} sx={{ position: "absolute", color: "white", top: 30, right: -40 }} />
+        </Tooltip>
         <Card
           className={s.vipCard}
           elevation={15}

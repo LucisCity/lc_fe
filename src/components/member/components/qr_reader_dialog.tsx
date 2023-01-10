@@ -22,31 +22,24 @@ const QRReader = ({ open }: { open: boolean }) => {
   const [result, setResult] = React.useState("No result");
   const [_, copy] = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
+  const getUserMedia = React.useCallback(async () => {
+    await navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+      })
+      .then(() => {
+        console.log("user has camera");
+      })
+      .catch((err) => {
+        console.log(err.name);
+      })
+      .finally(() => {});
+  }, []);
   // const [loading, setLoading] = React.useState(true);
   // const hasCam = React.useRef(true);
-  // React.useState(() => {
-  //   navigator.mediaDevices
-  //     .getUserMedia({
-  //       video: true,
-  //     })
-  //     .then((mediaStream) => {
-  //       hasCam.current = true;
-  //       const video = document.querySelector("video");
-  //       if (video) {
-  //         video.srcObject = mediaStream;
-  //         video.onloadedmetadata = () => {
-  //           video.play();
-  //         };
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       hasCam.current = false;
-  //       console.log("false");
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // });
+  React.useState(() => {
+    getUserMedia();
+  });
   const onCopy = () => {
     copy(result);
     enqueueSnackbar("Copied", { variant: "success" });
