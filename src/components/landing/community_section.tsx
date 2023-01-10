@@ -3,6 +3,7 @@ import AnimWhenVisible from "../anim";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { headerHeight } from "../layout/header";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import Link from "next/link";
 
 type Props = {
   index?: number;
@@ -108,6 +109,9 @@ export default function ComunitySection(props: Props) {
               <Button
                 variant="outlined"
                 endIcon={<FacebookOutlinedIcon htmlColor={"#6555ee"} />}
+                LinkComponent={Link}
+                href={"https://www.facebook.com/luciscity.io"}
+                target="_blank"
                 sx={
                   {
                     //height: ["40px", "50px"],
@@ -116,18 +120,6 @@ export default function ComunitySection(props: Props) {
                 }
               >
                 Facebook
-              </Button>
-              <Button
-                variant="outlined"
-                endIcon={<Box component="img" src="/assets/imgs/landing/zalo.svg" height={20} width={20} alt="" />}
-                sx={
-                  {
-                    //height: ["40px", "50px"],
-                    // width: "167px",
-                  }
-                }
-              >
-                Zalo
               </Button>
               <Button
                 variant="outlined"
@@ -144,6 +136,9 @@ export default function ComunitySection(props: Props) {
               <Button
                 variant="outlined"
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_telegram_blue.svg" alt="" />}
+                LinkComponent={Link}
+                href={"https://t.me/luciscity_official_announcement"}
+                target="_blank"
                 sx={
                   {
                     //height: ["40px", "50px"],
@@ -155,6 +150,9 @@ export default function ComunitySection(props: Props) {
               <Button
                 variant="outlined"
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_twitter_blue.svg" alt="" />}
+                LinkComponent={Link}
+                href={"https://twitter.com/luciscity_io"}
+                target="_blank"
                 sx={
                   {
                     //height: ["40px", "50px"],

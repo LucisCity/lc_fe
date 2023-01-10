@@ -33,7 +33,7 @@ const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !==
   }),
 );
 
-const Search = styled(Autocomplete)(({ theme }) => ({
+export const Search = styled(Autocomplete)(({ theme }) => ({
   width: 290,
   [theme.breakpoints.down("sm")]: {
     width: "100%",

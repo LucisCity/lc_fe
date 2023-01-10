@@ -9,6 +9,7 @@ import UserStore from "../../store/user.store";
 import { useVipCard } from "./hooks/use_vipcard";
 import Button from "@mui/material/Button";
 import { TopVipMember } from "./components/top_vip_member";
+import { observer } from "mobx-react-lite";
 
 const data = [
   {
@@ -137,7 +138,7 @@ const DataItem = () => {
     </>
   );
 };
-export const MemberPage = () => {
+export const MemberPage = observer(() => {
   const { isVipMember, vipCard } = useVipCard();
   return (
     <ScrollPage pt={0}>
@@ -156,14 +157,21 @@ export const MemberPage = () => {
         <>
           <Box
             sx={{
-              height: "100vh",
+              height: "calc(100vh - (120px + 90px))",
             }}
           >
             <VipCard infoCard={vipCard} />
             <Box bgcolor={"rgba(44, 43, 45, 1)"} position={"absolute"} width={"100%"} bottom={0}>
               <Container>
-                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} height={160}>
-                  <Box>
+                <Box
+                  display={"flex"}
+                  flexDirection={{ sm: "row", xs: "column" }}
+                  alignItems={"center"}
+                  gap={2}
+                  justifyContent={{ sm: "space-between", xs: "center" }}
+                  height={160}
+                >
+                  <Box textAlign={{ xs: "center", sm: "left" }}>
                     <Typography variant={"h2"} color={"#fff"}>
                       Tư vấn V.I.P
                     </Typography>
@@ -186,9 +194,9 @@ export const MemberPage = () => {
                   </Button>
                 </Box>
               </Container>
-              <TopVipMember />
             </Box>
           </Box>
+          <TopVipMember />
         </>
       ) : (
         <>
@@ -281,4 +289,4 @@ export const MemberPage = () => {
       )}
     </ScrollPage>
   );
-};
+});
