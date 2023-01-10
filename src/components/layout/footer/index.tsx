@@ -112,7 +112,7 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
       className={hasBottomNav ? "fullscreenPage" : undefined}
     >
       <Container>
-        <Logo src="/assets/imgs/logo/logo.svg" alt="logo" />
+        <Logo src="/assets/imgs/logo/logo-3d.svg" alt="logo" />
         <Grid container spacing={{ sm: 0, xs: 4 }}>
           <Grid item xs={12} sm={6}>
             <Typography
@@ -135,11 +135,11 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                   </TextItem>
                   <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
                     <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
-                    (319) 555-0115
+                    (+84)34 890 2400
                   </TextItem>
                   <TextItem component={"p"} display={"flex"} alignItems={"center"} m={0} mb={5}>
                     <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />
-                    (229) 555-0109
+                    (+84)34 890 2400
                   </TextItem>
                 </Grid>
                 {/*<Grid item xs={6}>*/}
@@ -195,9 +195,19 @@ export default function Footer({ style, disabledBackground, hasBottomNav }: IPro
                   <UlComponent>
                     <li>
                       <Box display={"flex"} alignItems={"center"}>
-                        <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
-                        <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
-                        <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
+                        <a>
+                          <StartIcon src="/assets/imgs/footer/discord.svg" alt="discord icon" />
+                        </a>
+                        <a
+                          target="_blank"
+                          href="https://t.me/luciscity_official_announcement"
+                          rel="noopener noreferrer"
+                        >
+                          <StartIcon src="/assets/imgs/footer/telegram.svg" alt="telegram icon" />
+                        </a>
+                        <a target="_blank" href="https://twitter.com/luciscity_io" rel="noopener noreferrer">
+                          <StartIcon src="/assets/imgs/footer/twitter.svg" alt="twitter icon" />
+                        </a>
                       </Box>
                     </li>
                     <li>

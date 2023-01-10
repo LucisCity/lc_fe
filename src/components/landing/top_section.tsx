@@ -14,7 +14,7 @@ export const TopSection = () => {
   return (
     <MainItemComponent
       sx={{
-        background: `url(${"assets/imgs/landing/background-intro.jpg"})`,
+        background: `url(${"assets/imgs/landing/background-intro-real.jpg"})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "left",
