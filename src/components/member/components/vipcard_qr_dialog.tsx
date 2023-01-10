@@ -50,7 +50,13 @@ export default function ShareVipCardDialog({ cardId }: { cardId: string }) {
     <>
       <Button
         variant={"outlined"}
-        sx={{ background: "transparent", mr: 2 }}
+        sx={(theme) => ({
+          [theme.breakpoints.down("sm")]: {
+            px: 4,
+          },
+          background: "transparent",
+          mr: 2,
+        })}
         endIcon={<Box component={"img"} src={"/assets/imgs/member/qr-code.svg"} />}
         onClick={handleClickOpen}
       >

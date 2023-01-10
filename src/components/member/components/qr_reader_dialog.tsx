@@ -18,7 +18,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function QRReader() {
+export default function QRReaderDialog() {
   // const { userStore } = useStores();
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = React.useState("No result");
@@ -36,22 +36,29 @@ export default function QRReader() {
     enqueueSnackbar("Copied", { variant: "success" });
   };
 
-  let browserHasCamera = false;
-  React.useCallback(async () => {
-    await navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-      })
-      .then(() => {
-        browserHasCamera = true;
-      });
-    return result;
-  }, []);
-  // console.log(browserHasCamera);
+  const browserHasCamera = React.useRef(false);
+  React.useEffect(() => {
+    if (open) {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+        })
+        .then(() => {
+          browserHasCamera.current = true;
+        })
+        .catch();
+    }
+  });
+  // console.log(browserHasCamera.current);
 
   return (
     <>
       <Button
+        sx={(theme) => ({
+          [theme.breakpoints.down("sm")]: {
+            px: 4,
+          },
+        })}
         variant={"contained"}
         endIcon={<Box component={"img"} src={"/assets/imgs/member/scan-qr.svg"} />}
         onClick={handleClickOpen}
@@ -69,9 +76,8 @@ export default function QRReader() {
       >
         {/* <DialogTitle>{"Use Google's location service?"}</DialogTitle> */}
         <DialogContent sx={{ display: open ? "flex" : "none", flexDirection: "column", alignItems: "center" }}>
-          {browserHasCamera ? (
+          {browserHasCamera.current ? (
             <>
-              {" "}
               <Typography variant="h5" mb="20px">
                 Quét mã QR
               </Typography>

@@ -2,9 +2,6 @@ import { Box, Card, CardContent, CardMedia, Typography, Button, Skeleton } from 
 import React from "react";
 import { styled } from "@mui/system";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import ShareVipCardDialog from "./vipcard_qr_dialog";
-import moment from "moment";
-import QRReader from "./qr_reader";
 
 const Title = styled("img")(({ theme }) => ({
   height: 25,
@@ -138,9 +135,29 @@ export const VipCardSkeleton = () => {
           </Box>
         </Box>
       </Card>
-      <Box mt={10}>
-        <Skeleton variant={"rounded"} width={210} height={50} />
-        <Skeleton variant={"rounded"} width={210} height={50} />
+      <Box mt={10} display={"flex"}>
+        <Button
+          variant={"outlined"}
+          sx={(theme) => ({
+            [theme.breakpoints.down("sm")]: {
+              px: 4,
+            },
+            background: "transparent",
+            mr: 2,
+          })}
+        >
+          <Skeleton variant={"text"} width={100} />
+        </Button>
+        <Button
+          sx={(theme) => ({
+            [theme.breakpoints.down("sm")]: {
+              px: 4,
+            },
+          })}
+          variant={"contained"}
+        >
+          <Skeleton variant={"text"} width={100} />
+        </Button>
       </Box>
       <Typography color={"#000"} sx={{ mt: 6 }}>
         Nội dung ngắn gọn ở đây
