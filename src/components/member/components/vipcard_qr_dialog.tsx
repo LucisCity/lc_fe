@@ -10,6 +10,7 @@ import { useCopyToClipboard } from "react-use";
 import { useSnackbar } from "notistack";
 import { useDownload } from "../../../hooks/use_download";
 import UserStore from "../../../store/user.store";
+import Link from "next/link";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -127,7 +128,14 @@ export default function ShareVipCardDialog({ cardId }: { cardId: string }) {
               <Typography variant="h5" mt="19px">
                 hoặc liên kết dưới đây
               </Typography>
-              <Typography variant="body1" color="primary" sx={{ mt: "29px" }}>
+              <Typography
+                component={Link}
+                href={link}
+                variant="body1"
+                color="primary"
+                sx={{ mt: "29px", width: { md: "80%", xs: "95%" } }}
+                style={{ wordWrap: "break-word" }}
+              >
                 {link}
               </Typography>
               <Button

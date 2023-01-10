@@ -27,11 +27,13 @@ export default function InvestmentFavorite() {
         </PaginatedList>
       ) : (
         <PaginatedList rowsPerPage={5}>
-          {followingProjects?.map((i, idx) => (
-            <Box key={idx} px={{ md: 4 }} pt={{ xs: 4 }}>
-              <ProjectCard {...i} />
-            </Box>
-          ))}
+          {followingProjects
+            ? followingProjects.map((i, idx) => (
+                <Box key={idx} px={{ md: 4 }} pt={{ xs: 4 }}>
+                  <ProjectCard {...i} />
+                </Box>
+              ))
+            : []}
         </PaginatedList>
       )}
     </React.Fragment>
