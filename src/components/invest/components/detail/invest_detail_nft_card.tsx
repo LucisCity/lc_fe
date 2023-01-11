@@ -31,7 +31,7 @@ export const ProgressWaitData = ({ refetchContractData }: { refetchContractData:
 
   return <CircularProgress variant="determinate" size={20} value={progressValue} />;
 };
-export default function InvestDetailNftCard({ isVoteTime }: { isVoteTime: boolean }) {
+export default function InvestDetailNftCard({ isSaleTime }: { isSaleTime: boolean }) {
   const { data, refetchContractData } = useNft();
 
   const router = useRouter();
@@ -135,7 +135,7 @@ export default function InvestDetailNftCard({ isVoteTime }: { isVoteTime: boolea
                 sx={{
                   height: "50px",
                 }}
-                disabled={isVoteTime}
+                disabled={!isSaleTime}
                 endIcon={<Box component="img" src="/assets/imgs/landing/ic_next.svg" alt="" />}
                 onClick={() => {
                   if (!userWalletAddress || !isConnected) {

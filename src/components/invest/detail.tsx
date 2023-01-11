@@ -29,10 +29,15 @@ export function InvestDetailPage() {
     disableClaim,
   } = useInvestDetail();
   const { download } = useDownload();
-  const isVoteTime = React.useMemo(() => {
-    if (!detail?.start_time_vote_sell) return false;
-    return Date.now() >= new Date(detail?.start_time_vote_sell).getTime();
-  }, [detail?.start_time_vote_sell]);
+
+  const isSaleTime = React.useMemo(() => {
+    if (!detail?.take_profit_at) return false;
+    if (!detail?.open_sale_at) return false;
+
+    return (
+      Date.now() <= new Date(detail?.take_profit_at).getTime() && Date.now() >= new Date(detail?.open_sale_at).getTime()
+    );
+  }, [detail?.take_profit_at, detail?.open_sale_at]);
   return (
     <Box
       sx={{
@@ -133,7 +138,7 @@ export function InvestDetailPage() {
             )}
           </Box>
           <Box>
-            <InvestDetailNftCard isVoteTime={isVoteTime} />
+            <InvestDetailNftCard isSaleTime={isSaleTime} />
             <ClaimProfitCard
               balance={profitBalance}
               onClaim={onClaimProfit}
