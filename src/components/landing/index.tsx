@@ -23,6 +23,7 @@ import Footer from "../layout/footer";
 import ComunitySection from "./community_section";
 import { Background } from "./components/background";
 import LayoutStore from "../layout/layout.store";
+import { Project } from "../../gql/graphql";
 
 export enum Section {
   OnTop, // start
@@ -37,7 +38,7 @@ export enum Section {
   Community,
 }
 
-export default function LandingPage({ projects }: { projects: { name: string; description: string }[] }) {
+export default function LandingPage({ projects }: { projects: Project[] }) {
   const [slideActive, setSlideActive] = useState(0);
   const theme = useTheme();
   const [paging, setPaging] = useState<PagingContextType>({

@@ -71,3 +71,10 @@ w3m-modal {
   position: initial !important;
   bottom: -30px !important;
 }
+
+#landing-highlight-projects .swiper-pagination-bullets {
+  position: sticky !important;
+  bottom: -5px !important;
+}
+
+

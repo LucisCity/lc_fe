@@ -2,19 +2,17 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import LandingPage from "../components/landing";
 import DocHead from "../components/layout/doc_head";
 import PageLayout from "../components/layout/PageLayout";
+import client from "../utils/apolo.util";
+import { GET_HOT_PROJECT } from "../config/api/invest.config";
+import { Project } from "../gql/graphql";
 
-type Project = {
-  name: string;
-  description: string;
-};
 export const getStaticProps: GetStaticProps<{ projects: Project[] }> = async (context) => {
   // const res = await fetch('https://.../posts')
-  const projects: Project[] = [
-    {
-      name: "Navaland Phú Yên",
-      description: "Bất động sản nghỉ dưỡng",
-    },
-  ];
+  const res = await client.query({
+    query: GET_HOT_PROJECT,
+  });
+
+  const projects: Project[] = res?.data?.hotProjects;
 
   return {
     props: {
