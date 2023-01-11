@@ -184,7 +184,7 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
                 bottom: 15,
               }}
             >
-              <Typography fontSize={12}>VALID THRU</Typography>
+              <Typography fontSize={12}>ISSUED ON</Typography>
               <Typography fontSize={19} fontWeight={500} letterSpacing={1.5}>
                 {expiredAt ? moment(expiredAt).format("MM/YY") : "--/--"}
               </Typography>

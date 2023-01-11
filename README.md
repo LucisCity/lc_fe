@@ -32,3 +32,35 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Tài liệu vận hành
+
+### Trang vận hành admin: [web_url]/admin/graphql (ví dụ: https://luciscity.io//admin/graphql)
+
+#### Tạo tài khoản admin và sử dụng api
+
+- Dùng mutation register ở trang admin và điền email, password
+- Đăng nhập để lấy token
+- Trong mục HTTP HEADERS, điền
+```
+  {
+  "Authorization": "Bearer [token]"
+  }
+```
+Ví dụ: token = abcdef (token thật sẽ có độ dài lớn hơn)
+```
+  {
+  "Authorization": "Bearer abcdef"
+  }
+```
+#### Tạo project:
+- Tạo contract cho project
+- Dùng mutation uploadProject 
+#### Chuyển project về trạng thái kết thúc
+- Dùng mutaion finishProject
+#### Phê duyệt xác minh danh tính của người dùng
+- Dùng query getPendingKycs để lấy ra yêu cầu xác minh đang pending, hoặc getKycs để lấy tất cả các yêu cầu xác minh (pending, success, fail)
+- Dùng mutation updateKyc để cập nhật trạng thái xác minh cho người dùng
+#### VIP card
+- Dùng query getVipCards để lấy ra thẻ VIP
+- Dùng mutation createVipCard để tạo thẻ, updateVipCard để update thẻ, deleteVipCard để xóa thẻ
