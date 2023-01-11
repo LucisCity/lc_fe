@@ -10,6 +10,7 @@ import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
 import { useInvestedProject } from "../../../hooks/profile/use_investment";
 import { InvestedProjectGql } from "../../../gql/graphql";
 import { formatCurrency } from "../../../utils/number.util";
+import { slugify } from "../../../utils/string.util";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -29,7 +30,8 @@ const InvestedCard = (props: InvestedProjectGql) => {
     price,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
-    start_time_vote_sell: waitTransferAt,
+    start_time_vote_sell: startVotingAt,
+    end_time_vote_sell: endVotingAt,
     ended,
     nft_price: nftPrice,
     total_nft: totalNft,
@@ -41,7 +43,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
   /* eslint-enable */
   const salePeriod = ended
     ? ProjectSalePeriod.CLOSED
-    : waitTransferAt && new Date() > new Date(waitTransferAt)
+    : startVotingAt && new Date() > new Date(startVotingAt)
     ? ProjectSalePeriod.TRANSFERRING
     : takeProfitAt && new Date() > new Date(takeProfitAt)
     ? ProjectSalePeriod.PROFITING
@@ -49,7 +51,14 @@ const InvestedCard = (props: InvestedProjectGql) => {
     ? ProjectSalePeriod.OPEN
     : ProjectSalePeriod.UPCOMING;
 
-  const href = `/invest/${id}`;
+  const isVoting = React.useMemo(() => {
+    const currentDate = new Date();
+    return (
+      startVotingAt && endVotingAt && currentDate >= new Date(startVotingAt) && currentDate < new Date(endVotingAt)
+    );
+  }, [startVotingAt, endVotingAt]);
+
+  const href = `/invest/${slugify(title)}.${id}`;
 
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>
@@ -157,7 +166,13 @@ const InvestedCard = (props: InvestedProjectGql) => {
               </Grid>
               <Grid item xs={6}>
                 <Box display={"flex"}>
-                  <Button href={`${href}#vote`} LinkComponent={Link} variant="contained" sx={{ mr: 1 }}>
+                  <Button
+                    href={`${href}#vote`}
+                    LinkComponent={Link}
+                    variant="contained"
+                    sx={{ mr: 1 }}
+                    disabled={!isVoting}
+                  >
                     Vote
                   </Button>
                   <Button href={`${href}#claim`} LinkComponent={Link} variant="contained">
