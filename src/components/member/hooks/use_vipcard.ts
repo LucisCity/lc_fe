@@ -13,22 +13,14 @@ const GET_VIP_CARD = gql`
       number
       name
       tier
-      expired_at
+      valid_from
     }
-  }
-`;
-const HAS_VIP_CARD = gql`
-  query hasVipCard {
-    hasVipCard
   }
 `;
 
 export const useVipCard = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [vipCard, setVipCard] = useState<any>();
-  const { data, loading: loadingHasVipCard } = useQuery<{ hasVipCard: boolean }>(HAS_VIP_CARD, {
-    skip: !UserStore.isLoggedIn,
-  });
   const { loading } = useQuery<{ getVipCard: VipCard }>(GET_VIP_CARD, {
     skip: !UserStore.isLoggedIn,
     onCompleted: (res) => {
@@ -43,8 +35,6 @@ export const useVipCard = () => {
   return {
     loading,
     vipCard,
-    loadingHasVipCard,
-    isVipMember: data?.hasVipCard ?? false,
   };
 };
 
@@ -55,7 +45,7 @@ const GET_VIP_CARD_FROM_ID = gql`
       number
       name
       tier
-      expired_at
+      valid_from
     }
   }
 `;

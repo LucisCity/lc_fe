@@ -4,6 +4,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { headerHeight } from "../layout/header";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import Link from "next/link";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 type Props = {
   index?: number;
@@ -160,6 +161,20 @@ export default function ComunitySection(props: Props) {
                 }
               >
                 Twitter
+              </Button>
+              <Button
+                variant="outlined"
+                endIcon={<LinkedInIcon htmlColor={"#6555ee"} />}
+                LinkComponent={Link}
+                href={"https://linkedin.com/company/luciscity-io"}
+                target="_blank"
+                sx={
+                  {
+                    //height: ["40px", "50px"],
+                  }
+                }
+              >
+                Linked in
               </Button>
             </Box>
           </Box>

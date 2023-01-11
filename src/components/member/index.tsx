@@ -139,7 +139,7 @@ const DataItem = () => {
   );
 };
 export const MemberPage = observer(() => {
-  const { isVipMember, vipCard } = useVipCard();
+  const { vipCard } = useVipCard();
   return (
     <ScrollPage pt={0}>
       <Box
@@ -153,7 +153,7 @@ export const MemberPage = observer(() => {
           height: "100vh",
         }}
       />
-      {isVipMember ? (
+      {vipCard && (
         <>
           <Box mb={{ lg: 100 }}>
             <VipCard infoCard={vipCard} />
@@ -204,48 +204,47 @@ export const MemberPage = observer(() => {
           </Box>
           <TopVipMember />
         </>
-      ) : (
-        <>
-          <Box mt={-10}>
-            <CardSection disabledBackground={true} disabledReadmoreButton={true} />
+      )}
+      <Box mt={-10}>
+        <CardSection disabledBackground={true} disabledReadmoreButton={true} />
+      </Box>
+      <Box pb={10} position={"relative"}>
+        <Container>
+          <Box
+            borderRadius={4}
+            pt={10}
+            pb={10}
+            pl={{ xs: 5, sm: 10, md: 18, lg: 22 }}
+            pr={{ xs: 5, sm: 10, md: 18, lg: 22 }}
+            border={"1px solid #fff"}
+            sx={{
+              background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
+              backdropFilter: "blur(16px)",
+            }}
+            zIndex={2}
+            position={"relative"}
+          >
+            <Typography
+              variant={"h1"}
+              mb={8}
+              sx={{
+                display: "flex",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                fontSize: 20,
+                justifyContent: "center",
+              }}
+            >
+              QUYỀN LỢI NHÀ ĐẦU TƯ
+            </Typography>
+            <Box>
+              <Grid container spacing={1}>
+                <DataItem />
+              </Grid>
+            </Box>
           </Box>
-          <Box pb={10} position={"relative"}>
-            <Container>
-              <Box
-                borderRadius={4}
-                pt={10}
-                pb={10}
-                pl={{ xs: 5, sm: 10, md: 18, lg: 22 }}
-                pr={{ xs: 5, sm: 10, md: 18, lg: 22 }}
-                border={"1px solid #fff"}
-                sx={{
-                  background: "linear-gradient(108.58deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 119.12%)",
-                  backdropFilter: "blur(16px)",
-                }}
-                zIndex={2}
-                position={"relative"}
-              >
-                <Typography
-                  variant={"h1"}
-                  mb={8}
-                  sx={{
-                    display: "flex",
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    fontSize: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  QUYỀN LỢI NHÀ ĐẦU TƯ
-                </Typography>
-                <Box>
-                  <Grid container spacing={1}>
-                    <DataItem />
-                  </Grid>
-                </Box>
-              </Box>
-            </Container>
-            {/* <Box
+        </Container>
+        {/* <Box
           sx={{
             width: 256,
             height: 256,
@@ -258,41 +257,39 @@ export const MemberPage = observer(() => {
             zIndex: 1,
           }}
         /> */}
+      </Box>
+      <Box
+        bgcolor={"rgba(101, 85, 238, 1)"}
+        sx={{
+          backgroundImage: `url("/assets/imgs/landing/line_background.svg")`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "left",
+        }}
+      >
+        <Container>
+          <Box pt={20} pb={20}>
+            <Typography
+              variant={"h1"}
+              sx={{
+                display: "flex",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                fontSize: 32,
+                justifyContent: "flex-start",
+                color: "#fff",
+              }}
+            >
+              Hướng dẫn mua <br /> thẻ thành viên
+            </Typography>
+            <Box pt={12}>
+              <Grid container spacing={5} height={"auto"}>
+                <TutorialStepComponent />
+              </Grid>
+            </Box>
           </Box>
-          <Box
-            bgcolor={"rgba(101, 85, 238, 1)"}
-            sx={{
-              backgroundImage: `url("/assets/imgs/landing/line_background.svg")`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "left",
-            }}
-          >
-            <Container>
-              <Box pt={20} pb={20}>
-                <Typography
-                  variant={"h1"}
-                  sx={{
-                    display: "flex",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    fontSize: 32,
-                    justifyContent: "flex-start",
-                    color: "#fff",
-                  }}
-                >
-                  Hướng dẫn mua <br /> thẻ thành viên
-                </Typography>
-                <Box pt={12}>
-                  <Grid container spacing={5} height={"auto"}>
-                    <TutorialStepComponent />
-                  </Grid>
-                </Box>
-              </Box>
-            </Container>
-          </Box>
-        </>
-      )}
+        </Container>
+      </Box>
     </ScrollPage>
   );
 });

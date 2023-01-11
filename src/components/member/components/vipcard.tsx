@@ -30,7 +30,7 @@ function formatCardNumber(number: string) {
 export const VipCard = ({ infoCard }: { infoCard: any }) => {
   // console.log(`expiredAt ${expiredAt}`);
   if (!infoCard) return null;
-  const { id, number, name, tier, expired_at: expiredAt } = infoCard; // eslint-disable-line
+  const { id, number, name, tier, valid_from: validFrom } = infoCard; // eslint-disable-line
   const cardNumberFormatted = formatCardNumber(number);
   return (
     <Box mt={20} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
@@ -186,7 +186,7 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
             >
               <Typography fontSize={12}>ISSUED ON</Typography>
               <Typography fontSize={19} fontWeight={500} letterSpacing={1.5}>
-                {expiredAt ? moment(expiredAt).format("MM/YY") : "--/--"}
+                {validFrom ? moment(validFrom).format("MM/YY") : "--/--"}
               </Typography>
             </Box>
           </Box>
