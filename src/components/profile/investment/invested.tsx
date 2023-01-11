@@ -10,6 +10,7 @@ import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
 import { useInvestedProject } from "../../../hooks/profile/use_investment";
 import { InvestedProjectGql } from "../../../gql/graphql";
 import { formatCurrency } from "../../../utils/number.util";
+import { slugify } from "../../../utils/string.util";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -49,7 +50,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
     ? ProjectSalePeriod.OPEN
     : ProjectSalePeriod.UPCOMING;
 
-  const href = `/invest/${id}`;
+  const href = `/invest/${slugify(title)}.${id}`;
 
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>

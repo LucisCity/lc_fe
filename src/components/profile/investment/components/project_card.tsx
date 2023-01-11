@@ -7,6 +7,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { ProjectGql } from "../../../../gql/graphql";
 import { formatCurrency } from "../../../../utils/number.util";
+import { slugify } from "../../../../utils/string.util";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -95,7 +96,7 @@ export const ProjectCard = (props: ProjectGql) => {
   // console.log(`openSaleAt ${openSaleAt}`);
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>
-      <Link href={`/invest/${id}`}>
+      <Link href={`/invest/${slugify(title)}.${id}`}>
         <CardActionArea component={"div"}>
           <Grid container sx={{ px: 3, py: 4 }} spacing={3}>
             <Grid item xs={12} sm={3}>
