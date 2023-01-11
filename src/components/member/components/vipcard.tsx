@@ -33,7 +33,7 @@ export const VipCard = ({ infoCard }: { infoCard: any }) => {
   const { id, number, name, tier, expired_at: expiredAt } = infoCard; // eslint-disable-line
   const cardNumberFormatted = formatCardNumber(number);
   return (
-    <Box mt={30} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
+    <Box mt={20} display="flex" flexDirection="column" alignItems={"center"} gap={2}>
       <Title className={s.title} src="/assets/imgs/landing/card_title.png" alt="galaxy card" />
       <Box sx={{ position: "relative" }}>
         <Tooltip title={"Card Info"}>

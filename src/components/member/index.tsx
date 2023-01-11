@@ -155,13 +155,19 @@ export const MemberPage = observer(() => {
       />
       {isVipMember ? (
         <>
-          <Box
-            sx={{
-              height: "calc(100vh - (120px + 90px))",
-            }}
-          >
+          <Box mb={{ lg: 100 }}>
             <VipCard infoCard={vipCard} />
-            <Box bgcolor={"rgba(44, 43, 45, 1)"} position={"absolute"} width={"100%"} bottom={0}>
+            <Box
+              bgcolor={"rgba(44, 43, 45, 1)"}
+              width={"100%"}
+              sx={(theme) => ({
+                [theme.breakpoints.up("lg")]: {
+                  position: "absolute",
+                  bottom: 0,
+                },
+                mt: 20,
+              })}
+            >
               <Container>
                 <Box
                   display={"flex"}
