@@ -9,6 +9,7 @@ import UserStore from "../../../../store/user.store";
 import { useWalletAddress } from "../../../../hooks/profile/account/use_info";
 import { handleGraphqlErrors } from "../../../../utils/apolo.util";
 import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 const imgSrc = "/assets/imgs/account/wallet/";
 
@@ -75,7 +76,7 @@ export default function ConnectWallet() {
   const web3Modal = useWeb3Modal();
   const userWalletAddress = walletAddress ?? UserStore.user?.wallet_address;
   const { address, isConnected, isConnecting } = useAccount({});
-
+  const router = useRouter();
   React.useEffect(() => {
     if (address) {
       if (userWalletAddress && address === userWalletAddress) {
@@ -96,6 +97,14 @@ export default function ConnectWallet() {
       }).then();
     }
   }, [address, userWalletAddress]);
+
+  React.useEffect(() => {
+    if (isConnected && router.query?.redirect_url) {
+      setTimeout(() => {
+        router.push(router.query?.redirect_url as string);
+      }, 1000);
+    }
+  }, [isConnected]);
 
   return (
     <React.Fragment>

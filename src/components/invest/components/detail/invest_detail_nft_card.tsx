@@ -9,6 +9,7 @@ import React from "react";
 import { useAccount } from "wagmi";
 import UserStore from "../../../../store/user.store";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const ProgressWaitData = ({ refetchContractData }: { refetchContractData: () => void }) => {
   const [progressValue, setProgressValue] = React.useState(0);
@@ -33,6 +34,7 @@ export const ProgressWaitData = ({ refetchContractData }: { refetchContractData:
 export default function InvestDetailNftCard({ isVoteTime }: { isVoteTime: boolean }) {
   const { data, refetchContractData } = useNft();
 
+  const router = useRouter();
   const [isDifferentAddress, setIsDifferentAddress] = React.useState(false);
   const [showAlertConnectWallet, setShowAlertConnectWallet] = React.useState(false);
   const [showPopup, setShowPopup] = React.useState(false);
@@ -153,7 +155,7 @@ export default function InvestDetailNftCard({ isVoteTime }: { isVoteTime: boolea
                   <Box display={"flex"} justifyContent={"flex-end"}>
                     <Button
                       component={Link}
-                      href={"/profile/account?tab=connect_wallet"}
+                      href={`/profile/account?tab=connect_wallet&redirect_url=${router.asPath}`}
                       sx={{ textTransform: "capitalize" }}
                     >
                       Kết nối ví
