@@ -30,7 +30,8 @@ const InvestedCard = (props: InvestedProjectGql) => {
     price,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
-    start_time_vote_sell: waitTransferAt,
+    start_time_vote_sell: startVotingAt,
+    end_time_vote_sell: endVotingAt,
     ended,
     nft_price: nftPrice,
     total_nft: totalNft,
@@ -42,13 +43,20 @@ const InvestedCard = (props: InvestedProjectGql) => {
   /* eslint-enable */
   const salePeriod = ended
     ? ProjectSalePeriod.CLOSED
-    : waitTransferAt && new Date() > new Date(waitTransferAt)
+    : startVotingAt && new Date() > new Date(startVotingAt)
     ? ProjectSalePeriod.TRANSFERRING
     : takeProfitAt && new Date() > new Date(takeProfitAt)
     ? ProjectSalePeriod.PROFITING
     : openSaleAt && new Date() > new Date(openSaleAt)
     ? ProjectSalePeriod.OPEN
     : ProjectSalePeriod.UPCOMING;
+
+  const isVoting = React.useMemo(() => {
+    const currentDate = new Date();
+    return (
+      startVotingAt && endVotingAt && currentDate >= new Date(startVotingAt) && currentDate < new Date(endVotingAt)
+    );
+  }, [startVotingAt, endVotingAt]);
 
   const href = `/invest/${slugify(title)}.${id}`;
 
@@ -158,7 +166,13 @@ const InvestedCard = (props: InvestedProjectGql) => {
               </Grid>
               <Grid item xs={6}>
                 <Box display={"flex"}>
-                  <Button href={`${href}#vote`} LinkComponent={Link} variant="contained" sx={{ mr: 1 }}>
+                  <Button
+                    href={`${href}#vote`}
+                    LinkComponent={Link}
+                    variant="contained"
+                    sx={{ mr: 1 }}
+                    disabled={!isVoting}
+                  >
                     Vote
                   </Button>
                   <Button href={`${href}#claim`} LinkComponent={Link} variant="contained">

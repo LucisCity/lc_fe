@@ -77,7 +77,7 @@ export const ProjectCard = (props: ProjectGql) => {
     total_nft_sold: totalNftSold,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
-    start_time_vote_sell: waitTransferAt,
+    start_time_vote_sell: startVotingAt,
     ended,
     profile: { follows },
   } = props;
@@ -85,14 +85,14 @@ export const ProjectCard = (props: ProjectGql) => {
   const salePeriod = React.useMemo(() => {
     return ended
       ? ProjectSalePeriod.CLOSED
-      : waitTransferAt && new Date() > new Date(waitTransferAt)
+      : startVotingAt && new Date() > new Date(startVotingAt)
       ? ProjectSalePeriod.TRANSFERRING
       : takeProfitAt && new Date() > new Date(takeProfitAt)
       ? ProjectSalePeriod.PROFITING
       : openSaleAt && new Date() > new Date(openSaleAt)
       ? ProjectSalePeriod.OPEN
       : ProjectSalePeriod.UPCOMING;
-  }, [waitTransferAt, takeProfitAt, openSaleAt, ended]);
+  }, [startVotingAt, takeProfitAt, openSaleAt, ended]);
   // console.log(`openSaleAt ${openSaleAt}`);
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>
