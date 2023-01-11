@@ -19,9 +19,6 @@ const WITHDRAW_BALANCE = gql`
       id
       type
       user_id
-      wallet {
-        balance
-      }
       amount
       blockchain_transaction {
         status
