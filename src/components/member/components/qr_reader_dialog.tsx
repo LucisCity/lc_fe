@@ -50,9 +50,7 @@ const QRReader = ({ open }: { open: boolean }) => {
       });
   }, []);
   React.useEffect(() => {
-    // console.log("qr idalog open");
     if (open) {
-      // console.log("qr idalog open");
       getUserMedia();
     }
   });
@@ -117,7 +115,7 @@ const QRReader = ({ open }: { open: boolean }) => {
           <Typography variant={"h4"}>
             Quyền truy cập camera bị từ chối, làm theo hướng dẫn bên dưới để cho phép quyền truy cập
           </Typography>
-          <Box component={"img"} src={"/assets/imgs/member/camera_denied.png"} />
+          <Box component={"img"} src={"/assets/imgs/member/camera_denied.png"} width={"95%"} mt={3} />
         </>
       )}
       {dialogContent === "Others" && (
