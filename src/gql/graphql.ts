@@ -68,6 +68,13 @@ export enum ContractType {
   Token = 'TOKEN'
 }
 
+export type DashboardData = {
+  __typename?: 'DashboardData';
+  profitRate?: Maybe<Scalars['String']>;
+  totalAssetsBalance?: Maybe<Scalars['String']>;
+  totalInvestedBalance?: Maybe<Scalars['String']>;
+};
+
 /** all back-end error code */
 export enum ErrorCode {
   AccountExisted = 'ACCOUNT_EXISTED',
@@ -413,6 +420,7 @@ export type ProjectNftOwner = {
   __typename?: 'ProjectNftOwner';
   created_at: Scalars['DateTime'];
   currency_amount: Scalars['Decimal'];
+  is_burned: Scalars['Boolean'];
   is_sell_voted: Scalars['Boolean'];
   project_ended: Scalars['Boolean'];
   project_id: Scalars['String'];
@@ -425,6 +433,7 @@ export type ProjectNftOwner = {
 export type ProjectNftOwnerGql = {
   __typename?: 'ProjectNftOwnerGql';
   currency_amount: Scalars['Decimal'];
+  is_burned: Scalars['Boolean'];
   project_id: Scalars['String'];
   total_nft: Scalars['Int'];
   user: InvestorGql;
@@ -471,6 +480,7 @@ export type ProjectProfileGql = {
 export type ProjectProfitBalance = {
   __typename?: 'ProjectProfitBalance';
   balance: Scalars['Decimal'];
+  balance_claimed: Scalars['Decimal'];
   created_at: Scalars['DateTime'];
   from: Scalars['DateTime'];
   project_id: Scalars['String'];
@@ -482,6 +492,7 @@ export type ProjectProfitBalance = {
 export type ProjectProfitBalanceGql = {
   __typename?: 'ProjectProfitBalanceGql';
   balance: Scalars['Decimal'];
+  balance_claimed: Scalars['Decimal'];
   from: Scalars['DateTime'];
   to: Scalars['DateTime'];
   user_id: Scalars['String'];
@@ -508,6 +519,8 @@ export type Query = {
   getAppErrorCode?: Maybe<Scalars['Boolean']>;
   /** get balance */
   getBalance?: Maybe<Wallet>;
+  /** claim profit vip user */
+  getDashboard?: Maybe<DashboardData>;
   /** Get nft bought of user */
   getInvestor?: Maybe<Array<ProjectNftOwnerGql>>;
   /** get kyc verification images */
@@ -710,6 +723,7 @@ export enum TransactionStatus {
 }
 
 export enum TransactionType {
+  BurnNft = 'BURN_NFT',
   BuyNft = 'BUY_NFT',
   ClaimProfit = 'CLAIM_PROFIT',
   ClaimReferral = 'CLAIM_REFERRAL',
