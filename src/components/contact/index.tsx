@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Background } from "../landing/components/background";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import UserStore from "../../store/user.store";
+import { LoadingButton } from "@mui/lab";
 
 const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -52,6 +53,7 @@ const CONTACT_US = gql`
 `;
 export const ContactPage = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -77,8 +79,9 @@ export const ContactPage = () => {
       enqueueSnackbar("Bạn gửi câu hỏi thành công, chúng tôi sẽ trả lời bạn sớm nhất!", { variant: "success" });
     },
   });
-  const onSubmit = (data: any) => {
-    contactUs({
+  const onSubmit = async (data: any) => {
+    setLoading(true);
+    await contactUs({
       variables: {
         phone: data.phone,
         name: data.name,
@@ -87,6 +90,7 @@ export const ContactPage = () => {
         userId: UserStore.user?.id ?? "",
       },
     });
+    setLoading(false);
   };
   return (
     <ScrollPage>
@@ -225,9 +229,9 @@ export const ContactPage = () => {
                       {...register("question")}
                     />
                   </Box>
-                  <Button variant={"contained"} type={"submit"} fullWidth sx={{ mt: 10 }}>
+                  <LoadingButton loading={loading} variant={"contained"} type={"submit"} fullWidth sx={{ mt: 10 }}>
                     Gửi
-                  </Button>
+                  </LoadingButton>
                 </Box>
               </AnimComponent>
               <ImageDecor src={"/assets/imgs/contact/circle.png"} alt={"img-decor"} />
