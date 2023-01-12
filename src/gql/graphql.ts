@@ -68,6 +68,38 @@ export enum ContractType {
   Token = 'TOKEN'
 }
 
+/** all back-end error code */
+export enum ErrorCode {
+  AccountExisted = 'ACCOUNT_EXISTED',
+  BadRequest = 'BAD_REQUEST',
+  BalanceNotEnough = 'BALANCE_NOT_ENOUGH',
+  BalancePoolNotEnough = 'BALANCE_POOL_NOT_ENOUGH',
+  DuplicateWalletAddress = 'DUPLICATE_WALLET_ADDRESS',
+  EmailInvalid = 'EMAIL_INVALID',
+  Error_500 = 'ERROR_500',
+  FbIdNotFound = 'FB_ID_NOT_FOUND',
+  InvalidNewPass = 'INVALID_NEW_PASS',
+  InvalidTimeVoteSell = 'INVALID_TIME_VOTE_SELL',
+  InviteeNotExist = 'INVITEE_NOT_EXIST',
+  KycPendingOrSucceed = 'KYC_PENDING_OR_SUCCEED',
+  NewPassSameOldPass = 'NEW_PASS_SAME_OLD_PASS',
+  NotEnoughNft = 'NOT_ENOUGH_NFT',
+  NotVipUser = 'NOT_VIP_USER',
+  ProfitIsZero = 'PROFIT_IS_ZERO',
+  ProjectNotFound = 'PROJECT_NOT_FOUND',
+  ReferralClaimed = 'REFERRAL_CLAIMED',
+  SellVoted = 'SELL_VOTED',
+  SignatureExpired = 'SIGNATURE_EXPIRED',
+  SignatureWrong = 'SIGNATURE_WRONG',
+  TestServerError = 'TEST_SERVER_ERROR',
+  TokenInvalid = 'TOKEN_INVALID',
+  UsernameDuplicated = 'USERNAME_DUPLICATED',
+  UserConnectedWallet = 'USER_CONNECTED_WALLET',
+  UserNotFound = 'USER_NOT_FOUND',
+  WalletNotFound = 'WALLET_NOT_FOUND',
+  WrongOldPass = 'WRONG_OLD_PASS'
+}
+
 export type InvestedProjectGql = {
   __typename?: 'InvestedProjectGql';
   address: Scalars['String'];
@@ -129,6 +161,8 @@ export type Mutation = {
   claimProjectProfit?: Maybe<Scalars['Boolean']>;
   /** claim referral */
   claimReferral?: Maybe<Wallet>;
+  /** claim profit vip user */
+  contactUs?: Maybe<Scalars['Boolean']>;
   /** Forgot password */
   forgotPassword: Scalars['Boolean'];
   /** Login */
@@ -176,6 +210,15 @@ export type MutationClaimProjectProfitArgs = {
 
 export type MutationClaimReferralArgs = {
   inviteeId: Scalars['String'];
+};
+
+
+export type MutationContactUsArgs = {
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  phone: Scalars['String'];
+  question?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -461,6 +504,7 @@ export type Query = {
   followingProjects: Array<ProjectGql>;
   /** get account info */
   getAccountInfo?: Maybe<AccountInfo>;
+  getAppErrorCode?: Maybe<Scalars['Boolean']>;
   /** get balance */
   getBalance?: Maybe<Wallet>;
   /** Get nft bought of user */
@@ -504,6 +548,11 @@ export type Query = {
   recommendedProjects: Array<ProjectGql>;
   /** Auth resolver */
   temp: Scalars['String'];
+};
+
+
+export type QueryGetAppErrorCodeArgs = {
+  error_code?: InputMaybe<ErrorCode>;
 };
 
 

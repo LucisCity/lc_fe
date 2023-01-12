@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
 import { handleGraphqlErrors, setAuthToken } from "../../../utils/apolo.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 const LOGIN_MUT = gql`
   mutation login($email: String!, $password: String!) {
@@ -101,7 +102,15 @@ export default function useLogin() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.UserNotFound:
+            enqueueSnackbar("Không tìm thấy user", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
@@ -120,7 +129,17 @@ export default function useLogin() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.Error_500:
+          case ErrorCode.BadRequest:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+          case ErrorCode.EmailInvalid:
+            enqueueSnackbar("Email không hợp lệ hoặc không tìm thấy email, vui lòng thử lại", { variant: "error" });
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
@@ -139,7 +158,16 @@ export default function useLogin() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.BadRequest:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+          case ErrorCode.FbIdNotFound:
+            enqueueSnackbar("Không thể kết nối với tài khoản facebook, vui lòng thử lại", { variant: "error" });
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 

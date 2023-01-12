@@ -4,6 +4,7 @@ import { useState } from "react";
 import { VOTE_SELLPROJECT_MUT } from "../../../config/api/invest.config";
 import projectStore from "../../../store/project.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 type VoteType = "accept" | "deny";
 
@@ -25,7 +26,18 @@ export default function useVoteSell() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.NotEnoughNft:
+            enqueueSnackbar("Bạn chưa mua đủ nft để vote", { variant: "error" });
+          case ErrorCode.InvalidTimeVoteSell:
+            enqueueSnackbar("Hiện tại không phải thời điểm vote", { variant: "error" });
+          case ErrorCode.SellVoted:
+            enqueueSnackbar("Mỗi user chỉ được vote một lần", { variant: "error" });
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 

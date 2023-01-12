@@ -1,5 +1,5 @@
 import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
-import { AccountInfo } from "../../../gql/graphql";
+import { AccountInfo, ErrorCode } from "../../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import UserStore from "../../../store/user.store";
@@ -121,11 +121,11 @@ export function useUpdateAccountInfo(): {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => {
         switch (err.code) {
-          case "USERNAME_DUPLICATED":
+          case ErrorCode.UsernameDuplicated:
             enqueueSnackbar("Username này đã tồn tại, vui lòng chọn username khác", { variant: "error" });
             break;
           default:
-            enqueueSnackbar("Server error", { variant: "error" });
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
       });
     },

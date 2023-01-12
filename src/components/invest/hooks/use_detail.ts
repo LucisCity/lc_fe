@@ -12,7 +12,7 @@ import {
   PROFIT_BALANCE_SUBSCRIPTION,
   PROJECT_INVESTOR_QUERY,
 } from "../../../config/api/invest.config";
-import { ProjectGql, ProjectNftOwner, ProjectNftOwnerGql, ProjectProfitBalance } from "../../../gql/graphql";
+import { ErrorCode, ProjectGql, ProjectNftOwner, ProjectNftOwnerGql, ProjectProfitBalance } from "../../../gql/graphql";
 import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
@@ -105,7 +105,12 @@ export default function useInvestDetail() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
@@ -120,7 +125,16 @@ export default function useInvestDetail() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.BalanceNotEnough:
+            enqueueSnackbar("Không đủ profit để thực hiện thao tác này", { variant: "error" });
+          case ErrorCode.WalletNotFound:
+            enqueueSnackbar("Không tìm thấy ví", { variant: "error" });
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
