@@ -153,7 +153,7 @@ export const MemberPage = observer(() => {
           height: "100vh",
         }}
       />
-      {vipCard && (
+      {vipCard && UserStore.isLoggedIn && (
         <>
           <Box mb={{ lg: 100 }}>
             <VipCard infoCard={vipCard} />

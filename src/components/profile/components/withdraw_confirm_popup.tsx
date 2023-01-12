@@ -5,17 +5,23 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Alert, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useWithdraw } from "../../../hooks/profile/use_withdraw";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
 import TransactionHistoryStore from "../../../store/transaction_history.store";
+import { useRouter } from "next/router";
 
 export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void }) {
-  const { withdraw, isLoading, activeStep } = useWithdraw();
+  const { withdraw, isLoading, activeStep, isConnectWallet } = useWithdraw();
   const balance = UserStore.user?.wallet?.balance;
+  const router = useRouter();
   const onWithdraw = async (data: any) => {
+    if (!isConnectWallet) {
+      router.push(`/profile/account?tab=connect_wallet&redirect_url=${router.asPath}`);
+      return;
+    }
     if (data.amount && data?.amount > Number(balance)) {
       setError("amount", { type: "maxAmount", message: "Số lượng bạn nhập vượt quá số dư!" }, { shouldFocus: true });
       return;
@@ -41,7 +47,7 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
 
   return (
     <div>
-      <Dialog open={true} fullWidth maxWidth={"xs"}>
+      <Dialog open={true} fullWidth maxWidth={"sm"}>
         <DialogTitle>Rút tiền về ví</DialogTitle>
         <form onSubmit={handleSubmit(onWithdraw)}>
           <DialogContent>
@@ -73,13 +79,18 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
                 <StepLabel>Rút tiền</StepLabel>
               </Step>
             </Stepper>
+            {!isConnectWallet && (
+              <Alert severity="warning" sx={{ mt: 4 }}>
+                Bạn cần kết nối để rút tiền.
+              </Alert>
+            )}
           </DialogContent>
           <DialogActions>
             <Button disabled={isLoading} onClick={onClose}>
               Hủy
             </Button>
             <LoadingButton type={"submit"} loading={isLoading} variant={"contained"}>
-              Xác nhận
+              {!isConnectWallet ? "Kết nối ví" : "Xác nhận"}
             </LoadingButton>
           </DialogActions>
         </form>

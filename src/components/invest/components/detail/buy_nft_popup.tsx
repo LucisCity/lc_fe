@@ -152,14 +152,14 @@ const BuyNftPopup = ({
             <Typography mb={1} variant={"h5"}>
               Tổng thanh toán: {formatCurrency(Number(totalOrder.toString()))}
             </Typography>
-            <Stepper activeStep={activeStep} alternativeLabel>
-              <Step>
+            <Stepper alternativeLabel>
+              <Step active={true}>
                 <StepLabel>Nhập số lượng</StepLabel>
               </Step>
-              <Step>
+              <Step active={true}>
                 <StepLabel>Chấp thuận thanh toán</StepLabel>
               </Step>
-              <Step>
+              <Step active={true}>
                 <StepLabel>Mua</StepLabel>
               </Step>
             </Stepper>
