@@ -1,4 +1,4 @@
-import { useContractReads, useContractWrite, usePrepareContractWrite, useBalance } from "wagmi";
+import { useContractReads, useContractWrite, usePrepareContractWrite, useBalance, useAccount } from "wagmi";
 
 import React, { useCallback, useState } from "react";
 import ProjectStore from "../../../store/project.store";
@@ -43,7 +43,8 @@ export const useBuyNft = ({ callBack }: { callBack?: () => void }) => {
   const { enqueueSnackbar } = useSnackbar();
   const USDTAddress = "0xa9Ee5E11f26E9F6F9A1952AEbd5A91C138380B82";
   const contract = ProjectStore.projectDetail?.contract;
-  const address = UserStore.user?.wallet_address;
+
+  const { address } = useAccount({});
   const [loadingBuyNFT, setLoadingBuyNFT] = useState(false);
   const [loadingApprove, setLoadingApprove] = useState(false);
   const {
