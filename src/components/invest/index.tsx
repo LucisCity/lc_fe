@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { CircularProgress, Container, Divider, MenuItem, Popper, Select } from "@mui/material";
+import { CircularProgress, Container, Divider, MenuItem, Popper, Select, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
@@ -24,6 +24,7 @@ import { useFollowingProject } from "../../hooks/profile/use_investment";
 import { CardSkeleton } from "./components/card_skeleton";
 import { ProjectGql, ProjectType } from "../../gql/graphql";
 import { debounce, throttle } from "lodash";
+import { SearchProject } from "./components/search_project";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -33,19 +34,11 @@ const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !==
   }),
 );
 
-export const Search = styled(Autocomplete)(({ theme }) => ({
-  width: 290,
-  [theme.breakpoints.down("sm")]: {
-    width: "100%",
-  },
-}));
 export const InvestPage = () => {
   const { highlightProjects, loadingHighlightProject, projects, loadingProjects, loadProjects, searchProject } =
     useProject();
   const { loading: loadingFollowingProject, followingProjects } = useFollowingProject();
-  const [inputValue, setInputValue] = React.useState("");
-  const [searchLoading, setSearchLoading] = React.useState(false);
-  const [options, setOptions] = React.useState<readonly ProjectGql[]>([]);
+
   const handleChangeType = async (e: any) => {
     const type = e.target.value;
     if (type === "ALL") {
@@ -63,23 +56,6 @@ export const InvestPage = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetch = React.useCallback(
-    debounce((inputValue: string) => {
-      searchProject({ search: inputValue }).then((res) => setOptions(res.data?.getProjects ?? []));
-      setSearchLoading(false);
-    }, 500),
-    [],
-  );
-  React.useEffect(() => {
-    setSearchLoading(true);
-    if (!inputValue) {
-      setOptions([]);
-      setSearchLoading(false);
-      return;
-    }
-    fetch(inputValue);
-  }, [inputValue]);
   return (
     <ScrollPage>
       <Box
@@ -148,72 +124,32 @@ export const InvestPage = () => {
             Tất cả dự án
           </Typography>
           <Box display={{ xs: "block", sm: "none" }}>
-            <Button
-              sx={(theme) => ({
-                height: 40,
-                pt: 4,
-                pb: 4,
-                pl: 5,
-                pr: 5,
-                fontSize: theme.typography.caption.fontSize,
-                fontWeight: theme.typography.caption.fontWeight,
-                [theme.breakpoints.down("md")]: {
-                  padding: theme.spacing(5),
-                },
-              })}
-              variant={"contained"}
-              color={"secondary"}
-              startIcon={<img src={"/assets/imgs/invest/icons/more.svg"} />}
-            >
-              More
-            </Button>
+            <Tooltip title={"Tính năng đang phát triển"}>
+              <Button
+                sx={(theme) => ({
+                  height: 40,
+                  pt: 4,
+                  pb: 4,
+                  pl: 5,
+                  pr: 5,
+                  fontSize: theme.typography.caption.fontSize,
+                  fontWeight: theme.typography.caption.fontWeight,
+                  [theme.breakpoints.down("md")]: {
+                    padding: theme.spacing(5),
+                  },
+                })}
+                variant={"contained"}
+                color={"secondary"}
+                startIcon={<img src={"/assets/imgs/invest/icons/more.svg"} />}
+              >
+                More
+              </Button>
+            </Tooltip>
           </Box>
         </Box>
         <FilterView mb={5}>
           <Box mr={{ sm: 5, xs: 0 }} flex={1}>
-            <Search
-              fullWidth
-              autoComplete={false}
-              // disablePortal
-              freeSolo
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              PopperComponent={(prop) => (
-                <Popper {...prop} sx={{ width: { xs: "auto", sm: "500px !important" } }} placement={"bottom-start"} />
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant={"filled"}
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: <img src={"/assets/imgs/invest/icons/search.svg"} style={{ marginRight: 12 }} />,
-                    style: {
-                      padding: 0,
-                      paddingLeft: 12,
-                      height: 40,
-                    },
-                    endAdornment: (
-                      <React.Fragment>
-                        {searchLoading ? <CircularProgress color="inherit" size={12} sx={{ mr: 2 }} /> : null}
-                        {/*{params.InputProps.endAdornment}*/}
-                      </React.Fragment>
-                    ),
-                  }}
-                  placeholder={"Tìm kiếm dự án bạn quan tâm"}
-                />
-              )}
-              options={options}
-              getOptionLabel={(option: any) => option?.title}
-              renderOption={(props, option) => (
-                // @ts-ignore
-                <Box p={1} {...props}>
-                  {/* @ts-ignore */}
-                  <SearchOption data={option} />
-                </Box>
-              )}
-            />
+            <SearchProject searchProject={searchProject} />
           </Box>
           <Box display={"flex"}>
             <Box
@@ -281,28 +217,30 @@ export const InvestPage = () => {
             {/*  </Select>*/}
             {/*</Box>*/}
             <Box>
-              <Button
-                sx={(theme) => ({
-                  height: 40,
-                  pt: 4,
-                  pb: 4,
-                  pl: 5,
-                  pr: 5,
-                  fontSize: theme.typography.caption.fontSize,
-                  fontWeight: theme.typography.caption.fontWeight,
-                  [theme.breakpoints.down("md")]: {
-                    padding: theme.spacing(5),
-                  },
-                  [theme.breakpoints.down("sm")]: {
-                    display: "none",
-                  },
-                })}
-                variant={"contained"}
-                color={"secondary"}
-                startIcon={<img src={"/assets/imgs/invest/icons/more.svg"} />}
-              >
-                More
-              </Button>
+              <Tooltip title={"Tính năng đang phát triển"}>
+                <Button
+                  sx={(theme) => ({
+                    height: 40,
+                    pt: 4,
+                    pb: 4,
+                    pl: 5,
+                    pr: 5,
+                    fontSize: theme.typography.caption.fontSize,
+                    fontWeight: theme.typography.caption.fontWeight,
+                    [theme.breakpoints.down("md")]: {
+                      padding: theme.spacing(5),
+                    },
+                    [theme.breakpoints.down("sm")]: {
+                      display: "none",
+                    },
+                  })}
+                  variant={"contained"}
+                  color={"secondary"}
+                  startIcon={<img src={"/assets/imgs/invest/icons/more.svg"} />}
+                >
+                  More
+                </Button>
+              </Tooltip>
             </Box>
           </Box>
         </FilterView>

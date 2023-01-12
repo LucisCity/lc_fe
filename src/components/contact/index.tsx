@@ -123,12 +123,12 @@ export const ContactPage = () => {
                   </ItemStack>
                   <ItemStack elevation={0}>
                     <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
-                    <Typography variant={"body2"}>(319) 555-0115</Typography>
+                    <Typography variant={"body2"}>(+84)34 890 2400</Typography>
                   </ItemStack>
-                  <ItemStack elevation={0}>
-                    <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />
-                    <Typography variant={"body2"}>(319) 555-0115</Typography>
-                  </ItemStack>
+                  {/*<ItemStack elevation={0}>*/}
+                  {/*  <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />*/}
+                  {/*  <Typography variant={"body2"}>(319) 555-0115</Typography>*/}
+                  {/*</ItemStack>*/}
                 </Stack>
               </Box>
               <Box flex={1} display={"flex"} alignItems={"flex-end"} mt={3} mb={3}>
