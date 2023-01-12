@@ -1,7 +1,7 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { ReferralDataResponse } from "../../gql/graphql";
+import { ErrorCode, ReferralDataResponse } from "../../gql/graphql";
 import UserStore from "../../store/user.store";
 import { useState } from "react";
 
@@ -54,7 +54,16 @@ export default function useReferral() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.InviteeNotExist:
+            enqueueSnackbar("Người mời không tồn tại", { variant: "error" });
+          case ErrorCode.ReferralClaimed:
+            enqueueSnackbar("Referral này đã được claim", { variant: "error" });
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 

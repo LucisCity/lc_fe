@@ -1,5 +1,5 @@
 import { ApolloError, gql, useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
-import { NotificationGql } from "../../gql/graphql";
+import { ErrorCode, NotificationGql } from "../../gql/graphql";
 import { useSnackbar } from "notistack";
 import { handleGraphqlErrors } from "../../utils/apolo.util";
 import { useEffect } from "react";
@@ -131,7 +131,12 @@ export function useSeenAllNotis(): {
   const [seenAllNotis, { loading: loadingSeenAllNotis }] = useMutation(SEEN_ALL_NOTIS, {
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
     fetchPolicy: "no-cache",
   });
@@ -157,7 +162,12 @@ export function useSeenNotification(): {
   const [seenNotification, { loading: loadingSeenNotification }] = useMutation(SEEN_NOTIFICATION, {
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
     fetchPolicy: "no-cache",
   });

@@ -3,6 +3,7 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { isStrongPass } from "../../../utils/password.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 export const CHANGE_PASSWORD_MUT = gql`
   mutation changePassword($oldPass: String!, $newPass: String!) {
@@ -13,6 +14,7 @@ export const CHANGE_PASSWORD_MUT = gql`
 export function useChangePassword() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  //TODO: handle error code
 
   const [changePass, { loading }] = useMutation(CHANGE_PASSWORD_MUT, {
     onCompleted: () => {
@@ -22,7 +24,7 @@ export function useChangePassword() {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => {
         switch (err.code) {
-          case "USER_NOT_FOUND":
+          case ErrorCode.UserNotFound:
             enqueueSnackbar("Không tìm thấy user", { variant: "error" });
             break;
           case "NEW_PASS_SAME_OLD_PASS":
@@ -37,7 +39,7 @@ export function useChangePassword() {
             });
             break;
           default:
-            enqueueSnackbar("Server error", { variant: "error" });
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
       });
     },

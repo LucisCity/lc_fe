@@ -4,6 +4,7 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { isStrongPass } from "../../../utils/password.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 const RESET_PASSWORD_MUT = gql`
   mutation resetPassword($token: String!, $password: String!) {
@@ -24,7 +25,24 @@ export default function useResetPassword() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.TokenInvalid:
+            enqueueSnackbar("Token không đúng, vui lòng thử lại hoặc liên hệ với chúng tôi để được hỗ trợ", {
+              variant: "error",
+            });
+          case ErrorCode.InvalidNewPass:
+            enqueueSnackbar("Mật khẩu mới không hợp lệ, yêu cầu độ dài 8-32, bao gồm cả số và chữ", {
+              variant: "error",
+            });
+          case ErrorCode.BadRequest:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+          case ErrorCode.NewPassSameOldPass:
+            enqueueSnackbar("Mật khẩu mới trùng với mật khẩu hiện tại", { variant: "error" });
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
