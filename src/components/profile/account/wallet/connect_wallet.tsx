@@ -80,6 +80,11 @@ export default function ConnectWallet() {
   React.useEffect(() => {
     if (address) {
       if (userWalletAddress && address === userWalletAddress) {
+        if (router.query?.redirect_url) {
+          setTimeout(() => {
+            router.push(router.query?.redirect_url as string);
+          }, 1000);
+        }
         return;
       }
       if (userWalletAddress && address !== userWalletAddress) {
@@ -96,15 +101,7 @@ export default function ConnectWallet() {
         },
       }).then();
     }
-  }, [address, userWalletAddress]);
-
-  React.useEffect(() => {
-    if (isConnected && router.query?.redirect_url) {
-      setTimeout(() => {
-        router.push(router.query?.redirect_url as string);
-      }, 1000);
-    }
-  }, [isConnected]);
+  }, [address, userWalletAddress, router.query?.redirect_url]);
 
   return (
     <React.Fragment>

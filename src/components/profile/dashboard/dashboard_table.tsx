@@ -81,8 +81,10 @@ const typeTransaction = (type: string): "WITHDRAW" | "DEPOSIT" | "" => {
 
 const descriptionRow = (type: TransactionType): string => {
   switch (type) {
-    case TransactionType.ClaimProfit:
+    case TransactionType.WithdrawBalance:
       return "Rút tiền về ví";
+    case TransactionType.ClaimProfit:
+      return "Nhận lãi dự án";
     case TransactionType.ClaimReferral:
       return "Nhận thưởng giới thiệu bạn bè";
     case TransactionType.BuyNft:

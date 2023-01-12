@@ -40,7 +40,7 @@ class TransactionHistoryStore {
   updateStatusTransaction(transactionId: string, status: TransactionStatus) {
     // @ts-ignore
     this._transactions[0] =
-      this._transactions[0].map((tx) => {
+      this._transactions[0]?.map((tx) => {
         if (tx.id === transactionId) {
           return {
             ...tx,

@@ -38,6 +38,16 @@ export const useWithdraw = () => {
       UserStore.updateWallet(res?.getBalance);
     },
   });
+
+  const isConnectWallet = React.useMemo(() => {
+    if (!address && !UserStore.user?.wallet_address) {
+      return false;
+    }
+    if (address !== UserStore.user?.wallet_address) {
+      return false;
+    }
+    return true;
+  }, [address, UserStore.user?.wallet_address]);
   const [withdrawMutation, { loading }] = useMutation<{ withdrawBalance: TransactionLog }>(WITHDRAW_BALANCE, {
     onCompleted: (res) => {
       if (res?.withdrawBalance?.id) {
@@ -86,5 +96,6 @@ export const useWithdraw = () => {
     withdraw,
     activeStep,
     isLoading: isLoadingSignMessage || loading,
+    isConnectWallet,
   };
 };
