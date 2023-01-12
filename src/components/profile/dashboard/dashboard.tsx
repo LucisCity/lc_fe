@@ -44,7 +44,12 @@ const DashBoardItems = () => {
       content: formatNumber(data?.getDashboard?.profitRate ?? "", { maximumFractionDigits: 3 }) + "%",
       svgSrc: iconSrc + "profit.svg",
     },
-    { position: 4, title: "Số dư hiện tại", content: formatCurrency(balance ?? ""), svgSrc: iconSrc + "surplus.svg" },
+    {
+      position: 4,
+      title: "Số dư hiện tại",
+      content: formatCurrency(Number(balance) ?? ""),
+      svgSrc: iconSrc + "surplus.svg",
+    },
   ];
   return (
     <>
