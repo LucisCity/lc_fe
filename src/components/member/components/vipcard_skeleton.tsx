@@ -130,7 +130,7 @@ export const VipCardSkeleton = () => {
               bottom: 15,
             }}
           >
-            <Typography fontSize={12}>VALID THRU</Typography>
+            <Typography fontSize={12}>ISSUED ON</Typography>
             <Skeleton variant={"text"} sx={{ fontSize: 19 }} />
           </Box>
         </Box>

@@ -24,6 +24,7 @@ export function InvestDetailPage() {
     claimProfitData,
     investors,
     following,
+    isFollowingProject,
     onToggleFollow,
     onClaimProfit,
     disableClaim,
@@ -61,8 +62,9 @@ export function InvestDetailPage() {
           totalVote={detail?.profile.total_vote ?? 0}
           address={detail?.address}
           follows={detail?.profile.follows ?? 0}
+          isFollowing={isFollowingProject}
           toggleFollow={onToggleFollow}
-          voting={following}
+          loading={following}
         />
         <InvestImageBox project={detail} />
         <InvestDetailSteper detail={detail} />

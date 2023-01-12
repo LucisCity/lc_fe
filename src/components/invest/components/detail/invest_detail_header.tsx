@@ -1,9 +1,11 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, SvgIcon, Typography } from "@mui/material";
 import VoteMenu from "./vote_menu";
 import ShareDialog from "./share_dialog";
 import { LoadingButton } from "@mui/lab";
 import { AppEmitter } from "../../../../utils/emitter";
 import EMITER_KEY from "../../../../config/emiter.key";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 interface IProps {
   title?: string;
@@ -13,9 +15,9 @@ interface IProps {
   follows?: number;
   takeProfitStartTime?: string;
   toggleFollow?: () => void;
-  voting?: boolean;
+  loading?: boolean;
+  isFollowing?: boolean;
 }
-
 export default function InvestDetailHeader(props: IProps) {
   function onOpenMap() {
     AppEmitter.emit(EMITER_KEY.openMap);
@@ -92,11 +94,12 @@ export default function InvestDetailHeader(props: IProps) {
             sx={{
               color: "#FF6C6C",
               width: "84px",
+              ".MuiSvgIcon-root": {
+                fontSize: 28,
+              },
             }}
-            endIcon={
-              props.voting ? null : <Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />
-            }
-            loading={props.voting}
+            endIcon={props.loading ? null : props.isFollowing ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            loading={props.loading}
             onClick={props.toggleFollow}
           >
             {props.follows}
