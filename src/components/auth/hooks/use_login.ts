@@ -107,6 +107,9 @@ export default function useLogin() {
           case ErrorCode.WrongPassword:
             enqueueSnackbar("Sai mật khẩu, vui lòng nhập lại", { variant: "error" });
             break;
+          case ErrorCode.UserDontHavePassword:
+            enqueueSnackbar("Tài khoản này chưa cài đặt password, vui lòng đăng nhập qua google hoặc facebook", { variant: "error" });
+            break;
           case ErrorCode.UserNotFound:
             enqueueSnackbar("Không tìm thấy user", { variant: "error" });
             break;
