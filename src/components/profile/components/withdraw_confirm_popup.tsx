@@ -22,6 +22,10 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
       router.push(`/profile/account?tab=connect_wallet&redirect_url=${router.asPath}`);
       return;
     }
+    if (data.amount && data.amount <= 0) {
+      setError("amount", { type: "minAmount", message: "Bạn phải nhập số lớn hơn 0!" }, { shouldFocus: true });
+      return;
+    }
     if (data.amount && data?.amount > Number(balance)) {
       setError("amount", { type: "maxAmount", message: "Số lượng bạn nhập vượt quá số dư!" }, { shouldFocus: true });
       return;
@@ -65,7 +69,11 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
               InputProps={{
                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
               }}
-              error={errors.amount?.type === "required" || errors.amount?.type === "maxAmount"}
+              error={
+                errors.amount?.type === "required" ||
+                errors.amount?.type === "maxAmount" ||
+                errors.amount?.type === "minAmount"
+              }
               helperText={(errors.amount?.message as string) ?? ""}
             />
             <Stepper activeStep={activeStep} alternativeLabel>
