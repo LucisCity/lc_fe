@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import PaginatedList from "../components/paginated_list";
 import { ProjectCard } from "./components/project_card";
-import { useHotProject } from "../../../hooks/profile/use_investment";
+import { useHotProject } from "../hooks/use_investment";
 import { Skeleton } from "@mui/material";
 
 export default function InvestmentHot() {

@@ -6,7 +6,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import { LoadingButton } from "@mui/lab";
 import TextField from "@mui/material/TextField";
 import UserStore from "../../../../store/user.store";
-import { useWalletAddress } from "../../../../hooks/profile/account/use_info";
+import { useWalletAddress } from "../hooks/use_info";
 import { handleGraphqlErrors } from "../../../../utils/apolo.util";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChangeEvent } from "react";
 import { Box, Button, Grid, Skeleton, Typography } from "@mui/material";
 import SvgIcon from "../../common/svg_icon";
-import { FileUpload, useUserKyc } from "../../../hooks/profile/account/use_kyc";
+import { FileUpload, useUserKyc } from "./hooks/use_kyc";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";

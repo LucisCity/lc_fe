@@ -9,7 +9,7 @@ import TableCell from "@mui/material/TableCell";
 import { Typography } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { table, TablePaginationActions } from "../components/table";
-import useReferral from "../../../hooks/profile/use_referral";
+import useReferral from "../hooks/use_referral";
 import moment from "moment";
 import { ReferralType } from "../../../gql/graphql";
 import { ReferralTableSkeleton } from "../components/referral_table_skeleton";

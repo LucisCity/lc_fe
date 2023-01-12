@@ -1,9 +1,9 @@
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
-import { handleGraphqlErrors } from "../../utils/apolo.util";
+import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { InvestedProjectGql, ProjectGql } from "../../gql/graphql";
+import { InvestedProjectGql, ProjectGql } from "../../../gql/graphql";
 import { useEffect, useState } from "react";
-import userStore from "../../store/user.store";
+import userStore from "../../../store/user.store";
 
 const GET_INVESTED_PROJECTS = gql`
   query investedProjects {

@@ -1,9 +1,9 @@
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import { handleGraphqlErrors } from "../../utils/apolo.util";
+import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { BlockchainTransaction, TransactionHistoryResponse } from "../../gql/graphql";
+import { BlockchainTransaction, TransactionHistoryResponse } from "../../../gql/graphql";
 import React, { useState } from "react";
-import TransactionHistoryStore from "../../store/transaction_history.store";
+import TransactionHistoryStore from "../../../store/transaction_history.store";
 
 const GET_LIST_TRANSACTION_HISTORY = gql`
   query getTransactionHistory($skip: Int, $take: Int) {

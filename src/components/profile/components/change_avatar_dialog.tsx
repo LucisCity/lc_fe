@@ -8,7 +8,7 @@ import { Box, DialogActions, DialogTitle, IconButton, Typography } from "@mui/ma
 import SvgIcon from "../../common/svg_icon";
 import { useFileInput } from "../../../hooks/use_file_input";
 import CloseIcon from "@mui/icons-material/Close";
-import { useUploadAvatar } from "../../../hooks/profile/use_upload_avatar";
+import { useUploadAvatar } from "../hooks/use_upload_avatar";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

@@ -1,9 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { GET_ACCOUNT_INFO } from "./use_info";
 import axios from "axios";
-import UserStore from "../../../store/user.store";
+import UserStore from "../../../../store/user.store";
 import { useSnackbar } from "notistack";
-import { REST_API_ENDPOINT } from "../use_upload_avatar";
+import { REST_API_ENDPOINT } from "../../hooks/use_upload_avatar";
 
 export const GET_KYC_IMAGES = gql`
   query getKycImages {

@@ -3,7 +3,7 @@ import React from "react";
 import PaginatedList from "../components/paginated_list";
 import { ProjectCard } from "./components/project_card";
 import { Skeleton } from "@mui/material";
-import { useRecommendedProject } from "../../../hooks/profile/use_investment";
+import { useRecommendedProject } from "../hooks/use_investment";
 
 export default function InvestmentRecommended() {
   const { recommendedProjects, loading } = useRecommendedProject();

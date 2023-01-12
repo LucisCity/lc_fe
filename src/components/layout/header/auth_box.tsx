@@ -7,9 +7,9 @@ import { Right } from "../../common/right";
 import AvatarMenu from "./avatar_menu";
 import { observer } from "mobx-react-lite";
 import { ApolloError, useLazyQuery } from "@apollo/client";
-import { useSubToUnseenNotiCount, useUnseenNotifications } from "../../../hooks/profile/use_notification";
+import { useSubToUnseenNotiCount, useUnseenNotifications } from "../../profile/hooks/use_notification";
 import { isNumber } from "lodash";
-import { GET_BALANCE } from "../../../hooks/profile/account/use_info";
+import { GET_BALANCE } from "../../profile/account/hooks/use_info";
 import { useDisconnect } from "wagmi";
 import { useRouter } from "next/router";
 
