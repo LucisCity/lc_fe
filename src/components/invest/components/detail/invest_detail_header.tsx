@@ -94,7 +94,7 @@ export default function InvestDetailHeader(props: IProps) {
             sx={{
               color: "#FF6C6C",
               width: "84px",
-              ".MuiSvgIcon-root": {
+              ".MuiButton-endIcon > .MuiSvgIcon-root": {
                 fontSize: 28,
               },
             }}
