@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import React from "react";
 import PaginatedList from "../components/paginated_list";
-import { ProjectSalePeriod, ProjectStatus } from "./components/project_card";
+import { calculateProjectStatus, ProjectStatus } from "./components/project_card";
 import { useInvestedProject } from "../../../hooks/profile/use_investment";
 import { InvestedProjectGql } from "../../../gql/graphql";
 import { formatCurrency } from "../../../utils/number.util";
@@ -18,8 +18,6 @@ const Icon = styled("img")(({ theme }) => ({
   height: 10,
 }));
 
-const TOTAL_TOKENS = 1000;
-
 const InvestedCard = (props: InvestedProjectGql) => {
   /* eslint-disable */
   const {
@@ -30,6 +28,7 @@ const InvestedCard = (props: InvestedProjectGql) => {
     price,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
+    profit_period: profitPeriod,
     start_time_vote_sell: startVotingAt,
     end_time_vote_sell: endVotingAt,
     ended,
@@ -40,16 +39,11 @@ const InvestedCard = (props: InvestedProjectGql) => {
     nft_bought: { total_nft: totalNftOwned },
     profit_balance: { balance },
   } = props;
+  const salePeriod = React.useMemo(
+    () => calculateProjectStatus(props),
+    [startVotingAt, takeProfitAt, openSaleAt, ended, profitPeriod],
+  );
   /* eslint-enable */
-  const salePeriod = ended
-    ? ProjectSalePeriod.CLOSED
-    : startVotingAt && new Date() > new Date(startVotingAt)
-    ? ProjectSalePeriod.TRANSFERRING
-    : takeProfitAt && new Date() > new Date(takeProfitAt)
-    ? ProjectSalePeriod.PROFITING
-    : openSaleAt && new Date() > new Date(openSaleAt)
-    ? ProjectSalePeriod.OPEN
-    : ProjectSalePeriod.UPCOMING;
 
   const isVoting = React.useMemo(() => {
     const currentDate = new Date();
