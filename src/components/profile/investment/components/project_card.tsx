@@ -51,7 +51,6 @@ export const ProjectStatus = (props: { status: ProjectSalePeriod }) => {
       sx={(theme) => ({
         background: bgColor,
         color: "#fff",
-        width: 80,
         height: 40,
         marginRight: 3,
         padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
@@ -65,6 +64,41 @@ export const ProjectStatus = (props: { status: ProjectSalePeriod }) => {
   );
 };
 
+export function calculateProjectStatus(args: {
+  open_sale_at: any;
+  take_profit_at: any;
+  profit_period: number;
+  start_time_vote_sell?: any;
+  ended: boolean;
+}) {
+  /* eslint-disable */
+  const {
+    open_sale_at: openSaleAt,
+    take_profit_at: takeProfitAt,
+    profit_period: profitPeriod,
+    start_time_vote_sell: startVotingAt,
+    ended,
+  } = args;
+  const MS_IN_DAY = 1000 * 24 * 60 * 60;
+  const takeProfitAtTime = new Date(takeProfitAt).getTime();
+  const profitDays = (new Date().getTime() - takeProfitAtTime) / MS_IN_DAY;
+  const _profitPeriod = profitDays / profitPeriod;
+  const profitPeriodIndex = Math.floor(_profitPeriod);
+
+  return ended
+    ? ProjectSalePeriod.CLOSED
+    : startVotingAt && new Date() > new Date(startVotingAt)
+    ? ProjectSalePeriod.TRANSFERRING
+    : profitPeriodIndex > 0
+    ? ProjectSalePeriod.PROFITING
+    : takeProfitAt && new Date() > new Date(takeProfitAt)
+    ? ProjectSalePeriod.EXPECTED_PROFITING
+    : openSaleAt && new Date() > new Date(openSaleAt)
+    ? ProjectSalePeriod.OPEN
+    : ProjectSalePeriod.UPCOMING;
+  /* eslint-enable */
+}
+
 export const ProjectCard = (props: ProjectGql) => {
   /* eslint-disable */
   const {
@@ -77,23 +111,16 @@ export const ProjectCard = (props: ProjectGql) => {
     total_nft_sold: totalNftSold,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
+    profit_period: profitPeriod,
     start_time_vote_sell: startVotingAt,
     ended,
     profile: { follows },
   } = props;
+  const salePeriod = React.useMemo(
+    () => calculateProjectStatus(props),
+    [startVotingAt, takeProfitAt, openSaleAt, ended, profitPeriod],
+  );
   /* eslint-enable */
-  const salePeriod = React.useMemo(() => {
-    return ended
-      ? ProjectSalePeriod.CLOSED
-      : startVotingAt && new Date() > new Date(startVotingAt)
-      ? ProjectSalePeriod.TRANSFERRING
-      : takeProfitAt && new Date() > new Date(takeProfitAt)
-      ? ProjectSalePeriod.PROFITING
-      : openSaleAt && new Date() > new Date(openSaleAt)
-      ? ProjectSalePeriod.OPEN
-      : ProjectSalePeriod.UPCOMING;
-  }, [startVotingAt, takeProfitAt, openSaleAt, ended]);
-  // console.log(`openSaleAt ${openSaleAt}`);
   return (
     <Card sx={{ borderRadius: 4 }} elevation={0}>
       <Link href={`/invest/${slugify(title)}.${id}`}>

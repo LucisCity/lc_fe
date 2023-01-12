@@ -11,7 +11,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { ProjectGql } from "../../../gql/graphql";
-import { ProjectSalePeriod, ProjectStatus } from "../../profile/investment/components/project_card";
+import { calculateProjectStatus, ProjectStatus } from "../../profile/investment/components/project_card";
 import { slugify } from "../../../utils/string.util";
 import { formatCurrency } from "../../../utils/number.util";
 
@@ -38,21 +38,15 @@ export const Card = (props: IProps) => {
   const [state, setState] = React.useState(props?.isCollapseContent ?? true);
   const {
     ended,
-    start_time_vote_sell: waitTransferAt,
+    start_time_vote_sell: startVotingAt,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
+    profit_period: profitPeriod,
   } = props.data;
-  const salePeriod = React.useMemo(() => {
-    return ended
-      ? ProjectSalePeriod.CLOSED
-      : waitTransferAt && new Date() > new Date(waitTransferAt)
-      ? ProjectSalePeriod.TRANSFERRING
-      : takeProfitAt && new Date() > new Date(takeProfitAt)
-      ? ProjectSalePeriod.PROFITING
-      : openSaleAt && new Date() > new Date(openSaleAt)
-      ? ProjectSalePeriod.OPEN
-      : ProjectSalePeriod.UPCOMING;
-  }, [waitTransferAt, takeProfitAt, openSaleAt, ended]);
+  const salePeriod = React.useMemo(
+    () => calculateProjectStatus(props.data),
+    [startVotingAt, takeProfitAt, openSaleAt, ended, profitPeriod],
+  );
   return (
     <MuiCard sx={{ borderRadius: 4, position: "relative" }} elevation={1}>
       <Link href={`/invest/${slugify(props.data.title)}.${props.data.id}`}>

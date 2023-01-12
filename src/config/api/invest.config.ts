@@ -155,6 +155,7 @@ export const PROJECT_EXTRA_INFO_QUERY = gql`
       currency_amount
       is_sell_voted
     }
+    isFollowingProject(projectId: $projectId)
   }
 `;
 

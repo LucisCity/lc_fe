@@ -15,6 +15,7 @@ const GET_INVESTED_PROJECTS = gql`
       address
       open_sale_at
       take_profit_at
+      profit_period
       start_time_vote_sell
       ended
       nft_price

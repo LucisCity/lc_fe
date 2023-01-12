@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import { ProjectGql } from "../../../gql/graphql";
 import { formatCurrency } from "../../../utils/number.util";
 import { slugify } from "../../../utils/string.util";
-import { ProjectSalePeriod, ProjectStatus } from "../../profile/investment/components/project_card";
+import { calculateProjectStatus, ProjectStatus } from "../../profile/investment/components/project_card";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(3),
@@ -35,21 +35,15 @@ interface IProps {
 export const HighlightCard = (props: IProps) => {
   const {
     ended,
-    start_time_vote_sell: waitTransferAt,
+    start_time_vote_sell: startVotingAt,
     open_sale_at: openSaleAt,
     take_profit_at: takeProfitAt,
+    profit_period: profitPeriod,
   } = props.data;
-  const salePeriod = React.useMemo(() => {
-    return ended
-      ? ProjectSalePeriod.CLOSED
-      : waitTransferAt && new Date() > new Date(waitTransferAt)
-      ? ProjectSalePeriod.TRANSFERRING
-      : takeProfitAt && new Date() > new Date(takeProfitAt)
-      ? ProjectSalePeriod.PROFITING
-      : openSaleAt && new Date() > new Date(openSaleAt)
-      ? ProjectSalePeriod.OPEN
-      : ProjectSalePeriod.UPCOMING;
-  }, [waitTransferAt, takeProfitAt, openSaleAt, ended]);
+  const salePeriod = React.useMemo(
+    () => calculateProjectStatus(props.data),
+    [startVotingAt, takeProfitAt, openSaleAt, ended, profitPeriod],
+  );
   return (
     <MuiCard sx={{ borderRadius: 4 }} elevation={0}>
       <Link href={`/invest/${slugify(props.data.title)}.${props.data.id}`}>

@@ -6,7 +6,7 @@ import * as React from "react";
 import { Project } from "../../gql/graphql";
 import { Mousewheel, Pagination } from "swiper";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { ProjectSalePeriod, ProjectStatus } from "../profile/investment/components/project_card";
+import { calculateProjectStatus, ProjectStatus } from "../profile/investment/components/project_card";
 import "swiper/css/pagination";
 import "swiper/css";
 import { formatCurrency } from "../../utils/number.util";
@@ -113,18 +113,17 @@ export function NftInfoCard(props: { title: string; content: string; icon?: stri
 const NftInfo = ({ index, fullscreen, data }: { index?: number; fullscreen?: boolean; data: any }) => {
   const theme = useTheme();
   const swiper = useSwiper();
-  const { ended, start_time_vote_sell: waitTransferAt, open_sale_at: openSaleAt, take_profit_at: takeProfitAt } = data;
-  const salePeriod = React.useMemo(() => {
-    return ended
-      ? ProjectSalePeriod.CLOSED
-      : waitTransferAt && new Date() > new Date(waitTransferAt)
-      ? ProjectSalePeriod.TRANSFERRING
-      : takeProfitAt && new Date() > new Date(takeProfitAt)
-      ? ProjectSalePeriod.PROFITING
-      : openSaleAt && new Date() > new Date(openSaleAt)
-      ? ProjectSalePeriod.OPEN
-      : ProjectSalePeriod.UPCOMING;
-  }, [waitTransferAt, takeProfitAt, openSaleAt, ended]);
+  const {
+    ended,
+    start_time_vote_sell: startVotingAt,
+    open_sale_at: openSaleAt,
+    take_profit_at: takeProfitAt,
+    profit_period: profitPeriod,
+  } = data;
+  const salePeriod = React.useMemo(
+    () => calculateProjectStatus(data),
+    [startVotingAt, takeProfitAt, openSaleAt, ended, profitPeriod],
+  );
   return (
     <>
       <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={index}>

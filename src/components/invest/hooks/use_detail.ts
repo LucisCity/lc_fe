@@ -21,6 +21,7 @@ export default function useInvestDetail() {
   const form = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const [disableClaim, setDisableClaim] = useState(false);
+  const [isFollowingProject, setIsFollowingProject] = useState(false);
   const router = useRouter();
   const _id = router.query["id"] as string;
   const _temps = (_id ?? "").split(".");
@@ -58,6 +59,7 @@ export default function useInvestDetail() {
     isVoted: boolean;
     getProfitBalance: ProjectProfitBalance;
     getNftBought: ProjectNftOwner;
+    isFollowingProject: boolean;
   }>(PROJECT_EXTRA_INFO_QUERY, {
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
@@ -65,6 +67,7 @@ export default function useInvestDetail() {
     },
     onCompleted(data) {
       setDisableClaim(false);
+      setIsFollowingProject(data.isFollowingProject);
       projectStore.setProjectDetail({
         ...(projectStore.projectDetail as any),
         isVoted: data.isVoted ?? false,
@@ -89,7 +92,8 @@ export default function useInvestDetail() {
   });
 
   const [toggleFollowProject, { loading }] = useMutation(PROJECT_FOLLOW_MUT, {
-    onCompleted: () => {
+    onCompleted: (data) => {
+      setIsFollowingProject(data?.toggleFollowProject);
       // enqueueSnackbar("Request successfully!", {
       //   variant: "success",
       // });
@@ -210,6 +214,7 @@ export default function useInvestDetail() {
     claimProfitData,
     disableClaim,
     form,
+    isFollowingProject,
     onToggleFollow,
     onClaimProfit,
   };
