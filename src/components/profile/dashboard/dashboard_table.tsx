@@ -23,6 +23,7 @@ interface ITableData {
   type: TransactionType;
   amount?: string;
   status: TransactionStatus;
+  description?: string;
 }
 
 const getStatusColor = (status: TransactionStatus) => {
@@ -88,7 +89,7 @@ const descriptionRow = (type: TransactionType): string => {
     case TransactionType.ClaimReferral:
       return "Nhận thưởng giới thiệu bạn bè";
     case TransactionType.BuyNft:
-      return "Mua 1 nft thành công";
+      return "Mua nft thành công";
     default:
       return "";
   }
@@ -114,7 +115,7 @@ const Row = ({ row }: { row: ITableData }) => {
       <TableCell style={{ width: "10%", textAlign: "left", color: "#504C67" }} scope="row">
         <Typography fontWeight={500} fontSize={16} color={amountColor(row.type)}>
           {row.type === TransactionType.BuyNft
-            ? "+1NFT"
+            ? `${row?.description?.split(" ")[1] ?? ""} NFT`
             : `${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
         </Typography>
       </TableCell>
@@ -143,6 +144,7 @@ const DashboardTable = observer((props: DashboardTableProps) => {
         type: item.type,
         amount: `${item.amount}`,
         status: !item.blockchain_transaction ? TransactionStatus.Succeed : item.blockchain_transaction?.status,
+        description: item.description ?? "",
       };
     }) ?? [];
   const handleChangePage = async (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {

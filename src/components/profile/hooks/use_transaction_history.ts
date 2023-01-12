@@ -15,6 +15,7 @@ const GET_LIST_TRANSACTION_HISTORY = gql`
         user_id
         created_at
         amount
+        description
         blockchain_transaction {
           tx_hash
           status
