@@ -16,6 +16,7 @@ import { ErrorCode, ProjectGql, ProjectNftOwner, ProjectNftOwnerGql, ProjectProf
 import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import { KMath } from "../../../utils/math.util";
 
 export default function useInvestDetail() {
   const form = useForm();
@@ -26,6 +27,7 @@ export default function useInvestDetail() {
   const _id = router.query["id"] as string;
   const _temps = (_id ?? "").split(".");
   const projectId = _temps.length > 1 ? _temps[1] : null;
+  const [profitRate, setProfitRate] = useState(0);
 
   const [fetchProject, detail] = useLazyQuery<{ getProject: ProjectGql }>(PROJECT_DETAIL_QUERY, {
     onError: (e) => {
@@ -74,6 +76,16 @@ export default function useInvestDetail() {
         profitBalance: data.getProfitBalance,
         nftBought: data.getNftBought,
       });
+      if (!projectStore.projectDetail) {
+        return;
+      }
+      projectStore.computeProfitRate(
+        projectStore.projectDetail.nft_price,
+        data.getNftBought.total_nft,
+        data.getNftBought.currency_amount,
+        data.getProfitBalance.balance,
+        data.getProfitBalance.balance_claimed,
+      );
     },
   });
 
