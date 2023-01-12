@@ -522,6 +522,8 @@ export type Query = {
   getOneTimePassword: Scalars['String'];
   /** Get profit balance */
   getProfitBalance?: Maybe<ProjectProfitBalance>;
+  /** Get profit rate */
+  getProfitRate?: Maybe<Scalars['Float']>;
   /** Get list referral user */
   getProject: ProjectGql;
   /** Get related project */
@@ -581,6 +583,11 @@ export type QueryGetOneTimePasswordArgs = {
 
 
 export type QueryGetProfitBalanceArgs = {
+  projectId: Scalars['String'];
+};
+
+
+export type QueryGetProfitRateArgs = {
   projectId: Scalars['String'];
 };
 

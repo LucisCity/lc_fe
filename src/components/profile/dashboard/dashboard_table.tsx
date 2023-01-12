@@ -159,11 +159,13 @@ const DashboardTable = observer((props: DashboardTableProps) => {
               {loading ? (
                 <ReferralTableSkeleton />
               ) : data.length === 0 ? (
-                <TableCell style={{ width: "100%" }} scope="row">
-                  <Box display={"flex"} justifyContent={"center"}>
-                    <Typography>Không có dữ liệu!</Typography>
-                  </Box>
-                </TableCell>
+                <TableRow>
+                  <TableCell style={{ width: "100%" }} scope="row">
+                    <Box display={"flex"} justifyContent={"center"}>
+                      <Typography>Không có dữ liệu!</Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
               ) : (
                 data.map((row) => <Row key={row.id} row={row} />)
               )}

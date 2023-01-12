@@ -13,6 +13,7 @@ import SellVoteCard from "./components/detail/sell_vote_card";
 import UpdatesTab from "./components/detail/updates_tab";
 import useInvestDetail from "./hooks/use_detail";
 import React from "react";
+import ProfitRateCard from "./components/detail/prifit_rate_card";
 
 export function InvestDetailPage() {
   const [tabIdx, setTabIdx] = useState(0);
@@ -147,6 +148,7 @@ export function InvestDetailPage() {
               loading={claimProfitData.loading || disableClaim}
             />
             <SellVoteCard />
+            <ProfitRateCard />
             <Typography variant="h3" mt="24px">
               Giấy tờ pháp lý
             </Typography>

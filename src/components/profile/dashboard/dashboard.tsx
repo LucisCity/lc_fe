@@ -5,34 +5,51 @@ import React from "react";
 // import { useStores } from "../../store";
 import SvgIcon from "../../common/svg_icon";
 import UserStore from "../../../store/user.store";
-import { formatCurrency } from "../../../utils/number.util";
+import { formatCurrency, formatNumber } from "../../../utils/number.util";
 import WithdrawConfirmPopup from "../components/withdraw_confirm_popup";
+import { gql, useQuery } from "@apollo/client";
 
 const iconSrc = "/assets/imgs/icon/";
 
+const GET_DASHBOARD = gql`
+  query getDashboard {
+    getDashboard {
+      profitRate
+      totalAssetsBalance
+      totalInvestedBalance
+    }
+  }
+`;
 const DashBoardItems = () => {
   const balance = UserStore.user?.wallet?.balance;
+
+  const { data } = useQuery(GET_DASHBOARD);
   const tutorialStepData = [
     {
       position: 1,
       title: "Tổng tài sản ước tính",
-      content: "$ ----",
+      content: formatCurrency(Number(data?.getDashboard?.totalAssetsBalance) ?? ""),
       svgSrc: iconSrc + "total_asset.svg",
     },
     {
       position: 2,
       title: "Số tiền đã đầu tư",
-      content: "$ ----",
+      content: formatCurrency(Number(data?.getDashboard?.totalInvestedBalance) ?? ""),
       svgSrc: iconSrc + "invested_amount.svg",
     },
 
     {
       position: 3,
       title: "Tỉ suất lợi nhuận",
-      content: "----",
+      content: formatNumber(data?.getDashboard?.profitRate ?? "", { maximumFractionDigits: 3 }) + "%",
       svgSrc: iconSrc + "profit.svg",
     },
-    { position: 4, title: "Số dư hiện tại", content: formatCurrency(balance ?? ""), svgSrc: iconSrc + "surplus.svg" },
+    {
+      position: 4,
+      title: "Số dư hiện tại",
+      content: formatCurrency(Number(balance) ?? ""),
+      svgSrc: iconSrc + "surplus.svg",
+    },
   ];
   return (
     <>
