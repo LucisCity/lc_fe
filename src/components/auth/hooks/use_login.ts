@@ -104,6 +104,9 @@ export default function useLogin() {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => {
         switch (err.code) {
+          case ErrorCode.WrongPassword:
+            enqueueSnackbar("Sai mật khẩu, vui lòng nhập lại", { variant: "error" });
+            break;
           case ErrorCode.UserNotFound:
             enqueueSnackbar("Không tìm thấy user", { variant: "error" });
             break;

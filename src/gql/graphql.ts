@@ -97,7 +97,8 @@ export enum ErrorCode {
   UserConnectedWallet = 'USER_CONNECTED_WALLET',
   UserNotFound = 'USER_NOT_FOUND',
   WalletNotFound = 'WALLET_NOT_FOUND',
-  WrongOldPass = 'WRONG_OLD_PASS'
+  WrongOldPass = 'WRONG_OLD_PASS',
+  WrongPassword = 'WRONG_PASSWORD'
 }
 
 export type InvestedProjectGql = {
@@ -199,7 +200,7 @@ export type Mutation = {
 
 export type MutationChangePasswordArgs = {
   newPass: Scalars['String'];
-  oldPass: Scalars['String'];
+  oldPass?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -535,6 +536,8 @@ export type Query = {
   getVipUsers?: Maybe<Array<User>>;
   /** get wallet address */
   getWalletAddress?: Maybe<Scalars['String']>;
+  /** check if user has password */
+  hasPassWord?: Maybe<Scalars['Boolean']>;
   /** check if user has vip card */
   hasVipCard?: Maybe<Scalars['Boolean']>;
   /** get list of hot projects */
