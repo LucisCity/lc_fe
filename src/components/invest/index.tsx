@@ -1,19 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { CircularProgress, Container, Divider, MenuItem, Popper, Select, Tooltip } from "@mui/material";
+import { Container, Divider, MenuItem, Select, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ScrollPage from "../layout/scroll_page";
 import { Card } from "./components/card";
-import { SearchOption } from "./components/search_option";
-import { LoadingButton, Masonry } from "@mui/lab";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import StackAnim from "../anim/stack_anim";
+
 import Typography from "@mui/material/Typography";
 import { HighlightCard } from "./components/highlight_card";
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+
 import useProject from "./hooks/use_project";
 import { Mousewheel, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,8 +18,7 @@ import "swiper/css/pagination";
 import { HighlightCardSkeleton } from "./components/highlight_card_skeleton";
 import { useFollowingProject } from "../../hooks/profile/use_investment";
 import { CardSkeleton } from "./components/card_skeleton";
-import { ProjectGql, ProjectType } from "../../gql/graphql";
-import { debounce, throttle } from "lodash";
+import { ProjectType } from "../../gql/graphql";
 import { SearchProject } from "./components/search_project";
 
 const FilterView = styled(Box, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(

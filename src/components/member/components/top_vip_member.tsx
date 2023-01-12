@@ -8,12 +8,12 @@ import Avatar from "@mui/material/Avatar";
 import { formatCurrency } from "../../../utils/number.util";
 import { CardActions, Chip, Divider, Popper } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Search } from "../../invest";
 import { SearchOption } from "../../invest/components/search_option";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import MuiCard from "@mui/material/Card";
 import Button from "@mui/material/Button";
+import { Search } from "../../invest/components/search_project";
 
 const fakeData = [
   {
