@@ -72,14 +72,25 @@ export const CompanySection = (props: Props) => {
                   alignItems={"flex-start"}
                   height="100%"
                 >
-                  <Box sx={{ background: "rgba(255,255,255,0.6)" }} p={4}>
+                  <Box p={4}>
                     <AnimWhenVisible variants={{ hidden: { opacity: 0, y: -100 } }} index={props.index}>
                       <TitleImage src="/assets/imgs/logo/logo-3d.svg" alt="lucis - title" />
                     </AnimWhenVisible>
-                    <Typography sx={{ mb: 22 }} variant={"h5"}>
-                      Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng. Mở ra cơ hội đầu tư vào thị
-                      trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
-                    </Typography>
+                    <Box
+                      sx={{
+                        background: "rgba(255,255,255,0.6)",
+                        px: 3,
+                        py: 5,
+                        borderRadius: 2,
+                        backdropFilter: "blur(4px)",
+                        mb: 22,
+                      }}
+                    >
+                      <Typography variant={"h5"}>
+                        Hệ sinh thái số bền vững mang lại lợi nhuận và giá trị cho Cộng đồng. Mở ra cơ hội đầu tư vào
+                        thị trường bất động sản đầy tiềm năng từ nhiều nền tảng trên toàn Thế giới.
+                      </Typography>
+                    </Box>
                     <AnimWhenVisible
                       variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0 } }}
                       index={props.index}
