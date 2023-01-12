@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Alert, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
-import { useWithdraw } from "../../../hooks/profile/use_withdraw";
+import { useWithdraw } from "../hooks/use_withdraw";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";

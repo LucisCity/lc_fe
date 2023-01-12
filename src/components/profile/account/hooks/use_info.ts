@@ -1,8 +1,8 @@
 import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
-import { AccountInfo, ErrorCode } from "../../../gql/graphql";
+import { AccountInfo, ErrorCode } from "../../../../gql/graphql";
 import { useSnackbar } from "notistack";
-import { handleGraphqlErrors } from "../../../utils/apolo.util";
-import UserStore from "../../../store/user.store";
+import { handleGraphqlErrors } from "../../../../utils/apolo.util";
+import UserStore from "../../../../store/user.store";
 import * as React from "react";
 
 export const GET_BALANCE = gql`

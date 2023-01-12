@@ -1,10 +1,10 @@
 import * as React from "react";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import { Box, Button, IconButton, Paper, Switch, SwitchProps, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, Paper, Skeleton, Switch, SwitchProps, TextField, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 // @ts-ignore
-import { useChangePassword } from "../../../hooks/profile/account/use_security";
+import { useChangePassword } from "./hooks/use_security";
 
 const CustomSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -99,10 +99,12 @@ interface PassFieldProps {
   label: string;
   value: string;
   form: any;
+  disabled?: boolean;
+  defaultValue?: string;
 }
 
 const PasswordField = (props: PassFieldProps) => {
-  const { label, form, value } = props;
+  const { label, form, value, disabled, defaultValue } = props;
   const [showPass, setShowPass] = React.useState(false);
 
   const handleClickShowPassword = () => {
@@ -128,50 +130,75 @@ const PasswordField = (props: PassFieldProps) => {
           pr: { sm: "10%", xs: 0 },
         }}
       >
-        <TextField
-          fullWidth
-          margin="normal"
-          type={showPass ? "text" : "password"}
-          error={!!form.formState.errors[value]}
-          helperText={form.formState.errors[value]?.message as string}
-          {...form.register(value, {
-            required: "This is required",
-            minLength: { value: 8, message: "Minimum length should be 8" },
-          })}
-          InputProps={{
-            style: {
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: 1.5,
-              color: "#504C67",
-              background: "#fff",
-              border: "none",
-              borderRadius: 8,
-              height: "50px",
-              paddingLeft: 2,
-            },
-          }}
-        />
-        <IconButton
-          sx={{
-            position: "absolute",
-            right: { sm: "15%", xs: 20 },
-            top: 21,
-          }}
-          aria-label="toggle password visibility"
-          onClick={handleClickShowPassword}
-          onMouseDown={handleMouseDownPassword}
-          edge="end"
-        >
-          {showPass ? <VisibilityOff /> : <Visibility />}
-        </IconButton>
+        {defaultValue ? (
+          <TextField
+            disabled={disabled}
+            value={defaultValue}
+            fullWidth
+            margin="normal"
+            type={"text"}
+            InputProps={{
+              style: {
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: 1.5,
+                color: "#504C67",
+                background: "#fff",
+                border: "none",
+                borderRadius: 8,
+                height: "50px",
+                paddingLeft: 2,
+              },
+            }}
+          />
+        ) : (
+          <>
+            <TextField
+              fullWidth
+              margin="normal"
+              type={showPass ? "text" : "password"}
+              error={!!form.formState.errors[value]}
+              helperText={form.formState.errors[value]?.message as string}
+              {...form.register(value, {
+                required: "This is required",
+                minLength: { value: 8, message: "Minimum length should be 8" },
+              })}
+              InputProps={{
+                style: {
+                  fontSize: 16,
+                  fontWeight: 400,
+                  lineHeight: 1.5,
+                  color: "#504C67",
+                  background: "#fff",
+                  border: "none",
+                  borderRadius: 8,
+                  height: "50px",
+                  paddingLeft: 2,
+                },
+              }}
+            />
+            <IconButton
+              sx={{
+                position: "absolute",
+                right: { sm: "15%", xs: 20 },
+                top: 21,
+              }}
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              edge="end"
+            >
+              {showPass ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </>
+        )}
       </Box>
     </>
   );
 };
 
 export default function Security() {
-  const { form, onChangePass, loading } = useChangePassword();
+  const { form, onChangePass, userHasPassword, loadingHasPass } = useChangePassword();
 
   async function onSubmit(values: any) {
     // e.preventDefault();
@@ -183,7 +210,22 @@ export default function Security() {
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <Grid container spacing={{ sm: 0, xs: 2 }} direction={{ sm: "row", xs: "column" }}>
         <Grid item sm={6} xs={12}>
-          <PasswordField label={"Nhập mật khẩu hiện tại"} form={form} value="oldPass" />
+          {loadingHasPass ? (
+            <>
+              <Label>Nhập mật khẩu hiện tại</Label>
+              <Skeleton variant={"rounded"} height={50} width={350} sx={{ my: 3 }} />
+            </>
+          ) : userHasPassword ? (
+            <PasswordField label={"Nhập mật khẩu hiện tại"} form={form} value="oldPass" disabled={false} />
+          ) : (
+            <PasswordField
+              label={"Nhập mật khẩu hiện tại"}
+              form={form}
+              value="oldPass"
+              defaultValue={"Không có mật khẩu hiện tại"}
+              disabled={true}
+            />
+          )}
         </Grid>
         <Grid item xs={12} container>
           <Grid item sm={6} xs={12}>

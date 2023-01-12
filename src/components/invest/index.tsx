@@ -16,7 +16,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { HighlightCardSkeleton } from "./components/highlight_card_skeleton";
-import { useFollowingProject } from "../../hooks/profile/use_investment";
+import { useFollowingProject } from "../profile/hooks/use_investment";
 import { CardSkeleton } from "./components/card_skeleton";
 import { ProjectType } from "../../gql/graphql";
 import { SearchProject } from "./components/search_project";

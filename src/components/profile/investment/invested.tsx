@@ -7,7 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import React from "react";
 import PaginatedList from "../components/paginated_list";
 import { calculateProjectStatus, ProjectStatus } from "./components/project_card";
-import { useInvestedProject } from "../../../hooks/profile/use_investment";
+import { useInvestedProject } from "../hooks/use_investment";
 import { InvestedProjectGql } from "../../../gql/graphql";
 import { formatCurrency } from "../../../utils/number.util";
 import { slugify } from "../../../utils/string.util";

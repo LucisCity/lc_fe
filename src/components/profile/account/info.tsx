@@ -3,7 +3,7 @@ import InputUnstyled, { inputUnstyledClasses } from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Paper, Skeleton, Typography, useMediaQuery } from "@mui/material";
-import { useGetAccountInfo, useUpdateAccountInfo, useWalletAddress } from "../../../hooks/profile/account/use_info";
+import { useGetAccountInfo, useUpdateAccountInfo, useWalletAddress } from "./hooks/use_info";
 import moment, { Moment } from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";

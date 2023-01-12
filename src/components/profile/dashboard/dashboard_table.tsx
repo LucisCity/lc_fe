@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Typography } from "@mui/material";
 import { table, TablePaginationActions } from "../components/table";
-import useTransactionHistory from "../../../hooks/profile/use_transaction_history";
+import useTransactionHistory from "../hooks/use_transaction_history";
 import { ReferralTableSkeleton } from "../components/referral_table_skeleton";
 import moment from "moment/moment";
 import { TransactionStatus, TransactionType } from "../../../gql/graphql";
