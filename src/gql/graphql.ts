@@ -102,6 +102,7 @@ export enum ErrorCode {
   TokenInvalid = 'TOKEN_INVALID',
   UsernameDuplicated = 'USERNAME_DUPLICATED',
   UserConnectedWallet = 'USER_CONNECTED_WALLET',
+  UserDontHavePassword = 'USER_DONT_HAVE_PASSWORD',
   UserNotFound = 'USER_NOT_FOUND',
   WalletNotFound = 'WALLET_NOT_FOUND',
   WrongOldPass = 'WRONG_OLD_PASS',
