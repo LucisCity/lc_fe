@@ -83,6 +83,7 @@ export enum ErrorCode {
   BalancePoolNotEnough = 'BALANCE_POOL_NOT_ENOUGH',
   DuplicateWalletAddress = 'DUPLICATE_WALLET_ADDRESS',
   EmailInvalid = 'EMAIL_INVALID',
+  EmailRegistered = 'EMAIL_REGISTERED',
   Error_500 = 'ERROR_500',
   FbIdNotFound = 'FB_ID_NOT_FOUND',
   InvalidNewPass = 'INVALID_NEW_PASS',

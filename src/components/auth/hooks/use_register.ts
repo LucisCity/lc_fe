@@ -30,6 +30,9 @@ export default function useRegister() {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => {
         switch (err.code) {
+          case ErrorCode.EmailRegistered:
+            enqueueSnackbar("Email này đã được đăng ký, vui lòng sử dụng một email khác", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
