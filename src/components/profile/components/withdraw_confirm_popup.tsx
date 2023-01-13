@@ -23,6 +23,7 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
       return;
     }
     if (balance <= 0) {
+      setError("amount", { type: "minAmount", message: "Bạn phải nhập số lớn hơn 0!" }, { shouldFocus: true });
       return;
     }
     if (data?.amount <= 0) {
@@ -51,7 +52,6 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
       amount: balance,
     },
   });
-
   return (
     <div>
       <Dialog open={true} fullWidth maxWidth={"sm"}>

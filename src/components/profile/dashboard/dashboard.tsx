@@ -23,7 +23,7 @@ const GET_DASHBOARD = gql`
 const DashBoardItems = () => {
   const balance = UserStore.user?.wallet?.balance;
 
-  const { data } = useQuery(GET_DASHBOARD);
+  const { data } = useQuery(GET_DASHBOARD, { fetchPolicy: "no-cache" });
   const tutorialStepData = [
     {
       position: 1,
@@ -47,7 +47,7 @@ const DashBoardItems = () => {
     {
       position: 4,
       title: "Số dư hiện tại",
-      content: formatCurrency(Number(balance) ?? ""),
+      content: formatCurrency(Number(balance ?? 0) ?? ""),
       svgSrc: iconSrc + "surplus.svg",
     },
   ];
