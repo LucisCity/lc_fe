@@ -818,7 +818,7 @@ export type VipCardCount = {
 };
 
 export enum VipCardTier {
-  GalaxyPremium = "GALAXY_PREMIUM",
+  GalaxyPlatinum = "GALAXY_PLATINUM",
 }
 
 export type VipUserClaimProfitChangeLog = {
