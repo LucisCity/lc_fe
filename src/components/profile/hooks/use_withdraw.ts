@@ -60,7 +60,11 @@ export const useWithdraw = () => {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) =>
+        enqueueSnackbar("Có lỗi xảy ra vui lòng thử lại hoặc liên hệ với chúng tôi để được xử lý!", {
+          variant: "error",
+        }),
+      );
     },
   });
   const { isLoading: isLoadingSignMessage, signMessageAsync: signMessageMetamask } = useSignMessage();
