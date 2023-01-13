@@ -66,6 +66,8 @@ export function useWalletAddress(props?: { errorCallback?: () => void }) {
               variant: "error",
             });
             break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
       });
       // disconnect wallet

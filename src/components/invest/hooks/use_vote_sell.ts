@@ -30,10 +30,13 @@ export default function useVoteSell() {
         switch (err.code) {
           case ErrorCode.NotEnoughNft:
             enqueueSnackbar("Bạn chưa mua đủ nft để vote", { variant: "error" });
+            break;
           case ErrorCode.InvalidTimeVoteSell:
             enqueueSnackbar("Hiện tại không phải thời điểm vote", { variant: "error" });
+            break;
           case ErrorCode.SellVoted:
             enqueueSnackbar("Mỗi user chỉ được vote một lần", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }

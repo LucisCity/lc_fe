@@ -141,8 +141,10 @@ export default function useInvestDetail() {
         switch (err.code) {
           case ErrorCode.BalanceNotEnough:
             enqueueSnackbar("Không đủ profit để thực hiện thao tác này", { variant: "error" });
+            break;
           case ErrorCode.WalletNotFound:
             enqueueSnackbar("Không tìm thấy ví", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }

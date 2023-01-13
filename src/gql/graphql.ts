@@ -90,6 +90,7 @@ export enum ErrorCode {
   InvalidTimeVoteSell = 'INVALID_TIME_VOTE_SELL',
   InviteeNotExist = 'INVITEE_NOT_EXIST',
   KycPendingOrSucceed = 'KYC_PENDING_OR_SUCCEED',
+  LoginFbFailed = 'LOGIN_FB_FAILED',
   NewPassSameOldPass = 'NEW_PASS_SAME_OLD_PASS',
   NotEnoughNft = 'NOT_ENOUGH_NFT',
   NotVipUser = 'NOT_VIP_USER',
@@ -848,7 +849,7 @@ export type VipCardCount = {
 };
 
 export enum VipCardTier {
-  GalaxyPremium = 'GALAXY_PREMIUM'
+  GalaxyPlatinum = 'GALAXY_PLATINUM'
 }
 
 export type VipUserClaimProfitChangeLog = {
