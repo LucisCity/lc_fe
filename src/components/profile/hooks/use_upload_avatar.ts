@@ -1,7 +1,7 @@
 import { useSnackbar } from "notistack";
 import axios from "axios";
-import UserStore from "../../store/user.store";
-import { FileUpload } from "./account/use_kyc";
+import UserStore from "../../../store/user.store";
+import { FileUpload } from "../account/hooks/use_kyc";
 
 export const REST_API_ENDPOINT =
   process.env.NEXT_PUBLIC_GRAPHQL_URL?.substring(0, process.env.NEXT_PUBLIC_GRAPHQL_URL.lastIndexOf("/")) + "/api";

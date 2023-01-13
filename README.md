@@ -59,8 +59,9 @@ Ví dụ: token = abcdef (token thật sẽ có độ dài lớn hơn)
 #### Chuyển project về trạng thái kết thúc
 - Dùng mutaion finishProject
 #### Phê duyệt xác minh danh tính của người dùng
-- Dùng query getPendingKycs để lấy ra yêu cầu xác minh đang pending, hoặc getKycs để lấy tất cả các yêu cầu xác minh (pending, success, fail)
-- Dùng mutation updateKyc để cập nhật trạng thái xác minh cho người dùng
+- Dùng query getPendingKycs để lấy ra yêu cầu xác minh đang pending, hoặc getKycs để lấy tất cả các yêu cầu xác minh (pending, success, failed)
+- Dùng mutation updatePendingKyc để cập nhật trạng thái success/failed bại xác minh cho người dùng
+- Dùng mutation revertKycToPending nếu bạn muốn đổi trạng thái xác minh của người dùng về lại pending
 #### VIP card
 - Dùng query getVipCards để lấy ra thẻ VIP
 - Dùng mutation createVipCard để tạo thẻ, updateVipCard để update thẻ, deleteVipCard để xóa thẻ

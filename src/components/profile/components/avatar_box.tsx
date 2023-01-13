@@ -19,7 +19,7 @@ export const AvatarBox = observer(() => {
   const verified = React.useMemo(() => !!UserStore.user?.kyc_verification?.find((i) => i.status === "SUCCESS"), []);
   const userBadge = React.useMemo(() => {
     switch (vipCard?.tier) {
-      case VipCardTier.GalaxyPremium:
+      case VipCardTier.GalaxyPlatinum:
         return "/assets/imgs/landing/card_title.png";
       default:
         return "/assets/imgs/landing/card_title.png";
@@ -115,12 +115,12 @@ export const AvatarBox = observer(() => {
                   <>
                     <VerifiedIcon />
                     <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                      Đã xác thực
+                      Đã xác minh
                     </Typography>
                   </>
                 ) : (
                   <Typography fontSize={{ xs: 16 }} fontWeight={500}>
-                    Xác thực tài khoản
+                    Xác minh danh tính
                   </Typography>
                 )}
               </Button>

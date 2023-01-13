@@ -4,12 +4,7 @@ import React, { useEffect } from "react";
 import moment from "moment";
 import Link from "next/link";
 import PaginatedList from "./components/paginated_list";
-import {
-  useGetNotifications,
-  useSeenAllNotis,
-  useSeenNotification,
-  useSubToNewNoti,
-} from "../../hooks/profile/use_notification";
+import { useGetNotifications, useSeenAllNotis, useSeenNotification, useSubToNewNoti } from "./hooks/use_notification";
 import { NotificationGql } from "../../gql/graphql";
 import { isEmpty } from "lodash";
 

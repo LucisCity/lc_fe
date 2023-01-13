@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Typography } from "@mui/material";
 import { table, TablePaginationActions } from "../components/table";
-import useTransactionHistory from "../../../hooks/profile/use_transaction_history";
+import useTransactionHistory from "../hooks/use_transaction_history";
 import { ReferralTableSkeleton } from "../components/referral_table_skeleton";
 import moment from "moment/moment";
 import { TransactionStatus, TransactionType } from "../../../gql/graphql";
@@ -23,6 +23,7 @@ interface ITableData {
   type: TransactionType;
   amount?: string;
   status: TransactionStatus;
+  description?: string;
 }
 
 const getStatusColor = (status: TransactionStatus) => {
@@ -45,8 +46,8 @@ const amountColor = (type: TransactionType) => {
     case TransactionType.WithdrawBalance:
       return "#FF0B0B";
     case TransactionType.ClaimReferral:
-      return "#00BE13";
     case TransactionType.BuyNft:
+    case TransactionType.ClaimProfit:
       return "#00BE13";
     default:
       return "";
@@ -88,7 +89,7 @@ const descriptionRow = (type: TransactionType): string => {
     case TransactionType.ClaimReferral:
       return "Nhận thưởng giới thiệu bạn bè";
     case TransactionType.BuyNft:
-      return "Mua 1 nft thành công";
+      return "Mua nft thành công";
     default:
       return "";
   }
@@ -114,7 +115,7 @@ const Row = ({ row }: { row: ITableData }) => {
       <TableCell style={{ width: "10%", textAlign: "left", color: "#504C67" }} scope="row">
         <Typography fontWeight={500} fontSize={16} color={amountColor(row.type)}>
           {row.type === TransactionType.BuyNft
-            ? "+1NFT"
+            ? `${row?.description?.split(" ")[1] ?? ""} NFT`
             : `${typeTransaction(row.type) === "WITHDRAW" ? "-" : "+"} ${formatCurrency(row?.amount ?? 0)}`}
         </Typography>
       </TableCell>
@@ -143,6 +144,7 @@ const DashboardTable = observer((props: DashboardTableProps) => {
         type: item.type,
         amount: `${item.amount}`,
         status: !item.blockchain_transaction ? TransactionStatus.Succeed : item.blockchain_transaction?.status,
+        description: item.description ?? "",
       };
     }) ?? [];
   const handleChangePage = async (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -159,11 +161,13 @@ const DashboardTable = observer((props: DashboardTableProps) => {
               {loading ? (
                 <ReferralTableSkeleton />
               ) : data.length === 0 ? (
-                <TableCell style={{ width: "100%" }} scope="row">
-                  <Box display={"flex"} justifyContent={"center"}>
-                    <Typography>Không có dữ liệu!</Typography>
-                  </Box>
-                </TableCell>
+                <TableRow>
+                  <TableCell style={{ width: "100%" }} scope="row">
+                    <Box display={"flex"} justifyContent={"center"}>
+                      <Typography>Không có dữ liệu!</Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
               ) : (
                 data.map((row) => <Row key={row.id} row={row} />)
               )}

@@ -1,9 +1,9 @@
 import { ApolloError, gql, useLazyQuery, useMutation, useQuery, useSubscription } from "@apollo/client";
-import { ErrorCode, NotificationGql } from "../../gql/graphql";
+import { ErrorCode, NotificationGql } from "../../../gql/graphql";
 import { useSnackbar } from "notistack";
-import { handleGraphqlErrors } from "../../utils/apolo.util";
+import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { useEffect } from "react";
-import userStore from "../../store/user.store";
+import userStore from "../../../store/user.store";
 
 export const GET_NOTIFICATIONS = gql`
   query ($page: Int!, $limit: Int!) {

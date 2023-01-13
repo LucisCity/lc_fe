@@ -1,10 +1,10 @@
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useAccount, useSignMessage } from "wagmi";
-import { handleGraphqlErrors } from "../../utils/apolo.util";
+import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { useSnackbar } from "notistack";
-import { TransactionLog } from "../../gql/graphql";
-import { GET_BALANCE } from "./account/use_info";
-import UserStore from "../../store/user.store";
+import { TransactionLog } from "../../../gql/graphql";
+import { GET_BALANCE } from "../account/hooks/use_info";
+import UserStore from "../../../store/user.store";
 import React from "react";
 
 const GET_OTP = gql`
@@ -60,7 +60,11 @@ export const useWithdraw = () => {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) =>
+        enqueueSnackbar("Có lỗi xảy ra vui lòng thử lại hoặc liên hệ với chúng tôi để được xử lý!", {
+          variant: "error",
+        }),
+      );
     },
   });
   const { isLoading: isLoadingSignMessage, signMessageAsync: signMessageMetamask } = useSignMessage();

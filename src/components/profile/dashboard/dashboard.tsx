@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper, Skeleton, Typography } from "@mui/material";
 import DashboardTable from "./dashboard_table";
 import React from "react";
 // import { useStores } from "../../store";
@@ -23,64 +23,105 @@ const GET_DASHBOARD = gql`
 const DashBoardItems = () => {
   const balance = UserStore.user?.wallet?.balance;
 
-  const { data } = useQuery(GET_DASHBOARD);
-  const tutorialStepData = [
-    {
-      position: 1,
-      title: "Tổng tài sản ước tính",
-      content: formatCurrency(Number(data?.getDashboard?.totalAssetsBalance) ?? ""),
-      svgSrc: iconSrc + "total_asset.svg",
-    },
-    {
-      position: 2,
-      title: "Số tiền đã đầu tư",
-      content: formatCurrency(Number(data?.getDashboard?.totalInvestedBalance) ?? ""),
-      svgSrc: iconSrc + "invested_amount.svg",
-    },
+  const { data, loading } = useQuery(GET_DASHBOARD, { fetchPolicy: "no-cache" });
+  const dashboardInfo = React.useMemo(
+    () => [
+      {
+        position: 1,
+        title: "Tổng tài sản ước tính",
+        content: formatCurrency(Number(data?.getDashboard?.totalAssetsBalance) ?? ""),
+        svgSrc: iconSrc + "total_asset.svg",
+      },
+      {
+        position: 2,
+        title: "Số tiền đã đầu tư",
+        content: formatCurrency(Number(data?.getDashboard?.totalInvestedBalance) ?? ""),
+        svgSrc: iconSrc + "invested_amount.svg",
+      },
 
-    {
-      position: 3,
-      title: "Tỉ suất lợi nhuận",
-      content: formatNumber(data?.getDashboard?.profitRate ?? "", { maximumFractionDigits: 3 }) + "%",
-      svgSrc: iconSrc + "profit.svg",
-    },
-    { position: 4, title: "Số dư hiện tại", content: formatCurrency(balance ?? ""), svgSrc: iconSrc + "surplus.svg" },
-  ];
+      {
+        position: 3,
+        title: "Tỉ suất lợi nhuận",
+        content: formatNumber(data?.getDashboard?.profitRate ?? "", { maximumFractionDigits: 3 }) + "%",
+        svgSrc: iconSrc + "profit.svg",
+      },
+      {
+        position: 4,
+        title: "Số dư hiện tại",
+        content: formatCurrency(Number(balance ?? 0) ?? ""),
+        svgSrc: iconSrc + "surplus.svg",
+      },
+    ],
+    [data?.getDashboard],
+  );
   return (
     <>
-      {tutorialStepData.map((item, index) => (
+      {dashboardInfo.map((item, index) => (
         <React.Fragment key={item.title}>
           <Grid item xs={12} sm={6} md={3} height={"inherit"} my={{ md: 2 }}>
-            <Paper
-              elevation={index === 0 ? 5 : 0}
-              sx={{
-                borderRadius: 4,
-                px: { sm: 4, xs: 7 },
-                // pl: {md: 4, sm: 4, xs: 1},
-                py: 5,
-                height: "100%",
-                background: `${index === 0 ? "#6555EE" : "#fff"}`,
-                color: `${index === 0 ? "#fff" : "#504C67"}`,
-              }}
-            >
-              <Box
-                width={40}
-                height={40}
-                sx={{ background: index === 0 ? "#fff" : "#504C67" }}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                borderRadius={2}
+            {loading ? (
+              <Paper
+                elevation={index === 0 ? 5 : 0}
+                sx={{
+                  borderRadius: 4,
+                  px: { sm: 4, xs: 7 },
+                  // pl: {md: 4, sm: 4, xs: 1},
+                  py: 5,
+                  height: "100%",
+                  background: `${index === 0 ? "#6555EE" : "#fff"}`,
+                  color: `${index === 0 ? "#fff" : "#504C67"}`,
+                }}
               >
-                <SvgIcon src={item.svgSrc} />
-              </Box>
-              <Typography fontSize={{ lg: 16, md: 13, xs: 16 }} my={2}>
-                {item.title}
-              </Typography>
-              <Typography fontSize={{ lg: 25, md: 20, xs: 30 }} fontWeight={600}>
-                {item.content}
-              </Typography>
-            </Paper>
+                <Box
+                  width={40}
+                  height={40}
+                  sx={{ background: index === 0 ? "#fff" : "#504C67" }}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  borderRadius={2}
+                >
+                  <SvgIcon src={item.svgSrc} />
+                </Box>
+                <Typography fontSize={{ lg: 16, md: 13, xs: 16 }} my={2}>
+                  {item.title}
+                </Typography>
+                <Typography fontSize={{ lg: 25, md: 20, xs: 30 }} fontWeight={600} component={"div"}>
+                  <Skeleton variant={"text"} />
+                </Typography>
+              </Paper>
+            ) : (
+              <Paper
+                elevation={index === 0 ? 5 : 0}
+                sx={{
+                  borderRadius: 4,
+                  px: { sm: 4, xs: 7 },
+                  // pl: {md: 4, sm: 4, xs: 1},
+                  py: 5,
+                  height: "100%",
+                  background: `${index === 0 ? "#6555EE" : "#fff"}`,
+                  color: `${index === 0 ? "#fff" : "#504C67"}`,
+                }}
+              >
+                <Box
+                  width={40}
+                  height={40}
+                  sx={{ background: index === 0 ? "#fff" : "#504C67" }}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  borderRadius={2}
+                >
+                  <SvgIcon src={item.svgSrc} />
+                </Box>
+                <Typography fontSize={{ lg: 16, md: 13, xs: 16 }} my={2}>
+                  {item.title}
+                </Typography>
+                <Typography fontSize={{ lg: 25, md: 20, xs: 30 }} fontWeight={600}>
+                  {item.content}
+                </Typography>
+              </Paper>
+            )}
           </Grid>
         </React.Fragment>
       ))}

@@ -46,6 +46,17 @@ export const lucisCity721Abi = [
   {
     anonymous: false,
     inputs: [
+      { indexed: true, internalType: "address", name: "owner", type: "address" },
+      { indexed: false, internalType: "uint256", name: "quantity", type: "uint256" },
+      { indexed: false, internalType: "uint256", name: "tokenIdFrom", type: "uint256" },
+      { indexed: false, internalType: "uint256", name: "tokenIdTo", type: "uint256" },
+    ],
+    name: "MintNFT",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
       { indexed: true, internalType: "address", name: "previousOwner", type: "address" },
       { indexed: true, internalType: "address", name: "newOwner", type: "address" },
     ],

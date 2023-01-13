@@ -4,7 +4,7 @@ import React from "react";
 import StackAnim from "../../anim/stack_anim";
 import PaginatedList from "../components/paginated_list";
 import { ProjectCard } from "./components/project_card";
-import { useFollowingProject } from "../../../hooks/profile/use_investment";
+import { useFollowingProject } from "../hooks/use_investment";
 
 export default function InvestmentFavorite() {
   const { followingProjects, loading } = useFollowingProject();

@@ -195,7 +195,7 @@ const NftInfo = ({ index, fullscreen, data }: { index?: number; fullscreen?: boo
                     >
                       <Typography variant="h2">{formatCurrency(data.price)}</Typography>
                       <Typography variant="h5" color={"#fff"}>
-                        {data.total_nft_sold} đang bán
+                        {data.total_nft_sold} đã bán
                       </Typography>
                     </Box>
                   </Grid>

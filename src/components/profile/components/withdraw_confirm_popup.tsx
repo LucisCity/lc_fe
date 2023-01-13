@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Alert, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
-import { useWithdraw } from "../../../hooks/profile/use_withdraw";
+import { useWithdraw } from "../hooks/use_withdraw";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
@@ -20,6 +20,14 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
   const onWithdraw = async (data: any) => {
     if (!isConnectWallet) {
       router.push(`/profile/account?tab=connect_wallet&redirect_url=${router.asPath}`);
+      return;
+    }
+    if (balance <= 0) {
+      setError("amount", { type: "minAmount", message: "Bạn phải nhập số lớn hơn 0!" }, { shouldFocus: true });
+      return;
+    }
+    if (data?.amount <= 0) {
+      setError("amount", { type: "minAmount", message: "Bạn phải nhập số lớn hơn 0!" }, { shouldFocus: true });
       return;
     }
     if (data.amount && data?.amount > Number(balance)) {
@@ -44,7 +52,6 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
       amount: balance,
     },
   });
-
   return (
     <div>
       <Dialog open={true} fullWidth maxWidth={"sm"}>
@@ -65,7 +72,11 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
               InputProps={{
                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
               }}
-              error={errors.amount?.type === "required" || errors.amount?.type === "maxAmount"}
+              error={
+                errors.amount?.type === "required" ||
+                errors.amount?.type === "maxAmount" ||
+                errors.amount?.type === "minAmount"
+              }
               helperText={(errors.amount?.message as string) ?? ""}
             />
             <Stepper activeStep={activeStep} alternativeLabel>
@@ -89,7 +100,7 @@ export default function WithdrawConfirmPopup({ onClose }: { onClose: () => void 
             <Button disabled={isLoading} onClick={onClose}>
               Hủy
             </Button>
-            <LoadingButton type={"submit"} loading={isLoading} variant={"contained"}>
+            <LoadingButton type={"submit"} loading={isLoading} disabled={Number(balance) <= 0} variant={"contained"}>
               {!isConnectWallet ? "Kết nối ví" : "Xác nhận"}
             </LoadingButton>
           </DialogActions>
