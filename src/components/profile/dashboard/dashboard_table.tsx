@@ -46,8 +46,8 @@ const amountColor = (type: TransactionType) => {
     case TransactionType.WithdrawBalance:
       return "#FF0B0B";
     case TransactionType.ClaimReferral:
-      return "#00BE13";
     case TransactionType.BuyNft:
+    case TransactionType.ClaimProfit:
       return "#00BE13";
     default:
       return "";

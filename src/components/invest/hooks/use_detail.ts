@@ -17,6 +17,8 @@ import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { KMath } from "../../../utils/math.util";
+import { GET_BALANCE } from "../../profile/account/hooks/use_info";
+import UserStore from "../../../store/user.store";
 
 export default function useInvestDetail() {
   const form = useForm();
@@ -125,6 +127,11 @@ export default function useInvestDetail() {
       });
     },
   });
+  const [getBalance] = useLazyQuery(GET_BALANCE, {
+    onCompleted: (res) => {
+      UserStore.updateWallet(res?.getBalance);
+    },
+  });
 
   const [claimProfit, claimProfitData] = useMutation(PROJECT_CLAIM_PROFIT_MUT, {
     onCompleted: () => {
@@ -134,6 +141,7 @@ export default function useInvestDetail() {
       detail.client.refetchQueries({
         include: ["projectExtraQuery"],
       });
+      getBalance();
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
