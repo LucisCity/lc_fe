@@ -58,8 +58,10 @@ export default function useReferral() {
         switch (err.code) {
           case ErrorCode.InviteeNotExist:
             enqueueSnackbar("Người mời không tồn tại", { variant: "error" });
+            break;
           case ErrorCode.ReferralClaimed:
             enqueueSnackbar("Referral này đã được claim", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }

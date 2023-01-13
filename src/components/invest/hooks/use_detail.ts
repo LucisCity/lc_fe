@@ -17,6 +17,8 @@ import projectStore from "../../../store/project.store";
 import userStore from "../../../store/user.store";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { KMath } from "../../../utils/math.util";
+import { GET_BALANCE } from "../../profile/account/hooks/use_info";
+import UserStore from "../../../store/user.store";
 
 export default function useInvestDetail() {
   const form = useForm();
@@ -125,6 +127,11 @@ export default function useInvestDetail() {
       });
     },
   });
+  const [getBalance] = useLazyQuery(GET_BALANCE, {
+    onCompleted: (res) => {
+      UserStore.updateWallet(res?.getBalance);
+    },
+  });
 
   const [claimProfit, claimProfitData] = useMutation(PROJECT_CLAIM_PROFIT_MUT, {
     onCompleted: () => {
@@ -134,6 +141,7 @@ export default function useInvestDetail() {
       detail.client.refetchQueries({
         include: ["projectExtraQuery"],
       });
+      getBalance();
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
@@ -141,8 +149,10 @@ export default function useInvestDetail() {
         switch (err.code) {
           case ErrorCode.BalanceNotEnough:
             enqueueSnackbar("Không đủ profit để thực hiện thao tác này", { variant: "error" });
+            break;
           case ErrorCode.WalletNotFound:
             enqueueSnackbar("Không tìm thấy ví", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }

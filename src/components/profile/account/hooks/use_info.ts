@@ -56,16 +56,21 @@ export function useWalletAddress(props?: { errorCallback?: () => void }) {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => {
         switch (err.code) {
-          case "DUPLICATE_ADDRESS":
-            enqueueSnackbar("Địa chỉ ví này đã có người khác dùng, làm ơn kết nối địa chỉ khác. ", {
+          case ErrorCode.DuplicateWalletAddress:
+            enqueueSnackbar(
+              "Địa chỉ ví này đã được sử dụng bởi tài khoản khác, vui lòng kết nối với một địa chỉ khác",
+              {
+                variant: "error",
+              },
+            );
+            break;
+          case ErrorCode.UserConnectedWallet:
+            enqueueSnackbar("Tài khoản của bạn đã liên kết với địa chỉ ví khác", {
               variant: "error",
             });
             break;
-          case "USER_CONNECTED":
-            enqueueSnackbar("Tài khoản của bạn đã liên kết với địa chỉ ví khác.", {
-              variant: "error",
-            });
-            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
       });
       // disconnect wallet

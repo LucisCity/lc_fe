@@ -29,8 +29,10 @@ export default function useVote() {
         switch (err.code) {
           case "INVALID_INPUT":
             enqueueSnackbar("Input không hợp lệ", { variant: "error" });
+            break;
           case "NOT_FOUND":
             enqueueSnackbar("Không tìm thấy project", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }

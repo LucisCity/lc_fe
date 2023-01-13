@@ -108,7 +108,9 @@ export default function useLogin() {
             enqueueSnackbar("Sai mật khẩu, vui lòng nhập lại", { variant: "error" });
             break;
           case ErrorCode.UserDontHavePassword:
-            enqueueSnackbar("Tài khoản này chưa cài đặt password, vui lòng đăng nhập qua google hoặc facebook", { variant: "error" });
+            enqueueSnackbar("Tài khoản này chưa cài đặt password, vui lòng đăng nhập qua google hoặc facebook", {
+              variant: "error",
+            });
             break;
           case ErrorCode.UserNotFound:
             enqueueSnackbar("Không tìm thấy user", { variant: "error" });
@@ -140,8 +142,10 @@ export default function useLogin() {
           case ErrorCode.Error_500:
           case ErrorCode.BadRequest:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+            break;
           case ErrorCode.EmailInvalid:
             enqueueSnackbar("Email không hợp lệ hoặc không tìm thấy email, vui lòng thử lại", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
@@ -166,10 +170,15 @@ export default function useLogin() {
       const errors = handleGraphqlErrors(e);
       errors.forEach((err) => {
         switch (err.code) {
-          case ErrorCode.BadRequest:
-            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+          case ErrorCode.LoginFbFailed:
+            enqueueSnackbar(
+              "Có lỗi xảy ra khi liên kết với tài khoản facebook, vui lòng đăng nhập bằng cách thức khác hoặc liên hệ với chúng tôi để được hỗ trợ",
+              { variant: "error" },
+            );
+            break;
           case ErrorCode.FbIdNotFound:
             enqueueSnackbar("Không thể kết nối với tài khoản facebook, vui lòng thử lại", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }

@@ -95,7 +95,7 @@ export default function InvestDetailNftCard({ isSaleTime }: { isSaleTime: boolea
           }}
         >
           <Typography variant="h3">{formatCurrency(pricePerOne * totalSold ?? 0)}</Typography>
-          <Typography variant="caption">{`${totalSold}/${totalSupply}`} NFT đang bán</Typography>
+          <Typography variant="caption">{`${totalSold}/${totalSupply}`} NFT đã bán</Typography>
         </Box>
 
         <Grid container spacing={2} mt={5}>

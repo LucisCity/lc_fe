@@ -31,14 +31,18 @@ export default function useResetPassword() {
             enqueueSnackbar("Token không đúng, vui lòng thử lại hoặc liên hệ với chúng tôi để được hỗ trợ", {
               variant: "error",
             });
+            break;
           case ErrorCode.InvalidNewPass:
             enqueueSnackbar("Mật khẩu mới không hợp lệ, yêu cầu độ dài 8-32, bao gồm cả số và chữ", {
               variant: "error",
             });
+            break;
           case ErrorCode.BadRequest:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+            break;
           case ErrorCode.NewPassSameOldPass:
             enqueueSnackbar("Mật khẩu mới trùng với mật khẩu hiện tại", { variant: "error" });
+            break;
           default:
             enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
         }
