@@ -70,7 +70,11 @@ const InvestedCard = (props: InvestedProjectGql) => {
             <Grid item xs={12} sm={8} container spacing={3}>
               <Grid item sm={6} xs={12}>
                 <Box mb={1} display={"flex"} justifyContent={"space-between"} alignItems={"baseline"}>
-                  <Typography fontSize={{ lg: 20, md: 18, sm: 16, xs: 20 }} fontWeight={600}>
+                  <Typography
+                    fontSize={{ lg: 20, md: 18, sm: 16, xs: 20 }}
+                    fontWeight={600}
+                    sx={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}
+                  >
                     {title}
                   </Typography>
                   <Typography fontWeight={500} fontSize={{ lg: 18, md: 16, sm: 14, sx: 18 }} color={"#33E179"}>

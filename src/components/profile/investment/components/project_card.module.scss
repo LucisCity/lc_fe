@@ -1,0 +1,10 @@
+.status {
+  @media (max-width: 1064px) {
+    animation: leftright 3s infinite alternate ease-in-out;
+  }
+}
+
+@keyframes leftright {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-150%, 0); }
+}

@@ -8,6 +8,7 @@ import React from "react";
 import { ProjectGql } from "../../../../gql/graphql";
 import { formatCurrency } from "../../../../utils/number.util";
 import { slugify } from "../../../../utils/string.util";
+import s from "./project_card.module.scss";
 
 const Icon = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -44,22 +45,31 @@ export const ProjectStatus = (props: { status: ProjectSalePeriod }) => {
     }
   }, [props.status]);
   const hoverBgColor = bgColor.substring(0, bgColor.length - 2) + "99" + bgColor.charAt(bgColor.length - 1);
+  const isExpectedProfiting = props.status === ProjectSalePeriod.EXPECTED_PROFITING;
   return (
     <Button
       variant="contained"
       color={"secondary"}
-      sx={(theme) => ({
+      sx={{
         background: bgColor,
         color: "#fff",
         height: 40,
         marginRight: 3,
-        padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+        paddingX: "10px !important",
         "&:hover": {
           background: hoverBgColor,
         },
-      })}
+      }}
     >
-      <Typography whiteSpace={"nowrap"}>{props.status}</Typography>
+      {isExpectedProfiting ? (
+        <Box sx={{ overflow: "hidden" }}>
+          <Typography className={s.status} whiteSpace={"nowrap"} sx={{ p: 0 }}>
+            {props.status}
+          </Typography>
+        </Box>
+      ) : (
+        <Typography whiteSpace={"nowrap"}>{props.status}</Typography>
+      )}
     </Button>
   );
 };
@@ -136,7 +146,11 @@ export const ProjectCard = (props: ProjectGql) => {
             </Grid>
             <Grid item xs={12} sm={9} container spacing={3}>
               <Grid item xs={6}>
-                <Typography variant="h3" mb={2}>
+                <Typography
+                  variant="h3"
+                  mb={2}
+                  sx={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}
+                >
                   {title}
                 </Typography>
                 <Typography color="text.secondary" lineHeight={1.4} fontSize={12}>
