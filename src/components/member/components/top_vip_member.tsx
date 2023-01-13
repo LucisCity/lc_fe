@@ -14,6 +14,8 @@ import CardContent from "@mui/material/CardContent";
 import MuiCard from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { Search } from "../../invest/components/search_project";
+import { useVipMember } from "../hooks/use_vipmember";
+import { Scalars } from "../../../gql/graphql";
 
 const fakeData = [
   {
@@ -71,7 +73,7 @@ const fakeData = [
   },
 ];
 
-const CardItem = ({ position }: { position?: "top1" | "top2" | "top3" | "topn" }) => {
+const CardItem = ({ position, data }: { position?: "top1" | "top2" | "top3" | "topn"; data: any }) => {
   return (
     <Box component={Paper} sx={{ borderRadius: 2 }} elevation={1} mb={2}>
       <Box
@@ -97,17 +99,19 @@ const CardItem = ({ position }: { position?: "top1" | "top2" | "top3" | "topn" }
           ) : (
             <img src="/assets/imgs/member/tick-square-normal.svg" alt="" />
           )}
-          <Avatar sx={{ ml: 2 }}>T</Avatar>
+          <Avatar sx={{ ml: 2 }} src={data?.profile?.avatar}>
+            {data?.profile?.avatar ?? data?.email[0]}
+          </Avatar>
           <Box ml={2} display={"flex"} flexDirection={"column"}>
             <Typography variant={"h5"} color={position === "top1" ? "#fff" : "#504C67"}>
-              Eleanor Pena
+              {data?.profile?.display_name}
             </Typography>
             <Typography variant={"caption"} color={position === "top1" ? "#fff" : "#504C67"}>
-              debbie.baker@example.com
+              {data?.email}
             </Typography>
           </Box>
         </Box>
-        <Typography color={position === "top1" ? "#fff" : "#504C67"}>{formatCurrency(432)}</Typography>
+        {/*<Typography color={position === "top1" ? "#fff" : "#504C67"}>{formatCurrency(432)}</Typography>*/}
       </Box>
     </Box>
   );
@@ -137,44 +141,55 @@ const ServiceCard = ({ data }: { data: any }) => {
 };
 
 export const TopVipMember = () => {
+  const { profit, loadingProfit, claimProfitForVipUser, data: vipMemberList } = useVipMember();
+
+  const profitBalance = {
+    balance: isNaN(Number(profit)) ? 0 : Number(profit),
+  };
   return (
     <Box mt={10}>
       <Container component={"div"}>
         <Grid container spacing={5}>
           <Grid item xs={12} sm={6} md={5} lg={4}>
-            <ClaimProfitCard
-            // balance={profitBalance}
-            // onClaim={onClaimProfit}
-            // loading={claimProfitData.loading || disableClaim}
-            />
+            <ClaimProfitCard balance={profitBalance} onClaim={claimProfitForVipUser} loading={loadingProfit} />
             <Typography variant="h3" mt={6} mb={6}>
               Danh sách thành viên
             </Typography>
             <Box bgcolor={"#F9F9F9"} px={{ xs: 3, sm: 5 }} borderRadius={2} py={4}>
-              <Box>
-                <Typography variant={"body2"} mb={2} ml={3}>
-                  Top 1
-                </Typography>
-                <CardItem position={"top1"} />
-              </Box>
-              <Box>
-                <Typography variant={"body2"} mb={2} ml={3}>
-                  Top 2
-                </Typography>
-                <CardItem position={"top2"} />
-              </Box>
-              <Box>
-                <Typography variant={"body2"} mb={2} ml={3}>
-                  Top 3
-                </Typography>
-                <CardItem position={"top3"} />
-              </Box>
-              <Divider sx={{ my: 5 }} />
-              <Box>
-                {Array.from({ length: 6 }).map((item, index) => (
-                  <CardItem key={index} />
-                ))}
-              </Box>
+              {vipMemberList && vipMemberList.length > 0 ? (
+                <>
+                  {vipMemberList?.[0] && (
+                    <Box>
+                      <Typography variant={"body2"} mb={2} ml={3}>
+                        Top 1
+                      </Typography>
+                      <CardItem position={"top1"} data={vipMemberList[0]} />
+                    </Box>
+                  )}
+                  {vipMemberList?.[1] && (
+                    <Box>
+                      <Typography variant={"body2"} mb={2} ml={3}>
+                        Top 2
+                      </Typography>
+                      <CardItem position={"top2"} data={vipMemberList[1]} />
+                    </Box>
+                  )}
+                  {vipMemberList?.[2] && (
+                    <Box>
+                      <Typography variant={"body2"} mb={2} ml={3}>
+                        Top 3
+                      </Typography>
+                      <CardItem position={"top3"} data={vipMemberList[2]} />
+                    </Box>
+                  )}
+                  <Divider sx={{ my: 5 }} />
+                  <Box>
+                    {vipMemberList.slice(3)?.map((item) => (
+                      <CardItem key={item.id} data={item} />
+                    ))}
+                  </Box>
+                </>
+              ) : null}
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={7} lg={8}>
