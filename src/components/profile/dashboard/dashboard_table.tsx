@@ -48,6 +48,7 @@ const amountColor = (type: TransactionType) => {
     case TransactionType.ClaimReferral:
     case TransactionType.BuyNft:
     case TransactionType.ClaimProfit:
+    case TransactionType.VipUserClaimProfit:
       return "#00BE13";
     default:
       return "";
@@ -84,6 +85,8 @@ const descriptionRow = (type: TransactionType): string => {
   switch (type) {
     case TransactionType.WithdrawBalance:
       return "Rút tiền về ví";
+    case TransactionType.VipUserClaimProfit:
+      return "Nhận lãi thành viên V.I.P";
     case TransactionType.ClaimProfit:
       return "Nhận lãi dự án";
     case TransactionType.ClaimReferral:

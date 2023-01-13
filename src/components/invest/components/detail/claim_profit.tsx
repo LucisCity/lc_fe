@@ -4,7 +4,7 @@ import { ProjectProfitBalance } from "../../../../gql/graphql";
 import { formatDate } from "../../../../utils/date.util";
 
 type Props = {
-  balance?: ProjectProfitBalance;
+  balance?: ProjectProfitBalance | { balance?: number; from?: string; to?: string };
   loading?: boolean;
   onClaim?: () => void;
 };

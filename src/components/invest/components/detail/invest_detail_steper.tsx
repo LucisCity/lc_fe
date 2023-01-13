@@ -60,10 +60,11 @@ export default function InvestDetailSteper({ detail }: IProps) {
       }
     } else {
       steps.push("");
+      steps.push("");
     }
 
     const now = new Date();
-    if (detail.start_time_vote_sell && now > new Date(detail.start_time_vote_sell)) {
+    if (detail.end_time_vote_sell && now >= new Date(detail.end_time_vote_sell)) {
       steps.push(formatDate(detail.start_time_vote_sell, "dd, MMM, yyyy"));
       activeIndex = 4;
     } else {
