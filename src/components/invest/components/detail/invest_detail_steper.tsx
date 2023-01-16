@@ -74,7 +74,6 @@ export default function InvestDetailSteper({ detail }: IProps) {
       activeIndex = 5;
     }
     steps.push("");
-    // console.log("steps: ", steps);
     return { steps, activeIndex };
   }, [detail]);
 

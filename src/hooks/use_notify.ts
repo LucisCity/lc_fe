@@ -9,7 +9,6 @@ export function useNotify() {
     if (err.code === 401) {
       return;
     }
-    console.log("err: ", err);
     toast({
       status: "error",
       title: Array.isArray(err.message)

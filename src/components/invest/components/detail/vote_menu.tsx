@@ -66,7 +66,6 @@ export default function VoteMenu() {
             precision={0.5}
             max={10}
             onChange={(event, newValue) => {
-              console.log("newValue: ", newValue);
               setValue(newValue ?? 0);
             }}
             onChangeActive={(event, newValue) => {

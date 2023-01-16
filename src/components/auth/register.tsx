@@ -62,7 +62,6 @@ function SignInSide() {
       const refCode = localStorage.getItem("referralCode");
       if (refCode && !form.getValues("ref_code")) {
         form.setValue("ref_code", refCode);
-        console.log(123);
       }
     }
   }, []);

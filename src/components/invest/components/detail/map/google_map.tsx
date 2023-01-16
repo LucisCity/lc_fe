@@ -5,7 +5,6 @@ import Marker from "./custom_marker";
 import MarkerType from "./marker_type";
 
 const render = (status: Status) => {
-  console.log("status: ", status);
   if (status === Status.FAILURE) {
     return <p>failed</p>;
   }

@@ -29,7 +29,6 @@ export default function CustomMarker({ data, map, onClick, highlight }: CustomMa
     lat = Number(latlong[0]);
     lng = Number(latlong[1].trim());
   }
-  console.log("lat: ", lat);
   const media =
     data.project.profile.medias && data.project.profile.medias.length > 0
       ? data.project.profile.medias[0].url ?? ""

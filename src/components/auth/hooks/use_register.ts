@@ -68,6 +68,7 @@ export default function useRegister() {
     confirmModal.onClose();
     Router.push("/login");
   };
+
   return {
     onRegister,
     form,

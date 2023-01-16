@@ -22,7 +22,6 @@ type Props = {
 export default function NftSection(props: Props) {
   const theme = useTheme();
   const { projects } = props;
-  console.log(props);
   return (
     <Box
       className={props.fullscreen ? "fullscreenPage" : undefined}
