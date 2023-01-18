@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import anime from "animejs";
 import s from "./error_404.module.scss";
 import { useRouter } from "next/router";
-import {Box, Button, Typography} from "@mui/material";
-import {ArrowBackIosNewRounded, HomeOutlined} from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
+import { ArrowBackIosNewRounded, HomeOutlined } from "@mui/icons-material";
 
 export default function Error404(props: any) {
   return (
@@ -13,7 +13,7 @@ export default function Error404(props: any) {
         <div className="container">
           <div className="row">
             <div className="col-sm-12 col-md-12 mt-5 mb-5">
-              <SvgAnim404/>
+              <SvgAnim404 />
               <Box mt={-30} mb={20} zIndex={999} position="relative">
                 {props.children ?? <Actions404 />}
               </Box>
@@ -22,7 +22,7 @@ export default function Error404(props: any) {
         </div>
       </section>
     </div>
-  )
+  );
 }
 
 function Actions404() {
@@ -37,15 +37,15 @@ function Actions404() {
         This page was removed or missing, please go back
       </Typography>
       <Box justifyContent="center" display="flex" mt={10}>
-        <Button variant="contained" onClick={() => router.back()} startIcon={<ArrowBackIosNewRounded/>}>
+        <Button variant="contained" onClick={() => router.back()} startIcon={<ArrowBackIosNewRounded />}>
           Go Back
         </Button>
-        <Button variant="contained" onClick={() => router.push('/')} startIcon={<HomeOutlined/>} sx={{ml: 10}}>
+        <Button variant="contained" onClick={() => router.push("/")} startIcon={<HomeOutlined />} sx={{ ml: 10 }}>
           Go Home
         </Button>
       </Box>
     </>
-  )
+  );
 }
 
 function SvgAnim404() {
@@ -64,10 +64,10 @@ function SvgAnim404() {
       translateX: 10,
       autoplay: true,
       loop: true,
-      easing: 'easeInOutSine',
-      direction: 'alternate',
-      scale: [{value: 1}, {value: 1.4}, {value: 1, delay: 250}],
-      rotateY: {value: '+=180', delay: 200},
+      easing: "easeInOutSine",
+      direction: "alternate",
+      scale: [{ value: 1 }, { value: 1.4 }, { value: 1, delay: 250 }],
+      rotateY: { value: "+=180", delay: 200 },
     });
   }, []);
 
@@ -1238,5 +1238,5 @@ function SvgAnim404() {
         </linearGradient>
       </defs>
     </svg>
-  )
+  );
 }

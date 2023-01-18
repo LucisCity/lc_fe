@@ -21,7 +21,7 @@ export function OperationSection(props: Props) {
         height: "100vh",
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
-          background: `url(/assets/imgs/member/background.jpg)`,
+          background: `url(/assets/imgs/background/5.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "left",

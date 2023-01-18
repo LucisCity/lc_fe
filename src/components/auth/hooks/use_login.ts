@@ -4,7 +4,8 @@ import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import UserStore from "../../../store/user.store";
-import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import { handleGraphqlErrors, setAuthToken } from "../../../utils/apolo.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 const LOGIN_MUT = gql`
   mutation login($email: String!, $password: String!) {
@@ -13,45 +14,69 @@ const LOGIN_MUT = gql`
       user {
         id
         email
+        ref_code
         profile {
           user_id
           avatar
           display_name
         }
+        wallet {
+          balance
+        }
+        kyc_verification {
+          status
+        }
+        wallet_address
       }
     }
   }
 `;
 
 const LOGIN_GG_MUT = gql`
-  mutation loginGoogle($token: String!) {
-    loginGoogle(token: $token) {
+  mutation loginGoogle($token: String!, $refCode: String) {
+    loginGoogle(token: $token, refCode: $refCode) {
       token
       user {
         id
         email
+        ref_code
         profile {
           user_id
           avatar
           display_name
         }
+        wallet {
+          balance
+        }
+        kyc_verification {
+          status
+        }
+        wallet_address
       }
     }
   }
 `;
 
 const LOGIN_FB_MUT = gql`
-  mutation loginFacebook($token: String!) {
-    loginFacebook(token: $token) {
+  mutation loginFacebook($token: String!, $refCode: String) {
+    loginFacebook(token: $token, refCode: $refCode) {
       token
       user {
         id
         email
+        ref_code
         profile {
           user_id
           avatar
           display_name
         }
+        wallet {
+          balance
+        }
+        kyc_verification {
+          status
+        }
+        wallet_address
       }
     }
   }
@@ -65,33 +90,99 @@ export default function useLogin() {
   const [login, { loading }] = useMutation(LOGIN_MUT, {
     onCompleted: (res) => {
       UserStore.saveLoginInfo(res.login.token, res.login.user);
+      if (typeof localStorage !== undefined) {
+        localStorage.removeItem("referralCode");
+      }
+      setAuthToken(res.login.token);
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.WrongPassword:
+            enqueueSnackbar("Sai mật khẩu, vui lòng nhập lại", { variant: "error" });
+            break;
+          case ErrorCode.UserDontHavePassword:
+            enqueueSnackbar("Tài khoản này chưa cài đặt password, vui lòng đăng nhập qua google hoặc facebook", {
+              variant: "error",
+            });
+            break;
+          case ErrorCode.UserNotFound:
+            enqueueSnackbar("Không tìm thấy user", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
   const [loginGgMut, { loading: loadingGg }] = useMutation(LOGIN_GG_MUT, {
     onCompleted: (res) => {
       UserStore.saveLoginInfo(res.loginGoogle.token, res.loginGoogle.user);
+      if (typeof localStorage !== undefined) {
+        localStorage.removeItem("referralCode");
+      }
+      setAuthToken(res.loginGoogle.token);
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.Error_500:
+          case ErrorCode.BadRequest:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+            break;
+          case ErrorCode.EmailInvalid:
+            enqueueSnackbar("Email không hợp lệ hoặc không tìm thấy email, vui lòng thử lại", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
   const [loginFbMut, { loading: loadingFb }] = useMutation(LOGIN_FB_MUT, {
     onCompleted: (res) => {
       UserStore.saveLoginInfo(res.loginFacebook.token, res.loginFacebook.user);
+      if (typeof localStorage !== undefined) {
+        localStorage.removeItem("referralCode");
+      }
+      setAuthToken(res.loginFacebook.token);
+      if (Router.query?.redirect_url) {
+        Router.push(Router.query?.redirect_url as string);
+        return;
+      }
       Router.push("/");
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.LoginFbFailed:
+            enqueueSnackbar(
+              "Có lỗi xảy ra khi liên kết với tài khoản facebook, vui lòng đăng nhập bằng cách thức khác hoặc liên hệ với chúng tôi để được hỗ trợ",
+              { variant: "error" },
+            );
+            break;
+          case ErrorCode.FbIdNotFound:
+            enqueueSnackbar("Không thể kết nối với tài khoản facebook, vui lòng thử lại", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
@@ -111,7 +202,7 @@ export default function useLogin() {
     });
   }
 
-  function fbLogin(res: any) {
+  function fbLogin(res: any, refCode?: string) {
     const token = res?.accessToken;
     if (!token) {
       return;
@@ -119,10 +210,11 @@ export default function useLogin() {
     loginFbMut({
       variables: {
         token,
+        refCode,
       },
     });
   }
-  function ggLogin(res: any) {
+  function ggLogin(res: any, refCode?: string) {
     const token = res?.access_token ?? res?.code ?? res?.id_token;
     if (!token) {
       return;
@@ -130,6 +222,7 @@ export default function useLogin() {
     loginGgMut({
       variables: {
         token,
+        refCode,
       },
     });
   }

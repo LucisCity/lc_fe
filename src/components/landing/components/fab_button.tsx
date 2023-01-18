@@ -10,11 +10,12 @@ import zIndex from "@mui/material/styles/zIndex";
 import { useSwiper } from "swiper/react";
 import { useReleaseOver } from "../../../hooks/use_long_press";
 import { useCallback } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
+import { Facebook } from "@mui/icons-material";
 
 const actions = [
   { icon: <TelegramIcon />, name: "Telegram" },
-  { icon: <img src="/assets/imgs/landing/zalo.svg" alt="zalo icon" width={20} />, name: "Zalo" },
+  { icon: <Facebook />, name: "Facebook" },
   { icon: <LiveHelpIcon />, name: "FAQs" },
   { icon: <KeyboardArrowUpIcon />, name: "Jump to top" },
 ];
@@ -48,7 +49,15 @@ export const FabButton = (props: Props) => {
           }
         }
         break;
-
+      case "Facebook":
+        window.open("https://www.facebook.com/luciscity.io", "_blank");
+        break;
+      case "Telegram":
+        window.open("https://t.me/luciscity_official_announcement", "_blank");
+        break;
+      case "FAQs":
+        Router.push("/faq");
+        break;
       default:
         break;
     }

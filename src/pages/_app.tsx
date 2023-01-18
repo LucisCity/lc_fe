@@ -22,6 +22,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import Web3Provider from "../components/profile/account/wallet/components/web3_provider";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -259,9 +260,11 @@ export default function MyApp(props: MyAppProps) {
             <NotistackWrapper>
               {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <Web3Provider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </Web3Provider>
             </NotistackWrapper>
           </ThemeProvider>
         </CacheProvider>

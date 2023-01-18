@@ -3,10 +3,11 @@ import InputUnstyled, { inputUnstyledClasses } from "@mui/base/InputUnstyled";
 import { useMediaQuery } from "@mui/material";
 
 export const CustomInput = styled(InputUnstyled, {
-  shouldForwardProp: (prop) => prop !== 'email',
-})(({theme}) => `
+  shouldForwardProp: (prop) => prop !== "email",
+})(
+  ({ theme }) => `
   .${inputUnstyledClasses.input} {
-    width: ${useMediaQuery(theme.breakpoints.up('md')) ? '90%' : '100%'};
+    width: ${useMediaQuery(theme.breakpoints.up("sm")) ? "90%" : "100%"};
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
@@ -22,5 +23,5 @@ export const CustomInput = styled(InputUnstyled, {
     //   border-color: "white";
     // }
   }
-`
+`,
 );

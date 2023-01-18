@@ -8,6 +8,12 @@ export function useCountdownTime(endAt: Date | string | undefined) {
 
   useEffect(() => {
     console.log("_end: ", endAt);
+    if (!endAt) {
+      return;
+    }
+    if (timer != null) {
+      clearInterval(timer);
+    }
     countdown();
     const _timer = setInterval(() => {
       countdown();
@@ -26,6 +32,7 @@ export function useCountdownTime(endAt: Date | string | undefined) {
     const _end = new Date(endAt ?? new Date());
     const _start = new Date();
     if (_start > _end) {
+      console.log("return");
       if (timer != null) {
         clearInterval(timer);
       }

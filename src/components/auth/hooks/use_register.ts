@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useModal } from "../../../hooks/use_modal";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
 import { isStrongPass } from "../../../utils/password.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 const REGISTER_MUT = gql`
   mutation register($email: String!, $password: String!, $ref_code: String) {
@@ -27,7 +28,15 @@ export default function useRegister() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(ERROR_MESSAGES[err.code] ?? err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.EmailRegistered:
+            enqueueSnackbar("Email này đã được đăng ký, vui lòng sử dụng một email khác", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 
@@ -59,6 +68,7 @@ export default function useRegister() {
     confirmModal.onClose();
     Router.push("/login");
   };
+
   return {
     onRegister,
     form,

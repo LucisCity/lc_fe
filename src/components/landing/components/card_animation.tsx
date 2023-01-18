@@ -104,9 +104,9 @@ export const CardAnimation = (props: IProps) => {
           hidden: { opacity: 0, y: 100, transition: { delay: 0 } },
         }}
       >
-        <ImageAnimation src="/assets/imgs/landing/card2.png" style={{ zIndex: 1 }} />
-        <ImageAnimation src="/assets/imgs/landing/card2.png" style={{ zIndex: 2 }} animate={controls} />
-        <ImageAnimation src="/assets/imgs/landing/card3.png" style={{ zIndex: 3 }} animate={controls2} />
+        <ImageAnimation src="/assets/imgs/landing/card1-real.png" style={{ zIndex: 1 }} />
+        <ImageAnimation src="/assets/imgs/landing/card2-real.png" style={{ zIndex: 2 }} animate={controls} />
+        <ImageAnimation src="/assets/imgs/landing/card3-real.png" style={{ zIndex: 3 }} animate={controls2} />
       </AnimWhenVisible>
     </Box>
   );

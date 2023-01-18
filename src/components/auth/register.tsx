@@ -20,6 +20,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Divider, Stack } from "@mui/material";
 import ConfirmDialog from "../common/confirm_dialog";
 import { useModal } from "../../hooks/use_modal";
+import { useRouter } from "next/router";
 
 function Copyright(props: any) {
   return (
@@ -41,14 +42,33 @@ export default function LoginPage() {
 }
 
 function SignInSide() {
+  const { loading, onRegister, form, confirmModal, onClose } = useRegister();
+  const router = useRouter();
   const { fbLogin, ggLogin } = useLogin();
   const loginGG = useGoogleLogin({
-    onSuccess: ggLogin,
-    // ux_mode: "popup",
-    // flow: "auth-code",
+    onSuccess: (res) => ggLogin(res, form.getValues("ref_code")),
   });
-  const { loading, onRegister, form, confirmModal, onClose } = useRegister();
 
+  ///// SET REFERRAL CODE ///////
+  React.useEffect(() => {
+    if (router.query?.r && typeof localStorage !== undefined) {
+      localStorage.setItem("referralCode", router.query?.r as string);
+      form.setValue("ref_code", router.query?.r as string);
+    }
+  }, [router.query?.r]);
+
+  React.useEffect(() => {
+    if (typeof localStorage !== undefined) {
+      const refCode = localStorage.getItem("referralCode");
+      if (refCode && !form.getValues("ref_code")) {
+        form.setValue("ref_code", refCode);
+      }
+    }
+  }, []);
+  /////////////////////////////////
+  React.useEffect(() => {
+    form.setFocus("email", { shouldSelect: true });
+  }, [form.setFocus]);
   async function onSubmit(values: any) {
     onRegister(values.email, values.password, values.confirm_pass, values.ref_code);
   }
@@ -72,7 +92,7 @@ function SignInSide() {
         <Box
           sx={{
             my: 8,
-            mx: 4,
+            mx: { xs: 4, sm: 8 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -102,7 +122,7 @@ function SignInSide() {
             <FacebookLogin
               appId={process.env.NEXT_PUBLIC_FB_APP_ID ?? ""}
               // autoLoad
-              callback={fbLogin}
+              callback={(res: any) => fbLogin(res, form.getValues("ref_code"))}
               render={(renderProps: any) => (
                 <Button
                   variant="outlined"
@@ -135,10 +155,11 @@ function SignInSide() {
             </Box>
             <Divider sx={{ flex: "1" }} />
           </Box>
-          <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1, width: "100%" }}>
+            <Typography mb={1} mt={2}>
+              Email Address
+            </Typography>
             <TextField
-              label="Email Address"
-              margin="normal"
               // required
               fullWidth
               variant="outlined"
@@ -152,9 +173,10 @@ function SignInSide() {
                 },
               })}
             />
+            <Typography mb={1} mt={2}>
+              Password
+            </Typography>
             <TextField
-              label="Password"
-              margin="normal"
               // required
               fullWidth
               type="password"
@@ -165,9 +187,10 @@ function SignInSide() {
                 minLength: { value: 8, message: "Minimum length should be 8" },
               })}
             />
+            <Typography mb={1} mt={2}>
+              Confirm password
+            </Typography>
             <TextField
-              label="Confirm password"
-              margin="normal"
               // required
               fullWidth
               type="password"
@@ -178,9 +201,10 @@ function SignInSide() {
                 minLength: { value: 8, message: "Minimum length should be 8" },
               })}
             />
+            <Typography mb={1} mt={2}>
+              Ref code
+            </Typography>
             <TextField
-              label="Ref code"
-              margin="normal"
               // required
               fullWidth
               error={!!form.formState.errors["ref_code"]}

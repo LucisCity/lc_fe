@@ -209,4 +209,19 @@ export const COMPONENT_THEME: Components<Omit<Theme, "components">> = {
       },
     },
   },
+
+  MuiStep: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+      },
+    },
+  },
+  MuiStepLabel: {
+    styleOverrides: {
+      iconContainer: {
+        paddingRight: 0,
+      },
+    },
+  },
 };

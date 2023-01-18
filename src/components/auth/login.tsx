@@ -51,6 +51,9 @@ function SignInSide() {
     onLogin(values.email, values.password);
   }
 
+  React.useEffect(() => {
+    form.setFocus("email", { shouldSelect: true });
+  }, [form.setFocus]);
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -71,7 +74,7 @@ function SignInSide() {
         <Box
           sx={{
             my: 8,
-            mx: 4,
+            mx: { xs: 4, sm: 8 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -83,7 +86,7 @@ function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ mt: 1, width: "100%" }}>
             <Stack direction={["column", "column", "row"]} gap={2} my="12px">
               <Button
                 onClick={() => {
@@ -134,14 +137,15 @@ function SignInSide() {
               </Box>
               <Divider sx={{ flex: "1" }} />
             </Box>
+
+            <Typography mb={1} mt={2}>
+              Email Address
+            </Typography>
             <TextField
-              margin="normal"
               //   required
               fullWidth
               id="email"
-              label="Email Address"
               autoComplete="email"
-              autoFocus
               error={!!form.formState.errors["email"]}
               helperText={form.formState.errors["email"]?.message as string}
               {...form.register("email", {
@@ -152,11 +156,12 @@ function SignInSide() {
                 },
               })}
             />
+            <Typography mb={1} mt={2}>
+              Password
+            </Typography>
             <TextField
-              margin="normal"
               //   required
               fullWidth
-              label="Password"
               type="password"
               id="password"
               autoComplete="current-password"

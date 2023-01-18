@@ -1,10 +1,12 @@
 import { ApolloClient, ApolloError, ApolloLink, createHttpLink, from, InMemoryCache, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
+import { ethereumClient } from "../components/profile/account/wallet/components/web3_provider";
+import userStore from "../store/user.store";
+import { StorageHelper } from "./index";
 //   import { CachePersistor } from 'apollo-cache-persist';
 
 // Cache implementation
@@ -34,9 +36,9 @@ function _getAuthToken(): string {
 }
 
 function _fetchInitialAuthTokenFromLocal(): string {
-  // const u = getLocalAuthInfo();
-  // return u ? u.token ?? "" : "";
-  return "";
+  const token = StorageHelper.getToken();
+  return token ?? "";
+  // return "";
 }
 
 // const persistor = new CachePersistor({
@@ -48,8 +50,6 @@ function _fetchInitialAuthTokenFromLocal(): string {
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = _getAuthToken();
-
-  //console.log("{apolo.authLink} token: ", token);
 
   // return the headers to the context so httpLink can read them
   return {
@@ -72,6 +72,10 @@ if (isClient) {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: process.env.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTION_URL ?? "",
+      connectionParams: {
+        authorization: `Bearer ${_getAuthToken()}`,
+      },
+      shouldRetry: (e) => true,
     }),
   );
 
@@ -90,15 +94,13 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach((e) => {
       const { message, path, extensions } = e;
       console.log(`[GraphQL error]: Message: ${message}, Path: ${path},  extensions: ${extensions?.message}`);
-      if (message === "Unauthorized" || extensions.code === "UNAUTHENTICATED") {
+      if (message === "Unauthorized" || extensions?.code === "UNAUTHENTICATED") {
         // Clean auth info in case of auth error
         // Might be JWT is expired
         // We do clear info only if there was a logged-in user
         if (_getAuthToken() != null) {
-          // clearLocalAuthInfo();
-          // AuthStore.resetStates();
-          // AuthGameStore.resetStates(); // reset game store
-          // Modal.info({content: "sdfsdfsdfsd"});
+          userStore.logout();
+          ethereumClient.disconnect();
         }
       } else {
       }

@@ -1,18 +1,39 @@
 import { Close } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton, Modal } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
+import EMITER_KEY from "../../../../config/emiter.key";
+import { ProjectGql } from "../../../../gql/graphql";
 import { useModal } from "../../../../hooks/use_modal";
+import { AppEmitter } from "../../../../utils/emitter";
 import GoogleMap from "./map/google_map";
 import MarkerType from "./map/marker_type";
 
-export default function MapDialog() {
+interface IProps {
+  project: ProjectGql;
+}
+export default function MapDialog({ project }: IProps) {
   const [highlightedItem, setHighlightedItem] = useState<MarkerType | null>(null);
+  const latlong = project?.location?.split(",");
+  let lat = 0;
+  let long = 0;
+  if (latlong && latlong.length > 1) {
+    lat = Number(latlong[0]);
+    long = Number(latlong[1].trim());
+  }
   const [center, setCenter] = useState<google.maps.LatLngLiteral>({
-    lat: 21.026573,
-    lng: 105.828041,
+    lat: lat, // 21.026573,
+    lng: long, //105.828041,
   });
   const [zoom, setZoom] = useState<number>(15);
   const modal = useModal();
+
+  useEffect(() => {
+    AppEmitter.addListener(EMITER_KEY.openMap, () => {
+      console.log("openMap");
+      modal.onOpen();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onIdle = (map: google.maps.Map) => {
     setZoom(map.getZoom()!);
@@ -55,7 +76,7 @@ export default function MapDialog() {
       </Button>
       <Dialog fullWidth maxWidth="lg" open={modal.isOpen}>
         <DialogTitle sx={{ height: "60px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          Map{" "}
+          Map
           <IconButton onClick={modal.onClose}>
             <Close />
           </IconButton>
@@ -71,10 +92,10 @@ export default function MapDialog() {
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
               center={center}
               zoom={zoom}
-              markers={[{ lat: 21.026573, long: 105.828041, id: "1", title: "Demo" }]}
+              markers={[{ project }]}
               onIdle={onIdle}
               onMarkerClick={onMarkerClick}
-              highlightedMarkerId={highlightedItem?.id}
+              highlightedMarkerId={highlightedItem?.project.id}
             />
           </Box>
         </DialogContent>

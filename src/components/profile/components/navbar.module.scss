@@ -1,0 +1,50 @@
+.bottomLogoutButton {
+  color: #000000;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.topLogoutButton {
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    color: #000000;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    justify-content: center;
+    width: fit-content;
+    height: auto;
+    padding: 10px;
+    div {
+      margin-right: 10px;
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 460px) {
+    p {
+      font-size: 14px !important;
+    }
+  }
+}
+
+.active {
+  background: #6555EE;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.default {
+  color: #504C67;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.cardBg {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+}

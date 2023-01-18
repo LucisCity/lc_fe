@@ -3,6 +3,7 @@ import Router from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { handleGraphqlErrors } from "../../../utils/apolo.util";
+import { ErrorCode } from "../../../gql/graphql";
 
 const FORGOT_MUT = gql`
   mutation forgotPassword($email: String!) {
@@ -24,7 +25,15 @@ export default function useForgot() {
     },
     onError: (e) => {
       const errors = handleGraphqlErrors(e);
-      errors.forEach((err) => enqueueSnackbar(err.message, { variant: "error" }));
+      errors.forEach((err) => {
+        switch (err.code) {
+          case ErrorCode.UserNotFound:
+            enqueueSnackbar("Không tìm thấy user", { variant: "error" });
+            break;
+          default:
+            enqueueSnackbar("Lỗi server, vui lòng liên hệ với chúng tôi để được hỗ trợ", { variant: "error" });
+        }
+      });
     },
   });
 

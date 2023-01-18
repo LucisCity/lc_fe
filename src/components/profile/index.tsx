@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import { Card, Grid } from "@mui/material";
-import { ProfileNavBar } from "./components/navbar/navbar";
+import { ProfileNavBar } from "./components/navbar";
 import ScrollPage from "../layout/scroll_page";
 import { Box, Container } from "@mui/system";
 import s from "./index.module.sass";
@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type Props = {
   children: any;
@@ -17,6 +18,7 @@ type Props = {
 
 export const ProfileLayout = observer((props: Props) => {
   const loading = !UserStore.isLoadedFromLocal;
+  const router = useRouter();
 
   return (
     <ScrollPage>
@@ -35,7 +37,7 @@ export const ProfileLayout = observer((props: Props) => {
       <Container component="div" className={s.profileC}>
         <Card
           sx={{
-            minHeight: 900,
+            minHeight: { sm: 900 },
             width: "inherit",
             mb: 15,
             display: "flex",
@@ -45,21 +47,11 @@ export const ProfileLayout = observer((props: Props) => {
             borderLeft: "1px solid #fff",
             borderTop: "1px solid #fff",
             borderBottom: "1px solid #fff",
-            borderRight: {md: "none", xs: "1px solid #fff"},
+            borderRight: { md: "none", xs: "1px solid #fff" },
           }}
           elevation={0}
         >
-          {/*<CollapseMenu activeTab={activeTab}>*/}
-          {/*  {props.children}*/}
-          {/*</CollapseMenu>*/}
-          <Grid
-            container
-            // sx={(theme) => ({
-            //   [theme.breakpoints.down("sm")]: {
-            //     display: "none",
-            //   },
-            // })}
-          >
+          <Grid container>
             <Grid
               item
               sm={3}
@@ -81,7 +73,6 @@ export const ProfileLayout = observer((props: Props) => {
                 display: "flex",
                 flexDirection: "column",
                 backgroundColor: "#f9f9f9",
-
                 WebkitBackfaceVisibility: "hidden",
                 MozBackfaceVisibility: "hidden",
                 WebkitTransform: "translate3d(0, 0, 0)",
@@ -97,11 +88,12 @@ export const ProfileLayout = observer((props: Props) => {
                   flexDirection={"column"}
                   justifyContent={"center"}
                   alignItems={"center"}
+                  padding={7}
                 >
-                  <Typography variant={"h3"} mb={4}>
+                  <Typography variant={"h3"} mb={4} textAlign={"center"}>
                     Bạn phải đăng nhập mới có thể xem thông tin.
                   </Typography>
-                  <Button LinkComponent={Link} href={"/login"} variant={"contained"}>
+                  <Button LinkComponent={Link} href={`/login?redirect_url=${router.asPath}`} variant={"contained"}>
                     Đăng nhập
                   </Button>
                 </Box>

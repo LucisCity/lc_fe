@@ -6,10 +6,9 @@ import Link from "next/link";
 import zIndex from "@mui/material/styles/zIndex";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
-import {isChrome, isChromium, isIOS, isMobile, isMobileSafari, isTablet} from "react-device-detect";
-import {isClient, isStandaloneMode} from "../../../utils/env";
+import { isChrome, isChromium, isIOS, isMobile, isMobileSafari, isTablet } from "react-device-detect";
+import { isClient, isStandaloneMode } from "../../../utils/env";
 import SvgIcon from "../../common/svg_icon";
-
 
 function AppNavAction(props: any) {
   const { label, icon, to, ...others } = props;
@@ -17,7 +16,6 @@ function AppNavAction(props: any) {
 }
 
 function BottomNavigationUI() {
-  // console.log('{BottomNavigationUI} render: ');
   const router = useRouter();
   const [tabIdx, setTabIdx] = React.useState(-1);
 
@@ -64,7 +62,11 @@ function BottomNavigationUI() {
       <AppNavAction label="Đầu tư" to="/invest" icon={<SvgIcon src={"/assets/imgs/bottom_navbar/status-up.svg"} />} />
       <AppNavAction label="Thành viên" to="/member" icon={<SvgIcon src={"/assets/imgs/bottom_navbar/cards.svg"} />} />
       <AppNavAction label="Tin tức" to="/news" icon={<SvgIcon src={"/assets/imgs/bottom_navbar/book.svg"} />} />
-      <AppNavAction label="Cá nhân" to="/profile" icon={<SvgIcon src={"/assets/imgs/bottom_navbar/user-square.svg"} />} />
+      <AppNavAction
+        label="Cá nhân"
+        to="/profile"
+        icon={<SvgIcon src={"/assets/imgs/bottom_navbar/user-square.svg"} />}
+      />
     </BottomNavigationMui>
   );
 }

@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { UserGql } from "../gql/graphql";
+import { UserGql, Wallet } from "../gql/graphql";
 import { StorageHelper } from "../utils";
 
 class UserStore {
@@ -19,17 +19,39 @@ class UserStore {
   }
   get isLoggedIn() {
     return this._token != null && this._token != "";
+    // return true;
   }
 
   get isLoadedFromLocal() {
     return this._isLoadedFromLocal;
   }
 
+  updateWallet(wallet: Wallet) {
+    this._user!.wallet = wallet;
+    StorageHelper.setUser(this._user);
+  }
+
+  updateWalletAddress(address: string) {
+    // eslint-disable-next-line
+    this._user!.wallet_address = address;
+    StorageHelper.setUser(this._user);
+  }
+
+  updateDisplayName(displayName: string) {
+    // eslint-disable-next-line
+    this._user!.profile.display_name = displayName;
+    StorageHelper.setUser(this._user);
+  }
+
+  updateAvatar(avatar: string) {
+    this._user!.profile.avatar = avatar;
+    StorageHelper.setUser(this._user);
+  }
+
   loadFromLocal() {
     if (typeof window == "undefined") {
       return;
     }
-    console.log("loadFromLocal: ", this._isLoadedFromLocal);
     if (this._isLoadedFromLocal) {
       return;
     }

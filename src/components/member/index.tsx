@@ -4,6 +4,12 @@ import { CardSection } from "../landing/card_section";
 import { Avatar, Container, Grid, Paper, Typography } from "@mui/material";
 import { Background } from "../landing/components/background";
 import ScrollPage from "../layout/scroll_page";
+import { VipCard } from "./components/vipcard";
+import UserStore from "../../store/user.store";
+import { useVipCard } from "./hooks/use_vipcard";
+import Button from "@mui/material/Button";
+import { TopVipMember } from "./components/top_vip_member";
+import { observer } from "mobx-react-lite";
 
 const data = [
   {
@@ -132,7 +138,8 @@ const DataItem = () => {
     </>
   );
 };
-export const MemberPage = () => {
+export const MemberPage = observer(() => {
+  const { vipCard } = useVipCard();
   return (
     <ScrollPage pt={0}>
       <Box
@@ -146,6 +153,58 @@ export const MemberPage = () => {
           height: "100vh",
         }}
       />
+      {vipCard && UserStore.isLoggedIn && (
+        <>
+          <Box mb={{ lg: 100 }}>
+            <VipCard infoCard={vipCard} />
+            <Box
+              bgcolor={"rgba(44, 43, 45, 1)"}
+              width={"100%"}
+              sx={(theme) => ({
+                [theme.breakpoints.up("lg")]: {
+                  position: "absolute",
+                  bottom: 0,
+                },
+                mt: 20,
+              })}
+            >
+              <Container>
+                <Box
+                  display={"flex"}
+                  flexDirection={{ sm: "row", xs: "column" }}
+                  alignItems={"center"}
+                  gap={2}
+                  justifyContent={{ sm: "space-between", xs: "center" }}
+                  height={160}
+                >
+                  <Box textAlign={{ xs: "center", sm: "left" }}>
+                    <Typography variant={"h2"} color={"#fff"}>
+                      Tư vấn V.I.P
+                    </Typography>
+                    <Typography variant={"caption"} color={"#fff"}>
+                      Thông báo đến Lucis và nhận hỗ trợ trực tiếp ngay lập tức từ chúng tôi
+                    </Typography>
+                  </Box>
+                  <Button
+                    sx={{
+                      background: "linear-gradient(90deg, #EAAE19 0%, #FFF98E 79%, #FFF280 100%);",
+                      color: "#2C2B2D",
+                      "&:hover": {
+                        background: "linear-gradient(90deg, #EAAE19 0%, #FFF98E 79%, #FFF280 100%);",
+                      },
+                    }}
+                    variant={"contained"}
+                    endIcon={<img src="/assets/imgs/member/24-support.svg" alt="24-support" />}
+                  >
+                    Yêu cầu hỗ trợ
+                  </Button>
+                </Box>
+              </Container>
+            </Box>
+          </Box>
+          <TopVipMember />
+        </>
+      )}
       <Box mt={-10}>
         <CardSection disabledBackground={true} disabledReadmoreButton={true} />
       </Box>
@@ -233,4 +292,4 @@ export const MemberPage = () => {
       </Box>
     </ScrollPage>
   );
-};
+});

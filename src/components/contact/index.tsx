@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Background } from "../landing/components/background";
 import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
@@ -12,6 +12,12 @@ import { StartIcon } from "../layout/footer";
 import ScrollPage from "../layout/scroll_page";
 import AnimWhenVisible from "../anim";
 import AnimComponent from "../anim/anim_component";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { gql, useMutation } from "@apollo/client";
+import { useSnackbar } from "notistack";
+import UserStore from "../../store/user.store";
+import { LoadingButton } from "@mui/lab";
 
 const ItemStack = styled(Paper, { shouldForwardProp: (propsName) => propsName !== "active" })<{ active?: boolean }>(
   ({ theme, active }) => ({
@@ -39,7 +45,53 @@ const ImageDecor = styled("img")(({ theme }) => ({
   right: -16,
   zIndex: -1,
 }));
+
+const CONTACT_US = gql`
+  mutation contactUs($phone: String!, $userId: String, $name: String, $email: String, $question: String) {
+    contactUs(phone: $phone, userId: $userId, name: $name, email: $email, question: $question)
+  }
+`;
 export const ContactPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      question: "",
+    },
+  });
+
+  const [contactUs] = useMutation(CONTACT_US, {
+    onCompleted: (data) => {
+      reset({
+        phone: "",
+        name: "",
+        email: "",
+        question: "",
+      });
+      enqueueSnackbar("Bạn gửi câu hỏi thành công, chúng tôi sẽ trả lời bạn sớm nhất!", { variant: "success" });
+    },
+  });
+  const onSubmit = async (data: any) => {
+    setLoading(true);
+    await contactUs({
+      variables: {
+        phone: data.phone,
+        name: data.name,
+        email: data.email,
+        question: data.question,
+        userId: UserStore.user?.id ?? "",
+      },
+    });
+    setLoading(false);
+  };
   return (
     <ScrollPage>
       <Box
@@ -71,27 +123,42 @@ export const ContactPage = () => {
                   </ItemStack>
                   <ItemStack elevation={0}>
                     <StartIcon src="/assets/imgs/footer/phone.svg" alt="phone icon" />
-                    <Typography variant={"body2"}>(319) 555-0115</Typography>
+                    <Typography variant={"body2"}>(+84)34 890 2400</Typography>
                   </ItemStack>
-                  <ItemStack elevation={0}>
-                    <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />
-                    <Typography variant={"body2"}>(319) 555-0115</Typography>
-                  </ItemStack>
+                  {/*<ItemStack elevation={0}>*/}
+                  {/*  <StartIcon src="/assets/imgs/footer/headphone.svg" alt="headphone icon" />*/}
+                  {/*  <Typography variant={"body2"}>(319) 555-0115</Typography>*/}
+                  {/*</ItemStack>*/}
                 </Stack>
               </Box>
               <Box flex={1} display={"flex"} alignItems={"flex-end"} mt={3} mb={3}>
                 <Box>
                   <Stack spacing={2} direction={"row"}>
-                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                    <IconButton
+                      sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}
+                      LinkComponent={Link}
+                      href={"https://www.facebook.com/luciscity.io"}
+                      target={"_blank"}
+                    >
                       <img src="/assets/imgs/contact/ic_facebook.svg" alt="icon facebook" />
                     </IconButton>
-                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
-                      <img src="/assets/imgs/contact/ic_discord.svg" alt="icon discord" />
-                    </IconButton>
-                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                    {/*<IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>*/}
+                    {/*  <img src="/assets/imgs/contact/ic_discord.svg" alt="icon discord" />*/}
+                    {/*</IconButton>*/}
+                    <IconButton
+                      sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}
+                      LinkComponent={Link}
+                      href={"https://t.me/luciscity_official_announcement"}
+                      target={"_blank"}
+                    >
                       <img src="/assets/imgs/contact/ic_telegram.svg" alt="icon telegram" />
                     </IconButton>
-                    <IconButton sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}>
+                    <IconButton
+                      sx={{ background: "rgba(255, 255, 255, 0.5)", p: 3 }}
+                      LinkComponent={Link}
+                      href={"https://twitter.com/luciscity_io"}
+                      target={"_blank"}
+                    >
                       <img src="/assets/imgs/contact/ic_twitter.svg" alt="icon twitter" />
                     </IconButton>
                   </Stack>
@@ -100,7 +167,7 @@ export const ContactPage = () => {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={5} component={Box} position={"relative"}>
-            <Box>
+            <Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
               <AnimComponent
                 variants={{
                   visible: { opacity: 1, y: 0 },
@@ -125,6 +192,7 @@ export const ContactPage = () => {
                       sx={{ background: "rgba(255,255,255,0.5)" }}
                       fullWidth
                       placeholder={"Nguyễn Đức Tân"}
+                      {...register("name")}
                     />
                   </Box>
                   <Box mb={2}>
@@ -133,6 +201,7 @@ export const ContactPage = () => {
                       sx={{ background: "rgba(255,255,255,0.5)" }}
                       fullWidth
                       placeholder={"lucis@luciscity.io"}
+                      {...register("email")}
                     />
                   </Box>
                   <Box mb={2}>
@@ -141,7 +210,13 @@ export const ContactPage = () => {
                       sx={{ background: "rgba(255,255,255,0.5)" }}
                       fullWidth
                       placeholder={"(+84) 123456789"}
+                      {...register("phone", { required: "Bạn phải nhập số điên thoại!" })}
                     />
+                    {errors?.phone && (
+                      <Typography variant={"caption"} color={"red"}>
+                        {errors?.phone?.message}
+                      </Typography>
+                    )}
                   </Box>
                   <Box mb={2}>
                     <Typography mb={1}>Câu hỏi của bạn là gì ?</Typography>
@@ -151,11 +226,12 @@ export const ContactPage = () => {
                       multiline
                       rows={6}
                       placeholder={"Câu hỏi của bạn là gì ...."}
+                      {...register("question")}
                     />
                   </Box>
-                  <Button variant={"contained"} fullWidth sx={{ mt: 10 }}>
+                  <LoadingButton loading={loading} variant={"contained"} type={"submit"} fullWidth sx={{ mt: 10 }}>
                     Gửi
-                  </Button>
+                  </LoadingButton>
                 </Box>
               </AnimComponent>
               <ImageDecor src={"/assets/imgs/contact/circle.png"} alt={"img-decor"} />

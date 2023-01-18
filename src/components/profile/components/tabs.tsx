@@ -1,8 +1,10 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -13,48 +15,49 @@ interface StyledTabsProps {
 const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
-    TabIndicatorProps={{children: <span className="MuiTabs-indicatorSpan"/>}}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
     scrollButtons="auto"
     variant="scrollable"
   />
 ))({
-  '& .MuiTabs-indicator': {
-    display: 'flex',
-    justifyContent: 'center',
+  "& .MuiTabs-indicator": {
+    display: "flex",
+    justifyContent: "center",
   },
-  '& .MuiTabs-indicatorSpan': {
+  "& .MuiTabs-indicatorSpan": {
     // maxWidth: 50,
-    width: '100%',
-    backgroundColor: '#504C67',
+    width: "100%",
+    backgroundColor: "#504C67",
   },
 });
 
 interface StyledTabProps {
   label: string;
+  href: string;
 }
 
-const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(({theme}) => ({
-  textTransform: 'none',
-  fontWeight: 400,
-  fontSize: 16,
-  marginRight: theme.spacing(1),
-  color: '#9A9A9A',
-  '&.Mui-selected': {
-    color: '#504C67',
-  },
-  // '&.Mui-focusVisible': {
-  //   backgroundColor: 'rgba(100, 95, 228, 0.32)',
-  // },
-  // "&:hover": {
-  //   // textDecoration: "none",
-  //   "&:before": {
-  //     width: "100%",
-  //     transition: (theme.transitions as any).create(["width"]),
-  //   },
-  // },
-}));
+const StyledTab = styled((props: StyledTabProps) => <Tab LinkComponent={Link} disableRipple {...props} />)(
+  ({ theme }) => ({
+    textTransform: "none",
+    fontWeight: 400,
+    fontSize: 16,
+    marginRight: theme.spacing(1),
+    color: "#9A9A9A",
+    "&.Mui-selected": {
+      color: "#504C67",
+    },
+    // '&.Mui-focusVisible': {
+    //   backgroundColor: 'rgba(100, 95, 228, 0.32)',
+    // },
+    // "&:hover": {
+    //   // textDecoration: "none",
+    //   "&:before": {
+    //     width: "100%",
+    //     transition: (theme.transitions as any).create(["width"]),
+    //   },
+    // },
+  }),
+);
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -63,7 +66,7 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
-  const {children, value, index, ...other} = props;
+  const { children, value, index, ...other } = props;
 
   return (
     <div
@@ -74,7 +77,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box pl={{lg: 2}} pt={5} px={0}>
+        <Box pl={{ lg: 2 }} pt={5} px={0}>
           {children}
         </Box>
       )}
@@ -85,44 +88,48 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-interface ProfileSubTabsProps {
+interface ProfileTabsProps {
   children: any;
-  labels: string[];
+  sectionHref: string;
+  tabs: {
+    label: string;
+    value: string;
+  }[];
 }
 
-export default function ProfileSubTabs(props: ProfileSubTabsProps) {
-  const {children, labels} = props;
+export default function ProfileTabs(props: ProfileTabsProps) {
+  const { children, tabs, sectionHref } = props;
 
-  const [value, setValue] = React.useState(0);
+  const router = useRouter();
+  const currentTabIdx = tabs.map((i) => i.value).indexOf(String(router.query.tab));
+  // open tab
+  const [openTab, setOpenTab] = React.useState(currentTabIdx >= 0 ? currentTabIdx : 0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setOpenTab(newValue);
   };
 
   return (
-    <Box sx={{width: '100%'}} my={{xs: 5}}>
+    <Box sx={{ width: "100%" }} my={{ xs: 5 }}>
       <Box
         sx={{
-          color: '#9A9A9A',
+          color: "#9A9A9A",
           borderBottom: 1,
-          borderBottomColor: '#D9D9D9'
-        }}>
-        <StyledTabs
-          value={value}
-          onChange={handleChange}
-          aria-label="styled tabs example"
-        >
-          {labels.map((label) => (
-            <StyledTab key={label} label={label} {...a11yProps(labels.indexOf(label))}/>
+          borderBottomColor: "#D9D9D9",
+        }}
+      >
+        <StyledTabs value={openTab} onChange={handleChange} aria-label="styled tabs example">
+          {tabs.map((i, idx) => (
+            <StyledTab key={idx} label={i.label} href={sectionHref + "?tab=" + i.value} {...a11yProps(idx)} />
           ))}
         </StyledTabs>
       </Box>
       {React.Children.map(children, (child: any, index: number) => (
-        <TabPanel key={index} index={index} value={value}>
+        <TabPanel key={index} index={index} value={openTab}>
           {child}
         </TabPanel>
       ))}

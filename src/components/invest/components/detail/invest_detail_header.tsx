@@ -1,7 +1,28 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, SvgIcon, Typography } from "@mui/material";
+import VoteMenu from "./vote_menu";
 import ShareDialog from "./share_dialog";
+import { LoadingButton } from "@mui/lab";
+import { AppEmitter } from "../../../../utils/emitter";
+import EMITER_KEY from "../../../../config/emiter.key";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-export default function InvestDetailHeader() {
+interface IProps {
+  title?: string;
+  vote?: number;
+  totalVote?: number;
+  address?: string;
+  follows?: number;
+  takeProfitStartTime?: string;
+  toggleFollow?: () => void;
+  loading?: boolean;
+  isFollowing?: boolean;
+}
+export default function InvestDetailHeader(props: IProps) {
+  function onOpenMap() {
+    AppEmitter.emit(EMITER_KEY.openMap);
+  }
+
   return (
     <>
       <Box
@@ -12,10 +33,16 @@ export default function InvestDetailHeader() {
           mt: 6,
         }}
       >
-        <Typography variant="h2">Navaland Max</Typography>
-        <Button color="success" variant="contained" sx={{ ml: 6, textTransform: "none", fontWeight: 400, px: "12px" }}>
-          Sinh lời
-        </Button>
+        <Typography variant="h2">{props.title}</Typography>
+        {props.takeProfitStartTime && new Date() > new Date(props.takeProfitStartTime) ? (
+          <Button
+            color="success"
+            variant="contained"
+            sx={{ ml: 6, textTransform: "none", fontWeight: 400, px: "12px" }}
+          >
+            Sinh lời
+          </Button>
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -31,9 +58,11 @@ export default function InvestDetailHeader() {
             alignItems: "center",
           }}
         >
-          <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" />
+          {/* <Box component="img" src="/assets/imgs/invest/icons/ic_star.svg" alt="" /> */}
+          <VoteMenu />
+
           <Typography variant="h5" ml="2px">
-            4
+            {props.vote ?? 0}
           </Typography>
           <Box
             sx={{
@@ -46,10 +75,10 @@ export default function InvestDetailHeader() {
             }}
           />
           <Typography variant="h5" sx={{ display: ["none", "inherit"] }}>
-            120 Đánh giá
+            {props.totalVote} Đánh giá
           </Typography>
-          <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"] }}>
-            2118 Thornridge Cir. Syracuse, Connecticut 35624
+          <Typography variant="h5" ml={7} sx={{ display: ["none", "inherit"], cursor: "pointer" }} onClick={onOpenMap}>
+            {props.address}
           </Typography>
         </Box>
         <Box
@@ -59,17 +88,22 @@ export default function InvestDetailHeader() {
             gap: 3,
           }}
         >
-          <Button
+          <LoadingButton
             variant="contained"
             color={"secondary"}
             sx={{
               color: "#FF6C6C",
               width: "84px",
+              ".MuiButton-endIcon > .MuiSvgIcon-root": {
+                fontSize: 28,
+              },
             }}
-            endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_favorit.svg" alt="" />}
+            endIcon={props.loading ? null : props.isFollowing ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            loading={props.loading}
+            onClick={props.toggleFollow}
           >
-            235
-          </Button>
+            {props.follows}
+          </LoadingButton>
           {/* <Button
             variant="contained"
             endIcon={<Box component="img" src="/assets/imgs/invest/icons/ic_share.svg" alt="" />}
