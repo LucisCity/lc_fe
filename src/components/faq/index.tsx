@@ -34,12 +34,11 @@ export const Faq = () => {
         </Box>
         <Accordion TransitionProps={{ unmountOnExit: true }} elevation={0}>
           <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel1a-content" id="panel1a-header">
-            <Typography>Cách cài đặt app Lucis?</Typography>
+            <Typography>Cách cài đặt ứng dụng Lucis City?</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit
-              leo lobortis eget.
+              Đọc hướng dẫn cài đặt ứng dụng Lucis City tại đây: https://news.luciscity.io/huong-dan-cai-ung-dung-lucis-city-tren-mobile-va-pc/
             </Typography>
           </AccordionDetails>
         </Accordion>
