@@ -6,5 +6,6 @@ services:
       context: ../
       dockerfile: docker/Dockerfile
     image: lc_fe_isr-app
+    restart: always
     ports:
       - ${APP_PORT}:3000
